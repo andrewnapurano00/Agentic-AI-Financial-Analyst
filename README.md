@@ -4,6 +4,8 @@ A Streamlit-based financial research and portfolio analysis application powered 
 
 The app is designed to help users research public companies, compare peer groups, screen stocks, analyze portfolio risk/return, and generate agentic portfolio recommendations using a combination of deterministic evidence-building and AI decision-making.
 
+App Page: https://huggingface.co/spaces/andrewnap211/Agentic-AI-Financial-Analyst-v2
+
 > **Disclaimer:** This application is for research, education, and portfolio analytics support only. It does not provide personalized financial advice, investment recommendations, or guarantees of future returns. Always validate outputs with your own analysis before making investment decisions.
 
 ---
