@@ -1,0 +1,345 @@
+# MCP Tool Test Prompts
+
+Use these prompts to test whether the expanded MCP tools are working across analyst estimates, ratings, valuation, DCF, calendar data, company overview, peers, ESG, historical returns, technical indicators, and full research bundles.
+
+---
+
+## 1. Analyst Estimates / Ratings
+
+```text
+What are analyst estimates for AAPL for the next two fiscal years? Include revenue, EPS, and growth expectations.
+```
+
+```text
+Compare MSFT and NVDA using analyst estimates, price target consensus, ratings snapshot, and stock grades.
+```
+
+```text
+For AMZN, summarize analyst expectations, price target upside, and the current ratings snapshot.
+```
+
+```text
+Which has the better analyst setup right now: AAPL, MSFT, or GOOGL? Compare estimates, ratings, and price target upside.
+```
+
+---
+
+## 2. Valuation / DCF
+
+```text
+Run a valuation analysis for NVDA using DCF, levered DCF, trading multiples, and analyst price targets.
+```
+
+```text
+Compare AAPL and MSFT based on DCF value, current price, price target consensus, P/E, P/S, and EV/EBITDA.
+```
+
+```text
+Is META undervalued or overvalued based on DCF, analyst targets, and current valuation multiples?
+```
+
+```text
+Give me a valuation summary for JPM including DCF, market cap, analyst targets, and key financial ratios.
+```
+
+---
+
+## 3. Full Stock Research Bundle
+
+```text
+Give me a full investment analysis of MSFT using fundamentals, analyst expectations, valuation, DCF, ratings, technicals, and risks.
+```
+
+```text
+Compare AAPL, MSFT, and NVDA across fundamentals, analyst expectations, DCF valuation, price target upside, ratings, and technical momentum.
+```
+
+```text
+Build a buy/hold/sell view for GOOGL using company profile, quote, valuation, analyst estimates, ratings, recent price performance, and risks.
+```
+
+```text
+Give me an institutional-style research summary for AMZN with executive summary, fundamentals, analyst outlook, valuation, ratings, risks, and bottom line.
+```
+
+---
+
+## 4. Calendar / Dividends / Earnings
+
+```text
+When does AAPL report earnings, and what does its recent earnings calendar history look like?
+```
+
+```text
+Does MSFT pay dividends? Summarize its dividend history and recent dividend trend.
+```
+
+```text
+Compare the dividend profiles of JPM, BAC, and WFC.
+```
+
+```text
+Show me upcoming earnings events for the next two weeks.
+```
+
+---
+
+## 5. Company Overview / Peers
+
+```text
+Who are NVDA’s closest peers, and how does NVDA compare against them on valuation, profitability, and growth?
+```
+
+```text
+Give me a company overview for AMD including profile, market cap, peers, executives, and financial metrics.
+```
+
+```text
+Compare JPM to its peers using profitability, valuation, analyst targets, and ratings.
+```
+
+```text
+Find the peer group for MSFT and compare the companies using available financial metrics.
+```
+
+---
+
+## 6. ESG / Reference Data
+
+```text
+What ESG data is available for AAPL? Summarize its ESG ratings if available.
+```
+
+```text
+Compare the ESG profiles of AAPL, MSFT, and GOOGL.
+```
+
+```text
+Show me the available sectors and industries from the data source.
+```
+
+```text
+Check if there are any symbol changes relevant to META or GOOGL.
+```
+
+---
+
+## 7. Historical Returns / Technicals
+
+```text
+Compare the 5-year price return for AAPL, MSFT, NVDA, and GOOGL.
+```
+
+```text
+Compare AAPL and MSFT over 1-year, 3-year, and 5-year price performance.
+```
+
+```text
+Give me a technical indicator summary for NVDA using RSI, moving averages, trend strength, and recent price momentum.
+```
+
+```text
+Which looks technically stronger right now: AAPL, MSFT, or NVDA?
+```
+
+---
+
+## 8. Stress-Test Prompts
+
+```text
+Rank AAPL, MSFT, NVDA, GOOGL, and AMZN from best to worst using fundamentals, analyst estimates, valuation, price target upside, ratings, DCF, and technical momentum.
+```
+
+```text
+Create a portfolio watchlist table for AAPL, MSFT, NVDA, AMZN, and META with current price, market cap, revenue growth, margins, analyst upside, DCF upside, ratings, and technical signal.
+```
+
+```text
+Give me a deep-dive investment memo on NVDA using every available MCP tool, but keep the final answer structured with sections and no more than 900 words.
+```
+
+```text
+Compare JPM, BAC, WFC, and MS across analyst expectations, profitability, valuation, dividends, price target upside, and earnings calendar.
+```
+
+```text
+If I had to choose one stock between MSFT, GOOGL, AMZN, and META, which has the best risk/reward based on analyst estimates, valuation, DCF, fundamentals, and technicals?
+```
+
+---
+
+## 9. Best First End-to-End Test
+
+```text
+Compare AAPL and MSFT across analyst estimates, valuation, ratings, DCF, price target upside, and 5-year price return. Return a table and a short conclusion.
+```
+
+---
+
+## 10. Debugging Prompts
+
+Use these when you want to confirm whether one tool family is working.
+
+### Analyst Tool Debug
+
+```text
+Pull analyst estimates for AAPL and show me the raw fields you used for revenue, EPS, and period.
+```
+
+```text
+Pull the ratings snapshot for MSFT and explain what fields were returned.
+```
+
+```text
+Pull price target consensus for NVDA and show consensus, high, low, median, and implied upside if available.
+```
+
+### Valuation Tool Debug
+
+```text
+Pull DCF and levered DCF for AAPL and show the values returned before giving a conclusion.
+```
+
+```text
+Pull valuation data for MSFT and tell me whether DCF, price target, and trading multiples were available.
+```
+
+### Calendar Tool Debug
+
+```text
+Pull recent earnings calendar data for AAPL and show the returned event dates.
+```
+
+```text
+Pull dividend history for MSFT and summarize the latest five dividend records.
+```
+
+### Company / Peer Tool Debug
+
+```text
+Pull company profile, market cap, and peers for NVDA and show what fields were available.
+```
+
+```text
+Find MSFT peers and compare only the data fields that are available from the MCP tools.
+```
+
+### Technical Tool Debug
+
+```text
+Pull technical indicators for NVDA and show which indicators returned data versus which were unavailable.
+```
+
+```text
+Pull RSI and moving averages for AAPL and explain the current technical signal.
+```
+
+### Historical Price Tool Debug
+
+```text
+Pull 5-year historical price data for AAPL and show the start price, end price, and calculated return.
+```
+
+```text
+Compare AAPL and MSFT 5-year price returns and show the calculation inputs.
+```
+
+---
+
+## 11. Portfolio-Oriented Prompts
+
+```text
+Analyze my portfolio watchlist: AAPL, MSFT, NVDA, AMZN, and META. Compare fundamentals, analyst estimates, valuation, DCF upside, ratings, technicals, and price momentum.
+```
+
+```text
+Create a buy/hold/sell recommendation table for AAPL, MSFT, NVDA, AMZN, and META using analyst expectations, valuation, fundamentals, price targets, and technical signals.
+```
+
+```text
+Which stock in AAPL, MSFT, NVDA, AMZN, and META has the best forward risk/reward based on analyst estimates, DCF, ratings, price target upside, and 5-year return?
+```
+
+```text
+Build a portfolio ranking for AAPL, MSFT, NVDA, AMZN, and META with a short explanation for each score.
+```
+
+---
+
+## 12. Banking / Financial Sector Prompts
+
+```text
+Compare JPM, BAC, WFC, MS, and GS across valuation, profitability, analyst estimates, ratings, dividends, and price target upside.
+```
+
+```text
+Give me a full investment analysis of Morgan Stanley using fundamentals, analyst expectations, price targets, valuation, ratings, dividends, and recent earnings information.
+```
+
+```text
+Which bank has the best risk/reward: JPM, BAC, WFC, MS, or GS? Use analyst estimates, valuation, profitability, dividends, and ratings.
+```
+
+```text
+Compare JPM and MS using company profile, analyst estimates, DCF, ratings, dividend history, and 5-year price return.
+```
+
+---
+
+## 13. Sector / Industry Prompts
+
+```text
+Show me all available sectors and industries from the MCP data source.
+```
+
+```text
+Find technology companies available in the MCP data source and suggest a few names to compare.
+```
+
+```text
+Compare a technology stock, a bank stock, and a healthcare stock using the data fields available from the MCP tools.
+```
+
+```text
+Build a sector-aware comparison of AAPL, JPM, XOM, and UNH using only metrics that make sense across sectors.
+```
+
+---
+
+## 14. Earnings / Transcript Prompts
+
+```text
+Get the latest earnings transcript for AAPL and summarize management’s tone, guidance, and key business drivers.
+```
+
+```text
+Compare the latest earnings transcript themes for MSFT and NVDA.
+```
+
+```text
+Summarize AMZN’s latest earnings call and connect the commentary to analyst estimates and valuation.
+```
+
+```text
+Pull the latest transcript for META and identify growth drivers, margin commentary, capex commentary, and key risks.
+```
+
+---
+
+## 15. Combined Research Memo Prompts
+
+```text
+Write a concise investment memo for MSFT using company profile, fundamentals, analyst estimates, ratings, DCF, price target upside, technicals, and risks.
+```
+
+```text
+Write a bull case, bear case, and base case for NVDA using analyst expectations, valuation, DCF, ratings, price targets, and financial metrics.
+```
+
+```text
+Create an institutional-style stock pitch for AMZN with thesis, catalysts, valuation, risks, and final recommendation.
+```
+
+```text
+Give me a final buy/hold/sell decision for META using all available MCP data, but clearly separate data-driven facts from interpretation.
+```

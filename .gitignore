@@ -1,0 +1,51 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# Build files
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Streamlit secrets
+.streamlit/secrets.toml
+.streamlit/cache/
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Large local output folders
+exports/
+outputs/
+reports/
+checkpoints/
+models/
+.cache/

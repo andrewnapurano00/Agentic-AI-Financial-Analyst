@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agentic-ai-financial-analyst"
+version = "1.0.0"
+description = "Agentic AI financial research and portfolio management Streamlit application."
+requires-python = ">=3.11,<3.13"
+
+[tool.setuptools.packages.find]
+where = ["src"]
