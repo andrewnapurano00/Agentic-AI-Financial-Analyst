@@ -9,6 +9,9 @@ import pandas as pd
 from langchain_core.tools import StructuredTool
 from openai import OpenAI
 
+from langgraphagenticai.providers.openai_client import build_openai_client, safe_model_error
+from langgraphagenticai.utils.safety import sanitize_error
+
 from langgraphagenticai.tools.news_pipeline_tools import (
     compute_news_window,
     ensure_list,
@@ -259,7 +262,7 @@ def build_marketaux_news_chat_tools(openai_api_key: Optional[str] = None, market
     def _client() -> OpenAI:
         if not openai_api_key:
             raise ValueError("OPENAI_API_KEY is missing. Add it in the sidebar or environment before using news summary / QA tools.")
-        return OpenAI(api_key=openai_api_key)
+        return build_openai_client(openai_api_key)
 
     def summarize_marketaux_news(
         symbols: str,
@@ -343,7 +346,7 @@ def build_marketaux_news_chat_tools(openai_api_key: Optional[str] = None, market
                             "article_count_used": int(len(df_top)),
                             "combined_summary_gpt": "",
                             "status": "error",
-                            "error": str(exc),
+                            "error": sanitize_error(exc),
                         }
                     )
 
@@ -357,7 +360,7 @@ def build_marketaux_news_chat_tools(openai_api_key: Optional[str] = None, market
             )
 
         except Exception as exc:
-            return _error_payload("summarize_marketaux_news", str(exc), symbols=tickers)
+            return _error_payload("summarize_marketaux_news", sanitize_error(exc), symbols=tickers)
 
     def answer_question_about_marketaux_news(
         symbols: str,
@@ -439,7 +442,7 @@ Instructions:
             )
 
         except Exception as exc:
-            return _error_payload("answer_question_about_marketaux_news", str(exc), symbols=tickers, question=question)
+            return _error_payload("answer_question_about_marketaux_news", sanitize_error(exc), symbols=tickers, question=question)
 
     return [
             _make_tool(summarize_marketaux_news),

@@ -29,11 +29,14 @@ def _apply_position_caps(weights: pd.Series, max_position_weight: float, target_
         excess = float((w[over] - cap).sum())
         w[over] = cap
         room = (~over) & (w < cap - 1e-9)
-        room_total = float(w[room].sum())
-        if excess <= 1e-12 or not room.any() or room_total <= 0:
+        capacity = (cap - w[room]).clip(lower=0.0)
+        capacity_total = float(capacity.sum())
+        if excess <= 1e-12 or not room.any() or capacity_total <= 0:
             break
-        w.loc[room] = w.loc[room] + (w.loc[room] / room_total * excess)
-    return _normalize_weights(w.clip(upper=cap), min(target_sum, cap * len(w)))
+        allocation = capacity / capacity_total * min(excess, capacity_total)
+        w.loc[room] = w.loc[room] + allocation
+    # Never renormalize after clipping: doing so can recreate the violation.
+    return w.clip(lower=0.0, upper=cap)
 
 
 def _apply_sector_caps(df: pd.DataFrame, weights: pd.Series, max_sector_weight: float, target_sum: float, iterations: int = 20) -> pd.Series:
@@ -59,11 +62,84 @@ def _apply_sector_caps(df: pd.DataFrame, weights: pd.Series, max_sector_weight: 
         room = ~frozen
         room_sector_totals = w.groupby(sectors).sum()
         room = room & sectors.map(lambda s: room_sector_totals.get(s, 0.0) < sector_cap - 1e-9)
-        room_total = float(w[room].sum())
-        if excess_total <= 1e-12 or not room.any() or room_total <= 0:
+        if excess_total <= 1e-12 or not room.any():
             break
-        w.loc[room] = w.loc[room] + (w.loc[room] / room_total * excess_total)
-    return _normalize_weights(w, min(target_sum, sector_cap * max(1, sectors.nunique())))
+        eligible_sectors = list(dict.fromkeys(sectors[room].tolist()))
+        sector_room = {
+            sector: max(0.0, sector_cap - float(w[sectors == sector].sum()))
+            for sector in eligible_sectors
+        }
+        total_sector_room = sum(sector_room.values())
+        if total_sector_room <= 1e-12:
+            break
+        to_allocate = min(excess_total, total_sector_room)
+        for sector in eligible_sectors:
+            sector_mask = room & (sectors == sector)
+            count = int(sector_mask.sum())
+            if count:
+                w.loc[sector_mask] += (to_allocate * sector_room[sector] / total_sector_room) / count
+    # Preserve residual cash if sector capacity is insufficient.
+    return w.clip(lower=0.0)
+
+
+def _allocate_with_caps(
+    df: pd.DataFrame,
+    proposed: pd.Series,
+    target_sum: float,
+    max_position_weight: float,
+    max_sector_weight: float,
+    iterations: int = 50,
+) -> pd.Series:
+    """Project weights into position/sector caps without inflating them afterward."""
+    if proposed.empty or target_sum <= 0:
+        return proposed * 0.0
+    pos_cap = max_position_weight if max_position_weight and max_position_weight > 0 else 1.0
+    sector_cap = max_sector_weight if max_sector_weight and max_sector_weight > 0 else 1.0
+    sectors = df["sector"].fillna("Unclassified").astype(str)
+    w = _normalize_weights(proposed, target_sum).clip(lower=0.0, upper=pos_cap)
+
+    for _ in range(iterations):
+        for sector, total in w.groupby(sectors).sum().items():
+            if total > sector_cap + 1e-12:
+                mask = sectors == sector
+                w.loc[mask] *= sector_cap / total
+
+        deficit = target_sum - float(w.sum())
+        if deficit <= 1e-10:
+            break
+
+        sector_totals = w.groupby(sectors).sum()
+        sector_rooms = {
+            sector: max(0.0, sector_cap - float(sector_totals.get(sector, 0.0)))
+            for sector in sectors.unique()
+        }
+        position_room = (pos_cap - w).clip(lower=0.0)
+        available_by_sector: dict[str, float] = {}
+        for sector in sectors.unique():
+            mask = sectors == sector
+            available_by_sector[sector] = min(
+                sector_rooms[sector], float(position_room[mask].sum())
+            )
+        total_room = sum(available_by_sector.values())
+        if total_room <= 1e-12:
+            break
+
+        allocation_total = min(deficit, total_room)
+        for sector, available in available_by_sector.items():
+            if available <= 0:
+                continue
+            mask = sectors == sector
+            room = position_room[mask]
+            room_total = float(room.sum())
+            if room_total <= 0:
+                continue
+            sector_allocation = min(
+                allocation_total * available / total_room,
+                available,
+            )
+            w.loc[mask] += room / room_total * sector_allocation
+        w = w.clip(lower=0.0, upper=pos_cap)
+    return w
 
 
 def validate_agentic_weights(
@@ -101,13 +177,16 @@ def validate_agentic_weights(
     proposed = df["target_weight_proposed"].clip(lower=0.0)
     if float(proposed.sum()) <= 0:
         proposed = df["current_weight"].clip(lower=0.0)
-    proposed_norm = _normalize_weights(proposed, feasible_invested_weight)
-    capped_pos = _apply_position_caps(proposed_norm, max_position_weight=max_position_weight, target_sum=feasible_invested_weight)
-    capped_sector = _apply_sector_caps(df, capped_pos, max_sector_weight=max_sector_weight, target_sum=float(capped_pos.sum()))
-    final_weights = _apply_position_caps(capped_sector, max_position_weight=max_position_weight, target_sum=float(capped_sector.sum()))
-
-    if float(final_weights.sum()) > 0:
-        final_weights = final_weights / float(final_weights.sum()) * feasible_invested_weight
+    final_weights = _allocate_with_caps(
+        df,
+        proposed,
+        feasible_invested_weight,
+        max_position_weight,
+        max_sector_weight,
+    )
+    # Any unallocatable amount is cash; never rescale capped positions above limits.
+    feasible_invested_weight = float(final_weights.sum())
+    residual_cash_weight = max(0.0, 1.0 - feasible_invested_weight)
 
     df["target_weight_raw_ai"] = proposed
     df["target_weight"] = final_weights

@@ -4,6 +4,11 @@ import re
 
 
 SECTION_LABELS = [
+    "Overview",
+    "Market context",
+    "Price performance",
+    "Recent performance",
+    "Key Findings",
     "Executive Summary",
     "Fundamentals",
     "Fundamentals snapshot",
@@ -20,6 +25,11 @@ SECTION_LABELS = [
     "Conclusion",
     "Investment view",
     "Recommendation",
+    "News and catalysts",
+    "Recent News / Catalysts",
+    "What is driving the move",
+    "Watch next",
+    "Sources",
 ]
 
 
@@ -128,18 +138,34 @@ def _format_section_headers(text: str) -> str:
     for label in sorted(SECTION_LABELS, key=len, reverse=True):
         escaped = re.escape(label)
 
-        # At beginning of text
+        # At the beginning of the answer, including numbered report sections.
         out = re.sub(
-            rf"^{escaped}\s+",
-            rf"**{label}**\n\n",
+            rf"^(?:\d+[.)]\s*)?(?:#{{1,4}}\s*)?{escaped}\s*:?[ \t]+",
+            rf"### {label}\n\n",
             out,
             flags=re.IGNORECASE,
         )
 
-        # At beginning of a new paragraph or line
+        # At the beginning of a new paragraph or line.
         out = re.sub(
-            rf"\n{escaped}\s+",
-            rf"\n\n**{label}**\n\n",
+            rf"\n\s*(?:\d+[.)]\s*)?(?:#{{1,4}}\s*)?{escaped}\s*:?[ \t]+",
+            rf"\n\n### {label}\n\n",
+            out,
+            flags=re.IGNORECASE,
+        )
+
+        # Split recognized labels out of dense, single-paragraph reports.
+        out = re.sub(
+            rf"(?<=[.!?])\s+(?:\d+[.)]\s*)?{escaped}\s*:?[ \t]+",
+            rf"\n\n### {label}\n\n",
+            out,
+            flags=re.IGNORECASE,
+        )
+
+        # Normalize labels already emitted as standalone Markdown headings.
+        out = re.sub(
+            rf"(?m)^\s*(?:#{{1,6}}\s*|\*\*){escaped}(?:\*\*)?\s*:?[ \t]*$",
+            rf"### {label}",
             out,
             flags=re.IGNORECASE,
         )
@@ -184,6 +210,15 @@ def clean_financial_text(text: str) -> str:
     # Normalize bullet styles.
     out = re.sub(r"\n\s*•\s*", "\n- ", out)
     out = re.sub(r"^\s*•\s*", "- ", out)
+
+    # Normalize real Unicode bullets/dashes in addition to legacy mojibake.
+    out = re.sub(r"\n\s*(?:\u2022|\u2023|\u25aa)\s*", "\n- ", out)
+    out = re.sub(r"^\s*(?:\u2022|\u2023|\u25aa)\s*", "- ", out)
+    out = re.sub(r"(?m)^\s*[\u2013\u2014]\s+(?=\S)", "- ", out)
+
+    # Put compact numbered findings on separate lines while leaving decimals,
+    # dates, and financial figures alone.
+    out = re.sub(r"(?<!^)(?<!\n)\s+(?=\d+[.)]\s+[A-Z])", "\n", out)
 
     # Normalize percentages.
     out = re.sub(r"(\d+(?:\.\d+)?)\s+%", r"\1%", out)

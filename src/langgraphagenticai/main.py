@@ -14,13 +14,24 @@ from langgraphagenticai.graph.graph_builder import GraphBuilder
 from langgraphagenticai.prompts.system_prompts import get_system_prompt
 from langgraphagenticai.tools.finance_tool_registry import get_finance_tools
 from langgraphagenticai.ui.equity_report_tab import render_equity_report_tab
+from langgraphagenticai.ui.deep_research_tab import render_deep_research_tab
 from langgraphagenticai.ui.portfolio_optimizer_tab import render_portfolio_optimizer_tab
 from langgraphagenticai.ui.stock_screener_tab import render_stock_screener_tab
 from langgraphagenticai.ui.ai_portfolio_manager_tab import render_ai_portfolio_manager_tab
+from langgraphagenticai.ui.introduction_tab import render_introduction_tab
+from langgraphagenticai.ui.top_movers_tab import render_top_movers_tab
 from langgraphagenticai.ui.streamlitui.loadui import LoadStreamlitUI
+from langgraphagenticai.ui.app_shell import (
+    render_command_bar,
+    render_market_strip,
+    render_page_header,
+    render_research_launchpad,
+    render_terminal_status,
+)
 from langgraphagenticai.utils.app_health import validate_runtime_config
 from langgraphagenticai.utils.logging_utils import log_error, log_event, timed_event
 from langgraphagenticai.utils.response_cleaner import clean_financial_text
+from langgraphagenticai.utils.safety import sanitize_error
 
 
 TABLE_HINT_PATTERNS = [
@@ -110,7 +121,10 @@ def _build_repair_llm(openai_api_key: str, model_name: str):
 def _render_prior_chat() -> None:
     for msg in st.session_state.chat_history:
         with st.chat_message(msg["role"]):
-            st.markdown(msg["content"])
+            content = msg["content"]
+            if msg["role"] == "assistant":
+                content = clean_financial_text(content)
+            st.markdown(content)
 
 
 def _finance_input_hint(selected_usecase: str) -> str:
@@ -295,6 +309,7 @@ def load_langgraph_agenticai_app() -> None:
     ui = LoadStreamlitUI()
     user_controls = ui.load_streamlit_ui()
 
+    active_page = user_controls.get("active_page", "Research")
     selected_usecase = user_controls.get("selected_usecase", "Basic Finance Chat")
     openai_api_key = user_controls.get("OPENAI_API_KEY", "").strip()
     fmp_api_key = user_controls.get("FMP_API_KEY", "").strip()
@@ -309,7 +324,7 @@ def load_langgraph_agenticai_app() -> None:
         selected_model=model_name,
     )
 
-    if health["errors"]:
+    if health["errors"] and active_page not in {"Introduction", "Top Movers"}:
         for err in health["errors"]:
             st.error(err)
         return
@@ -317,60 +332,92 @@ def load_langgraph_agenticai_app() -> None:
     _render_status_panel(health["warnings"])
     _maybe_reset_thread_for_config_change(model_name, selected_usecase)
 
-    try:
-        with timed_event(
-            "graph_initialize",
+    if active_page == "Introduction":
+        render_introduction_tab(
+            fmp_api_key=fmp_api_key,
+            openai_api_key=openai_api_key,
             model_name=model_name,
-            selected_usecase=selected_usecase,
-        ):
-            graph = _build_cached_graph(
-                openai_api_key=openai_api_key,
-                model_name=model_name,
-                fmp_api_key=fmp_api_key,
-                usecase=selected_usecase,
-                marketaux_api_key=marketaux_api_key,
-            )
-            repair_llm = _build_repair_llm(
-                openai_api_key=openai_api_key,
-                model_name=model_name,
-            )
-        st.session_state.app_ready = True
-    except Exception as exc:
-        st.session_state.app_ready = False
-        log_error("app_init_failed", error=str(exc), model_name=model_name, selected_usecase=selected_usecase)
-        st.error(f"Failed to initialize app: {exc}")
+            marketaux_api_key=marketaux_api_key,
+        )
+        render_terminal_status(model_name, fmp_ready=bool(fmp_api_key), openai_ready=bool(openai_api_key))
         return
 
-    chat_tab, report_tab, optimizer_tab, screener_tab, ai_pm_tab = st.tabs(
-        ["Agent Chat", "Equity Comparison Report", "Portfolio Optimizer", "Stock Screener", "AI Portfolio Manager"]
-    )
+    command_query = render_command_bar()
+    if command_query and active_page != "Research":
+        st.session_state["pending_research_query"] = command_query
+        st.session_state["next_workspace"] = "Research"
+        st.rerun()
+    render_market_strip()
+    render_page_header(active_page)
 
-    with report_tab:
+    if active_page == "Equity Report":
         render_equity_report_tab(
             fmp_api_key=fmp_api_key,
             openai_api_key=openai_api_key,
             model_name=model_name,
         )
 
-    with optimizer_tab:
-        render_portfolio_optimizer_tab()
-
-    with screener_tab:
+    elif active_page == "Top Movers":
+        render_top_movers_tab(
+            fmp_api_key=fmp_api_key,
+            serper_api_key=user_controls.get("SERPER_API_KEY", ""),
+        )
+    elif active_page == "Stock Screener":
         render_stock_screener_tab(fmp_api_key=fmp_api_key)
-
-    with ai_pm_tab:
-        render_ai_portfolio_manager_tab(
+    elif active_page == "Portfolio Lab":
+        optimizer_tab, manager_tab = st.tabs(["Optimizer", "AI Portfolio Manager"])
+        with optimizer_tab:
+            render_portfolio_optimizer_tab()
+        with manager_tab:
+            render_ai_portfolio_manager_tab(
+                openai_api_key=openai_api_key,
+                model_name=model_name,
+                marketaux_api_key=marketaux_api_key,
+                fmp_api_key=fmp_api_key,
+            )
+    elif active_page == "Deep Research":
+        render_deep_research_tab(
             openai_api_key=openai_api_key,
             model_name=model_name,
-            marketaux_api_key=marketaux_api_key,
             fmp_api_key=fmp_api_key,
+            serper_api_key=user_controls.get("SERPER_API_KEY", ""),
+            marketaux_api_key=marketaux_api_key,
         )
 
-    with chat_tab:
+    else:
+        if not st.session_state.chat_history:
+            render_research_launchpad()
         _render_prior_chat()
 
-        user_input = st.chat_input(_finance_input_hint(selected_usecase))
+        pending_query = st.session_state.pop("pending_research_query", "")
+        user_input = command_query or pending_query or st.chat_input(_finance_input_hint(selected_usecase))
         if not user_input:
+            render_terminal_status(model_name, fmp_ready=bool(fmp_api_key), openai_ready=bool(openai_api_key))
+            return
+
+        try:
+            with timed_event(
+                "graph_initialize",
+                model_name=model_name,
+                selected_usecase=selected_usecase,
+            ):
+                graph = _build_cached_graph(
+                    openai_api_key=openai_api_key,
+                    model_name=model_name,
+                    fmp_api_key=fmp_api_key,
+                    usecase=selected_usecase,
+                    marketaux_api_key=marketaux_api_key,
+                )
+                repair_llm = _build_repair_llm(
+                    openai_api_key=openai_api_key,
+                    model_name=model_name,
+                )
+            st.session_state.app_ready = True
+        except Exception as exc:
+            st.session_state.app_ready = False
+            safe_error = sanitize_error(exc)
+            log_error("app_init_failed", error=safe_error, model_name=model_name, selected_usecase=selected_usecase)
+            st.error(f"Failed to initialize the research agent: {safe_error}")
             return
 
         st.session_state.request_counter += 1
@@ -387,7 +434,7 @@ def load_langgraph_agenticai_app() -> None:
             thread_id=thread_id,
             selected_usecase=selected_usecase,
             model_name=model_name,
-            user_input=user_input[:500],
+            user_input_length=len(user_input),
         )
 
         try:
@@ -407,10 +454,10 @@ def load_langgraph_agenticai_app() -> None:
                 "graph_execution_failed",
                 request_id=request_id,
                 thread_id=thread_id,
-                error=str(exc),
+                error=sanitize_error(exc),
             )
             with st.chat_message("assistant"):
-                st.error(f"Graph execution failed: {exc}")
+                st.error(f"Graph execution failed: {sanitize_error(exc)}")
             return
 
         result_messages = result.get("messages", [])
@@ -432,3 +479,5 @@ def load_langgraph_agenticai_app() -> None:
 
         if debug_mode and result_messages:
             _render_debug_trace(result_messages)
+
+    render_terminal_status(model_name, fmp_ready=bool(fmp_api_key), openai_ready=bool(openai_api_key))

@@ -41,6 +41,8 @@ Thumbs.db
 
 # Logs
 *.log
+debug_codex.txt
+*-ca-bundle.pem
 
 # Large local output folders
 exports/

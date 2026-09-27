@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+from datetime import datetime, timezone
 from typing import Any
 
 import pandas as pd
@@ -352,8 +353,8 @@ def _render_ai_chat(bundle: dict[str, Any], openai_api_key: str, model_name: str
             st.warning("OpenAI key is not loaded, so the chat answer is unavailable.")
             return
         try:
-            from openai import OpenAI
-            client = OpenAI(api_key=openai_api_key)
+            from langgraphagenticai.providers.openai_client import build_openai_client, safe_model_error
+            client = build_openai_client(openai_api_key)
             rec = bundle.get("recommendation_table", pd.DataFrame())
             context_cols = ["ticker", "final_action", "current_weight", "target_weight", "delta_weight", "committee_reason", "key_risks", "constraint_flags"]
             context = rec[[c for c in context_cols if c in rec.columns]].head(30).to_dict(orient="records") if rec is not None and not rec.empty else []
@@ -372,7 +373,7 @@ def _render_ai_chat(bundle: dict[str, Any], openai_api_key: str, model_name: str
             )
             st.write(getattr(response, "output_text", "") or "No response text returned.")
         except Exception as exc:
-            st.error(f"AI chat failed: {exc}")
+            st.error(f"AI chat failed: {safe_model_error(exc)}")
 
 
 def render_ai_portfolio_manager_tab(
@@ -482,10 +483,12 @@ def render_ai_portfolio_manager_tab(
                     selected_screen_tickers=selected_screen_tickers,
                     risk_profile=risk_profile,
                 )
+            bundle["generated_at"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
             st.session_state["pm_hybrid_bundle_v1"] = bundle
             st.success("AI portfolio review completed. Review target weights, trades, committee rationale, and validator notes below.")
         except Exception as exc:
-            st.error(str(exc))
+            from langgraphagenticai.utils.safety import sanitize_error
+            st.error(sanitize_error(exc))
 
     bundle = st.session_state.get("pm_hybrid_bundle_v1")
     if not bundle:

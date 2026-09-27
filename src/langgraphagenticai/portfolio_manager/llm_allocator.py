@@ -9,11 +9,13 @@ try:
 except Exception:
     OpenAI = None
 
+from langgraphagenticai.providers.openai_client import build_openai_client, safe_model_error
+
 
 def _client(openai_api_key: str):
     if not openai_api_key or OpenAI is None:
         return None
-    return OpenAI(api_key=openai_api_key)
+    return build_openai_client(openai_api_key)
 
 
 def _clean_text(text: str) -> str:
@@ -57,7 +59,7 @@ def _call_llm(payload: dict[str, Any], openai_api_key: str, model_name: str) -> 
         )
         return _clean_text(getattr(response, "output_text", None) or "No response returned.")
     except Exception as exc:
-        return f"AI request failed: {exc}"
+        return f"AI request failed: {safe_model_error(exc)}"
 
 
 def build_portfolio_manager_note(

@@ -4,36 +4,15 @@ from typing import Any
 
 import numpy as np
 import pandas as pd
-import requests
 import streamlit as st
-from requests.adapters import HTTPAdapter
-from urllib3.util.retry import Retry
 
-
-def _session() -> requests.Session:
-    s = requests.Session()
-    s.mount(
-        'https://',
-        HTTPAdapter(
-            max_retries=Retry(
-                total=5,
-                backoff_factor=0.7,
-                status_forcelist=[429, 500, 502, 503, 504],
-                allowed_methods=['GET'],
-                raise_on_status=False,
-            )
-        ),
-    )
-    return s
-
-
-SESSION = _session()
+from langgraphagenticai.providers.fmp_http import get_fmp_json
 
 
 def _get_json(url: str, params: dict[str, Any], timeout: int = 25) -> Any:
-    r = SESSION.get(url, params=params, timeout=timeout)
-    r.raise_for_status()
-    return r.json()
+    params = dict(params)
+    api_key = str(params.pop('apikey', ''))
+    return get_fmp_json(url, api_key=api_key, params=params, timeout=(5, timeout))
 
 
 def _safe_float(x: Any, default: float | None = None) -> float | None:

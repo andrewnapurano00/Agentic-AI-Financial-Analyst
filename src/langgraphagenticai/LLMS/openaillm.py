@@ -17,12 +17,16 @@ class OpenAILLM:
         kwargs = {
             "api_key": api_key,
             "model": model,
-            "timeout": 60,
-            "max_retries": 2,
+            "timeout": self.user_controls_input.get("timeout", 60),
+            "max_retries": self.user_controls_input.get("max_retries", 2),
         }
+        if self.user_controls_input.get("stream_usage") is not None:
+            kwargs["stream_usage"] = bool(self.user_controls_input["stream_usage"])
 
         # Some GPT-5 variants reject temperature explicitly.
         if not model.lower().startswith("gpt-5"):
             kwargs["temperature"] = 0.1
+        if self.user_controls_input.get("reasoning_effort"):
+            kwargs["reasoning_effort"] = self.user_controls_input["reasoning_effort"]
 
         return ChatOpenAI(**kwargs)

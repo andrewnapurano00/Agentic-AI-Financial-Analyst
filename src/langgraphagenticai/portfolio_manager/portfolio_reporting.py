@@ -30,6 +30,8 @@ try:
 except Exception:  # pragma: no cover - optional runtime dependency
     OpenAI = None
 
+from langgraphagenticai.providers.openai_client import build_openai_client, safe_model_error
+
 
 ADD_ACTIONS = {"Strong Buy", "Buy", "Add", "Start / Rotate In"}
 TRIM_ACTIONS = {"Trim"}
@@ -365,7 +367,7 @@ def build_portfolio_committee_summary(
         return fallback
 
     try:
-        client = OpenAI(api_key=openai_api_key)
+        client = build_openai_client(openai_api_key)
         payload = {
             "task": (
                 "Write a concise investment committee summary for the top of a portfolio manager dashboard. "
@@ -390,7 +392,7 @@ def build_portfolio_committee_summary(
         text = getattr(response, "output_text", "") or ""
         return text.strip() or fallback
     except Exception as exc:
-        return fallback + f"\n\nAI summary fallback note: AI request failed: {exc}"
+        return fallback + f"\n\nAI summary fallback note: AI request failed: {safe_model_error(exc)}"
 
 
 def _records(df: pd.DataFrame | None, limit: int) -> list[dict[str, Any]]:

@@ -107,11 +107,29 @@ def build_earnings_transcript_tools(fmp_api_key: str):
 
         rows = _extract_rows(client.latest_transcripts(symbol=symbol, limit=5))
         # Some MCP implementations return latest transcripts globally even when symbol is passed.
-        rows = [r for r in rows if str(r.get("symbol", symbol)).upper() == symbol] or rows
+        rows = [r for r in rows if str(r.get("symbol", "")).upper() == symbol]
+        rows.sort(key=lambda r: str(r.get("date") or ""), reverse=True)
 
         normalized = [_normalize_transcript_item(symbol, r) for r in rows]
         row = next((r for r in normalized if r.get("has_content")), normalized[0] if normalized else {})
         if not row or not row.get("content"):
+            # The latest-transcripts endpoint may return only a global list of
+            # metadata. Resolve this company's latest period before fetching text.
+            dates = _extract_rows(client.transcript_dates_by_symbol(symbol))
+            periods = []
+            for item in dates:
+                if str(item.get("symbol", symbol)).upper() != symbol:
+                    continue
+                try:
+                    year = int(item.get("year") or item.get("fiscalYear"))
+                    quarter = int(str(item.get("quarter") or item.get("period")).upper().replace("Q", ""))
+                    if quarter in (1, 2, 3, 4):
+                        periods.append((year, quarter))
+                except (TypeError, ValueError):
+                    continue
+            if periods:
+                year, quarter = max(periods)
+                return get_earnings_transcript(symbol, year, quarter, max_chars)
             return _safe_json_dumps(
                 {
                     "ok": False,
@@ -165,6 +183,7 @@ def build_earnings_transcript_tools(fmp_api_key: str):
             )
 
         rows = _extract_rows(client.search_transcripts(symbol=symbol, year=year, quarter=quarter))
+        rows = [r for r in rows if str(r.get("symbol", symbol)).upper() == symbol]
         normalized = [_normalize_transcript_item(symbol, r) for r in rows]
         row = next((r for r in normalized if r.get("has_content")), normalized[0] if normalized else {})
 

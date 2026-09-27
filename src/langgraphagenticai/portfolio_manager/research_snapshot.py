@@ -5,17 +5,18 @@ from typing import Any, Dict, List, Optional, Tuple
 
 import numpy as np
 import pandas as pd
-import requests
 import streamlit as st
+
+from langgraphagenticai.providers.fmp_http import get_fmp_json
 
 PRICE_FROM_DATE = "2019-01-01"
 PRICE_TO_DATE = None
 
 
 def _get_json(url: str, params: dict, timeout: int = 30):
-    r = requests.get(url, params=params, timeout=timeout)
-    r.raise_for_status()
-    return r.json()
+    params = dict(params)
+    api_key = str(params.pop("apikey", ""))
+    return get_fmp_json(url, api_key=api_key, params=params, timeout=(5, timeout))
 
 
 def _safe_number(x):
@@ -513,9 +514,7 @@ def fetch_price_history(symbol: str, api_key: str, from_date: Optional[str] = No
         params["from"] = from_date
     if to_date:
         params["to"] = to_date
-    r = requests.get(url, params=params, timeout=30)
-    r.raise_for_status()
-    data = r.json()
+    data = _get_json(url, params=params, timeout=30)
     if not isinstance(data, dict) or "historical" not in data or not data["historical"]:
         return pd.DataFrame()
     df = pd.DataFrame(data["historical"])

@@ -8,6 +8,9 @@ import time
 from contextlib import contextmanager
 from typing import Any, Dict, Optional
 
+from langgraphagenticai.utils.safety import redact_value
+from langgraphagenticai.utils.safety import sanitize_error
+
 
 _LOGGER_NAME = "langgraphagenticai"
 
@@ -30,12 +33,12 @@ class JsonFormatter(logging.Formatter):
 
         extra_fields = getattr(record, "extra_fields", None)
         if isinstance(extra_fields, dict):
-            payload.update(extra_fields)
+            payload.update(redact_value(extra_fields))
 
         if record.exc_info:
             payload["exception"] = self.formatException(record.exc_info)
 
-        return json.dumps(payload, default=_json_default, ensure_ascii=False)
+        return json.dumps(redact_value(payload), default=_json_default, ensure_ascii=False)
 
 
 def setup_logger(level: Optional[str] = None) -> logging.Logger:
@@ -87,7 +90,7 @@ def timed_event(event_name: str, **kwargs):
             event_name,
             elapsed_ms=elapsed_ms,
             status="error",
-            error=str(exc),
+            error=sanitize_error(exc),
             **kwargs,
         )
         raise

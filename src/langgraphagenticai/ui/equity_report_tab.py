@@ -1,27 +1,72 @@
 import io
 import json
+import re
+from datetime import datetime, timezone
+from html import escape as html_escape
 from typing import Dict, List, Optional, Tuple
 
 import numpy as np
 import pandas as pd
-import requests
 import streamlit as st
-from openai import OpenAI
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import landscape, letter
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib.units import inch
 from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle, PageBreak
 
+from langgraphagenticai.equity_committee import build_equity_committee_packet, run_equity_committee
+from langgraphagenticai.providers.fmp_http import get_fmp_json
+from langgraphagenticai.providers.openai_client import build_openai_client, safe_model_error
+from langgraphagenticai.utils.safety import sanitize_error
+
 
 PRICE_FROM_DATE = "2019-01-01"
 PRICE_TO_DATE = None
 
 
+def _render_equity_committee(decision: dict) -> None:
+    best_buy = decision.get("best_buy")
+    verdict = decision.get("verdict", "NO_BUY")
+    if best_buy:
+        st.success(f"Committee verdict: **{verdict} · {best_buy}** ({decision.get('confidence', 0)}% confidence)")
+    else:
+        st.warning(f"Committee verdict: **NO BUY** ({decision.get('confidence', 0)}% confidence)")
+    st.write(decision.get("summary", ""))
+    st.markdown("#### What the agents debated")
+    st.write(decision.get("debate_summary", ""))
+    views = decision.get("specialist_views", [])
+    if views:
+        columns = st.columns(min(3, len(views)))
+        for index, view in enumerate(views):
+            with columns[index % len(columns)]:
+                with st.container(border=True):
+                    role = str(view.get("role", "specialist")).replace("_", " ").title()
+                    st.markdown(f"**{role}**")
+                    if view.get("preferred_ticker"):
+                        st.caption(f"Preference: {view['preferred_ticker']}")
+                    st.write(view.get("argument", ""))
+                    for challenge in view.get("challenges", []):
+                        st.markdown(f"- {challenge}")
+    details = (("Catalysts", "catalysts"), ("Risks", "risks"),
+               ("Thesis invalidation", "invalidation_signals"),
+               ("Evidence limitations", "evidence_limitations"))
+    with st.expander("Decision controls and limitations", expanded=True):
+        for label, key in details:
+            values = decision.get(key, [])
+            if values:
+                st.markdown(f"**{label}**")
+                for value in values:
+                    st.markdown(f"- {value}")
+    st.caption(
+        f"Generated {decision.get('created_at', '')} · Model: {decision.get('model', 'unknown')} · "
+        + decision.get("disclaimer", "AI-generated research opinion, not personalized investment advice.")
+    )
+
+
 def _get_json(url: str, params: dict, timeout: int = 30):
-    r = requests.get(url, params=params, timeout=timeout)
-    r.raise_for_status()
-    return r.json()
+    params = dict(params)
+    api_key = str(params.pop("apikey", ""))
+    return get_fmp_json(url, api_key=api_key, params=params, timeout=(5, timeout))
 
 
 def _safe_number(x):
@@ -1322,9 +1367,7 @@ def fetch_price_history(symbol: str, api_key: str, from_date: Optional[str] = No
     if to_date:
         params["to"] = to_date
 
-    r = requests.get(url, params=params, timeout=30)
-    r.raise_for_status()
-    data = r.json()
+    data = _get_json(url, params=params, timeout=30)
 
     if not isinstance(data, dict) or "historical" not in data or not data["historical"]:
         return pd.DataFrame()
@@ -1350,7 +1393,7 @@ def fetch_all_price_history(symbols: List[str], api_key: str, from_date: Optiona
             df = fetch_price_history(sym, api_key=api_key, from_date=from_date, to_date=to_date)
             out[sym] = df
         except Exception as e:
-            st.error(f"{sym} technical fetch failed: {e}")
+            st.error(f"{sym} technical fetch failed: {sanitize_error(e)}")
             out[sym] = pd.DataFrame()
     return out
 
@@ -2561,9 +2604,11 @@ def get_sector_config(peer_group: Optional[str] = None) -> dict:
 
 
 def get_sector_metric_registry(peer_group: Optional[str] = None) -> dict:
+    # Keep Deep Research and Equity Research on one sector taxonomy and priority list.
+    from langgraphagenticai.deep_research.sector import SECTOR_METRIC_REGISTRY as shared_registry
     if not peer_group:
         peer_group = "General / Cross-Sector"
-    return SECTOR_METRIC_REGISTRY.get(peer_group, SECTOR_METRIC_REGISTRY["General / Cross-Sector"])
+    return shared_registry.get(peer_group, shared_registry["General / Cross-Sector"])
 
 
 def get_report_sections(peer_group: Optional[str] = None) -> Dict[str, List[str]]:
@@ -3626,7 +3671,7 @@ def build_section_drivers(section_name: str, scorecard: pd.DataFrame) -> List[st
     return bullets
 
 
-def build_executive_summary_paragraph(scorecard: pd.DataFrame) -> str:
+def _legacy_build_executive_summary_paragraph(scorecard: pd.DataFrame) -> str:
     if scorecard.empty:
         return "No reportable findings were available because the scorecard is empty."
 
@@ -3692,11 +3737,11 @@ def build_report_tables(scorecard: pd.DataFrame, peer_group: str = "General / Cr
     return tables
 
 
-def summarize_scorecard_with_gpt(records: List[dict], openai_api_key: str, model: str = "gpt-5") -> Optional[str]:
+def _legacy_summarize_scorecard_with_gpt(records: List[dict], openai_api_key: str, model: str = "gpt-5") -> Optional[str]:
     if not openai_api_key or not records:
         return None
 
-    client = OpenAI(api_key=openai_api_key)
+    client = build_openai_client(openai_api_key)
 
     prompt = f"""
 You are writing a concise buy-side or sell-side style supporting note for an equity comparison report.
@@ -3724,7 +3769,7 @@ Structured peer data:
         )
         return resp.choices[0].message.content.strip()
     except Exception as e:
-        return f"GPT supporting note generation failed: {e}"
+        return f"GPT supporting note generation failed: {safe_model_error(e)}"
 
 
 def dataframe_to_pdf_table(df: pd.DataFrame) -> Table:
@@ -4057,10 +4102,19 @@ def generate_pdf_report(
 
 
 def parse_tickers(tickers_text: str) -> List[str]:
-    return [t.strip().upper() for t in tickers_text.split(",") if t.strip()]
+    values: list[str] = []
+    for token in re.split(r"[,;\s]+", str(tickers_text or "")):
+        symbol = token.strip().upper()
+        if not symbol:
+            continue
+        if len(symbol) > 12 or not re.fullmatch(r"[A-Z0-9.^-]+", symbol):
+            raise ValueError(f"Invalid ticker: {token[:20]}")
+        if symbol not in values:
+            values.append(symbol)
+    return values
 
 
-def render_equity_report_tab(
+def _legacy_render_equity_report_tab(
     fmp_api_key: str,
     openai_api_key: str = "",
     model_name: str = "gpt-5",
@@ -4109,7 +4163,11 @@ def render_equity_report_tab(
             st.error("Please enter your FMP API key in the sidebar first.")
             return
 
-        tickers = parse_tickers(tickers_text)
+        try:
+            tickers = parse_tickers(tickers_text)
+        except ValueError as exc:
+            st.error(sanitize_error(exc))
+            return
         if not tickers:
             st.error("Please enter at least one ticker.")
             return
@@ -4173,6 +4231,7 @@ def render_equity_report_tab(
         )
 
         st.session_state["equity_report_payload"] = {
+            "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
             "tickers": tickers,
             "combined_scorecard": combined_scorecard,
             "display_df": display_df,
@@ -4524,37 +4583,8 @@ def fetch_historical_valuation_averages(symbols: List[str], api_key: str, limit:
 
 def _map_profile_sector_to_peer_group(sector_value: object, industry_value: object = "") -> str:
     """Map FMP profile sector/industry text to the report framework names."""
-    sector = str(sector_value or "").strip().lower()
-    industry = str(industry_value or "").strip().lower()
-    txt = f"{sector} {industry}"
-
-    if not txt.strip():
-        return "General / Cross-Sector"
-    if any(x in txt for x in ["bank", "financial", "capital markets", "asset management", "insurance"]):
-        return "Banks / Financials"
-    if any(x in txt for x in ["real estate", "reit", "mortgage"]):
-        return "Real Estate / REITs"
-    if any(x in txt for x in ["technology", "software", "semiconductor", "information technology", "hardware"]):
-        return "Technology / Software / Semis"
-    if "communication" in txt or "telecom" in txt or "media" in txt or "entertainment" in txt:
-        return "Communication Services"
-    if "consumer cyclical" in txt or "consumer discretionary" in txt:
-        return "Consumer Discretionary"
-    if "consumer defensive" in txt or "consumer staples" in txt:
-        return "Consumer Staples"
-    if "health" in txt or "biotech" in txt or "pharma" in txt or "medical" in txt:
-        return "Healthcare"
-    if "industrial" in txt:
-        return "Industrials"
-    if "energy" in txt or "oil" in txt or "gas" in txt:
-        return "Energy"
-    if "material" in txt or "chemical" in txt or "metals" in txt or "mining" in txt:
-        return "Materials"
-    if "utilities" in txt or "utility" in txt:
-        return "Utilities"
-    if "consumer" in txt:
-        return "Consumer"
-    return "General / Cross-Sector"
+    from langgraphagenticai.deep_research.sector import map_sector_to_framework
+    return map_sector_to_framework(sector_value, industry_value)
 
 
 def infer_peer_group_from_scorecard(scorecard: pd.DataFrame, fallback: str = "General / Cross-Sector") -> str:
@@ -4781,11 +4811,11 @@ Data:
 """.strip()
 
 
-def summarize_scorecard_with_gpt(records: List[dict], openai_api_key: str, model: str = "gpt-5") -> Optional[str]:
+def _legacy_story_summarize_scorecard_with_gpt(records: List[dict], openai_api_key: str, model: str = "gpt-5") -> Optional[str]:
     """Override: stronger final recommendation note aligned to the new template."""
     if not openai_api_key or not records:
         return None
-    client = OpenAI(api_key=openai_api_key)
+    client = build_openai_client(openai_api_key)
     prompt = f"""
 You are a disciplined equity research analyst.
 
@@ -4812,7 +4842,7 @@ Structured peer data:
         )
         return resp.choices[0].message.content.strip()
     except Exception as e:
-        return f"GPT final recommendation generation failed: {e}"
+        return f"GPT final recommendation generation failed: {safe_model_error(e)}"
 
 
 def _shorten_pdf_cell(value: object, max_chars: int = 44) -> str:
@@ -4904,7 +4934,7 @@ def dataframe_to_one_page_pdf_table(df: pd.DataFrame) -> Table:
     return table
 
 
-def generate_story_pdf_report(
+def _legacy_generate_story_pdf_report(
     scorecard: pd.DataFrame,
     report_tables: Dict[str, pd.DataFrame],
     tickers: List[str],
@@ -4965,10 +4995,8 @@ def render_equity_report_tab(
     openai_api_key: str = "",
     model_name: str = "gpt-5",
 ) -> None:
-    st.subheader("Equity Research Report")
-    st.caption(
-        "Simplified story-first report: profile, price returns, ratings, factor grades, momentum, total return, valuation, growth, profitability, leverage, OpenAI recommendation, and PDF export."
-    )
+    st.markdown("### Build a comparison")
+    st.caption("Enter a company or peer set. Axiom will assemble fundamentals, valuation, momentum, risks, and a decision-ready research story.")
     inject_equity_research_report_css()
 
     default_tickers = st.session_state.get("equity_report_ticker_text", "AAPL, MSFT, NVDA, GOOGL")
@@ -4998,13 +5026,17 @@ def render_equity_report_tab(
         with c5:
             price_to_date = st.text_input("Price history to", value="")
 
-        run_button = st.form_submit_button("Build Equity Research Report", type="primary")
+        run_button = st.form_submit_button("Run analysis", type="primary")
 
     if run_button:
         if not fmp_api_key:
             st.error("Please enter your FMP API key in the sidebar first.")
             return
-        tickers = parse_tickers(tickers_text)
+        try:
+            tickers = parse_tickers(tickers_text)
+        except ValueError as exc:
+            st.error(sanitize_error(exc))
+            return
         if not tickers:
             st.error("Please enter at least one ticker.")
             return
@@ -5083,6 +5115,7 @@ def render_equity_report_tab(
         )
 
         st.session_state["equity_report_payload"] = {
+            "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
             "tickers": tickers,
             "combined_scorecard": combined_scorecard,
             "display_df": display_df,
@@ -5101,7 +5134,7 @@ def render_equity_report_tab(
 
     payload = st.session_state.get("equity_report_payload")
     if not payload:
-        st.info("Enter one or more tickers above, then click Build Equity Research Report.")
+        st.info("Enter one or more tickers above, then select Run analysis.")
         return
 
     tickers = payload["tickers"]
@@ -5130,17 +5163,61 @@ def render_equity_report_tab(
         "pdf_bytes": pdf_bytes,
     })
 
+    generated_at = str(payload.get("generated_at", "")).replace("T", " ").replace("+00:00", " UTC")
+    st.markdown(
+        f'''<div class="ax-security-head"><div><div class="ax-security-symbol">{html_escape(' / '.join(tickers))}</div>
+        <div class="ax-security-meta">EQUITY RESEARCH &nbsp;|&nbsp; {len(tickers)} SECURITIES &nbsp;|&nbsp; {html_escape(generated_at)}</div></div>
+        <div class="ax-security-context">FRAMEWORK<br>{html_escape(peer_group.upper())}</div></div>''',
+        unsafe_allow_html=True,
+    )
+
     story_tab, chart_tab, sections_tab, audit_tab, downloads_tab = st.tabs([
-        "Research Story", "Price Return Chart", "Metric Sections", "Audit / Raw Data", "Downloads"
+        "THESIS", "PERFORMANCE", "FINANCIALS / VALUATION", "SOURCES / AUDIT", "EXPORTS"
     ])
 
     with story_tab:
-        st.markdown("### Executive Summary")
+        st.markdown("### Decision Summary")
         render_executive_summary_card(executive_summary)
 
         if gpt_note:
-            st.markdown("### OpenAI Final Recommendation")
+            st.markdown("### AI Research & Evidence")
             render_research_note_html(gpt_note)
+
+        st.markdown("### CrewAI Best-Buy Debate")
+        committee_packet = build_equity_committee_packet(
+            combined_scorecard,
+            peer_group=peer_group,
+            generated_at=str(payload.get("generated_at", "")),
+        )
+        committee = payload.get("crewai_equity_decision")
+        current_decision = committee if committee and committee.get("input_fingerprint") == committee_packet["fingerprint"] else None
+        if committee and current_decision is None:
+            st.warning("The saved committee verdict belongs to an older scorecard. Run the debate again for this report.")
+        st.caption(
+            "Four bounded agents debate fundamentals, valuation, and downside risk, then a chair selects one best buy "
+            "or concludes that none qualifies. It uses this saved table only and makes paid model calls only when requested."
+        )
+        if current_decision:
+            _render_equity_committee(current_decision)
+        if st.button(
+            "Run CrewAI best-buy debate" if not current_decision else "Run debate again",
+            type="primary" if not current_decision else "secondary",
+            key=f"equity_crew_{committee_packet['fingerprint']}",
+        ):
+            if not openai_api_key:
+                st.error("Please enter your OpenAI API key in the sidebar before running the CrewAI debate.")
+            else:
+                try:
+                    with st.spinner("CrewAI agents are debating the scorecard..."):
+                        decision = run_equity_committee(
+                            committee_packet,
+                            openai_api_key=openai_api_key,
+                            model_name=model_name,
+                        )
+                    st.session_state["equity_report_payload"]["crewai_equity_decision"] = decision
+                    st.rerun()
+                except Exception as exc:
+                    st.error("The CrewAI debate could not complete. " + sanitize_error(exc))
 
         if not ranking_table.empty:
             st.markdown("### Recommendation Snapshot")
@@ -5155,7 +5232,7 @@ def render_equity_report_tab(
         st.info(f"**{peer_group}** — {get_sector_config(peer_group).get('description', '')}")
 
     with chart_tab:
-        st.markdown("### Price Return Chart")
+        st.markdown("### Price & Relative Performance")
         selected_period = st.radio(
             "Select return period",
             PRICE_RETURN_PERIODS,
@@ -5172,7 +5249,7 @@ def render_equity_report_tab(
             st.line_chart(pivot, use_container_width=True)
 
     with sections_tab:
-        st.markdown("### Simplified Report Sections")
+        st.markdown("### Financial Quality, Valuation & Risk Signals")
         for section_name in [
             "Profile", "Ratings", "Factor Grades", "Momentum", "Total Return",
             "Valuation", "Growth", "Profitability", "Balance Sheet / Leverage",
@@ -5523,7 +5600,7 @@ def summarize_scorecard_with_gpt(records: List[dict], openai_api_key: str, model
     """Override: CIO-ready investment note with consistent markdown-safe formatting."""
     if not openai_api_key or not records:
         return None
-    client = OpenAI(api_key=openai_api_key)
+    client = build_openai_client(openai_api_key)
     prompt = f"""
 You are a senior equity research analyst preparing an investment committee note for an executive investment officer.
 
@@ -5574,7 +5651,7 @@ Structured peer data:
         )
         return _clean_report_text(resp.choices[0].message.content.strip())
     except Exception as e:
-        return f"GPT final recommendation generation failed: {e}"
+        return f"GPT final recommendation generation failed: {safe_model_error(e)}"
 
 
 def generate_story_pdf_report(

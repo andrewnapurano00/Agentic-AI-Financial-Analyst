@@ -1,4 +1,5 @@
 import datetime as dt
+import re
 from dataclasses import dataclass
 from typing import List, Optional, Tuple
 
@@ -50,7 +51,10 @@ def parse_tickers(text: str) -> List[str]:
         .replace(",", " ")
         .split()
     )
-    tickers = sorted({t.strip().upper() for t in tokens if t.strip()})
+    tickers = sorted({
+        token for token in (t.strip().upper() for t in tokens)
+        if token and len(token) <= 12 and re.fullmatch(r"[A-Z0-9.^=-]+", token)
+    })
     return tickers
 
 
@@ -98,6 +102,9 @@ def parse_custom_weights(text: str, n_assets: int) -> Tuple[Optional[np.ndarray]
 
         if len(arr) != n_assets:
             return None, f"Expected {n_assets} weights but got {len(arr)}."
+
+        if not np.isfinite(arr).all() or (arr < 0).any():
+            return None, "Weights must be finite and non-negative."
 
         if arr.sum() <= 0:
             return None, "Weights must sum to a positive number."
@@ -796,6 +803,15 @@ def render_portfolio_optimizer_tab() -> None:
 
     st.subheader("3. Risk / Return Table")
     risk_table = make_asset_summary_table(prices)
+    st.session_state["portfolio_optimizer_payload"] = {
+        "generated_at": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
+        "risk_table": risk_table.copy(),
+        "regime": regime,
+        "weights": {
+            "max_sharpe": {ticker: float(max_sharpe_port[ticker]) for ticker in prices.columns},
+            "minimum_volatility": {ticker: float(min_vol_port[ticker]) for ticker in prices.columns},
+        },
+    }
     display = risk_table.copy()
     for c in ["AnnReturn", "AnnVol", "MaxDrawdown", "DownsideVol"]:
         if c in display.columns:

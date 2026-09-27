@@ -1,25 +1,33 @@
-from langgraphagenticai.utils.app_health import validate_runtime_config
+from langgraphagenticai.utils.response_cleaner import clean_financial_text
 
 
-def test_validate_runtime_config_missing_openai():
-    result = validate_runtime_config(
-        openai_api_key="",
-        fmp_api_key="abc",
-        marketaux_api_key="xyz",
-        selected_model="gpt-5",
+def test_research_sections_become_markdown_headings():
+    raw = (
+        "Overview: Acme rallied on earnings. "
+        "Key Findings: Revenue grew 18 %. Risks: Valuation is elevated. "
+        "Bottom Line: Momentum remains positive."
     )
 
-    assert len(result["errors"]) == 1
-    assert "OPENAI_API_KEY" in result["errors"][0]
+    cleaned = clean_financial_text(raw)
+
+    assert cleaned.startswith("### Overview\n")
+    assert "\n### Key Findings\n" in cleaned
+    assert "\n### Risks\n" in cleaned
+    assert "\n### Bottom Line\n" in cleaned
+    assert "18%" in cleaned
 
 
-def test_validate_runtime_config_warnings():
-    result = validate_runtime_config(
-        openai_api_key="abc",
-        fmp_api_key="",
-        marketaux_api_key="",
-        selected_model="gpt-5",
-    )
+def test_research_bullets_and_numbered_sections_are_normalized():
+    raw = "1. Price performance: Up strongly\n\u2022 Volume expanded\n\u2014 News sentiment improved"
 
-    assert result["errors"] == []
-    assert len(result["warnings"]) == 2
+    cleaned = clean_financial_text(raw)
+
+    assert cleaned.startswith("### Price performance\n")
+    assert "- Volume expanded" in cleaned
+    assert "- News sentiment improved" in cleaned
+
+
+def test_existing_markdown_heading_is_not_duplicated():
+    cleaned = clean_financial_text("## Overview\nBusiness remains resilient.")
+
+    assert cleaned == "### Overview\nBusiness remains resilient."

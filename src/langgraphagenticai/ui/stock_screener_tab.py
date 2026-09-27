@@ -2,11 +2,11 @@ import os
 import time
 import numpy as np
 import pandas as pd
-import requests
 import streamlit as st
 from datetime import datetime, timezone
-from requests.adapters import HTTPAdapter
-from urllib3.util.retry import Retry
+
+from langgraphagenticai.providers.fmp_http import get_fmp_json
+from langgraphagenticai.utils.safety import sanitize_error
 
 # ==============================================================================
 # CONFIG
@@ -61,32 +61,11 @@ def _render_screener_styles():
 # ==============================================================================
 # HTTP HELPERS
 # ==============================================================================
-def _session():
-    s = requests.Session()
-    s.mount(
-        "https://",
-        HTTPAdapter(
-            max_retries=Retry(
-                total=5,
-                backoff_factor=0.7,
-                status_forcelist=[429, 500, 502, 503, 504],
-                allowed_methods=["GET"],
-                raise_on_status=False,
-            )
-        ),
-    )
-    return s
-
-
-SESSION = _session()
-
-
 def _get_json(url, params=None, timeout=25):
+    request_params = dict(params or {})
+    api_key = str(request_params.pop("apikey", FMP_API_KEY))
     try:
-        r = SESSION.get(url, params=params, timeout=timeout)
-        if r.status_code != 200:
-            return None
-        return r.json()
+        return get_fmp_json(url, api_key=api_key, params=request_params, timeout=(5, timeout))
     except Exception:
         return None
 
@@ -135,22 +114,17 @@ def _sanitize_params(filters):
 @st.cache_data(ttl=3600, show_spinner=False)
 def fmp_company_screener_safe(filters, timeout=20, max_pages=10):
     url = "https://financialmodelingprep.com/stable/company-screener"
-    params_base = _sanitize_params(filters) | {"apikey": FMP_API_KEY}
+    params_base = _sanitize_params(filters)
 
     all_rows = []
     meta = {"errors": [], "warnings": [], "pages": 0}
 
     for page in range(max_pages):
         try:
-            r = SESSION.get(url, params={**params_base, "page": page}, timeout=timeout)
-            if r.status_code == 429:
-                time.sleep(1.0)
-                continue
-            if r.status_code != 200:
-                meta["errors"].append({"page": page, "status": r.status_code})
-                break
-
-            data = r.json() or []
+            data = get_fmp_json(
+                url, api_key=FMP_API_KEY, params={**params_base, "page": page},
+                timeout=(5, timeout),
+            ) or []
             if not data:
                 break
 
@@ -165,7 +139,7 @@ def fmp_company_screener_safe(filters, timeout=20, max_pages=10):
                 break
 
         except Exception as e:
-            meta["warnings"].append({"page": page, "msg": repr(e)})
+            meta["warnings"].append({"page": page, "msg": sanitize_error(e)})
             break
 
     out = pd.concat(all_rows, ignore_index=True) if all_rows else pd.DataFrame()
@@ -829,6 +803,10 @@ def render_stock_screener_tab(fmp_api_key: str) -> None:
         metrics_df = metrics_df.sort_values("Market Cap", ascending=False, na_position="last").reset_index(drop=True)
 
     final_df = metrics_df.head(final_display_limit).copy()
+    st.session_state["stock_screener_payload"] = {
+        "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "results": final_df.copy(),
+    }
 
     st.subheader("Final Screener Output")
     st.caption(

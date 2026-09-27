@@ -3,10 +3,10 @@ from __future__ import annotations
 from typing import Any
 
 import pandas as pd
-import requests
 import streamlit as st
-from requests.adapters import HTTPAdapter
-from urllib3.util.retry import Retry
+
+from langgraphagenticai.providers.fmp_http import get_fmp_json
+from langgraphagenticai.utils.safety import sanitize_error
 
 
 SERVER_KEYS = {
@@ -18,26 +18,6 @@ SERVER_KEYS = {
     'dividendMoreThan', 'dividendLowerThan',
     'limit', 'page', 'isEtf', 'isFund'
 }
-
-
-def _session() -> requests.Session:
-    s = requests.Session()
-    s.mount(
-        'https://',
-        HTTPAdapter(
-            max_retries=Retry(
-                total=5,
-                backoff_factor=0.7,
-                status_forcelist=[429, 500, 502, 503, 504],
-                allowed_methods=['GET'],
-                raise_on_status=False,
-            )
-        ),
-    )
-    return s
-
-
-SESSION = _session()
 
 
 def _sanitize_params(filters: dict[str, Any]) -> dict[str, Any]:
@@ -56,17 +36,16 @@ def fmp_company_screener(filters: dict[str, Any], api_key: str, timeout: int = 2
         return pd.DataFrame(), {'errors': ['Missing FMP API key'], 'warnings': [], 'pages': 0}
 
     url = 'https://financialmodelingprep.com/stable/company-screener'
-    params_base = _sanitize_params(filters) | {'apikey': api_key}
+    params_base = _sanitize_params(filters)
     all_rows: list[pd.DataFrame] = []
     meta = {'errors': [], 'warnings': [], 'pages': 0}
 
     for page in range(max_pages):
         try:
-            r = SESSION.get(url, params={**params_base, 'page': page}, timeout=timeout)
-            if r.status_code != 200:
-                meta['errors'].append(f'Page {page}: HTTP {r.status_code}')
-                break
-            data = r.json() or []
+            data = get_fmp_json(
+                url, api_key=api_key, params={**params_base, 'page': page},
+                timeout=(5, timeout),
+            ) or []
             if not data:
                 break
             df = pd.DataFrame(data)
@@ -80,7 +59,7 @@ def fmp_company_screener(filters: dict[str, Any], api_key: str, timeout: int = 2
             if len(df) < int(params_base['limit']):
                 break
         except Exception as exc:
-            meta['warnings'].append(repr(exc))
+            meta['warnings'].append(f"Page {page}: {sanitize_error(exc)}")
             break
 
     out = pd.concat(all_rows, ignore_index=True) if all_rows else pd.DataFrame()

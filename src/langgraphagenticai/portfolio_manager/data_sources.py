@@ -13,6 +13,7 @@ import yfinance as yf
 
 from langgraphagenticai.portfolio_manager.fmp_fundamentals import fetch_fmp_fundamental_snapshots
 from langgraphagenticai.portfolio_manager.research_snapshot import build_research_snapshot
+from langgraphagenticai.utils.safety import sanitize_error
 
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
@@ -420,10 +421,10 @@ def fetch_recent_news(
                 detail = exc.response.json()
             except Exception:
                 detail = getattr(exc.response, "text", str(exc))
-            errors.append(f"{symbol}: HTTP {status} - {detail}")
+            errors.append(f"{symbol}: HTTP {status} - {sanitize_error(detail)}")
             continue
         except Exception as exc:
-            errors.append(f"{symbol}: {exc}")
+            errors.append(f"{symbol}: {sanitize_error(exc)}")
             continue
 
         data = payload.get("data", []) if isinstance(payload, dict) else []

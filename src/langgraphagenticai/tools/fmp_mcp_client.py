@@ -2,10 +2,29 @@ from __future__ import annotations
 
 import asyncio
 import json
+import re
 import threading
+import time
+from contextlib import contextmanager
+from contextvars import ContextVar
 from typing import Any, Dict, Optional
 
 from fastmcp import Client as MCPClient
+
+from langgraphagenticai.utils.safety import sanitize_error
+
+
+_request_deadline = ContextVar("fmp_request_deadline", default=None)
+
+
+@contextmanager
+def fmp_request_budget(seconds: float):
+    """Bound a research tool's cumulative FMP work without affecting other callers."""
+    token = _request_deadline.set(time.monotonic() + seconds)
+    try:
+        yield
+    finally:
+        _request_deadline.reset(token)
 
 
 class FMPMCPClient:
@@ -39,7 +58,10 @@ class FMPMCPClient:
     # ------------------------------------------------------------------
     @staticmethod
     def _clean_symbol(symbol: str) -> str:
-        return (symbol or "").strip().upper()
+        value = (symbol or "").strip().upper()
+        if not value or len(value) > 12 or not re.fullmatch(r"[A-Z0-9.^-]+", value):
+            raise ValueError("Invalid security symbol.")
+        return value
 
     @staticmethod
     def _clean_period(period: str) -> str:
@@ -168,12 +190,15 @@ class FMPMCPClient:
         last_error = None
         for attempt in range(self.retries + 1):
             try:
-                return self._run_coro_sync(_call_once())
+                deadline = _request_deadline.get()
+                remaining = deadline - time.monotonic() if deadline is not None else self.timeout_seconds
+                if remaining <= 0:
+                    return self._normalize_response(tool_name, endpoint, args, [], error="Research data request budget exceeded")
+                return self._run_coro_sync(asyncio.wait_for(_call_once(), timeout=min(self.timeout_seconds, remaining)))
             except Exception as exc:  # noqa: BLE001
-                last_error = str(exc)
+                last_error = "FMP request timed out" if isinstance(exc, TimeoutError) else sanitize_error(exc)
                 if attempt < self.retries:
                     try:
-                        import time
                         time.sleep(self.retry_sleep * (attempt + 1))
                     except Exception:
                         pass
@@ -186,7 +211,7 @@ class FMPMCPClient:
         async def _list_once() -> Any:
             async with MCPClient(self.mcp_url) as client:
                 return await client.list_tools()
-        return self._run_coro_sync(_list_once())
+        return self._run_coro_sync(asyncio.wait_for(_list_once(), timeout=self.timeout_seconds))
 
     # ------------------------------------------------------------------
     # Quote / market data: tool_name="quote"

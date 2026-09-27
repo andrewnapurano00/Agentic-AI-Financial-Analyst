@@ -14,6 +14,7 @@ except Exception:
     OpenAI = None
 
 from langgraphagenticai.portfolio_manager.evidence_builder import compact_evidence_records, safe_float, clean_text
+from langgraphagenticai.providers.openai_client import build_openai_client, safe_model_error
 
 ACTION_LADDER = ["Sell", "Trim", "Hold / Watch", "Hold", "Add", "Strong Buy"]
 
@@ -191,7 +192,7 @@ def run_agentic_committee(
         "You are not a generic chatbot. Return valid JSON only."
     )
     try:
-        client = OpenAI(api_key=openai_api_key)
+        client = build_openai_client(openai_api_key)
         response = client.responses.create(
             model=model_name,
             input=[
@@ -214,7 +215,7 @@ def run_agentic_committee(
     except Exception as exc:
         fallback = build_fallback_committee_decision(evidence_table, portfolio_summary, max_weight, cash_buffer)
         fallback["status"] = "fallback_openai_error"
-        fallback["error"] = str(exc)
+        fallback["error"] = safe_model_error(exc)
         return fallback
 
 

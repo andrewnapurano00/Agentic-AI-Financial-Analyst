@@ -7,6 +7,34 @@ name = "agentic-ai-financial-analyst"
 version = "1.0.0"
 description = "Agentic AI financial research and portfolio management Streamlit application."
 requires-python = ">=3.11,<3.13"
+dependencies = [
+    "streamlit>=1.61,<2",
+    "pandas>=2.2,<4",
+    "numpy>=2,<3",
+    "requests>=2.32,<3",
+    "openai>=2.50,<3",
+    "langchain>=1.3,<2",
+    "langchain-community>=0.4,<0.5",
+    "langchain-core>=1.2,<2",
+    "langchain-openai>=1.1,<2",
+    "langgraph>=1.2,<2",
+    "tavily-python>=0.7,<1",
+    "trafilatura>=2,<3",
+    "newspaper4k>=0.9,<1",
+    "lxml-html-clean>=0.4,<1",
+    "fastmcp>=3.4,<4",
+    "crewai==1.14.4",
+    "yfinance>=0.2.50,<2",
+    "scikit-learn>=1.6,<2",
+    "matplotlib>=3.9,<4",
+    "reportlab>=4,<6",
+    "python-dotenv>=1,<2",
+    "openpyxl>=3.1,<4",
+    "xlsxwriter>=3.2,<4",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<10"]
 
 [tool.setuptools.packages.find]
 where = ["src"]

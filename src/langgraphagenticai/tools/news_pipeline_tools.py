@@ -481,7 +481,8 @@ def build_marketaux_news_fetch_tools(marketaux_api_key: Optional[str] = None):
                 )
                 cache[key] = df.copy()
         except Exception as exc:
-            return _error_payload("fetch_marketaux_company_news", str(exc), symbols=tickers)
+            from langgraphagenticai.utils.safety import sanitize_error
+            return _error_payload("fetch_marketaux_company_news", sanitize_error(exc), symbols=tickers)
 
         return _safe_json_dumps(
             {

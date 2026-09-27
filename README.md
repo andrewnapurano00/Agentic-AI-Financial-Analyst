@@ -1,3 +1,14 @@
+---
+title: Agentic AI Financial Analyst V2
+emoji: 📊
+colorFrom: purple
+colorTo: green
+sdk: docker
+app_port: 7860
+pinned: false
+short_description: Agentic AI Portfolio Management and Research Tool
+---
+
 # Agentic AI Financial Analyst
 
 A Streamlit-based financial research and portfolio analysis application powered by LangGraph, OpenAI, Financial Modeling Prep data, Marketaux news, yfinance price data, and a hybrid multi-agent portfolio committee workflow.
@@ -49,7 +60,11 @@ This project combines several finance analytics workflows into one application:
 
 ## Application Pages
 
-The Streamlit app is organized into five primary tabs.
+The Streamlit app is organized into seven connected workspaces: Introduction, Top Movers, Research, Equity Report, Stock Screener, Portfolio Lab, and Deep Research. Selected tickers and completed analysis can be handed between workspaces through shared session context.
+
+### Introduction and Top Movers
+
+**Introduction** provides a live market overview and an FMP-backed company snapshot with period-validated fundamentals, adjusted-price performance, normalized news, provider timestamps, and an optional evidence-grounded AI summary. **Top Movers** ranks a liquid U.S. equity universe by five-trading-day performance, shows breadth and sector leadership, and clearly marks partial provider coverage.
 
 ---
 
@@ -122,6 +137,7 @@ Includes:
 
 - Executive summary.
 - OpenAI final recommendation, if enabled.
+- Optional **CrewAI Best-Buy Debate**. Fundamental, valuation, and risk agents challenge one another before an investment-committee chair selects one candidate, marks it for watch, or returns **No Buy**. The debate is an explicit paid action, uses only the saved scorecard, and displays dissent, risks, invalidation signals, evidence limitations, model, and generation time.
 - Recommendation snapshot.
 - Selected sector/peer framework.
 
@@ -414,7 +430,7 @@ The app is built around a `src/` Python package layout.
 At a high level:
 
 - `app.py` loads environment variables, adds `src/` to the Python path, and starts the Streamlit app.
-- `main.py` initializes Streamlit session state, loads sidebar configuration, builds the LangGraph finance agent, validates API keys, and renders the five main tabs.
+- `main.py` initializes Streamlit session state, loads sidebar configuration, builds the LangGraph finance agent on explicit research actions, validates API keys, and routes the seven connected workspaces.
 - `LLMS/openaillm.py` creates the OpenAI model client.
 - `graph/graph_builder.py` builds the LangGraph tool-calling workflow.
 - `nodes/chatbot_with_Tool_node.py` contains the chatbot/tool node logic.
@@ -514,8 +530,10 @@ source venv/bin/activate
 
 ```bash
 pip install --upgrade pip
-pip install -r requirements.txt
+pip install -r requirements.txt -c constraints.txt
 ```
+
+For development and tests, install `requirements-dev.txt` instead. Runtime dependencies are also declared in `pyproject.toml`.
 
 ---
 
@@ -529,9 +547,10 @@ Create a `.env` file in the project root:
 OPENAI_API_KEY=your_openai_api_key_here
 FMP_API_KEY=your_fmp_api_key_here
 MARKETAUX_API_KEY=your_marketaux_api_key_here
+SERPER_API_KEY=your_serper_api_key_here
 ```
 
-`MARKETAUX_API_KEY` is optional, but required for enhanced news workflows.
+`MARKETAUX_API_KEY` and `SERPER_API_KEY` are optional. Marketaux powers enhanced company-news workflows; Serper powers Top Movers and Deep Research web-news evidence.
 
 For Streamlit Cloud or another hosted deployment, use `.streamlit/secrets.toml`:
 
@@ -539,6 +558,7 @@ For Streamlit Cloud or another hosted deployment, use `.streamlit/secrets.toml`:
 OPENAI_API_KEY = "your_openai_api_key_here"
 FMP_API_KEY = "your_fmp_api_key_here"
 MARKETAUX_API_KEY = "your_marketaux_api_key_here"
+SERPER_API_KEY = "your_serper_api_key_here"
 ```
 
 The repository includes `.streamlit/secrets.toml.example` as a template.
@@ -576,21 +596,31 @@ In the sidebar:
 3. Enter API keys if they are not already loaded from `.env` or Streamlit secrets.
 4. Optionally enable debug mode.
 
-The sidebar displays whether OpenAI, FMP, and Marketaux keys were detected.
+The sidebar displays whether OpenAI, FMP, Marketaux, and Serper keys were detected.
 
 ### Step 3: Choose a page
 
-Use the top tabs:
+Use the workspace navigation in the sidebar:
 
-- **Agent Chat** for natural-language research.
-- **Equity Comparison Report** for sector-aware multi-ticker research reports.
-- **Portfolio Optimizer** for historical risk/return and efficient frontier analytics.
+- **Introduction** for the market pulse and company snapshots.
+- **Top Movers** for five-trading-day leadership, breadth, and news.
+- **Research** for LangGraph-powered natural-language research.
+- **Equity Report** for sector-aware multi-ticker research reports.
 - **Stock Screener** for rule-based company discovery.
-- **AI Portfolio Manager** for hybrid agentic portfolio recommendations and rebalancing.
+- **Portfolio Lab** for the historical optimizer and opt-in AI portfolio manager.
+- **Deep Research** for cited, recoverable research reports and the optional CrewAI committee.
 
 ### Step 4: Download outputs
 
 Several pages include downloadable outputs such as CSV, Excel, PDF, and holdings/recommendation templates.
+
+### Step 5: Run offline tests
+
+```bash
+python -m pytest -q
+```
+
+Tests use synthetic or mocked provider/model responses and must not consume paid API credits.
 
 ---
 
@@ -895,6 +925,17 @@ The Portfolio Optimizer depends on yfinance. If price data fails:
 - Re-run after a short delay if Yahoo data is temporarily unavailable.
 
 ---
+
+## Deep Research tab
+
+The **Deep Research** tab is implemented in
+`src/langgraphagenticai/deep_research/`. Research up to four companies using FMP fundamentals, calculated
+technicals, earnings and valuation tools, Serper news, and saved results from the
+equity, portfolio, screener and optimizer tabs. Reports include an investment
+thesis, company comparisons, sources, data gaps, follow-up questions and downloads.
+
+Set `SERPER_API_KEY` alongside your existing OpenAI/FMP keys, or enter it in the
+sidebar. See [Deep Research setup and workflow](DEEP_RESEARCH.md).
 
 ## Future Enhancements
 

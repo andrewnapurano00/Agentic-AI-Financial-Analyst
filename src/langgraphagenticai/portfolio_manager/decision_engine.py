@@ -13,6 +13,7 @@ except Exception:  # OpenAI is optional for tests/offline mode
     OpenAI = None
 
 from langgraphagenticai.portfolio_manager.analytics import compute_market_regime, compute_position_snapshot
+from langgraphagenticai.providers.openai_client import build_openai_client, safe_model_error
 from langgraphagenticai.portfolio_manager.data_sources import (
     build_multi_agent_dataset,
     fetch_company_info,
@@ -1306,7 +1307,7 @@ def _normalize_llm_action(action: Any, fallback: str = "Hold") -> str:
 def _llm_client(openai_api_key: str):
     if not openai_api_key or OpenAI is None:
         return None
-    return OpenAI(api_key=openai_api_key)
+    return build_openai_client(openai_api_key)
 
 
 def _call_openai_json(payload: dict[str, Any], openai_api_key: str, model_name: str) -> tuple[dict[str, Any], str, str | None]:
@@ -1357,7 +1358,7 @@ def _call_openai_json(payload: dict[str, Any], openai_api_key: str, model_name: 
             raw = response.choices[0].message.content or ""
             return _extract_json_obj(raw), raw, None
         except Exception as second_exc:
-            return {}, raw, f"OpenAI committee failed: {second_exc or first_exc}"
+            return {}, raw, f"OpenAI committee failed: {safe_model_error(second_exc or first_exc)}"
 
 
 def _agentic_evidence_pack(
