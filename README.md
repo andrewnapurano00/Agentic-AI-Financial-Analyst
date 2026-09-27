@@ -6,960 +6,388 @@ colorTo: green
 sdk: docker
 app_port: 7860
 pinned: false
-short_description: Agentic AI Portfolio Management and Research Tool
+short_description: Evidence-grounded financial research and portfolio analytics
 ---
 
-# Agentic AI Financial Analyst
+# Axiom Research — Agentic AI Financial Analyst
 
-A Streamlit-based financial research and portfolio analysis application powered by LangGraph, OpenAI, Financial Modeling Prep data, Marketaux news, yfinance price data, and a hybrid multi-agent portfolio committee workflow.
+Axiom Research is a Streamlit financial-research application that combines live market data, deterministic financial analytics, LangGraph research chat, exportable equity reports, portfolio tools, recoverable Deep Research, and optional multi-agent investment debates.
 
-The app is designed to help users research public companies, compare peer groups, screen stocks, analyze portfolio risk/return, and generate agentic portfolio recommendations using a combination of deterministic evidence-building and AI decision-making.
+[Open the hosted application](https://huggingface.co/spaces/andrewnap211/Agentic-AI-Financial-Analyst-v2)
 
-App Page: https://huggingface.co/spaces/andrewnap211/Agentic-AI-Financial-Analyst-v2
+> **Research software, not financial advice.** Outputs may be incomplete, stale, model-generated, or incorrect. Validate material facts and assumptions against original sources before making investment decisions.
 
-> **Disclaimer:** This application is for research, education, and portfolio analytics support only. It does not provide personalized financial advice, investment recommendations, or guarantees of future returns. Always validate outputs with your own analysis before making investment decisions.
+## Current application
 
----
+The app contains eight connected workspaces:
 
-## Table of Contents
+| Workspace | Primary use | AI calls |
+|---|---|---|
+| Introduction | Market overview, company search, snapshot, fundamentals, performance, and news | Optional summary |
+| Top Movers | Five-trading-day leaders and laggards, breadth, sectors, and related news | None by default |
+| Research | LangGraph finance chat with FMP and Marketaux tools | Explicit chat action |
+| Equity Report | Sector-aware company comparison, scoring, charts, exports, and best-buy debate | Optional recommendation and CrewAI debate |
+| Stock Screener | FMP universe filtering and metric enrichment | None |
+| Portfolio Lab | Historical optimizer plus hybrid AI portfolio manager | Optional portfolio committee |
+| Deep Research | Stable evidence-to-report workflow with recovery, citations, and optional committee | Explicit research/committee actions |
+| Deep Research V2 | Isolated cost and performance pilot for lighter models | Explicit pilot actions |
 
-- [Core Features](#core-features)
-- [Application Pages](#application-pages)
-  - [1. Agent Chat](#1-agent-chat)
-  - [2. Equity Research Report](#2-equity-research-report)
-  - [3. Portfolio Optimizer & Backtests](#3-portfolio-optimizer--backtests)
-  - [4. Stock Screener](#4-stock-screener)
-  - [5. Agentic AI Portfolio Manager](#5-agentic-ai-portfolio-manager)
-- [Architecture Overview](#architecture-overview)
-- [Data Sources](#data-sources)
-- [Installation](#installation)
-- [Environment Variables](#environment-variables)
-- [Running the App](#running-the-app)
-- [How to Use the App](#how-to-use-the-app)
-- [Example Agent Chat Prompts](#example-agent-chat-prompts)
-- [Project Structure](#project-structure)
-- [Downloadable Outputs](#downloadable-outputs)
-- [Troubleshooting](#troubleshooting)
-- [Future Enhancements](#future-enhancements)
+Selected tickers and completed work can be reused across several workspaces through shared session context. Ordinary Streamlit reruns, tab changes, and downloads do not intentionally trigger paid model calls.
 
----
+## Highlights
 
-## Core Features
+- Shared FMP transport with bounded retries, timeouts, response validation, and credential-safe errors.
+- Explicit provider, retrieval-time, statement-period, currency, and coverage metadata where supported.
+- Adjusted-price historical analytics and clear separation between price return and provider fundamentals.
+- Sector-aware equity frameworks that avoid applying one generic metric set to every industry.
+- Structured AI decisions with deterministic ticker, recommendation, weight, and citation validation.
+- Recoverable Deep Research runs that preserve evidence and partial drafts when a model stage fails.
+- CrewAI debates for Deep Research and Equity Report, both disabled until explicitly requested.
+- Cap-safe portfolio allocation with residual cash instead of post-cap renormalization.
+- Credential redaction across provider errors, logs, exports, and structured values.
+- PDF, Excel, CSV, Markdown, and JSON exports depending on the workspace.
 
-This project combines several finance analytics workflows into one application:
+## Workspace guide
 
-- **Agentic finance chat** using LangGraph and OpenAI.
-- **FMP-backed financial tools** for company profiles, quotes, statements, ratios, valuation, analyst estimates, ratings, calendars, ESG data, and research bundles.
-- **Marketaux-powered news tools** for enhanced company news retrieval and news Q&A when a Marketaux API key is available.
-- **CFA-style equity research reports** with sector-aware scoring, factor grades, valuation analysis, growth analysis, profitability analysis, leverage review, technical signals, price return charts, and downloadable PDF/Excel reports.
-- **Offline-first portfolio optimizer** using yfinance price history, efficient frontier simulation, Sharpe ratio analysis, drawdown metrics, beta, volatility, and crisis-period diagnostics.
-- **Rule-based stock screener** using Financial Modeling Prep with server-side filters and optional post-screen metric enrichment.
-- **Hybrid agentic portfolio manager** where deterministic calculations build evidence, an AI committee makes final portfolio decisions and target weights, and a constraint validator fixes position/sector limits and math consistency.
+### 1. Introduction
 
----
+The landing workspace provides an executive market view and an FMP-backed company snapshot.
 
-## Application Pages
+- Market pulse and index context.
+- Company lookup and canonical ticker handling.
+- Quote, company profile, period-validated fundamentals, valuation, and price performance.
+- Adjusted-price charts and normalized company news.
+- Provider and as-of metadata with missing/partial-data states.
+- Optional evidence-grounded OpenAI summary.
 
-The Streamlit app is organized into eight connected workspaces: Introduction, Top Movers, Research, Equity Report, Stock Screener, Portfolio Lab, Deep Research, and the separate Deep Research V2 cost pilot. Selected tickers and completed analysis can be handed between workspaces through shared session context.
+### 2. Top Movers
 
-### Introduction and Top Movers
+Top Movers ranks a liquid U.S. equity universe using five trading days of price performance.
 
-**Introduction** provides a live market overview and an FMP-backed company snapshot with period-validated fundamentals, adjusted-price performance, normalized news, provider timestamps, and an optional evidence-grounded AI summary. **Top Movers** ranks a liquid U.S. equity universe by five-trading-day performance, shows breadth and sector leadership, and clearly marks partial provider coverage.
+- Leaders and laggards.
+- Market breadth and sector leadership.
+- Serper news context when configured.
+- Explicit partial-provider coverage warnings.
+- Company handoff into downstream research workflows.
 
----
+### 3. Research
 
-## 1. Agent Chat
+Research is the interactive LangGraph finance-chat workspace.
 
-The **Agent Chat** page is the natural-language interface for company analysis, comparisons, valuation questions, news review, earnings transcript review, and tool-driven financial research.
-
-### What it does
-
-The chat agent uses a LangGraph workflow with OpenAI and a centralized finance tool registry. Depending on the prompt, the agent can call tools for:
-
-- Company profile and overview data.
-- Current quote and market data.
-- Historical price performance.
-- Financial statements.
-- Financial ratios and key metrics.
-- Analyst estimates.
-- Analyst ratings and stock grades.
-- Price target consensus.
-- DCF and levered DCF valuation data.
-- Earnings calendar and dividend history.
-- Earnings transcript discovery and transcript retrieval.
-- Sector, industry, peer, and directory/reference data.
-- ESG data where available.
-- Marketaux news summaries and news Q&A when configured.
-
-### Use case selector
-
-The sidebar includes a **Select Use Case** dropdown. The selected use case adjusts the system prompt and response style:
-
-- **Basic Finance Chat**: general finance questions and flexible company research.
-- **Single Company Analysis**: compact full-company analysis across business, financials, price action, catalysts, and risks.
-- **Compare Companies**: balanced multi-company comparison across fundamentals, valuation, growth, news, and risk.
-- **News and Earnings Review**: emphasizes catalysts, guidance tone, earnings transcript takeaways, and recent news.
-- **Full Company Research Report**: produces a structured research-style answer with business overview, financial highlights, news/catalysts, risks, and bottom line.
-
-### Table behavior
-
-If the user asks for a table, comparison table, ranking, matrix, or scorecard, the chat workflow attempts to return structured JSON that the app converts into a clean Streamlit dataframe. This helps avoid messy markdown tables and inconsistent formatting.
-
-### Debug mode
-
-The sidebar includes **Show debug trace**. When enabled, the app displays the graph message path and tool outputs in an expandable trace. This is useful for diagnosing which tools were called and what data was returned.
-
----
-
-## 2. Equity Research Report
-
-The **Equity Research Report** page builds a story-first, sector-aware equity comparison report for one or more tickers.
-
-### What it does
-
-This tab pulls company fundamentals, market data, technicals, historical valuation averages, price history, analyst-related fields, and sector-aware scoring inputs. It converts the raw data into a research-ready report with both tables and narrative summaries.
-
-### Main inputs
-
-- **Tickers**: comma-separated ticker list such as `AAPL, MSFT, NVDA, GOOGL`.
-- **Use OpenAI final recommendation**: optionally adds an OpenAI-generated recommendation note.
-- **Auto-detect sector framework**: attempts to infer the appropriate sector framework from company profile data.
-- **Manual sector / peer framework**: used when auto-detection is off or when the ticker list spans multiple sectors.
-- **Price history from / to**: controls the price history window used for return charts and technical analysis.
-
-### Report sections
-
-The page is split into several sub-tabs:
-
-#### Research Story
-
-Includes:
-
-- Executive summary.
-- OpenAI final recommendation, if enabled.
-- Optional **CrewAI Best-Buy Debate**. Fundamental, valuation, and risk agents challenge one another before an investment-committee chair selects one candidate, marks it for watch, or returns **No Buy**. The debate is an explicit paid action, uses only the saved scorecard, and displays dissent, risks, invalidation signals, evidence limitations, model, and generation time.
-- Recommendation snapshot.
-- Selected sector/peer framework.
-
-#### Price Return Chart
-
-Allows the user to select a return period and compare ticker price performance. The app displays both a return table and a line chart.
-
-Supported return periods include common windows such as short-term, year-to-date, 1-year, multi-year, and maximum available history depending on data availability.
-
-#### Metric Sections
-
-Displays simplified research sections such as:
-
-- Profile.
-- Ratings.
-- Factor grades.
-- Momentum.
-- Total return.
-- Valuation.
-- Growth.
-- Profitability.
-- Balance sheet / leverage.
-
-For important sections, the app also adds research takeaways explaining the drivers behind the metrics.
-
-#### Audit / Raw Data
-
-Includes:
-
-- Sector metric coverage audit.
-- Raw combined scorecard.
-
-This page helps users validate where the report had strong data coverage versus where fields were unavailable.
-
-#### Downloads
-
-Provides downloadable outputs:
-
-- PDF equity research report.
-- Excel research pack.
-- Display CSV.
-- Raw CSV.
-- Ranking CSV.
-
----
-
-## 3. Portfolio Optimizer & Backtests
-
-The **Portfolio Optimizer & Backtests** page is an offline-first portfolio analytics tool that uses historical price data to evaluate risk, return, drawdowns, efficient frontier behavior, and crisis-period roles.
-
-### What it does
-
-This page uses yfinance price data to calculate portfolio analytics without requiring the LLM. It is designed for quantitative portfolio review and historical risk/return testing.
-
-### Main inputs
-
-- **Ticker list**: defaults to a diversified example list such as `VTI, VTV, MGK, JPM, MSFT, CVX, LMT`.
-- **Date range**: controls the historical testing window.
-- **Risk-free rate**: used in Sharpe ratio calculations.
-- **Regime / testing mode**: allows the user to evaluate full-period or crisis-specific behavior.
-- **Test portfolio**: choose no test portfolio, equal-weight portfolio, or custom weights.
-- **Custom weights**: accepts values such as `20%, 20%, 15%, 15%, 10%, 10%, 10%` or decimal equivalents.
-
-### Output sections
-
-#### 1. Price Data
-
-Confirms whether historical prices were fetched successfully.
-
-#### 2. Efficient Frontier
-
-Simulates portfolios and visualizes risk/return tradeoffs. The optimizer identifies key portfolios such as maximum Sharpe and minimum volatility.
-
-#### 3. Risk / Return Table
-
-Shows asset-level metrics such as:
-
-- Annualized return.
-- Annualized volatility.
-- Sharpe ratio.
-- Max drawdown.
-- Beta.
-- Downside volatility.
-
-#### 4. Crisis Fingerprint Roles
-
-Evaluates how assets behaved during major market stress periods such as:
-
-- Global Financial Crisis.
-- 2011 downgrade / eurozone stress.
-- 2015-2016 China/oil selloff.
-- COVID-19 crash.
-- 2022 rates/inflation drawdown.
-
-This helps classify assets by their defensive or cyclical behavior during historical stress windows.
-
-#### 5. Key Portfolio Weights
-
-Displays the weights for selected optimized portfolios and/or user-specified test portfolios.
-
----
-
-## 4. Stock Screener
-
-The **Stock Screener** page is a rule-based Financial Modeling Prep screener with optional metric enrichment. This page does not use the LLM.
-
-### What it does
-
-The screener first applies broad FMP server-side filters, then optionally enriches the resulting companies with additional metrics and technical indicators.
-
-### Server-side filters
-
-Users can filter by:
-
-- Country.
-- Exchange.
-- Sector.
-- Industry text search.
-- Market cap range.
-- Price range.
-- Volume range.
-- Beta range.
-- Dividend range.
-- API page size.
-- Maximum pages to request.
-
-### Enrichment controls
-
-Users can choose:
-
-- Maximum tickers to enrich with metrics.
-- Final number of companies to display.
-- RSI period.
-
-### Optional post-screen metric filters
-
-The app can apply filters after enrichment for metrics such as:
-
-- P/E.
-- Price to sales.
-- Price to book.
-- Debt to equity.
-- Current ratio.
-- RSI.
-- ROE.
-- ROA.
-- ROIC.
-- Operating margin.
-- Net margin.
-- Dividend yield.
-- Distance from 52-week high.
-- Percent above 50-day moving average.
-- Percent above 200-day moving average.
-
-### Final output
-
-The final screener output is sorted by market cap and includes enriched company, valuation, profitability, leverage, dividend, and technical fields where available.
-
----
-
-## 5. Agentic AI Portfolio Manager
-
-The **Agentic AI Portfolio Manager** page is the app’s hybrid multi-agent recommendation engine for portfolio decisions and rebalancing.
-
-### What it does
-
-This page implements a hybrid workflow:
-
-1. **Deterministic evidence builder** gathers portfolio holdings, current values, sector exposure, technical/momentum data, valuation and fundamental evidence, and risk signals.
-2. **AI committee** reviews the evidence and makes final buy/hold/sell/trim/add decisions and target weights.
-3. **Constraint validator** checks the AI target weights and adjusts only when needed to satisfy rules such as maximum position weight, maximum sector weight, target cash buffer, and total weight summing.
-4. **Rebalance engine** converts target weights into actionable trade values and share changes.
-
-The news overlay is intentionally disabled in this tab to reduce token usage and keep the portfolio workflow focused on technicals, momentum, fundamentals, valuation, portfolio fit, and concentration rules.
-
-### Portfolio input options
-
-Users can enter portfolio holdings in three ways:
-
-- Use the example portfolio.
-- Type holdings directly in the app.
-- Upload a CSV or XLSX file.
-
-The expected holdings format is:
-
-```csv
-ticker,shares
-AAPL,25
-MSFT,18
-NVDA,12
-JPM,14
-XOM,16
-```
-
-The app also provides a downloadable holdings template.
-
-### Sidebar controls
-
-The Portfolio Manager sidebar includes:
-
-- **Benchmark**: default is `SPY`.
-- **Price history window**: `1y`, `2y`, or `5y`.
-- **Risk profile**: Conservative, Balanced, or Aggressive.
-- **Maximum position weight**: caps single-name concentration.
-- **Maximum sector weight**: caps sector concentration.
-- **Target cash buffer**: optional cash allocation.
-- **Ignore trades smaller than**: suppresses small rebalance noise.
-
-### Output tabs
-
-After clicking **Run hybrid AI committee**, the page produces several sub-tabs:
-
-#### Recommendations
-
-Shows the compact recommendation grid with:
-
-- Ticker.
-- Company name.
-- Sector.
-- Asset type.
-- Final action.
-- Committee conviction.
-- Current weight.
-- Target weight.
-- Weight change.
-- Trade value.
-- Share change.
-- Constraint flags.
-
-Below the grid, the page shows ticker-by-ticker committee decision summaries so the user can clearly see the rationale, risks, monitoring triggers, target weights, and trade values without cluttering the main table.
-
-#### Rebalance Plan
-
-Shows detailed trade instructions including:
-
-- Final action.
-- Rebalance action.
-- Trade direction.
-- Current and target values.
-- Current and target shares.
-- Share change.
-- Last price.
-- Trade priority.
-- Rebalance reason.
-
-#### Agent Debate
-
-Shows the internal committee views used to support the final recommendation. This is useful for understanding how different agents evaluated the portfolio.
-
-#### Evidence Scores
-
-Displays the evidence table used by the AI committee, including the deterministic signals and scoring inputs.
-
-#### Sector Exposure
-
-Shows current and target sector allocation so the user can evaluate whether the portfolio remains diversified after rebalancing.
-
-#### Monitoring
-
-Lists follow-up risks, watch items, and triggers that should be monitored after the recommendation.
-
-#### Diagnostics
-
-Displays run diagnostics and raw AI committee results. This is useful for debugging model output, fallback behavior, target weight validation, and data availability.
-
-#### AI Chat
-
-Lets the user ask a focused follow-up question about the latest portfolio run. This chat uses compact context from the generated recommendations and does not pull news articles.
+- Single-company research and peer comparisons.
+- Financial statements, ratios, valuation, DCF, analyst estimates, ratings, calendars, transcripts, ESG, technicals, and news tools.
+- Structured tables and consistent analyst-oriented formatting.
+- Use-case-specific system prompts.
+- Optional debug trace for tool selection and returned data.
 
 Example questions:
 
 ```text
-Why did the committee recommend these target weights?
+Compare MSFT and ORCL on revenue growth, margins, free cash flow, valuation, and downside risk.
+
+Summarize AAPL's latest earnings transcript and identify changes in guidance.
+
+Build a valuation snapshot for NVDA using forward estimates, historical multiples, and DCF evidence.
 ```
 
-```text
-Which holdings contributed most to portfolio concentration risk?
-```
+### 4. Equity Report
 
-```text
-What are the highest-priority trades and why?
-```
+Equity Report creates a story-first, multi-company research pack.
 
----
+- Automatic or manual sector/peer framework selection.
+- Fundamentals, valuation, growth, profitability, leverage, momentum, ratings, and factor grades.
+- Coverage-aware deterministic scores and rankings.
+- Price and relative-performance charts.
+- Executive summary and optional OpenAI recommendation.
+- Raw-scorecard and sector-coverage audit views.
+- PDF, Excel, display CSV, raw CSV, and ranking CSV exports.
 
-## Architecture Overview
+#### CrewAI best-buy debate
 
-The app is built around a `src/` Python package layout.
+An optional committee uses the saved Equity Report scorecard without recollecting provider data:
 
-At a high level:
+1. Fundamental-quality analyst.
+2. Valuation and expectations analyst.
+3. Bear-case and risk officer.
+4. Investment-committee chair.
 
-- `app.py` loads environment variables, adds `src/` to the Python path, and starts the Streamlit app.
-- `main.py` initializes Streamlit session state, loads sidebar configuration, builds the LangGraph finance agent on explicit research actions, validates API keys, and routes the eight connected workspaces.
-- `LLMS/openaillm.py` creates the OpenAI model client.
-- `graph/graph_builder.py` builds the LangGraph tool-calling workflow.
-- `nodes/chatbot_with_Tool_node.py` contains the chatbot/tool node logic.
-- `prompts/system_prompts.py` defines use-case-specific system prompts.
-- `tools/finance_tool_registry.py` registers the available finance tools.
-- `tools/` contains MCP-backed FMP tools and Marketaux news tools.
-- `ui/` contains the Streamlit tab renderers.
-- `portfolio_manager/` contains the agentic committee, evidence builder, hybrid workflow, constraint validator, and rebalance logic.
-- `utils/` contains formatting, response cleaning, health checks, and logging utilities.
+The chair returns `BUY`, `WATCH`, or `NO_BUY`, confidence, specialist arguments, dissent, catalysts, risks, evidence limitations, and thesis-invalidation conditions. Decisions are fingerprinted to the exact scorecard and rejected if they name an out-of-universe ticker.
 
----
+### 5. Stock Screener
 
-## Data Sources
+The screener combines server-side FMP universe filters with optional enrichment.
 
-The app uses multiple data sources depending on the page:
+- Exchange, country, sector, industry, market-cap, price, volume, beta, dividend, and ETF/fund controls.
+- Optional post-screen valuation, growth, profitability, leverage, analyst, and technical filters.
+- Bounded enrichment and explicit missing-provider results.
+- Downloadable final CSV.
 
-### Financial Modeling Prep
+### 6. Portfolio Lab
 
-Used for:
+Portfolio Lab contains two related tools.
 
-- Company profiles.
-- Quotes.
-- Statements.
-- Ratios.
-- Key metrics.
-- Analyst estimates.
-- Analyst ratings.
-- Price targets.
-- DCF and levered DCF.
-- Earnings calendars.
-- Dividend data.
-- Earnings transcripts.
-- Company screener.
-- Sector/industry/reference data.
-- ESG data where available.
+#### Optimizer
 
-### OpenAI
+- Historical adjusted-price analysis.
+- Annualized return and volatility.
+- Sharpe ratio with a disclosed risk-free-rate assumption.
+- Correlation, beta, drawdown, and crisis-period behavior.
+- Efficient-frontier simulation and portfolio-weight comparisons.
+- Custom weights and date windows.
 
-Used for:
+#### AI Portfolio Manager
 
-- Agent Chat reasoning.
-- Tool-driven finance responses.
-- Equity report recommendation notes.
-- Agentic portfolio committee decisions.
-- Portfolio Manager follow-up chat.
+- Manual holdings entry or CSV/XLSX upload.
+- Deterministic evidence, research snapshots, factor scores, and portfolio constraints.
+- Specialist-agent debate and lead portfolio-manager decision.
+- Target weights, rebalance trades, sector exposure, monitoring, diagnostics, and follow-up chat.
+- Position/sector-cap validation and residual-cash handling.
+- Recommendation and rebalance CSV exports.
 
-### Marketaux
+### 7. Deep Research
 
-Optional. Used for:
+The stable Deep Research workflow investigates one to four companies.
 
-- Recent company news retrieval.
-- News summaries.
-- News question answering.
+1. Collects FMP fundamentals, valuation, estimates, targets, and adjusted-price technicals.
+2. Adds Serper news/web discovery and optional saved app context.
+3. Plans targeted transcript, peer, valuation, rating, calendar, dividend, or ESG follow-ups.
+4. Generates a cited investment memo with dated evidence, scenarios, risks, and invalidation criteria.
+5. Reviews the memo and applies only uniquely matched corrections.
+6. Preserves evidence, drafts, warnings, and recovery checkpoints.
 
-Marketaux is intentionally disabled in the AI Portfolio Manager tab to reduce token usage.
+Completed research provides a thesis, normalized comparison, source register, data gaps, follow-up questions, diagnostics, and PDF/Markdown/JSON/CSV downloads. The optional CrewAI investment committee reuses saved evidence and does not refetch market data.
 
-### yfinance
+See [DEEP_RESEARCH.md](DEEP_RESEARCH.md) for the detailed workflow.
 
-Used for:
+### 8. Deep Research V2 — cost pilot
 
-- Portfolio Optimizer price history.
-- Historical risk/return calculations.
-- Efficient frontier simulation.
+V2 is intentionally separate from the stable workflow. It is designed to measure whether lighter models can lower cost and latency without weakening financial usefulness.
 
----
+#### Cost modes
+
+| Mode | Planning | Report | Review | Specialists | Committee lead |
+|---|---|---|---|---|---|
+| Economy | Light route | GPT-5 Mini | Deterministic; light review only when needed | Light route | GPT-5 Mini |
+| Balanced | Light route | GPT-5 Mini | Light interpretive review | Light route | GPT-5 Mini |
+| Maximum quality | GPT-5 Mini | GPT-5 | GPT-5 Mini | GPT-5 Mini | GPT-5 |
+
+The light route can use OpenAI, Groq, or an Ollama OpenAI-compatible endpoint. Provider failures are shown and never silently switched to another model.
+
+V2 currently includes:
+
+- Stage-specific provider/model routing.
+- Smaller deterministic evidence packets and output limits.
+- Python validation before interpretive review.
+- `None`, one-call **Quick decision**, or full CrewAI committee modes.
+- Compact committee briefs rather than replaying the full report to every specialist.
+- Maximum estimated model cost per run.
+- Stop after evidence collection and generate the report later.
+- Use-saved-result and force-fresh controls.
+- Per-stage input, cached-input, output, reasoning-token, latency, and cost diagnostics when available.
+- Prompt-size estimates and cumulative V2 session cost.
+- A fixed five-case evaluation fixture covering large-cap, sparse-data, same-sector, cross-sector, and missing-data scenarios.
+
+CrewAI may expose only aggregate usage; when that happens, specialist/lead attribution is clearly marked as estimated. Cheaper modes remain experimental until live evaluation meets the quality threshold in [TODO_DEEP_RESEARCH_COST_OPTIMIZATION.md](TODO_DEEP_RESEARCH_COST_OPTIMIZATION.md).
+
+## Data and model providers
+
+| Provider | Used for | Required? |
+|---|---|---|
+| Financial Modeling Prep | Profiles, quotes, statements, ratios, metrics, estimates, ratings, targets, transcripts, calendars, screener, ESG | Required for most live financial workflows |
+| OpenAI | Research chat, report synthesis, structured decisions, committee leads | Required for AI workflows |
+| Serper | Top Movers and Deep Research news/web discovery | Optional |
+| Marketaux | Enhanced company-news tools and news Q&A | Optional |
+| yfinance | Portfolio historical prices and optimizer analytics | No API key |
+| Groq | Deep Research V2 light planning/review/specialists | Optional pilot provider |
+| Ollama | Local Deep Research V2 light stages through an OpenAI-compatible endpoint | Optional pilot provider |
+| OpenRouter | Included experimental model notebook | Optional; not part of the primary app workflow |
+
+Provider availability, entitlements, coverage, and rate limits vary. The app preserves partial successes and surfaces missing records rather than silently treating missing data as zero.
 
 ## Installation
 
-### 1. Clone the repository
+Python 3.11 or 3.12 is supported.
 
 ```bash
-git clone <your-repository-url>
-cd <your-repository-folder>
-```
+git clone https://github.com/andrewnapurano00/Agentic-AI-Financial-Analyst.git
+cd Agentic-AI-Financial-Analyst
 
-### 2. Create a virtual environment
-
-Using `venv`:
-
-```bash
 python -m venv venv
 ```
 
-Activate it on Windows:
+Activate the environment:
 
-```bash
-venv\Scripts\activate
+```powershell
+# Windows PowerShell
+.\venv\Scripts\Activate.ps1
 ```
 
-Activate it on macOS/Linux:
-
 ```bash
+# macOS or Linux
 source venv/bin/activate
 ```
 
-### 3. Install dependencies
+Install reproducible runtime dependencies:
 
 ```bash
-pip install --upgrade pip
+python -m pip install --upgrade pip
 pip install -r requirements.txt -c constraints.txt
 ```
 
-For development and tests, install `requirements-dev.txt` instead. Runtime dependencies are also declared in `pyproject.toml`.
+For development and tests:
 
----
-
-## Environment Variables
-
-The app can read API keys from sidebar inputs, Streamlit secrets, or a `.env` file.
-
-Create a `.env` file in the project root:
-
-```env
-OPENAI_API_KEY=your_openai_api_key_here
-FMP_API_KEY=your_fmp_api_key_here
-MARKETAUX_API_KEY=your_marketaux_api_key_here
-SERPER_API_KEY=your_serper_api_key_here
+```bash
+pip install -r requirements-dev.txt -c constraints.txt
 ```
 
-`MARKETAUX_API_KEY` and `SERPER_API_KEY` are optional. Marketaux powers enhanced company-news workflows; Serper powers Top Movers and Deep Research web-news evidence.
+## Configuration
 
-For Streamlit Cloud or another hosted deployment, use `.streamlit/secrets.toml`:
+Copy `.env.example` to `.env` and populate only the services you intend to use:
 
-```toml
-OPENAI_API_KEY = "your_openai_api_key_here"
-FMP_API_KEY = "your_fmp_api_key_here"
-MARKETAUX_API_KEY = "your_marketaux_api_key_here"
-SERPER_API_KEY = "your_serper_api_key_here"
+```dotenv
+OPENAI_API_KEY=
+FMP_API_KEY=
+SERPER_API_KEY=
+MARKETAUX_API_KEY=
+GROQ_API_KEY=
+OPENROUTER_API_KEY=
 ```
 
-The repository includes `.streamlit/secrets.toml.example` as a template.
+Keys can also be entered in the sidebar or supplied through Streamlit secrets. For hosted Streamlit deployments, copy `.streamlit/secrets.toml.example` to `.streamlit/secrets.toml` and keep the real file out of version control.
 
----
+The app never intentionally renders, logs, exports, or caches API keys. `.env` and `.streamlit/secrets.toml` are ignored by Git.
 
-## Running the App
-
-Run the Streamlit app from the project root:
+## Run locally
 
 ```bash
 streamlit run app.py
 ```
 
-Then open the local Streamlit URL shown in the terminal.
+Open the local address printed by Streamlit. The health endpoint is:
 
----
-
-## How to Use the App
-
-### Step 1: Start the app
-
-Run:
-
-```bash
-streamlit run app.py
+```text
+/_stcore/health
 ```
 
-### Step 2: Configure the sidebar
-
-In the sidebar:
-
-1. Select the OpenAI model.
-2. Select the Agent Chat use case.
-3. Enter API keys if they are not already loaded from `.env` or Streamlit secrets.
-4. Optionally enable debug mode.
-
-The sidebar displays whether OpenAI, FMP, Marketaux, and Serper keys were detected.
-
-### Step 3: Choose a page
-
-Use the workspace navigation in the sidebar:
-
-- **Introduction** for the market pulse and company snapshots.
-- **Top Movers** for five-trading-day leadership, breadth, and news.
-- **Research** for LangGraph-powered natural-language research.
-- **Equity Report** for sector-aware multi-ticker research reports.
-- **Stock Screener** for rule-based company discovery.
-- **Portfolio Lab** for the historical optimizer and opt-in AI portfolio manager.
-- **Deep Research** for cited, recoverable research reports and the optional CrewAI committee.
-- **Deep Research V2** for experimental Economy/Balanced/Maximum routing, Groq or Ollama light stages, prompt-size and cost diagnostics, deterministic checks, result reuse, and quick/full decision modes. V1 remains unchanged for comparison.
-
-### Step 4: Download outputs
-
-Several pages include downloadable outputs such as CSV, Excel, PDF, and holdings/recommendation templates.
-
-### Step 5: Run offline tests
+## Docker
 
 ```bash
-python -m pytest -q
+docker build -t axiom-research .
+docker run --rm -p 7860:7860 --env-file .env axiom-research
 ```
+
+Then open `http://localhost:7860`.
+
+## Tests
 
 Tests use synthetic or mocked provider/model responses and must not consume paid API credits.
 
----
-
-## Example Agent Chat Prompts
-
-Use these prompts in the **Agent Chat** tab to test core functionality.
-
-### Single-company analysis
-
-```text
-Analyze AAPL across business overview, financials, valuation, technicals, catalysts, and risks.
+```powershell
+$env:PYTHONPATH = (Resolve-Path "src").Path
+python -m pytest -q
 ```
 
-```text
-Give me a full investment analysis of MSFT using fundamentals, analyst expectations, valuation, DCF, ratings, technicals, and risks.
-```
+The current verified suite contains **77 passing tests**, covering:
+
+- Formatting and response cleanup.
+- Secret redaction and provider hardening.
+- Portfolio constraints and financial invariants.
+- Deep Research planning, evidence, citations, recovery, UI behavior, and exports.
+- Deep Research V2 routing, prompt budgets, deterministic validation, caching, committee accounting, and evaluation fixtures.
+- Application import and health behavior.
+
+Live-provider smoke checks should remain explicit and separate from the offline suite.
+
+## Architecture
 
 ```text
-Build a buy/hold/sell view for GOOGL using company profile, quote, valuation, analyst estimates, ratings, recent price performance, and risks.
+app.py
+└── src/langgraphagenticai/
+    ├── main.py                    # Session initialization and workspace routing
+    ├── graph/                     # LangGraph finance-chat graph
+    ├── nodes/                     # Chat and tool-execution nodes
+    ├── prompts/                   # Use-case system prompts
+    ├── tools/                     # FMP, Marketaux, Serper, transcript, and research tools
+    ├── providers/                 # Shared FMP/OpenAI transport and failure handling
+    ├── ui/                        # Eight Streamlit workspaces and shared shell
+    ├── deep_research/             # V1 workflow, V2 pilot, evidence, review, exports
+    ├── portfolio_manager/         # Analytics, agents, constraints, rebalance, reporting
+    └── utils/                     # Safety, formatting, logging, health checks
 ```
 
-### Company comparison
+Design boundaries:
 
-```text
-Compare AAPL and MSFT across analyst estimates, valuation, ratings, DCF, price target upside, and 5-year price return. Return a table and a short conclusion.
-```
+- Streamlit modules orchestrate controls and presentation.
+- Provider behavior is centralized where practical.
+- Deterministic financial calculations live outside AI prompts.
+- Provider facts, calculated metrics, and model interpretations remain distinguishable.
+- Model calls require explicit actions and have bounded timeouts/retries.
+- Successful provider records survive partial failures elsewhere in a workflow.
 
-```text
-Compare AAPL, MSFT, and NVDA across fundamentals, analyst expectations, DCF valuation, price target upside, ratings, and technical momentum.
-```
+See [PLAN.md](PLAN.md) for the engineering roadmap and [docs/code_review.md](docs/code_review.md) for the comprehensive repository review and remediation record.
 
-```text
-Rank AAPL, MSFT, NVDA, GOOGL, and AMZN from best to worst using fundamentals, analyst estimates, valuation, price target upside, ratings, DCF, and technical momentum.
-```
+## Outputs
 
-### Analyst estimates and ratings
+| Workspace | Available downloads |
+|---|---|
+| Equity Report | PDF, Excel, display CSV, raw CSV, ranking CSV |
+| Stock Screener | CSV |
+| Portfolio Lab | Holdings template, recommendations CSV, rebalance CSV |
+| Deep Research | Executive PDF, Markdown memo, evidence/report JSON, comparison CSV |
+| Deep Research V2 | PDF, Markdown memo, audit JSON |
 
-```text
-What are analyst estimates for AAPL for the next two fiscal years? Include revenue, EPS, and growth expectations.
-```
+Downloads retain the evidence and warnings appropriate to their format. Raw audit exports may be more detailed than executive-facing reports but are still passed through credential-safety controls.
 
-```text
-Which has the better analyst setup right now: AAPL, MSFT, or GOOGL? Compare estimates, ratings, and price target upside.
-```
+## Reliability and financial conventions
 
-```text
-For AMZN, summarize analyst expectations, price target upside, and the current ratings snapshot.
-```
-
-### Valuation and DCF
-
-```text
-Run a valuation analysis for NVDA using DCF, levered DCF, trading multiples, and analyst price targets.
-```
-
-```text
-Is META undervalued or overvalued based on DCF, analyst targets, and current valuation multiples?
-```
-
-```text
-Give me a valuation summary for JPM including DCF, market cap, analyst targets, and key financial ratios.
-```
-
-### News and earnings
-
-```text
-Summarize recent news and transcript takeaways for NVDA.
-```
-
-```text
-What were the key themes from MSFT's latest earnings call?
-```
-
-```text
-Find available earnings transcript periods for AAPL.
-```
-
-```text
-Summarize AAPL Q2 2025 earnings transcript with management tone, guidance, risks, and analyst Q&A takeaways.
-```
-
-### Calendar and dividends
-
-```text
-When does AAPL report earnings, and what does its recent earnings calendar history look like?
-```
-
-```text
-Does MSFT pay dividends? Summarize its dividend history and recent dividend trend.
-```
-
-```text
-Compare the dividend profiles of JPM, BAC, and WFC.
-```
-
-### Technical analysis
-
-```text
-Give me a technical indicator summary for NVDA using RSI, moving averages, trend strength, and recent price momentum.
-```
-
-```text
-Which looks technically stronger right now: AAPL, MSFT, or NVDA?
-```
-
-```text
-Compare the 5-year price return for AAPL, MSFT, NVDA, and GOOGL.
-```
-
-### Portfolio watchlist
-
-```text
-Create a portfolio watchlist table for AAPL, MSFT, NVDA, AMZN, and META with current price, market cap, revenue growth, margins, analyst upside, DCF upside, ratings, and technical signal.
-```
-
----
-
-## Project Structure
-
-```text
-.
-├── app.py
-├── requirements.txt
-├── pyproject.toml
-├── README.md
-├── data/
-│   └── sample_holdings.csv
-├── .streamlit/
-│   ├── config.toml
-│   └── secrets.toml.example
-├── src/
-│   └── langgraphagenticai/
-│       ├── main.py
-│       ├── LLMS/
-│       │   └── openaillm.py
-│       ├── graph/
-│       │   └── graph_builder.py
-│       ├── nodes/
-│       │   └── chatbot_with_Tool_node.py
-│       ├── prompts/
-│       │   └── system_prompts.py
-│       ├── state/
-│       │   └── state.py
-│       ├── tools/
-│       │   ├── finance_tool_registry.py
-│       │   ├── fmp_mcp_client.py
-│       │   ├── company_overview_tools.py
-│       │   ├── financial_statement_tools.py
-│       │   ├── price_data_tools.py
-│       │   ├── earnings_transcript_tools.py
-│       │   ├── analyst_tools.py
-│       │   ├── valuation_tools.py
-│       │   ├── calendar_tools.py
-│       │   ├── directory_tools.py
-│       │   ├── esg_tools.py
-│       │   ├── research_bundle_tools.py
-│       │   ├── news_pipeline_tools.py
-│       │   └── news_chat_tools.py
-│       ├── ui/
-│       │   ├── equity_report_tab.py
-│       │   ├── portfolio_optimizer_tab.py
-│       │   ├── stock_screener_tab.py
-│       │   ├── ai_portfolio_manager_tab.py
-│       │   ├── streamlitui/
-│       │   │   └── loadui.py
-│       │   └── components/
-│       │       ├── pm_cards.py
-│       │       ├── pm_charts.py
-│       │       ├── pm_explainability.py
-│       │       ├── pm_filters.py
-│       │       └── pm_tables.py
-│       ├── portfolio_manager/
-│       │   ├── hybrid_workflow.py
-│       │   ├── agentic_committee.py
-│       │   ├── evidence_builder.py
-│       │   ├── constraint_validator.py
-│       │   ├── rebalance_engine.py
-│       │   ├── decision_engine.py
-│       │   ├── data_sources.py
-│       │   ├── analytics.py
-│       │   ├── research_snapshot.py
-│       │   ├── portfolio_reporting.py
-│       │   ├── scoring.py
-│       │   ├── schemas.py
-│       │   └── agents/
-│       │       ├── fundamental_agent.py
-│       │       ├── valuation_agent.py
-│       │       ├── technical_agent.py
-│       │       ├── risk_agent.py
-│       │       ├── portfolio_fit_agent.py
-│       │       ├── lead_pm_agent.py
-│       │       └── debate_orchestrator.py
-│       └── utils/
-│           ├── app_health.py
-│           ├── formatters.py
-│           ├── logging_utils.py
-│           └── response_cleaner.py
-└── tests/
-    ├── test_app_health.py
-    ├── test_formatters.py
-    └── test_response_cleaner.py
-```
-
----
-
-## Downloadable Outputs
-
-The app can generate several downloadable files:
-
-### Equity Research Report
-
-- PDF report.
-- Excel research pack.
-- Display CSV.
-- Raw CSV.
-- Ranking CSV.
-
-### AI Portfolio Manager
-
-- Holdings template CSV.
-- Recommendation table CSV.
-- Rebalance table CSV.
-
-### Stock Screener
-
-- Final screener table can be exported from Streamlit's dataframe interface or extended with a download button if desired.
-
----
+- Symbols are normalized and validated before supported network calls.
+- Missing values remain distinct from zero.
+- TTM, annual, quarterly, forward, and point-in-time values are labeled and should not be treated as interchangeable.
+- Adjusted prices are used for comparable historical-return calculations where available.
+- Price return is not presented as total return.
+- Portfolio weights are validated to sum to 100% within tolerance after constraints.
+- Currency mismatches, stale evidence, coverage gaps, and provider failures are surfaced.
+- Recommendations disclose uncertainty, risks, missing inputs, evidence date, and invalidation conditions where the workflow supports them.
 
 ## Troubleshooting
 
-### `ModuleNotFoundError: No module named 'langgraphagenticai'`
-
-Run the app from the project root:
-
-```bash
-streamlit run app.py
-```
-
-`app.py` adds `src/` to the Python path before importing the package.
-
 ### API key is not detected
 
-Check one of the following:
+- Confirm the variable name exactly matches `.env.example`.
+- Place `.env` in the repository root.
+- Restart Streamlit after changing environment variables.
+- For hosted deployment, use the platform's secret manager rather than committing keys.
 
-1. The key is entered in the Streamlit sidebar.
-2. The key exists in `.env` in the project root.
-3. The key exists in `.streamlit/secrets.toml` for Streamlit deployment.
+### A provider returns missing or partial data
 
-Expected `.env` format:
+Coverage differs by ticker, exchange, endpoint, and subscription tier. Review the provider warnings, source register, timestamps, and audit views. Missing values are intentionally not converted to zero.
 
-```env
-OPENAI_API_KEY=your_key
-FMP_API_KEY=your_key
-MARKETAUX_API_KEY=your_key
-```
+### Deep Research stops during writing or review
 
-### Agent Chat returns missing or `N/A` values
+Use the saved retry action. Evidence and completed drafts are retained, and recovery does not recollect provider data unless you start a fresh run.
 
-Possible reasons:
+### V2 Groq or Ollama stage fails
 
-- The data provider did not return the requested field.
-- The selected endpoint does not support that ticker.
-- The API key does not have access to the requested data.
-- The prompt asked for a metric that is not available in the current tool registry.
+- Confirm `GROQ_API_KEY` and the selected Groq model name.
+- For Ollama, confirm the model is installed and the OpenAI-compatible endpoint is reachable.
+- V2 does not silently fall back to OpenAI; change the route explicitly and rerun.
 
-Enable **Show debug trace** in the sidebar to inspect which tools were called and what they returned.
+### TLS certificate verification fails
 
-### Earnings transcript prompt asks for clarification
+Configure `SSL_CERT_FILE` and `REQUESTS_CA_BUNDLE` with your organization's trusted certificate bundle. Do not disable TLS verification.
 
-The chat agent is intentionally instructed not to guess transcript periods. If you ask for a transcript without quarter and year, it may ask for clarification unless you explicitly say “latest” or “most recent.”
+### Portfolio weights differ from the model proposal
 
-Good examples:
+The deterministic validator may adjust target weights to enforce position caps, sector caps, cash buffers, and the 100% total-weight invariant. Review the Diagnostics and Rebalance views for the applied changes.
 
-```text
-Summarize AAPL Q2 2025 earnings transcript.
-```
+## Security and contribution notes
 
-```text
-Summarize the latest MSFT earnings transcript.
-```
+- Never commit `.env`, `.streamlit/secrets.toml`, API responses containing credentials, or generated research output.
+- Keep paid provider and model calls out of automated tests.
+- Preserve provider dates, units, currency, period, and provenance in new financial features.
+- Add tests at the lowest useful layer for every behavioral change.
+- Follow [AGENTS.md](AGENTS.md) and the Definition of Done in that document when contributing.
 
-### Portfolio Manager target weights were adjusted
+## License and status
 
-The AI committee proposes actions and target weights, but the constraint validator may adjust them to satisfy:
-
-- Maximum position weight.
-- Maximum sector weight.
-- Cash buffer.
-- Total target weight sum.
-- Minimum trade threshold.
-
-Adjusted names and target-weight validation details appear in the Portfolio Manager diagnostics.
-
-### yfinance price data fails
-
-The Portfolio Optimizer depends on yfinance. If price data fails:
-
-- Confirm the tickers are valid.
-- Try fewer tickers.
-- Try a shorter date range.
-- Re-run after a short delay if Yahoo data is temporarily unavailable.
-
----
-
-## Deep Research tab
-
-The **Deep Research** tab is implemented in
-`src/langgraphagenticai/deep_research/`. Research up to four companies using FMP fundamentals, calculated
-technicals, earnings and valuation tools, Serper news, and saved results from the
-equity, portfolio, screener and optimizer tabs. Reports include an investment
-thesis, company comparisons, sources, data gaps, follow-up questions and downloads.
-
-Set `SERPER_API_KEY` alongside your existing OpenAI/FMP keys, or enter it in the
-sidebar. See [Deep Research setup and workflow](DEEP_RESEARCH.md).
-
-### Deep Research V2 pilot
-
-The separate **Deep Research V2** workspace implements the cost-optimization pilot without changing the original workflow. Economy and Balanced use a light planning/review/specialist route and keep `gpt-5-mini` for the report and final decision; Maximum quality uses the stronger OpenAI route. The light route can target OpenAI, Groq (`GROQ_API_KEY`), or an Ollama OpenAI-compatible endpoint. Every model stage is explicit, bounded by a per-run estimated-cost ceiling, and reported in the Performance tab. Saved-result reuse, stop-after-evidence, later synthesis, compact committee packets, and quick decisions never run because of an ordinary Streamlit rerun.
-
-## Future Enhancements
-
-Potential future improvements:
-
-- Add persistent portfolio storage.
-- Add broker-ready trade export format.
-- Add portfolio scenario analysis with macro regimes.
-- Add richer sector-specific metrics for banks, REITs, insurers, and energy companies.
-- Add a dedicated news/catalyst overlay back into Portfolio Manager as an optional toggle.
-- Add benchmark-relative attribution.
-- Add tax-aware rebalancing.
-- Add model evaluation logs for committee decisions.
-- Add Streamlit authentication for deployed use.
-
----
-
-## Summary
-
-Agentic AI Financial Analyst is a multi-page financial research and portfolio analysis app that combines deterministic financial analytics with LLM-powered reasoning. It supports natural-language research, structured equity reports, portfolio optimization, stock screening, and hybrid agentic portfolio recommendations.
-
-The app is best used as a research assistant and portfolio decision-support tool: it helps gather evidence, compare companies, explain tradeoffs, and generate structured outputs that can be reviewed, exported, and improved over time.
+This repository is an actively developed research application. Review the repository license, provider terms, model terms, and market-data redistribution restrictions before production or commercial use.
