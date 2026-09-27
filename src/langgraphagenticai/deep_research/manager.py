@@ -207,7 +207,10 @@ def finalize_report(result: dict) -> dict:
 
 class ResearchManager:
     def __init__(self, llm, financial_source: FinancialDataSource, serper: SerperClient,
-                 tools=(), progress=None, on_text=None, checkpoint=None, utility_llm=None):
+                 tools=(), progress=None, on_text=None, checkpoint=None, utility_llm=None,
+                 stage_llms=None, stage_limits=None, context_limits=None,
+                 deterministic_validator=None, interpretive_review=True,
+                 max_estimated_cost_usd=None, stop_after_evidence=False):
         self.llm, self.financial_source, self.serper = llm, financial_source, serper
         self.utility_llm = utility_llm or llm
         self.tools = {tool.name: tool for tool in tools}
@@ -219,11 +222,19 @@ class ResearchManager:
         self.review_status = "pending"
         self.report_warnings = []
         self.diagnostics = []
+        self.stage_llms = dict(stage_llms or {})
+        self.stage_limits = dict(stage_limits or {})
+        self.context_limits = dict(context_limits or {})
+        self.deterministic_validator = deterministic_validator
+        self.interpretive_review = interpretive_review
+        self.max_estimated_cost_usd = max_estimated_cost_usd
+        self.stop_after_evidence = stop_after_evidence
 
     def _invoke(self, instruction: str, payload: dict, *, stage="follow_up", max_tokens=None) -> str:
         limits = {"plan": (75, 1200), "draft": (150, 4500), "review": (120, 3000), "follow_up": (90, 2200)}
+        limits.update(self.stage_limits)
         timeout, token_limit = limits[stage]
-        llm = self.utility_llm if stage in {"plan", "review"} else self.llm
+        llm = self.stage_llms.get(stage) or (self.utility_llm if stage in {"plan", "review"} else self.llm)
         messages = [
             SystemMessage(content=RESEARCH_RULES + "\n" + instruction),
             HumanMessage(content=dumps(payload)),
@@ -238,6 +249,13 @@ class ResearchManager:
         started = time.monotonic()
         diagnostic = {"stage": stage, "model": model_name or "unknown",
                       "input_characters": sum(len(m.content) for m in messages)}
+        prices = _pricing(model_name)
+        if self.max_estimated_cost_usd is not None and prices:
+            spent = sum(d.get("estimated_cost_usd", 0) for d in self.diagnostics)
+            projected = (math.ceil(diagnostic["input_characters"] / 4) * prices[0]
+                         + (max_tokens or token_limit) * prices[2]) / 1_000_000
+            if spent + projected > self.max_estimated_cost_usd:
+                raise RuntimeError("The configured model-cost budget would be exceeded before this stage.")
         try:
             if stage == "draft" and self.on_text is not None:
                 text, finish, last_emit, usage = "", None, 0.0, None
@@ -420,10 +438,12 @@ class ResearchManager:
             )
             draft_payload = {"request": asdict(request), "research_questions": plan.get("questions", []),
              "sector_context": sector_context,
-             "evidence": evidence_context(evidence, 48000 if request.depth == "Extended" else 36000,
+             "evidence": evidence_context(evidence, self.context_limits.get(
+                 "draft_extended" if request.depth == "Extended" else "draft_standard",
+                 48000 if request.depth == "Extended" else 36000),
                                            focus=request.question),
              "comparison": analysis_comparison}
-            token_limit = 6000 if request.depth == "Extended" else 4500
+            token_limit = self.stage_limits.get("draft", (150, 6000 if request.depth == "Extended" else 4500))[1]
             draft = self._invoke(draft_instruction, draft_payload, stage="draft", max_tokens=token_limit)
             if clarification_only_response(draft):
                 self.progress("Replacing a clarification response with the requested complete memo")
@@ -437,6 +457,19 @@ class ResearchManager:
                     raise IncompleteGeneration("The model repeatedly returned clarification questions instead of a report.")
         self.draft = draft
         self.checkpoint({"draft": draft, "report": draft, "status": "review_pending", "review_status": "pending"})
+        validation_failures = []
+        if self.deterministic_validator:
+            validation_failures = self.deterministic_validator(request, evidence, draft)
+            self.diagnostics.append({
+                "stage": "mechanical_validation", "model": "python",
+                "status": "ok" if not validation_failures else "issues",
+                "issues": len(validation_failures), "input_characters": len(draft), "input_tokens": 0,
+                "cached_input_tokens": 0, "output_tokens": 0, "reasoning_tokens": 0,
+                "token_counts_estimated": False, "estimated_cost_usd": 0.0, "seconds": 0.0,
+            })
+        if self.deterministic_validator and not validation_failures and not self.interpretive_review:
+            self.review_status = "complete"
+            return draft
         self.progress("Reviewing arithmetic, citations, assumptions and counterarguments")
         try:
             review = parse_plan(self._invoke(
@@ -463,11 +496,13 @@ class ResearchManager:
             "drive the conclusion, and that material missing specialist KPIs are disclosed. For mixed sectors, reject false "
             "equivalence between economically incompatible metrics. "
             "Unavailable provider data already disclosed in the draft is not an unresolved review issue.",
-            {"request": asdict(request), "draft": draft,
+            {"request": asdict(request), "draft": draft, "deterministic_validation_failures": validation_failures,
              "comparison": analysis_comparison, "sector_context": sector_context,
              "evidence": evidence_context(
                  self._review_evidence(evidence, draft),
-                 26000 if request.depth == "Extended" else 22000,
+                 self.context_limits.get(
+                     "review_extended" if request.depth == "Extended" else "review_standard",
+                     26000 if request.depth == "Extended" else 22000),
                  focus=request.question)},
             stage="review",
             ))
@@ -564,6 +599,16 @@ class ResearchManager:
                 add(completed[index])
         result["status"] = "incomplete"
         save()
+        if self.stop_after_evidence:
+            costs = [d["estimated_cost_usd"] for d in self.diagnostics if "estimated_cost_usd" in d]
+            result.update(
+                status="evidence_ready", diagnostics=self.diagnostics.copy(), updated_at=utc_now(),
+                elapsed_seconds=round(time.monotonic() - started, 1),
+                estimated_model_cost_usd=round(sum(costs), 6) if costs else 0.0,
+                token_counts_estimated=any(d.get("token_counts_estimated", False) for d in self.diagnostics),
+            )
+            self.checkpoint(result.copy())
+            return result
         result = self.resume(result)
         result["elapsed_seconds"] = round(time.monotonic() - started, 1)
         self.checkpoint(result.copy())
@@ -629,5 +674,6 @@ class ResearchManager:
               "report": result["report"],
               "sector_context": sector_prompt_context(result.get("sector_frameworks") or sector_frameworks(
                   evidence, result["request"]["symbols"], result.get("comparison", []))),
-              "evidence": evidence_context(evidence, 18000, focus=question)},
+              "evidence": evidence_context(evidence, self.context_limits.get("follow_up", 18000), focus=question)},
+            stage="follow_up", max_tokens=self.stage_limits.get("follow_up", (90, 2200))[1],
         )

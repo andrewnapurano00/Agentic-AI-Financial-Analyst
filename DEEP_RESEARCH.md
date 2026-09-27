@@ -1,5 +1,11 @@
 # Deep Research in the main app
 
+> The original Deep Research workspace remains the stable V1 workflow. **Deep Research V2 · Cost Pilot** is isolated in its own navigation entry and session history so lighter-model experiments cannot change or overwrite V1 results.
+
+## V2 cost pilot
+
+V2 adds Economy, Balanced, and Maximum quality profiles; stage-specific OpenAI/Groq/Ollama routing; reduced report and evidence limits; deterministic report validation; optional interpretive review; compact quick-decision and CrewAI paths; exact-result reuse; stop-after-evidence/later-generation controls; fixed evaluation cases; and per-stage/session token, latency, and estimated-cost diagnostics. Groq and Ollama failures are surfaced and never silently rerouted. The final report and committee lead stay on the configured hosted OpenAI model until the evaluation set supports changing that policy.
+
 Launch the existing app with `streamlit run app.py`, then open **Deep Research**.
 Install `requirements.txt` if needed; the tab uses Streamlit 1.61 or newer to
 retain the selected research view across reruns.

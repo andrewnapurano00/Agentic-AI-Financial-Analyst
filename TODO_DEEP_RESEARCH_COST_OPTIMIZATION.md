@@ -4,6 +4,10 @@
 
 Reduce Deep Research and CrewAI model costs without materially weakening the quality, auditability, or usefulness of investment reports.
 
+## V2 pilot implementation status — 2026-09-27
+
+The roadmap is implemented behind the separate **Deep Research V2 · Cost Pilot** workspace; V1 remains unchanged. The pilot includes cost modes and stage routing, bounded output/context sizes, deterministic validation with conditional interpretive review, compact quick/full decisions, session result reuse and force-refresh, stop-after-evidence/later synthesis, Groq and Ollama light-stage routing, explicit provider failures, per-stage and session cost diagnostics, a run budget guard, and the fixed five-case evaluation fixture in `tests/fixtures/deep_research_v2_eval_cases.json`. CrewAI stage attribution is labeled estimated when CrewAI exposes aggregate rather than per-agent usage. Production-default promotion remains intentionally pending real, paid evaluation runs across the fixture.
+
 ## Current cost drivers
 
 - A complete workflow can make at least six model calls:

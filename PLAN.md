@@ -33,6 +33,7 @@ The repository-wide code review initiated the following completed foundations:
 - Reconciled package metadata, deployment constraints, and developer test dependencies.
 - Removal of duplicate active Equity Report function names and updated seven-workspace documentation.
 - Equity Report now has an opt-in, structured CrewAI best-buy debate over the saved scorecard, with specialist dissent, risk controls, input fingerprinting, and no automatic provider recollection.
+- A separate Deep Research V2 pilot now implements the cost-optimization roadmap with stage routing, compact contexts, deterministic validation, caching, cost ceilings, Groq/Ollama light stages, decision modes, and evaluation fixtures while preserving V1 behavior.
 
 The broader typed provenance model, universal freshness components, and canonical cross-workspace `ResearchContext` remain roadmap work; this pass establishes the safety and provider boundaries they will use.
 

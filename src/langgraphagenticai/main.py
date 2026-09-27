@@ -15,6 +15,7 @@ from langgraphagenticai.prompts.system_prompts import get_system_prompt
 from langgraphagenticai.tools.finance_tool_registry import get_finance_tools
 from langgraphagenticai.ui.equity_report_tab import render_equity_report_tab
 from langgraphagenticai.ui.deep_research_tab import render_deep_research_tab
+from langgraphagenticai.ui.deep_research_v2_tab import render_deep_research_v2_tab
 from langgraphagenticai.ui.portfolio_optimizer_tab import render_portfolio_optimizer_tab
 from langgraphagenticai.ui.stock_screener_tab import render_stock_screener_tab
 from langgraphagenticai.ui.ai_portfolio_manager_tab import render_ai_portfolio_manager_tab
@@ -382,6 +383,14 @@ def load_langgraph_agenticai_app() -> None:
             fmp_api_key=fmp_api_key,
             serper_api_key=user_controls.get("SERPER_API_KEY", ""),
             marketaux_api_key=marketaux_api_key,
+        )
+    elif active_page == "Deep Research V2":
+        render_deep_research_v2_tab(
+            openai_api_key=openai_api_key,
+            fmp_api_key=fmp_api_key,
+            serper_api_key=user_controls.get("SERPER_API_KEY", ""),
+            marketaux_api_key=marketaux_api_key,
+            groq_api_key=user_controls.get("GROQ_API_KEY", ""),
         )
 
     else:

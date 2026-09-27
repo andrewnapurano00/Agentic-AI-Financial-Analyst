@@ -45,7 +45,7 @@ def _clean_payload_text(value):
     return clean_committee_text(value) if isinstance(value, str) else value
 
 
-def _research_packet(result: dict) -> str:
+def _research_packet(result: dict, *, max_chars: int = 30000) -> str:
     """Build a bounded, credential-free packet from completed research."""
     evidence_register = [{
         "id": item.get("id"), "symbol": item.get("symbol"),
@@ -56,17 +56,21 @@ def _research_packet(result: dict) -> str:
     packet = {
         "request": result.get("request", {}),
         "research_status": result.get("status"),
-        "research_report": result.get("report", "")[:30000],
+        "research_report": result.get("report", "")[:max_chars // 3],
         "company_comparison": result.get("comparison", []),
         "sector_frameworks": result.get("sector_frameworks", []),
         "warnings": result.get("warnings", []),
         "coverage_gaps": result.get("gaps", []),
         "evidence_register": evidence_register,
     }
-    return json.dumps(json_safe(packet), ensure_ascii=False, default=str)
+    encoded = json.dumps(json_safe(packet), ensure_ascii=False, default=str)
+    return encoded[:max_chars]
 
 
-def run_investment_committee(result: dict, *, openai_api_key: str, model_name: str) -> dict:
+def run_investment_committee(result: dict, *, openai_api_key: str, model_name: str,
+                             specialist_model: str | None = None,
+                             specialist_provider: str = "OpenAI", groq_api_key: str = "",
+                             packet_max_chars: int = 30000) -> dict:
     """Run a CrewAI committee over saved research without recollecting data."""
     try:
         from crewai import Agent, Crew, LLM, Process, Task
@@ -82,8 +86,18 @@ def run_investment_committee(result: dict, *, openai_api_key: str, model_name: s
         raise ValueError("An OpenAI API key is required to run the CrewAI committee.")
 
     model = model_name if "/" in model_name else f"openai/{model_name}"
-    llm = LLM(model=model, api_key=openai_api_key)
-    packet = _research_packet(result)
+    lead_llm = LLM(model=model, api_key=openai_api_key, timeout=90, max_retries=1)
+    specialist_name = specialist_model or model_name
+    if specialist_provider.lower() == "groq":
+        if not groq_api_key:
+            raise ValueError("A Groq API key is required for Groq committee specialists.")
+        specialist_llm = LLM(model=f"groq/{specialist_name}", api_key=groq_api_key, timeout=90, max_retries=1)
+    elif specialist_provider.lower() == "ollama":
+        specialist_llm = LLM(model=f"ollama/{specialist_name}", timeout=90, max_retries=1)
+    else:
+        normalized = specialist_name if "/" in specialist_name else f"openai/{specialist_name}"
+        specialist_llm = LLM(model=normalized, api_key=openai_api_key, timeout=90, max_retries=1)
+    packet = _research_packet(result, max_chars=packet_max_chars)
     common = (
         "Use only the supplied research packet. Do not browse, call tools, or invent current facts. "
         "Treat missing or stale evidence as uncertainty. Distinguish facts from judgment. Internal evidence IDs may be used "
@@ -94,19 +108,19 @@ def run_investment_committee(result: dict, *, openai_api_key: str, model_name: s
         role="Fundamental and Valuation Analyst",
         goal="Assess business quality, financial durability, valuation, and upside for every supplied ticker.",
         backstory="You are a skeptical institutional equity analyst who refuses to fill evidence gaps with assumptions.",
-        llm=llm, verbose=False, allow_delegation=False,
+        llm=specialist_llm, verbose=False, allow_delegation=False, max_iter=4, max_execution_time=90,
     )
     risk_agent = Agent(
         role="Risk and Bear-Case Analyst",
         goal="Challenge the investment case, identify downside, and define thesis invalidation signals for every ticker.",
         backstory="You are an independent risk officer rewarded for finding unsupported confidence and asymmetric downside.",
-        llm=llm, verbose=False, allow_delegation=False,
+        llm=specialist_llm, verbose=False, allow_delegation=False, max_iter=4, max_execution_time=90,
     )
     lead_agent = Agent(
         role="Lead Portfolio Decision Maker",
         goal="Reconcile the analysts and issue clear BUY, HOLD, or SELL recommendations appropriate to the stated horizon.",
         backstory="You chair an investment committee, preserve meaningful dissent, and calibrate confidence to evidence quality.",
-        llm=llm, verbose=False, allow_delegation=False,
+        llm=lead_llm, verbose=False, allow_delegation=False, max_iter=4, max_execution_time=90,
     )
 
     fundamentals = Task(
@@ -140,7 +154,9 @@ def run_investment_committee(result: dict, *, openai_api_key: str, model_name: s
         raise RuntimeError("CrewAI completed without a structured committee decision.")
     payload = parsed.model_dump(mode="json")
     payload.update({
-        "created_at": utc_now(), "model": model_name, "source_research_id": result.get("id"),
+        "created_at": utc_now(), "model": model_name, "specialist_model": specialist_name,
+        "specialist_provider": specialist_provider, "source_research_id": result.get("id"),
+        "usage_metrics": json_safe(getattr(output, "token_usage", None) or getattr(output, "usage_metrics", None)),
         "disclaimer": "AI-generated research opinion, not personalized investment advice.",
     })
     return json_safe(_clean_payload_text(payload))

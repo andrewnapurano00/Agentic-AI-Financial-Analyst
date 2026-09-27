@@ -49,7 +49,7 @@ class LoadStreamlitUI:
             st.session_state["active_workspace"] = next_workspace
         active_page = st.sidebar.radio(
             "Workspace navigation",
-            ["Introduction", "Top Movers", "Research", "Equity Report", "Stock Screener", "Portfolio Lab", "Deep Research"],
+            ["Introduction", "Top Movers", "Research", "Equity Report", "Stock Screener", "Portfolio Lab", "Deep Research", "Deep Research V2"],
             label_visibility="collapsed",
             key="active_workspace",
         )
@@ -65,12 +65,14 @@ class LoadStreamlitUI:
             fmp_input = st.text_input("FMP API Key", type="password")
             marketaux_input = st.text_input("Marketaux API Key", type="password")
             serper_input = st.text_input("Serper API Key", type="password")
+            groq_input = st.text_input("Groq API Key (V2 pilot)", type="password")
         debug_mode = st.sidebar.checkbox("Show debug trace", value=False)
 
         openai_api_key = _resolve_secret(openai_input, "OPENAI_API_KEY", "OPENAI_API_KEY")
         fmp_api_key = _resolve_secret(fmp_input, "FMP_API_KEY", "FMP_API_KEY")
         serper_api_key = _resolve_secret(serper_input, "SERPER_API_KEY", "SERPER_API_KEY")
         marketaux_api_key = _resolve_secret(marketaux_input, "MARKETAUX_API_KEY", "MARKETAUX_API_KEY")
+        groq_api_key = _resolve_secret(groq_input, "GROQ_API_KEY", "GROQ_API_KEY")
 
         st.sidebar.caption(f"OpenAI {'ready' if openai_api_key else 'not configured'} / FMP {'ready' if fmp_api_key else 'not configured'}")
         st.sidebar.caption(f"Serper {'ready' if serper_api_key else 'not configured'} / MarketAux {'ready' if marketaux_api_key else 'not configured'}")
@@ -83,5 +85,6 @@ class LoadStreamlitUI:
             "FMP_API_KEY": fmp_api_key,
             "SERPER_API_KEY": serper_api_key,
             "MARKETAUX_API_KEY": marketaux_api_key,
+            "GROQ_API_KEY": groq_api_key,
             "debug_mode": debug_mode,
         }

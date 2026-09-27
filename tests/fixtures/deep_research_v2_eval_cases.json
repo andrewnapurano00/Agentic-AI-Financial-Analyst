@@ -1,0 +1,7 @@
+[
+  {"id": "large_cap", "symbols": ["MSFT"], "question": "Assess the long-term investment case."},
+  {"id": "sparse_coverage", "symbols": ["CMTL"], "question": "Assess the thesis while emphasizing missing evidence."},
+  {"id": "same_sector", "symbols": ["MSFT", "ORCL"], "question": "Compare quality, valuation, and downside risk."},
+  {"id": "cross_sector", "symbols": ["JPM", "NVDA"], "question": "Compare each company on its own sector economics."},
+  {"id": "missing_data", "symbols": ["TEST"], "question": "Return an inconclusive result when material data is absent."}
+]

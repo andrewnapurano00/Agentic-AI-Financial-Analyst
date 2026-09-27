@@ -28,8 +28,10 @@ def _load_current_deep_research() -> None:
         SRC / "langgraphagenticai" / "deep_research" / "data.py",
         SRC / "langgraphagenticai" / "deep_research" / "crew_committee.py",
         SRC / "langgraphagenticai" / "deep_research" / "manager.py",
+        SRC / "langgraphagenticai" / "deep_research" / "v2.py",
         SRC / "langgraphagenticai" / "deep_research" / "presentation.py",
         SRC / "langgraphagenticai" / "ui" / "deep_research_tab.py",
+        SRC / "langgraphagenticai" / "ui" / "deep_research_v2_tab.py",
     )
     stamp = tuple(path.stat().st_mtime_ns for path in source_files)
     lock = getattr(app_main, "_deep_research_reload_lock", None)
@@ -55,10 +57,14 @@ def _load_current_deep_research() -> None:
             "langgraphagenticai.deep_research.manager",
             "langgraphagenticai.deep_research.presentation",
             "langgraphagenticai.ui.deep_research_tab",
+            "langgraphagenticai.deep_research.v2",
+            "langgraphagenticai.ui.deep_research_v2_tab",
         ):
             importlib.reload(importlib.import_module(name))
         deep_research_ui = importlib.import_module("langgraphagenticai.ui.deep_research_tab")
         app_main.render_deep_research_tab = deep_research_ui.render_deep_research_tab
+        deep_research_v2_ui = importlib.import_module("langgraphagenticai.ui.deep_research_v2_tab")
+        app_main.render_deep_research_v2_tab = deep_research_v2_ui.render_deep_research_v2_tab
         app_main._deep_research_source_stamp = stamp
 
 

@@ -60,7 +60,7 @@ This project combines several finance analytics workflows into one application:
 
 ## Application Pages
 
-The Streamlit app is organized into seven connected workspaces: Introduction, Top Movers, Research, Equity Report, Stock Screener, Portfolio Lab, and Deep Research. Selected tickers and completed analysis can be handed between workspaces through shared session context.
+The Streamlit app is organized into eight connected workspaces: Introduction, Top Movers, Research, Equity Report, Stock Screener, Portfolio Lab, Deep Research, and the separate Deep Research V2 cost pilot. Selected tickers and completed analysis can be handed between workspaces through shared session context.
 
 ### Introduction and Top Movers
 
@@ -430,7 +430,7 @@ The app is built around a `src/` Python package layout.
 At a high level:
 
 - `app.py` loads environment variables, adds `src/` to the Python path, and starts the Streamlit app.
-- `main.py` initializes Streamlit session state, loads sidebar configuration, builds the LangGraph finance agent on explicit research actions, validates API keys, and routes the seven connected workspaces.
+- `main.py` initializes Streamlit session state, loads sidebar configuration, builds the LangGraph finance agent on explicit research actions, validates API keys, and routes the eight connected workspaces.
 - `LLMS/openaillm.py` creates the OpenAI model client.
 - `graph/graph_builder.py` builds the LangGraph tool-calling workflow.
 - `nodes/chatbot_with_Tool_node.py` contains the chatbot/tool node logic.
@@ -609,6 +609,7 @@ Use the workspace navigation in the sidebar:
 - **Stock Screener** for rule-based company discovery.
 - **Portfolio Lab** for the historical optimizer and opt-in AI portfolio manager.
 - **Deep Research** for cited, recoverable research reports and the optional CrewAI committee.
+- **Deep Research V2** for experimental Economy/Balanced/Maximum routing, Groq or Ollama light stages, prompt-size and cost diagnostics, deterministic checks, result reuse, and quick/full decision modes. V1 remains unchanged for comparison.
 
 ### Step 4: Download outputs
 
@@ -936,6 +937,10 @@ thesis, company comparisons, sources, data gaps, follow-up questions and downloa
 
 Set `SERPER_API_KEY` alongside your existing OpenAI/FMP keys, or enter it in the
 sidebar. See [Deep Research setup and workflow](DEEP_RESEARCH.md).
+
+### Deep Research V2 pilot
+
+The separate **Deep Research V2** workspace implements the cost-optimization pilot without changing the original workflow. Economy and Balanced use a light planning/review/specialist route and keep `gpt-5-mini` for the report and final decision; Maximum quality uses the stronger OpenAI route. The light route can target OpenAI, Groq (`GROQ_API_KEY`), or an Ollama OpenAI-compatible endpoint. Every model stage is explicit, bounded by a per-run estimated-cost ceiling, and reported in the Performance tab. Saved-result reuse, stop-after-evidence, later synthesis, compact committee packets, and quick decisions never run because of an ordinary Streamlit rerun.
 
 ## Future Enhancements
 
