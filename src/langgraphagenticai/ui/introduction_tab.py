@@ -3,6 +3,9 @@ from __future__ import annotations
 from html import escape
 
 import streamlit as st
+import pandas as pd
+import altair as alt
+from langgraphagenticai.providers.market_history import load_market_chart, RANGES
 
 from langgraphagenticai.ui.company_snapshot import (
     generate_company_summary,
@@ -12,6 +15,16 @@ from langgraphagenticai.ui.company_snapshot import (
 )
 from langgraphagenticai.ui.market_overview_data import load_market_overview
 from langgraphagenticai.utils.safety import sanitize_error
+
+
+def _interactive_price_chart(frame: pd.DataFrame, value_column: str) -> None:
+    chart = alt.Chart(frame.reset_index()).mark_line(color="#19d6f5").encode(
+        x=alt.X(f"{frame.index.name}:T", title="Date"),
+        y=alt.Y(f"{value_column}:Q", scale=alt.Scale(zero=False), title=value_column),
+        tooltip=[alt.Tooltip(f"{frame.index.name}:T", title="Date"),
+                 alt.Tooltip(f"{value_column}:Q", format=",.2f")],
+    ).properties(height=280).interactive()
+    st.altair_chart(chart, use_container_width=True)
 
 
 def _fmt(value: float | None, decimals: int = 2) -> str:
@@ -98,12 +111,24 @@ def _render_company_snapshot(snapshot: dict, summary: str) -> None:
     source_errors = snapshot.get("source_errors") or {}
     error_note = f'<div class="source-warning">Unavailable datasets: {escape(", ".join(source_errors))}</div>' if source_errors else ""
 
+    st.subheader(f"{snapshot['symbol']} historical prices")
+    period = st.segmented_control("Company historical range", ["1M", "3M", "1Y"], default="1Y", key=f"intro_company_range_{snapshot['symbol']}") or "1Y"
+    series = pd.DataFrame(performance.get("series", []))
+    if not series.empty:
+        series["date"] = pd.to_datetime(series["date"], errors="coerce")
+        series = series.dropna(subset=["date", "close"]).sort_values("date")
+        if not series.empty:
+            days = {"1M": 31, "3M": 93, "1Y": 366}[period]
+            series = series[series["date"] >= series["date"].max() - pd.Timedelta(days=days)]
+            _interactive_price_chart(series.set_index("date")[["close"]], "close")
+            st.caption(f"FMP | As of {performance.get('as_of', 'unavailable')} | Historical closing prices; price performance, not total return.")
+    else:
+        st.info("Historical company prices unavailable. Other company data is preserved.")
     st.markdown(f'''
       <div class="company-head terminal-card"><div><small>COMPANY SNAPSHOT / {escape(snapshot['symbol'])}</small><h2>{escape(snapshot['company'])}</h2><p>{escape(str(profile.get('sector') or 'N/A'))} · {escape(str(profile.get('industry') or 'N/A'))}</p></div>
         <div class="company-price"><span>LAST PRICE</span><strong>${_fmt(quote.get('price'))}</strong><em class="{state}">{pct:+.2f}%</em></div><div class="company-price"><span>MARKET CAP</span><strong>{_money(quote.get('market_cap'))}</strong><em>FMP</em></div></div>
       <div class="company-layout">
         <div class="company-main">
-          <section class="terminal-card"><div class="card-head"><div><span>PRICE PERFORMANCE / 1 YEAR</span><h2>${_fmt(performance.get('last_close'))}</h2></div><div class="range-tabs"><i>1Y</i></div></div>{_company_chart(performance.get('series', []))}<div class="chart-axis"><span>1Y AGO</span><span>9M</span><span>6M</span><span>3M</span><span>LATEST</span></div></section>
           <div class="company-subgrid"><section class="terminal-card"><h3>FINANCIAL QUALITY &amp; VALUATION</h3><div class="company-metrics">{metrics_html}</div></section><section class="terminal-card live-table"><h3>RECENT PERFORMANCE</h3>{performance_html}</section></div>
           <section class="updates terminal-card company-news"><h3>RECENT NEWS &amp; EVIDENCE <small>MARKETAUX · 10 DAYS</small></h3><ul>{news_html}</ul></section>
         </div>
@@ -118,13 +143,15 @@ def _render_company_snapshot(snapshot: dict, summary: str) -> None:
 def _brief(data: dict) -> tuple[str, list[tuple[str, str, str]]]:
     indexes = data["indexes"]
     sp, nasdaq, vix = (indexes.get(key) or {} for key in ("S&P 500", "NASDAQ", "VIX"))
+    if not all((sp, nasdaq, vix)):
+        return "Market coverage is partial. Available quotes remain visible; missing index data is excluded from interpretation.", []
     sp_pct, ndx_pct, vix_pct = (float(x.get("percent", 0.0)) for x in (sp, nasdaq, vix))
     direction = "higher" if sp_pct >= 0 else "lower"
     leader = "technology-heavy growth" if ndx_pct > sp_pct else "the broader market"
     text = (
         f"U.S. equities are trading {direction}, with {leader} leading. The S&P 500 is "
         f"{sp_pct:+.2f}% and the Nasdaq is {ndx_pct:+.2f}% versus the prior close; volatility "
-        f"is {vix_pct:+.2f}%. Values refresh from the same market-data source used by the app."
+        f"is {vix_pct:+.2f}%. Sources and daily-close fallbacks are labelled on the quote cards."
     )
     valid_sectors = [item for item in data["sectors"].items() if item[1]]
     strongest = max(valid_sectors, key=lambda x: x[1]["percent"], default=("N/A", {"percent": 0}))
@@ -136,7 +163,23 @@ def _brief(data: dict) -> tuple[str, list[tuple[str, str, str]]]:
     ]
 
 
-def _dashboard(data: dict, mode: str) -> None:
+def _render_market_chart(fmp_api_key: str) -> None:
+    period = st.segmented_control("S&P 500 historical range", list(RANGES), default="1D", key="intro_chart_range") or "1D"
+    try:
+        chart = load_market_chart(fmp_api_key, period)
+    except Exception as exc:
+        chart = {"points": [], "warnings": [f"Historical chart unavailable: {sanitize_error(exc)}"], "provider": "Unavailable"}
+    for warning in chart["warnings"]:
+        st.warning(warning)
+    if chart["points"]:
+        frame = pd.DataFrame(chart["points"], columns=["Date", "Index level"]).set_index("Date")
+        _interactive_price_chart(frame, "Index level")
+        st.caption(f"S&P 500 | {period} | {chart['provider']} | As of {frame.index[-1]} | Index points; price performance, not total return.")
+    else:
+        st.info("Historical prices are unavailable for this range. Choose another range or refresh.")
+
+
+def _dashboard(data: dict, mode: str, fmp_api_key: str = "") -> None:
     indexes = data["indexes"]
     sp = indexes.get("S&P 500") or {}
     as_of = data["as_of"]
@@ -151,7 +194,7 @@ def _dashboard(data: dict, mode: str) -> None:
     ticker_cells = []
     for label, snap in indexes.items():
         pct, state = _move(snap)
-        ticker_cells.append(f'<div><small>{escape(label)}</small><strong>{_fmt(snap.get("price") if snap else None)}</strong><em class="{state}">{pct}</em></div>')
+        ticker_cells.append(f'<div><small>{escape(label)}</small><strong>{_fmt(snap.get("price") if snap else None)}</strong><em class="{state}">{pct}</em><small>{escape(str((snap or {}).get("provider", "No coverage")))} | As of {escape(str((snap or {}).get("as_of", "unavailable")))}</small></div>')
     mover_rows = []
     for symbol, snap in data["movers"]:
         pct, state = _move(snap)
@@ -159,17 +202,18 @@ def _dashboard(data: dict, mode: str) -> None:
     index_rows = []
     for label, snap in indexes.items():
         pct, state = _move(snap)
-        index_rows.append(f'<div class="market-table-row"><b>{escape(label)}</b><span>{_fmt(snap.get("price") if snap else None)}</span><em class="{state}">{pct}</em></div>')
+        index_rows.append(f'<div class="market-table-row"><b>{escape(label)}</b><span>{_fmt(snap.get("price") if snap else None)}</span><em class="{state}">{pct}</em><small>{escape(str((snap or {}).get("provider", "No coverage")))} | As of {escape(str((snap or {}).get("as_of", "unavailable")))}</small></div>')
     sector_cells = []
     for label, snap in data["sectors"].items():
         pct = float(snap.get("percent", 0.0)) if snap else 0.0
+        display_pct = f"{pct:+.2f}%" if snap else "Unavailable"
         strength = min(1.0, abs(pct) / 2.5)
         color = f"rgba(20,154,99,{0.28 + strength * .58:.2f})" if pct >= 0 else f"rgba(177,50,72,{0.28 + strength * .58:.2f})"
-        sector_cells.append(f'<div style="background:{color}">{escape(label)}<br><b>{pct:+.2f}%</b></div>')
+        sector_cells.append(f'<div style="background:{color}">{escape(label)}<br><b>{display_pct}</b></div>')
     asset_rows = []
     for label, snap in data["cross_assets"].items():
         pct, state = _move(snap)
-        asset_rows.append(f'<div class="market-table-row"><b>{escape(label)}</b><span>{_fmt(snap.get("price") if snap else None)}</span><em class="{state}">{pct}</em></div>')
+        asset_rows.append(f'<div class="market-table-row"><b>{escape(label)}</b><span>{_fmt(snap.get("price") if snap else None)}</span><em class="{state}">{pct}</em><small>{escape(str((snap or {}).get("provider", "No coverage")))} | As of {escape(str((snap or {}).get("as_of", "unavailable")))}</small></div>')
     insight_html = "".join(f'<div class="insight {kind}"><b>{title}</b><span>{escape(text)}</span></div>' for kind, title, text in insights)
     updates = "".join(
         f'<li><time>{fetched.split()[0]}</time><i class="{"" if snap["percent"] >= 0 else "pink"}"></i>{symbol} moves {snap["percent"]:+.2f}% to {_fmt(snap["price"])}</li>'
@@ -177,12 +221,15 @@ def _dashboard(data: dict, mode: str) -> None:
     )
 
     st.markdown(f'''
-      <div class="intro-topline"><div><span class="intro-title">LIVE MARKET OVERVIEW</span><span class="live-dot"></span><b>5-MIN DATA CACHE</b></div><span>MARKET AS OF &nbsp; {escape(stamp)}</span></div>
-      <div class="ticker-row intro-five">{''.join(ticker_cells)}</div>
-      <div class="intro-grid">
-        <section class="market-main terminal-card"><div class="card-head"><div><span>S&amp;P 500 (^GSPC)</span><h2>{_fmt(sp.get('price'))} <b>{_move(sp)[0]}</b></h2></div><div class="range-tabs"><i>1D</i><i>5D</i><i>1M</i><i>3M</i><i>1Y</i></div></div>
-          {_line_chart(data['chart'])}<div class="chart-axis"><span>OPEN</span><span>10:30</span><span>12:00</span><span>1:30</span><span>3:00</span><span>LATEST</span></div><div class="source-line">Source: {escape(data['provider'])} · Last fetch {escape(fetched)}</div></section>
-        <aside class="ai-brief terminal-card"><div class="brief-head"><span class="ai-star">✦</span><b>{'AI MARKET BRIEF' if mode == 'AI Insights' else 'MARKET PULSE'}</b><small>{escape(fetched)}</small></div><p>{escape(brief)}</p>{insight_html}</aside>
+      <div class="intro-topline"><div><span class="intro-title">MARKET OVERVIEW</span><b>5-MIN DATA CACHE</b></div><span>MARKET AS OF &nbsp; {escape(stamp)}</span></div>
+      <div class="ticker-row intro-five">{''.join(ticker_cells)}</div>''', unsafe_allow_html=True)
+    chart_col, brief_col = st.columns([2.1, 1])
+    with chart_col:
+        st.markdown(f"**S&P 500 (^GSPC)** &nbsp; {_fmt(sp.get('price'))} &nbsp; {_move(sp)[0]}")
+        _render_market_chart(fmp_api_key)
+    with brief_col:
+        st.markdown(f'''<aside class="ai-brief terminal-card"><div class="brief-head"><b>MARKET PULSE / RULE-BASED</b><small>{escape(fetched)}</small></div><p>{escape(brief)}</p>{insight_html}</aside>''', unsafe_allow_html=True)
+    st.markdown(f'''<div class="intro-grid">
         <section class="mini-grid">
           <div class="terminal-card table-card"><h3>TOP MOVERS <small>WATCHLIST</small></h3>{''.join(mover_rows) or '<p>No market data available.</p>'}</div>
           <div class="terminal-card live-table"><h3>KEY INDICES</h3>{''.join(index_rows)}</div>
@@ -221,7 +268,13 @@ def render_introduction_tab(
         try:
             with st.spinner(f"Building current research snapshot for {selected_symbol}…"):
                 snapshot = load_company_snapshot(selected_symbol, fmp_api_key, marketaux_api_key)
-                summary = generate_company_summary(snapshot_json(snapshot), openai_api_key, model_name)
+                summary_key = f"intro_summary:{selected_symbol}:{model_name}"
+                if analyze:
+                    try:
+                        st.session_state[summary_key] = generate_company_summary(snapshot_json(snapshot), openai_api_key, model_name)
+                    except Exception as exc:
+                        st.warning(f"AI summary unavailable; company data is preserved: {sanitize_error(exc)}")
+                summary = st.session_state.get(summary_key, "Select Analyze Company to generate an AI summary from the current evidence.")
             _render_company_snapshot(snapshot, summary)
         except Exception as exc:
             st.error(f"Company analysis could not be completed: {sanitize_error(exc)}")
@@ -234,9 +287,10 @@ def render_introduction_tab(
     with refresh_col:
         if st.button("REFRESH DATA", use_container_width=True, key="intro_refresh"):
             load_market_overview.clear()
+            load_market_chart.clear()
             st.rerun()
     with status_col:
-        st.caption("Quotes may be delayed by the provider. Refreshes automatically every 5 minutes.")
+        st.caption("Quotes may be delayed by the provider. Cached for 5 minutes; use Refresh Data for a new request.")
     try:
         with st.spinner("Loading current market data…"):
             data = load_market_overview(fmp_api_key)
@@ -244,7 +298,7 @@ def render_introduction_tab(
             raise RuntimeError("The market provider returned no index quotes.")
         for warning in data.get("warnings", []):
             st.warning(warning)
-        _dashboard(data, mode or "AI Insights")
+        _dashboard(data, mode or "AI Insights", fmp_api_key)
     except Exception as exc:
         st.error(f"Live market data is temporarily unavailable: {sanitize_error(exc)}")
         st.info("No stale fallback values are displayed. Use Refresh Data to retry the provider.")

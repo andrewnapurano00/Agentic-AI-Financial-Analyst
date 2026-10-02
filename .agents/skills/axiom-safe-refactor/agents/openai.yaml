@@ -1,0 +1,4 @@
+interface:
+  display_name: "Axiom Safe Refactoring"
+  short_description: "Extract focused modules without output regressions"
+  default_prompt: "Use $axiom-safe-refactor to extract the requested responsibility into a focused module while preserving current outputs."

@@ -44,7 +44,7 @@ def load_top_movers(fmp_api_key: str, serper_api_key: str = "", limit: int = 12)
         if flag not in base:
             base[flag] = False
     base = base[(base["isEtf"] != True) & (base["isFund"] != True)].copy()  # noqa: E712
-    symbols = base["symbol"].dropna().astype(str).str.upper().unique().tolist()
+    symbols = base["symbol"].dropna().astype(str).str.upper().str.strip().unique().tolist()
 
     changes: list[dict] = []
     failed_chunks: list[dict[str, Any]] = []
@@ -66,13 +66,39 @@ def load_top_movers(fmp_api_key: str, serper_api_key: str = "", limit: int = 12)
     change_frame = pd.DataFrame(changes)
     if change_frame.empty or "5D" not in change_frame:
         raise RuntimeError("FMP returned no five-day performance data.")
-    movers = base.merge(change_frame, on="symbol", how="inner")
+    base["symbol"] = base["symbol"].astype(str).str.upper().str.strip()
+    change_frame["symbol"] = change_frame["symbol"].astype(str).str.upper().str.strip()
+    movers = base.merge(change_frame[[col for col in ("symbol", "1D", "5D", "1M", "ytd") if col in change_frame]], on="symbol", how="inner")
+    # Screener responses often omit average volume. Enrich only the displayed
+    # leaders/laggards, keeping request volume bounded and failures recoverable.
+    enrichment_warnings = []
+    ranked = movers.assign(**{"5D": pd.to_numeric(movers["5D"], errors="coerce")})
+    focus = list(dict.fromkeys(ranked.nlargest(limit, "5D")["symbol"].tolist() + ranked.nsmallest(limit, "5D")["symbol"].tolist()))
+    try:
+        quotes = _get(f"https://financialmodelingprep.com/api/v3/quote/{','.join(focus)}", fmp_api_key)
+        if isinstance(quotes, list):
+            lookup = {str(row.get("symbol", "")).upper(): row for row in quotes if isinstance(row, dict)}
+            for column in ("price", "marketCap", "volume", "avgVolume"):
+                if column not in movers:
+                    movers[column] = float("nan")
+                values = movers["symbol"].map(lambda symbol: lookup.get(symbol, {}).get(column))
+                numeric = pd.to_numeric(values, errors="coerce")
+                movers[column] = numeric.where(numeric.notna(), pd.to_numeric(movers[column], errors="coerce"))
+    except Exception as exc:
+        enrichment_warnings.append(f"Quote enrichment unavailable; screener values retained: {sanitize_error(exc)}")
+    for column in ("price", "marketCap", "volume", "avgVolume", "1D", "sector", "companyName"):
+        if column not in movers:
+            movers[column] = float("nan")
+    movers["sector"] = movers["sector"].fillna("Unknown")
     for column in ("price", "marketCap", "volume", "avgVolume", "1D", "5D", "1M", "ytd"):
         if column in movers:
             movers[column] = pd.to_numeric(movers[column], errors="coerce")
     movers = movers.dropna(subset=["5D", "price"]).copy()
-    movers["liquidityRatio"] = movers["volume"] / movers["avgVolume"].replace(0, pd.NA)
+    movers["liquidityRatio"] = movers["volume"] / movers["avgVolume"].where(movers["avgVolume"] > 0)
     movers = movers.sort_values("marketCap", ascending=False).drop_duplicates("symbol")
+
+    if movers.empty:
+        raise RuntimeError("No usable prices and five-day returns were returned. Refresh to retry.")
 
     gainers = movers.nlargest(limit, "5D").reset_index(drop=True)
     losers = movers.nsmallest(limit, "5D").reset_index(drop=True)
@@ -105,11 +131,11 @@ def load_top_movers(fmp_api_key: str, serper_api_key: str = "", limit: int = 12)
         "requested_universe_size": int(len(symbols)),
         "coverage_pct": round((len(movers) / len(symbols) * 100.0), 2) if symbols else 0.0,
         "partial": bool(failed_chunks or len(movers) < len(symbols)),
-        "provider_warnings": [
+        "provider_warnings": enrichment_warnings + ([
             f"{len(failed_chunks)} FMP price-change batch(es) failed; rankings use {len(movers)} of {len(symbols)} requested symbols."
         ] if failed_chunks else ([
             f"FMP returned usable five-day data for {len(movers)} of {len(symbols)} requested symbols."
-        ] if len(movers) < len(symbols) else []),
+        ] if len(movers) < len(symbols) else [])),
         "failed_chunks": failed_chunks,
         "fetched_at": datetime.now(timezone.utc),
         "providers": ["Financial Modeling Prep", "Serper" if serper_api_key else "Serper not configured"],

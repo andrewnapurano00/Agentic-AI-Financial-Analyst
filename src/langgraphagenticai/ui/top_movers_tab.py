@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from html import escape
+from math import isfinite
 
 import pandas as pd
 import streamlit as st
@@ -13,10 +14,22 @@ def _money(value) -> str:
         number = float(value)
     except (TypeError, ValueError):
         return "N/A"
+    if not isfinite(number):
+        return "Unavailable"
     for divisor, suffix in ((1e12, "T"), (1e9, "B"), (1e6, "M")):
         if abs(number) >= divisor:
             return f"${number / divisor:,.1f}{suffix}"
     return f"${number:,.2f}"
+
+
+def _numeric(value, suffix="", decimals=2, signed=False):
+    try:
+        number = float(value)
+        if isfinite(number):
+            return f"{number:+,.{decimals}f}{suffix}" if signed else f"{number:,.{decimals}f}{suffix}"
+    except (TypeError, ValueError):
+        pass
+    return "Unavailable"
 
 
 def _rows(frame: pd.DataFrame) -> str:
@@ -26,10 +39,10 @@ def _rows(frame: pd.DataFrame) -> str:
         daily = float(row.get("1D", 0.0))
         state = "up" if weekly >= 0 else "down"
         html.append(f'''<div class="mover-row">
-          <span class="mover-rank">{rank + 1:02d}</span><div><b>{escape(str(row.get('symbol', '')))}</b><small>{escape(str(row.get('companyName', '')))}</small></div>
+          <span class="mover-rank">{rank + 1:02d}</span><div><b>{escape(str(row.get('symbol', '')))}</b><small>{escape(str(row.get('companyName')) if pd.notna(row.get('companyName')) else str(row.get('symbol', '')))}</small></div>
           <span>{escape(str(row.get('sector') or 'N/A'))}</span><span>${float(row.get('price', 0)):,.2f}</span>
-          <em class="{'up' if daily >= 0 else 'down'}">{daily:+.2f}%</em><em class="{state}">{weekly:+.2f}%</em>
-          <span>{_money(row.get('marketCap'))}</span><span>{float(row.get('liquidityRatio', 0) or 0):.1f}x</span></div>''')
+          <em class="{'up' if daily >= 0 else 'down'}">{_numeric(daily, '%', signed=True)}</em><em class="{state}">{weekly:+.2f}%</em>
+          <span>{_money(row.get('marketCap'))}</span><span>{_numeric(row.get('liquidityRatio'), 'x', decimals=1)}</span></div>''')
     return "".join(html)
 
 
@@ -98,7 +111,7 @@ def render_top_movers_tab(*, fmp_api_key: str, serper_api_key: str) -> None:
       <div class="mover-row mover-header"><span>#</span><span>COMPANY</span><span>SECTOR</span><span>PRICE</span><span>1D</span><span>5D</span><span>MARKET CAP</span><span>VOL / AVG</span></div>{_rows(frame)}</section>
       <section class="terminal-card movers-sector"><h3>SECTOR LEADERSHIP <small>UNIVERSE AVERAGE</small></h3><div class="mover-sector-grid">{_sector_heatmap(data['sectors'])}</div></section>
       <aside class="terminal-card movers-news"><h3>NEWS DRIVING THE MOVERS <small>SERPER &middot; 7 DAYS</small></h3>{_news_panel(data['news'], data['gainers'].head(4)['symbol'].tolist() + data['losers'].head(4)['symbol'].tolist())}</aside></div>
-      <div class="source-line">Sources: {' &middot; '.join(data['providers'])} &middot; Refreshed {escape(fetched)} &middot; Rankings use FMP 5D price performance and exclude ETFs/funds.</div>
+      <div class="source-line">Sources: {' &middot; '.join(data['providers'])} &middot; Refreshed {escape(fetched)} &middot; Rankings use FMP 5D price performance and exclude ETFs/funds. Unavailable means provider coverage is missing; VOL / AVG compares current volume with provider average volume.</div>
     ''', unsafe_allow_html=True)
 
     focus_options = frame["symbol"].astype(str).tolist()

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Axiom Provider Debugging"
+  short_description: "Repair missing quotes and provider failures"
+  default_prompt: "Use $axiom-provider-debug to trace and fix missing ticker data in the affected workspace, with synthetic provider tests."

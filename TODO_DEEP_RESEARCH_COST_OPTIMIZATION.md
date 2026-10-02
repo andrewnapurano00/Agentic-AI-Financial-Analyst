@@ -4,11 +4,15 @@
 
 Reduce Deep Research and CrewAI model costs without materially weakening the quality, auditability, or usefulness of investment reports.
 
-## V2 pilot implementation status — 2026-09-27
+## Status and document scope - updated 2026-10-01
 
-The roadmap is implemented behind the separate **Deep Research V2 · Cost Pilot** workspace; V1 remains unchanged. The pilot includes cost modes and stage routing, bounded output/context sizes, deterministic validation with conditional interpretive review, compact quick/full decisions, session result reuse and force-refresh, stop-after-evidence/later synthesis, Groq and Ollama light-stage routing, explicit provider failures, per-stage and session cost diagnostics, a run budget guard, and the fixed five-case evaluation fixture in `tests/fixtures/deep_research_v2_eval_cases.json`. CrewAI stage attribution is labeled estimated when CrewAI exposes aggregate rather than per-agent usage. Production-default promotion remains intentionally pending real, paid evaluation runs across the fixture.
+This is the original optimization design checklist. Its unchecked proposals and cost-driver baseline are historical, not a current completion ledger. [PLAN.md](PLAN.md) records delivered capabilities, fresh verification and remaining acceptance work.
 
-## Current cost drivers
+## V2 pilot implementation - introduced 2026-09-27
+
+Parts of this roadmap are implemented behind the separate **Deep Research V2 · Cost Pilot** workspace; V1 remains unchanged. The pilot includes cost modes and stage routing, bounded output/context sizes, deterministic validation with conditional interpretive review, compact quick/full decisions, session result reuse and force-refresh, stop-after-evidence/later synthesis, Groq and Ollama light-stage routing, explicit provider failures, per-stage and session cost diagnostics, a run budget guard, and the fixed five-case evaluation fixture in `tests/fixtures/deep_research_v2_eval_cases.json`. CrewAI stage attribution is labeled estimated when CrewAI exposes aggregate rather than per-agent usage. The validators are mechanical rather than complete numerical/semantic grounding. Saved-session reuse is not universal freshness-aware caching, and dollar checks depend on known model prices. Production-default promotion remains pending executed quality/cost evaluation across the fixture; no measured savings are claimed.
+
+## Original cost-driver baseline (before the V2 pilot)
 
 - A complete workflow can make at least six model calls:
   1. Research planning

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Axiom Safe Exports"
+  short_description: "Verify report content and safe PDF/Excel downloads"
+  default_prompt: "Use $axiom-export-safety to repair the affected report export and verify its financial content, links, and credential handling."

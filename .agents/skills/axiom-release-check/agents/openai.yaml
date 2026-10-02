@@ -1,0 +1,4 @@
+interface:
+  display_name: "Axiom Release Checks"
+  short_description: "Verify tests, app health, workflows, and handoff"
+  default_prompt: "Use $axiom-release-check to verify the current changes and report readiness, failures, and untested risks without publishing anything."

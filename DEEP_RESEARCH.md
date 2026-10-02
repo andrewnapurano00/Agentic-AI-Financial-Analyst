@@ -117,6 +117,11 @@ refreshes provider data; saved context retains its original dates.
 
 ## Validation
 
-Run `python -m unittest discover -s tests -p "test_deep_research*.py"` with the
-app's dependencies installed. Tests use synthetic data and mocked provider/model
-responses; they do not consume API credits. The main app also has existing pytest tests.
+Use the project's installed Python environment and pytest so both pytest-style and unittest-style cases are collected:
+
+```powershell
+$env:PYTHONPATH = (Resolve-Path "src").Path
+python -m pytest tests/test_deep_research.py tests/test_deep_research_recovery.py tests/test_deep_research_ui.py tests/test_deep_research_v2.py -q
+```
+
+Tests use synthetic data and mocked provider/model responses; they do not consume API credits. See [PLAN.md](PLAN.md#verification-ledger) for the current inventory and limits. V2 helper tests and fixture presence do not establish end-to-end quality or achieved savings.

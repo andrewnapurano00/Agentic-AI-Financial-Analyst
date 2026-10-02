@@ -1,0 +1,4 @@
+interface:
+  display_name: "Axiom Streamlit Workflows"
+  short_description: "Fix controls, chart ranges, and workspace handoffs"
+  default_prompt: "Use $axiom-streamlit-workflows to fix the broken interaction and verify that navigation and reruns preserve completed work."

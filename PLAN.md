@@ -1,306 +1,304 @@
-# Axiom Research — 10-Step Improvement Plan
+# Axiom Research - Living Status and Improvement Plan
 
-## Product objective
+**Last audited:** 2026-10-01. **Repository baseline:** `ff1709e` (2026-09-27), plus the current uncommitted market-workspace fixes, project skills, and documentation updates. This describes the local working tree, not a deployed release.
 
-Turn the existing collection of capable research tools into one cohesive investment-research workstation: live and transparent data, connected workflows, grounded AI conclusions, reliable portfolio analytics, and a fast interface that helps a user move from market discovery to a defensible decision.
+## Purpose and how to read this file
 
-## Audit summary
+Build one trustworthy research workstation: transparent data, connected workflows, grounded conclusions, reliable portfolio analytics, and predictable cost. [AGENTS.md](AGENTS.md) defines engineering requirements; this file records what exists, how it works, what was verified, and what remains.
 
-The application already has substantial depth: seven workspaces, multiple financial/news providers, LangGraph tools, sector-aware reports, a large portfolio-management subsystem, Deep Research with recovery/citations, exports, and 63 automated tests.
+- **Implemented:** the named capability exists in code; verification scope is recorded separately.
+- **Partial:** useful foundations exist, but the roadmap acceptance criteria are unmet.
+- **Pilot:** isolated experimental capability; production promotion requires additional evaluation.
+- **Planned:** proposed work without evidence of completion.
+- **Verified:** a specific dated check passed. It never means all behavior in that area is covered.
 
-The most consequential gaps are architectural and product-level:
+Use stable roadmap IDs R01-R10 and delivery/verification IDs below when adding work. Keep historical entries and append evidence; update the current matrices when behavior changes.
 
-- FMP and price/news access are implemented in several separate modules with different caching and error behavior.
-- Data source, period, currency, freshness, and partial-failure status are not consistently visible.
-- Workspaces share some session data, but there is no canonical ticker/research context across the whole app.
-- Deep Research is well tested; Introduction, Top Movers, Research routing, Equity Report, Screener, and Portfolio Lab have much less direct interaction coverage.
-- Several critical modules are very large (`equity_report_tab.py` is about 4,900 lines; `decision_engine.py` about 1,700), increasing regression risk.
-- AI cost accounting, evidence reuse, and stage-specific model routing are incomplete.
-- The README reflects an earlier five-tab structure and does not fully describe the current Axiom workspace.
+## Current application status
+
+There are **eight navigation entries: seven main workspaces and one V2 pilot**. Session-backed results and several handoffs exist; a universal typed research context does not.
 
-The steps below are ordered by user impact and dependency, not implementation novelty.
+| Workspace | Current capability and implementation approach | Verification and remaining limits |
+| --- | --- | --- |
+| Introduction | Live overview and company snapshot, news, explicit AI summary. Market charts use a shared history adapter and actual Streamlit range controls with Altair hover/zoom. FMP commodity/crypto aliases are mapped; missing quotes fall back to labelled Yahoo daily closes. Company range changes reuse saved analysis. | Eight market tests include three Streamlit interactions across Introduction/Top Movers. Prior desktop/mobile browser checks passed. Universal currency/freshness contracts remain incomplete; company closing-price charts are not total-return series. |
+| Top Movers | Five-trading-day rankings, direction/sector filters, breadth, Serper news, and company handoff. Normalized symbol joins and a bounded quote batch enrich displayed global leaders/laggards. Missing/nonpositive average volume remains unavailable; partial failures preserve valid rows. | Synthetic enrichment/coverage tests and filter interaction coverage. Sector-filtered rows outside the enriched global set may still lack fields. Full cross-workspace handoff is not automatically covered. |
+| Research | LangGraph finance chat with FMP/Marketaux tools, thread checkpoints, structured table handling, response formatting, and sanitized event logs. | Cleaner/configuration tests cover helpers; complete tool-routing/chat interaction coverage remains missing. Changing model/use case currently resets the chat thread without the intended visible new-thread UX. |
+| Equity Report | Sector-aware financial/technical scoring, peers, rankings, optional saved narrative, PDF/Excel/CSV exports, and explicit CrewAI debate over a saved scorecard with fingerprinting and structured output. Duplicate active helper definitions were removed. | Three committee tests cover bounded packets/schema/universe validation. Full report scoring/UI/export coverage is incomplete. The UI module remains approximately 5,707 lines. |
+| Stock Screener | FMP universe filters, paginated results, optional metric enrichment, shared transport, and partial-result metadata. | A hardening contract covers pagination failure metadata. Full filtering/enrichment/UI tests remain missing; module-global key and cache behavior need review for session isolation. |
+| Portfolio Lab | Historical Yahoo adjusted-price optimizer plus hybrid AI manager, constraints, evidence, recommendations, rebalance/monitoring, and reports. Allocation caps preserve residual cash rather than renormalizing above caps. | Constraint/parser regressions are covered. Broad optimizer math, risk assumptions, trade reconciliation, full UI, and Excel/PDF artifact coverage remain incomplete. |
+| Deep Research (V1) | Evidence collection, bounded investigation tools, planning, streaming draft, review/patching, saved checkpoints, retry/resume, follow-ups, comparison output, PDF/JSON/CSV downloads, and optional committee. Saved app context is allowlisted. | Strongest coverage: 32 core, 14 recovery, and 9 UI tests. Citation existence/recovery tests do not prove every factual claim. Real-provider/model quality and full committee costs are not certified by offline tests. |
+| Deep Research V2 | Isolated cost pilot: Economy/Balanced/Maximum Quality, stage routing, compact prompts/output caps, mechanical checks, optional review, saved-session reuse/force refresh, evidence-only/later synthesis, Groq/Ollama light stages, quick/full decisions, diagnostics and budget guard. V1 remains separate. | Five helper/fixture tests. No complete V2 Streamlit/evaluation benchmark or measured savings. Cached request/config reuse is not universal evidence-content/freshness validation; unknown-price models weaken dollar-budget enforcement. |
+
+Entry points: [app.py](app.py), [main.py](src/langgraphagenticai/main.py), [sidebar routing](src/langgraphagenticai/ui/streamlitui/loadui.py). Shared design: [app_shell.py](src/langgraphagenticai/ui/app_shell.py).
+
+**Current configuration limit:** the main OpenAI-key gate exempts Introduction and Top Movers only. Other workspaces, including deterministic Screener/optimizer paths, can still be blocked without that key. Capability-specific gates are remaining work.
+
+## Delivered foundations and how they were built
 
-## Implementation status — 2026-09-27 hardening pass
+| Foundation | Current implementation | Boundaries still outstanding |
+| --- | --- | --- |
+| Provider reliability | Shared FMP REST sessions, safe-GET retries, bounded timeouts and sanitized provider exceptions under `providers/`. FMP MCP has its own bounded transport and investigation budget. | This is shared transport, not one canonical adapter/schema for every financial/news source. |
+| Credential handling | Recursive redaction and safe UI/provider errors in `utils/safety.py`; sanitized timing/request events avoid logging raw prompts. | Complete HTML, link, download, persistence and dependency audits are still required. |
+| Financial correctness | Introduction TTM validates quarterly period/currency alignment; zero is preserved; portfolio caps retain cash; unavailable liquidity is not fabricated as zero. | Universal period/currency/return-basis validation and broad optimizer/scoring tests are incomplete. |
+| Market controls/data | `providers/market_history.py` sorts/deduplicates/filter histories and falls back as a complete labelled series; Introduction uses real range controls; Top Movers tolerates enrichment failures. | Intro market 5D filtering is a calendar-day window, not a guaranteed five trading sessions. FMP daily closing-price and Yahoo adjusted-series bases must remain explicit. |
+| Model-call safety | Bounded direct OpenAI clients. Introduction analysis, saved report/committee actions and Deep Research stages are explicitly initiated and results reused. | No app-wide rerun/navigation/download paid-call regression suite or uniform cost ceiling exists. |
+| Deep Research recovery | Separate evidence/draft/review checkpoints, stage-specific failures, draft preservation, exact review patches and resume paths; model usage estimates when response usage is absent. | Mechanical citation checks are narrower than factual/semantic validation. |
+| Deployment baseline | Python 3.11/3.12 support, developer requirements, dependency constraints, non-root Docker image and health endpoint configuration. | Constraints are not a full transitive lock. Dependency-set parity, clean constrained installs, Docker build/workflow CI and release operations remain unverified. |
+| Contributor workflows | Nine repo-local skills with UI metadata, targeted references and [usage guide](docs/PROJECT_SKILLS.md). | These guide coding agents; they do not add app agents, Jira execution, runtime dependencies or automatic deployments. |
+
+The standalone `crew_ai/stock_picker` example and experimental notebooks are separate from the eight main navigation entries.
+
+## Delivery history
+
+Append new rows; do not rewrite previous delivery claims into release certification.
+
+| ID / date | Delivery and approach | Evidence / status |
+| --- | --- | --- |
+| D-20260927-01 | Hardening and research features: shared transports/redaction, allocation and TTM fixes, partial coverage, bounded model calls, V1 recovery, and optional Equity Report debate. | Commit `ac3e349`; historical [code review](docs/code_review.md). Corresponding fixes exist; broader roadmap acceptance remains open. |
+| D-20260927-02 | Separate V2 cost pilot with compact stage packets/routing, validators, reuse, optional decisions and evaluation fixtures. | Commit `7c73deb`; [V2 implementation](src/langgraphagenticai/deep_research/v2.py). Pilot, not proven savings or default promotion. |
+| D-20260927-03 | README refreshed for the then-current app and pilot. | Commit `ff1709e`; superseded test inventory is corrected in this audit. |
+| D-20261001-01 | Repaired Introduction historical controls and missing commodity/crypto quotes; hardened Top Movers enrichment and missing liquidity; saved summaries survive chart reruns without automatic AI calls. | Current working tree: `market_history.py`, `introduction_tab.py`, `market_overview_data.py`, `top_movers_data.py`, `top_movers_tab.py`, shared shell CSS and `tests/test_market_tabs.py`. V-20261001-01/02 below. |
+| D-20261001-02 | Added nine focused coding skills, invocation guide, metadata and provider/financial/portfolio/export/release references. | Current working tree: `.agents/skills/`, `docs/PROJECT_SKILLS.md`, README. Skill manifests, links, YAML and referenced repository paths validated during that task. |
+| D-20261001-03 | Rebuilt current-state documentation with workspace matrix, dated test inventory, delivery ledger and maintainable roadmap; separated requirements from implementation. | Documentation-only audit. Fresh offline suite and compile/import checks: V-20261001-02. No deployment or new app feature in this entry. |
+
+## Verification ledger
 
-The repository-wide code review initiated the following completed foundations:
+### V-20261001-02 - Fresh documentation audit
 
-- Shared FMP HTTP transport with bounded retries/timeouts and credential-safe provider errors.
-- Centralized secret redaction for logs, UI errors, and structured values.
-- Bounded direct OpenAI clients with a common timeout/retry policy.
-- Cap-safe portfolio allocation with residual cash instead of post-cap renormalization.
-- Period-validated quarterly TTM construction for the Introduction snapshot.
-- Explicit partial-coverage reporting for Top Movers.
-- Reconciled package metadata, deployment constraints, and developer test dependencies.
-- Removal of duplicate active Equity Report function names and updated seven-workspace documentation.
-- Equity Report now has an opt-in, structured CrewAI best-buy debate over the saved scorecard, with specialist dissent, risk controls, input fingerprinting, and no automatic provider recollection.
-- A separate Deep Research V2 pilot now implements the cost-optimization roadmap with stage routing, compact contexts, deterministic validation, caching, cost ceilings, Groq/Ollama light stages, decision modes, and evaluation fixtures while preserving V1 behavior.
+- Full offline pytest: **85 passed, 128 warnings, 116.66 seconds**, across ten modules. Provider/model boundaries in these tests use synthetic/mocked inputs; no paid workflow was requested.
+- Environment: Python **3.12.7**, pytest **7.4.4**, Streamlit **1.64.0**, existing local Anaconda interpreter. The declared dev requirement is pytest >=8,<10; deployment constraints pin Streamlit 1.61.1. This run verifies the current environment, not a clean constrained installation.
+- `python -m compileall -q app.py src` passed. `import app; import langgraphagenticai.main` passed. Import emitted caching and LangGraph deprecation warnings; import success is not full app startup.
+- Pytest warnings: 127 Altair/jsonschema deprecation warnings plus one imported-plugin assertion-rewrite warning from the inventory wrapper. No test failures.
+- No new startup/health, browser interaction, live-provider/model, Docker build, dependency upgrade or paid evaluation was performed for this documentation-only audit.
+- Documentation checks passed: local links and referenced paths, UTF-8/encoding, code-fence balance and `git diff --check`. Hash comparison confirmed all 136 existing source, test and skill files were unchanged by this audit.
 
-The broader typed provenance model, universal freshness components, and canonical cross-workspace `ResearchContext` remain roadmap work; this pass establishes the safety and provider boundaries they will use.
+Reproduce in the project's installed environment from the repository root:
 
----
+```powershell
+$env:PYTHONPATH = (Resolve-Path "src").Path
+python -m pytest -q
+python -m compileall -q app.py src
+python -c "import app; import langgraphagenticai.main"
+```
 
-## 1. Create a canonical market-data and provenance layer
+The audit used a pytest collection plugin to count module inventory; a normal pytest invocation need not reproduce its extra plugin warning. Do not hard-code this developer's interpreter path into shared scripts.
 
-**Why first:** Trust and consistency depend on every page interpreting the same source data the same way.
+### V-20261001-01 - Earlier market-repair verification
 
-**Deliverables**
+The earlier repair task ran the suite (**85 passed, 127 warnings**), compile/import checks, and Streamlit startup/health on port 8507. Browser checks exercised Introduction 1D/1M/1Y charts, restored commodity/crypto quote cards, Top Movers Leaders/Laggards, desktop and 390px mobile layouts. These were live-provider smoke checks with AI actions left unclicked, not an offline certification. Browser console showed chart-library warnings; no JavaScript errors were observed.
 
-- Introduce shared provider adapters for FMP, yfinance, Marketaux, and Serper.
-- Define typed records for security identity, quote, price history, statement value, news item, and provider error.
-- Include provider, retrieved-at time, source as-of date, currency/unit, fiscal period, and freshness status in each record.
-- Add one retry/timeout/rate-limit policy and one normalized error taxonomy.
-- Consolidate duplicate FMP request logic currently spread across company snapshot, Top Movers, Equity Report, Screener, Deep Research, and portfolio modules.
-- Define source precedence and explicitly label fallbacks rather than silently mixing providers.
+This is prior task evidence retained for traceability, not newly repeated by the documentation audit. It does not certify every workspace or currency/coverage combination.
 
-**Acceptance criteria**
+### Test inventory at V-20261001-02
 
-- The same ticker quote requested by two workspaces resolves through the same adapter and metadata model.
-- Provider failures produce a typed partial-data result rather than an empty table or swallowed exception.
-- Contract tests cover success, timeout, rate limit, malformed payload, empty result, and stale result.
-- No API key appears in logs, errors, cache diagnostics, or exports.
+| Module | Collected | Actual protection |
+| --- | ---: | --- |
+| `test_app_health.py` | 2 | Configuration validation only; despite the filename, no startup or HTTP health check |
+| `test_deep_research.py` | 32 | Evidence/provider envelopes, financial periods/trends, tool bounds, orchestration, citation failures and PDF/JSON helpers |
+| `test_deep_research_recovery.py` | 14 | Checkpoints, retries, draft preservation, stream/output failures, review patching and bounded prompts |
+| `test_deep_research_ui.py` | 9 | Mocked V1 Streamlit interactions, saved runs, follow-ups and recovery |
+| `test_deep_research_v2.py` | 5 | Routing/limits, mechanical validators, cache-key inputs, committee packet/estimated usage and fixture presence |
+| `test_equity_committee.py` | 3 | Bounded packet, structured decision consistency and selected-universe guard |
+| `test_formatters.py` | 3 | Numeric formatting and rectangular tables |
+| `test_hardening.py` | 6 | Allocation caps, redaction, TTM alignment, parsers, mover partial batches and Screener metadata |
+| `test_market_tabs.py` | 8 | History/fallback/alias/enrichment contracts and three Streamlit control/state tests |
+| `test_response_cleaner.py` | 3 | Research headings/bullets formatting |
+| **Total** | **85** | **Twelve Streamlit interaction cases are concentrated in V1 Deep Research and market controls** |
 
-**Impact:** Very high | **Effort:** High
+Counts describe collected cases, not a code-coverage percentage.
 
----
+| Coverage target | Current evidence | Remaining acceptance gap |
+| --- | --- | --- |
+| Financial/domain unit tests | Several important regressions protected | Broad scoring, return/risk math, currency, short history and trade reconciliation |
+| Provider contracts | Synthetic FMP/MCP/Serper/Yahoo boundaries in selected tests | Uniform timeout/rate-limit/malformed/stale/empty cases across all adapters, including Marketaux |
+| Streamlit workflows | V1 Deep Research and market controls | Research, Equity Report, Screener, Portfolio Lab, V2, and complete cross-page path |
+| Agent/AI validation | Recovery, citation existence, structured decisions and helper routing | End-to-end tool choice, numerical grounding, model quality, adversarial cases and paid-call invariants |
+| Exports | Deep Research PDF/JSON and formatting helpers | All-workspace PDF/Excel/CSV/JSON artifacts, credential/URL checks and data consistency |
+| Integration/deployment | Fresh compile/import; earlier local health/browser smoke | Automated startup/health plus mocked full workflow, clean install and Docker/CI |
+| Evaluation/observability | Five V2 scenario fixtures; local events and stage diagnostics | Executed scored benchmark, real per-agent usage, application-wide traces and quality thresholds |
 
-## 2. Add universal freshness, source, and data-quality UX
+## Configured limits versus measured outcomes
 
-**Why:** Users cannot judge live financial output without knowing its date, basis, and coverage.
+These are current settings, not measured performance promises.
 
-**Deliverables**
+| Scope | Current settings / mechanism | Limitation |
+| --- | --- | --- |
+| Market cache | Overview/history 300s; Top Movers and company snapshot 900s; company summary 1,800s | No universal freshness-state or narrative evidence fingerprint |
+| Other data caches | Screener universe uses 3,600s; Screener enrichment 1,800s; optimizer price downloads 900s | TTLs alone do not establish correct cross-session/provider/credential cache identity |
+| V1 model stages | Plan 1,200 output tokens / 75s; draft 4,500 standard or 6,000 extended / 150s; review 3,000 / 120s; follow-up 2,200 / 90s | Specific stage policies differ from other direct/graph clients |
+| V2 output/context | Economy draft 1,800 standard / 3,000 extended; other modes 2,200 / 3,500. Draft context 22,000 / 34,000 characters; compact review/follow-up packets | Mechanical validation is not numerical claim verification |
+| V2 routing | Economy defaults to nano light stages and mini drafting; Balanced uses optional review; Maximum Quality uses larger drafting/lead model. Groq/Ollama are opt-in light-stage routes | Alternate-provider operational quality is not established by helper tests |
+| Budget/usage | V2 default UI budget $0.35; stage estimates and session diagnostics; CrewAI aggregate usage split is explicitly estimated | Unknown model prices can evade dollar checks; no proven complete per-agent cost attribution |
+| Saved results | V1/V2 histories isolated; V1 retains five runs, V2 eight; explicit refresh/later-synthesis controls | Session reuse is not durable persistence or a universal freshness-aware cache |
 
-- Build shared source badges, as-of labels, freshness indicators, warning panels, and coverage summaries.
-- Show quote time, statement period, currency, news publication time, and retrieval time in the relevant card/table.
-- Add clear states for live, delayed, cached, stale, fallback, partial, and unavailable data.
-- Add a Data Quality drawer showing provider errors and missing fields without overwhelming the executive view.
-- Replace misleading generic “SYSTEM READY” states with capability-aware status.
+Cold/warm render latency, call-count budgets per workspace, and achieved savings have **not** been benchmarked here. Static model pricing tables need maintenance; do not treat estimates as current provider bills.
 
-**Acceptance criteria**
+## Ten-step roadmap
 
-- Introduction, Top Movers, Equity Report, Screener, Portfolio Lab, and Deep Research all display source and as-of metadata.
-- Stale data has a visible non-color-only warning.
-- Partial data remains usable and names the missing provider/category.
-- A user can distinguish provider facts, calculated fields, and AI interpretation at a glance.
+All ten broad milestones remain **partial**. Individual delivered foundations below do not satisfy every acceptance criterion. Preserve the numbered dependency order; tests accompany each behavioral change rather than waiting for R06.
 
-**Impact:** Very high | **Effort:** Medium
+| ID | Milestone | Current status | Next acceptance focus |
+| --- | --- | --- | --- |
+| R01 | Canonical market data and provenance | Partial | Typed shared records/adapters and provider contract matrix |
+| R02 | Universal freshness/source/data-quality UX | Partial | Consistent states and currency/period/source visibility across pages |
+| R03 | Shared company context and connected journey | Partial | Typed intent handoffs and preserved cross-page state |
+| R04 | Evidence-first validated AI research | Partial | Numerical/period/currency grounding beyond citation existence |
+| R05 | Stable domain modules | Partial | Characterized extraction of large mixed-responsibility modules |
+| R06 | User-critical automated workflow coverage | Partial | Remaining workspace interactions, cross-page path and CI |
+| R07 | Performance/cache/AI economics | Partial; V2 pilot | Measured latency/call counts and complete enforceable cost accounting |
+| R08 | Portfolio decision and monitoring workflow | Partial | Unified holdings/constraints, assumptions and trade reconciliation |
+| R09 | Observability, evaluations and feedback | Partial | Executed versioned evaluation and end-to-end sanitized traces |
+| R10 | Documentation/deployment readiness | Partial | Clean installs, dependency parity, Docker CI and release runbook |
 
----
+### R01 - Canonical data and provenance
 
-## 3. Build a shared company context and connected research journey
+**Impact: very high. Effort: high.** Shared FMP transport and labelled history fallbacks are implemented. REST, MCP, news and portfolio adapters still have different contracts.
 
-**Why:** The highest-value workflow crosses pages: discover a mover, inspect it, research it, compare it, and decide whether it fits a portfolio.
+- [x] Bounded shared REST transport, safe errors and selected partial-result metadata.
+- [ ] Typed security, quote, history, financial value, news and provider-error records with provider, retrieved time, source as-of, unit/currency, period and status.
+- [ ] Consolidate duplicate retrieval/normalization; define source precedence and uniform safe retry/rate-limit behavior.
+- [ ] Normalize/deduplicate Marketaux and Serper news under one contract.
 
-**Deliverables**
+**Acceptance:** two workspaces resolve the same quote through the same adapter/metadata model; failures preserve typed partial results; contracts cover success/timeout/rate limit/malformed/empty/stale; secrets are absent from logs/errors/diagnostics/exports.
 
-- Define a typed `ResearchContext` containing active ticker(s), comparison set, originating page, intended action, evidence IDs, and as-of metadata.
-- Replace ad hoc session keys with explicit navigation helpers.
-- Add consistent actions: Open Snapshot, Ask Research, Build Equity Report, Start Deep Research, Compare, Add to Portfolio Lab, and Return to Results.
-- Preserve completed results and filters across page navigation.
-- Add recent securities and pinned comparison sets using session persistence first, with an optional durable store later.
+### R02 - Universal data-quality UX
 
-**Acceptance criteria**
+**Impact: very high. Effort: medium.** Source/date notes and partial warnings exist in market and research paths; shared shell styling exists.
 
-- A Top Movers ticker can open Research with a formatted, prefilled question and then move into Deep Research without re-entering the ticker.
-- Returning to Top Movers preserves direction, sector, and selected symbol.
-- No navigation action silently clears completed chat or research.
-- Cross-page routing has automated Streamlit interaction tests.
+- [x] Market quote/fallback source notes, unavailable liquidity and partial coverage.
+- [ ] Shared badges, freshness indicators, coverage summaries and data-quality drawer.
+- [ ] Relevant quote/statement/news dates, currency, period and retrieval time on every data-heavy page.
+- [ ] Capability-aware readiness, including deterministic workspaces without an unnecessary model-key gate.
 
-**Impact:** Very high | **Effort:** Medium
+**Acceptance:** every major workspace distinguishes live/delayed/cached/stale/fallback/partial/unavailable using text as well as color; successful partial data survives; provider facts, calculations and AI interpretation are visibly different.
 
----
+### R03 - Connected company context
 
-## 4. Make AI research evidence-first and deterministically validated
+**Impact: very high. Effort: medium.** Existing navigation keys, selected-company handoffs, saved filters/results and Deep Research context collection provide foundations.
 
-**Why:** Attractive prose is not enough; investment research must be traceable and internally consistent.
+- [x] Selected ticker handoffs and allowlisted saved context in some paths.
+- [ ] Typed `ResearchContext`: tickers, comparison set, origin, intent, evidence IDs and dates; shared navigation helpers replace unrelated keys.
+- [ ] Consistent Snapshot/Research/Report/Deep Research/Compare/Portfolio actions and return-to-results.
+- [ ] Recent securities/pinned comparisons, preserved state and visible chat reset/new-thread behavior.
 
-**Deliverables**
+**Acceptance:** mover -> prefilled Research -> Deep Research without re-entry; returning preserves filters; no silent loss of completed work; full path covered by mocked interactions.
 
-- Use structured schemas for research summaries, company briefs, comparison tables, recommendations, risks, catalysts, and invalidation signals.
-- Attach evidence/source identifiers to material claims and display clickable source blocks.
-- Add deterministic validators for figures, currencies, dates, ticker coverage, citation existence, recommendation enums, scenario arithmetic, and period alignment.
-- Flag unsupported claims, contradictions, missing evidence, and stale inputs before rendering a confident conclusion.
-- Reuse the improved formatted research renderer across Research, Introduction AI summary, Equity Report narrative, and committee outputs.
+### R04 - Grounded and validated conclusions
 
-**Acceptance criteria**
+**Impact: very high. Effort: high.** V1 evidence/review recovery, period-aware helpers and committee schemas exist. V2 adds mechanical report checks.
 
-- Every material numerical claim in a structured research brief maps to evidence or is labeled as an estimate/inference.
-- Unknown citations and mismatched periods fail validation visibly.
-- AI output cannot overwrite provider facts or deterministic portfolio calculations.
-- A saved evidence packet can reproduce or audit the displayed conclusion.
+- [x] Evidence identifiers, unknown-citation failure handling, saved packets and structured committee outputs.
+- [ ] Structured briefs/recommendations/risks/catalysts/invalidation across all AI surfaces.
+- [ ] Deterministic numerical/date/currency/period/scenario checks against evidence; surface unsupported or contradictory claims.
+- [ ] Shared grounded renderer and clickable source blocks across chat, snapshots, reports and committees.
 
-**Impact:** Very high | **Effort:** High
+**Acceptance:** material numerical claims map to evidence or labelled estimates; invalid periods/citations fail visibly; AI cannot overwrite facts/calculations; saved inputs audit the conclusion.
 
----
+### R05 - Domain extraction
 
-## 5. Refactor the largest modules into stable domain components
+**Impact: high. Effort: high.** Focused transports/history/validators exist; duplicate active Equity Report names were removed. Major modules remain large: Equity Report ~5,707 lines, portfolio decision engine ~1,893, portfolio data sources ~1,140 at this audit.
 
-**Why:** Large mixed-responsibility files slow improvement and make regressions more likely.
+- [x] New history adapter and focused safety/constraint boundaries.
+- [ ] Characterization tests before extracting Equity Report retrieval, normalization, scoring, narrative, exports and rendering.
+- [ ] Extract portfolio policy/signals/constraints/synthesis/validation with stable interfaces.
+- [ ] Remove provider HTTP from primary pages; consolidate formatting, parsing and report components.
 
-**Deliverables**
+**Acceptance:** materially smaller mixed modules, stable tested public interfaces, and equivalent report outputs before/after extraction.
 
-- Split `equity_report_tab.py` into provider/service, normalization, scoring, narrative, export, and UI sections.
-- Split portfolio `decision_engine.py` into policy, signal calculation, constraints, decision synthesis, and validation.
-- Reduce direct network access from UI files.
-- Consolidate duplicate formatters, safe-number handling, ticker parsing, HTTP helpers, and report components.
-- Add stable interfaces before changing behavior.
+### R06 - Workflow protection
 
-**Acceptance criteria**
+**Impact: high. Effort: medium-high.** Current inventory is 85 cases; V1 recovery and market controls have direct interaction protection.
 
-- No primary Streamlit page contains provider-specific HTTP logic.
-- New domain modules have focused tests and clear public interfaces.
-- Existing report outputs pass characterization/snapshot tests before and after extraction.
-- Large-file line counts and duplicated request/formatting code are materially reduced.
+- [x] Offline core/recovery/UI cases and market repair contracts.
+- [ ] Unit/contract boundary coverage for scoring, filters, optimizer math, periods/currencies and missing/negative/short histories.
+- [ ] Success and empty/failure interactions for every workspace and navigation action.
+- [ ] Mocked discover -> snapshot -> research -> deep research -> portfolio workflow.
+- [ ] CI lint/format/type/tests/import/startup/Docker gates; no `.github` workflow currently exists.
 
-**Impact:** High | **Effort:** High
+**Acceptance:** each workspace has successful and failed/empty interactions, no paid tests, and CI blocks routing/provider/export/weight regressions.
 
----
+### R07 - Performance and cost
 
-## 6. Expand automated coverage to every user-critical workflow
+**Impact: high. Effort: medium-high.** Cached evidence, bounded requests, saved analyses and V2 stage profiles exist.
 
-**Why:** Current tests strongly protect Deep Research but leave other major pages exposed.
+- [x] Isolated Economy/Balanced/Maximum Quality pilot, compact packets and labelled usage estimates.
+- [ ] Cold/warm latency, provider/model call counts, prompt/output size baselines and measurable budgets by workspace.
+- [ ] Evidence-content/freshness-aware reuse, bounded batching/concurrency and explicit refresh.
+- [ ] Complete CrewAI/model cost attribution, unknown-price handling and enforceable pre-run/run ceilings.
+- [ ] Rerun/navigation/download paid-call regression checks and a scored V1/V2 comparison.
 
-**Deliverables**
+**Acceptance:** no unnecessary warm-cache calls; standard research <=3 model calls unless recovery; all-stage cost is included or clearly unknown; latency is visible and the economical route meets quality criteria. Claimed savings require measurements.
 
-- Add unit tests for Introduction, company snapshot, Top Movers ranking, Screener filters, Equity Report scoring, optimizer math, and portfolio constraints.
-- Add provider contract fixtures with synthetic/recorded sanitized payloads.
-- Add Streamlit tests for every navigation page, form submission, empty state, partial state, and cross-page handoff.
-- Add a mocked end-to-end path: discover → snapshot → research → deep research → portfolio.
-- Add CI for lint/format, type checks, tests, import smoke test, and Docker health check.
+### R08 - Portfolio decisions and monitoring
 
-**Acceptance criteria**
+**Impact: high. Effort: high.** Optimizer, AI manager, risk/regime analyses, constraints and monitoring exist; cap arithmetic has targeted protection.
 
-- Every workspace has at least one successful interaction test and one failure/empty-state test.
-- Tests perform no paid model or data-provider calls.
-- Core financial calculations have boundary tests for zero, missing, negative, currency mismatch, and short history.
-- CI blocks regressions in routing, provider contracts, exports, and portfolio weight constraints.
+- [x] Cap-safe constrained allocations with residual cash.
+- [ ] Canonical imported tickers/quantities/cost basis/account/cash and unified optimizer/manager holdings model.
+- [ ] Current/target weights, reconciled trades/capital, turnover, tax/slippage assumptions, exposures and risk contributions.
+- [ ] Explicit benchmark/window/frequency/risk-free/return basis; scenario/stress and attribution methodology.
+- [ ] Saved decision snapshots and evidence/constraint explanations for recommendation changes.
 
-**Impact:** High | **Effort:** Medium-high
+**Acceptance:** trades reconcile within tolerance, corrections are deterministic/explained, assumptions are visible and every proposed trade traces to evidence/constraint/objective.
 
----
+### R09 - Operating evidence and evaluations
 
-## 7. Improve performance, caching, and AI cost controls
+**Impact: medium-high. Effort: medium.** Sanitized events/request IDs, Deep Research stage diagnostics and five V2 scenario fixtures exist.
 
-**Why:** A research workstation must remain fast and predictable as data and agent depth grow.
+- [x] Local event safety/timing and versioned large-cap/sparse/same-sector/cross-sector/missing-data fixtures.
+- [ ] Request IDs spanning UI/providers/tools/models/exports; cache/error/token/cost telemetry across the app.
+- [ ] Execute evaluation for factual/numerical/citation/risk/readability/latency/cost criteria, including adverse news.
+- [ ] Quality thresholds before provider/model default changes and privacy-conscious feedback/issue capture.
 
-**Deliverables**
+**Acceptance:** failed actions are traceable without secrets; releases compare fixed scored fixtures; defaults meet accuracy/latency thresholds; errors offer actionable recovery.
 
-- Establish latency and call-count baselines for each workspace.
-- Apply data-specific cache policies and cache evidence separately from generated narratives.
-- Add request batching, capped concurrency, and provider-level rate-limit handling.
-- Implement Deep Research modes: Economy, Balanced, and Maximum Quality with stage-specific models and token budgets.
-- Include CrewAI calls in cost telemetry; add pre-run cost estimates and configurable spending limits.
-- Ensure reruns, downloads, tab changes, and formatting never repeat paid work.
+### R10 - Deployment and documentation
 
-**Acceptance criteria**
+**Impact: medium-high. Effort: medium.** Current README, subsystem guide, requirements/constraints, non-root Docker setup and project skills are present. This audit repairs documentation organization and stale test claims.
 
-- Warm cached pages make no unnecessary provider requests.
-- Standard Deep Research uses no more than three model calls unless recovery is needed.
-- Displayed run cost includes every model stage and clearly labels estimates.
-- Typical cached navigation feels immediate; provider/model latency is visible when it is not.
+- [x] Eight-entry workspace documentation, living status ledger and contributor skills.
+- [ ] Clean supported-Python installs; reconcile package/requirements extras and reproducible transitive dependencies.
+- [ ] Local/test/production profiles and operational key/capability/freshness matrix.
+- [ ] Dependency/secrets/HTML/URL/export/container checks; accessibility/responsive/onboarding/troubleshooting.
+- [ ] Docker health plus mocked workflow in CI; release versioning/migration/backup/operations runbook.
 
-**Impact:** High | **Effort:** Medium-high
+**Acceptance:** documented clean setup/test/start works; Docker CI passes; docs match runtime limits/paid actions; no known secret/debug artifact/mojibake remains. Local imports and a healthy earlier server alone do not satisfy this.
 
----
+## Delivery sequence and success measures
 
-## 8. Upgrade portfolio analytics into a decision-and-monitoring workflow
+- **Milestone A - Trusted data:** R01-R02.
+- **Milestone B - Connected, grounded research:** R03-R04.
+- **Milestone C - Maintainable and tested platform:** R05-R07.
+- **Milestone D - Portfolio product and production readiness:** R08-R10.
 
-**Why:** The portfolio subsystem is technically rich but can deliver more user value by connecting recommendations to holdings, constraints, and change over time.
+Begin with canonical provider records/contracts, then consistent data-quality display and intent-bearing context. Add tests with each slice. V2 quality/cost experiments stay isolated while these foundations mature.
 
-**Deliverables**
+Track metric provenance coverage; provider failure/partial recovery rate; cold/warm render latency; cross-page completion; citation/numerical validation; calls/tokens/cost per task; workspace interaction coverage; portfolio reconciliation; user usefulness/trust. Targets and measured baselines must be dated, not invented.
 
-- Add portfolio import with canonical validation for tickers, quantities, cost basis, account type, and cash.
-- Unify optimizer output and AI manager recommendations around the same holdings and constraint model.
-- Show current versus target weights, required trades, turnover, taxes/slippage assumptions, concentration, factor/sector exposure, and risk contribution.
-- Add scenario/stress testing and benchmark attribution with explicit methodology.
-- Save decision snapshots so users can compare recommendation changes as evidence updates.
+**Non-goals until R01-R06 are complete:** more loosely integrated providers, autonomous brokerage execution, more agents as a quality proxy, sensitive durable portfolio storage without privacy/authentication design, or mobile-native expansion before responsive workflows are reliable.
 
-**Acceptance criteria**
+## Documentation boundaries and design notes
 
-- Proposed trades reconcile to target weights and available capital within tolerance.
-- Constraint corrections are explained and deterministic.
-- Metrics display benchmark, window, frequency, risk-free rate, and price/return basis.
-- Users can trace each proposed trade to evidence, a constraint, or a portfolio objective.
+- AGENTS: durable engineering rules and maintenance procedure. PLAN: current implementation and dated proof. README: user setup/workflows. [DEEP_RESEARCH.md](DEEP_RESEARCH.md): subsystem behavior.
+- [Cost optimization TODO](TODO_DEEP_RESEARCH_COST_OPTIMIZATION.md) is the original design checklist, not a completion ledger; V2 status and unmet acceptance are recorded here.
+- [Historical code review](docs/code_review.md) retains the September findings and remediation history; its old environment/test counts are not current verification.
+- Shared transport is a foundation for canonical adapters, not a substitute for them. Existing session handoffs are a foundation for typed context, not that model itself.
+- V2 is an isolated experimental boundary. Promote defaults only after executed quality/cost evaluation; keep V1 recovery behavior protected.
 
-**Impact:** High | **Effort:** High
+## Template for continuing updates
 
----
+For each meaningful change, update the relevant matrix and Rxx checkboxes, then append:
 
-## 9. Add observability, evaluation, and user feedback loops
+```text
+Delivery ID / date:
+Related roadmap IDs and workspaces:
+User outcome and acceptance criteria:
+Implementation approach / architectural decision:
+Source paths and test paths:
+Commit or working-tree status:
+Verification ID, commands, environment, results:
+Mocks/live services and checks not performed:
+Remaining risks, follow-up IDs and next acceptance step:
+```
 
-**Why:** Reliability and AI quality cannot improve if failures, latency, and answer quality are invisible.
-
-**Deliverables**
-
-- Add structured request IDs spanning UI action, provider calls, graph/tool calls, model stages, and exports.
-- Record sanitized latency, cache hits, error categories, token usage, and estimated cost.
-- Create an evaluation set covering large cap, sparse coverage, same-sector comparison, cross-sector comparison, missing data, and adverse news.
-- Score factual accuracy, numerical consistency, citation correctness, risk coverage, readability, latency, and cost.
-- Add lightweight answer feedback and issue capture without collecting credentials or sensitive portfolio details by default.
-
-**Acceptance criteria**
-
-- A failed user action can be traced across providers and model stages without exposing secrets.
-- Release comparisons use a fixed, versioned evaluation set.
-- Model/provider changes cannot become defaults until they meet defined accuracy and latency thresholds.
-- Users receive actionable recovery messages rather than raw exceptions.
-
-**Impact:** Medium-high | **Effort:** Medium
-
----
-
-## 10. Finish product hardening, documentation, and deployment readiness
-
-**Why:** The current product has outgrown parts of its setup and documentation.
-
-**Deliverables**
-
-- Rewrite the README around the current seven-workspace Axiom experience and connected workflows.
-- Reconcile `requirements.txt` and `pyproject.toml`; adopt repeatable dependency locking and documented supported Python versions.
-- Add configuration profiles for local, test, and production environments.
-- Add security checks for dependencies, secrets, unsafe HTML, URLs, exports, and container configuration.
-- Add accessibility/responsive review, onboarding, sample workflows, provider capability matrix, and troubleshooting.
-- Define release versioning, migration notes, backup/export expectations, and operational runbook.
-
-**Acceptance criteria**
-
-- A clean environment can install, configure, test, and start the app using documented commands.
-- Docker health and one mocked workflow pass in CI.
-- Documentation matches the current navigation, keys, providers, limits, and data freshness behavior.
-- No known mojibake, committed secret, temporary debug file, or undocumented paid action remains.
-
-**Impact:** Medium-high | **Effort:** Medium
-
----
-
-## Recommended delivery sequence
-
-Use the numbered order. Steps 1–4 establish the product contract; Step 5 makes it safer to extend; Step 6 protects the refactor; Steps 7–9 improve economics and operating quality; Step 10 makes the result maintainable and deployable.
-
-For delivery, group work into four milestones:
-
-- **Milestone A — Trusted data:** Steps 1–2
-- **Milestone B — Connected, grounded research:** Steps 3–4
-- **Milestone C — Maintainable and tested platform:** Steps 5–7
-- **Milestone D — Portfolio product and production readiness:** Steps 8–10
-
-## Success measures
-
-Track these across the roadmap:
-
-- Percentage of visible financial metrics with provider, as-of date, period, and unit/currency.
-- Provider error rate and partial-result recovery rate.
-- Median cold and warm render time per workspace.
-- Cross-page workflow completion rate.
-- Citation and numerical validation pass rate.
-- Model calls, tokens, and cost per completed research task.
-- Automated workflow coverage by workspace.
-- Portfolio recommendation reconciliation/constraint pass rate.
-- User-rated usefulness and trust in research output.
-
-## Explicit non-goals until Steps 1–6 are complete
-
-- Adding more loosely integrated data providers.
-- Adding autonomous trading or brokerage execution.
-- Expanding agent count as a proxy for research quality.
-- Persisting sensitive user portfolios without an authentication, privacy, and storage design.
-- Shipping mobile-native applications before the responsive web workflow is reliable.
+A verification entry should retain the exact date/result and scope even after test counts grow. A delivered subitem can be checked while its parent milestone remains partial. Do not erase unverified work by describing a whole feature as done.

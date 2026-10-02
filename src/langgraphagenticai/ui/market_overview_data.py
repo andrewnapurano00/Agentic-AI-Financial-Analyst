@@ -37,6 +37,8 @@ CROSS_ASSETS = {
     "US 10Y": "^TNX", "Gold": "GC=F", "Oil": "CL=F", "Bitcoin": "BTC-USD",
     "US Dollar": "DX-Y.NYB", "Long Treasuries": "TLT", "Small Caps": "IWM",
 }
+# FMP uses its own commodity/crypto symbols, not Yahoo futures aliases.
+FMP_ALIASES = {"GC=F": "GCUSD", "CL=F": "CLUSD", "BTC-USD": "BTCUSD", "DX-Y.NYB": "DXUSD"}
 MOVER_UNIVERSE = ["AAPL", "MSFT", "NVDA", "AMZN", "GOOGL", "META", "TSLA", "JPM", "LLY", "AVGO"]
 
 
@@ -78,7 +80,8 @@ def _snapshots(prices: pd.DataFrame) -> dict[str, dict[str, float]]:
 
 def _load_fmp_market_overview(api_key: str) -> dict[str, Any]:
     symbols = list(INDEXES.values()) + list(SECTORS.values()) + list(CROSS_ASSETS.values()) + MOVER_UNIVERSE
-    url_symbols = ",".join(sorted(set(symbols)))
+    url_symbols = ",".join(sorted({FMP_ALIASES.get(symbol, symbol) for symbol in symbols}))
+    reverse_aliases = {value: key for key, value in FMP_ALIASES.items()}
     rows = get_fmp_json(
         f"https://financialmodelingprep.com/api/v3/quote/{url_symbols}",
         api_key=api_key,
@@ -89,6 +92,7 @@ def _load_fmp_market_overview(api_key: str) -> dict[str, Any]:
     snapshots = {}
     for row in rows:
         symbol = str(row.get("symbol") or "").upper()
+        symbol = reverse_aliases.get(symbol, symbol)
         price = row.get("price")
         if not symbol or price is None:
             continue
@@ -97,28 +101,33 @@ def _load_fmp_market_overview(api_key: str) -> dict[str, Any]:
         if percent is None:
             previous = float(row.get("previousClose") or 0.0)
             percent = change / previous * 100.0 if previous else 0.0
-        snapshots[symbol] = {"price": float(price), "change": change, "percent": float(percent)}
+        snapshots[symbol] = {"price": float(price), "change": change, "percent": float(percent),
+                             "as_of": str(pd.to_datetime(row.get("timestamp"), unit="s", utc=True, errors="coerce"))}
 
     warnings: list[str] = []
-    try:
-        chart_rows = get_fmp_json(
-            "https://financialmodelingprep.com/api/v3/historical-chart/5min/%5EGSPC",
-            api_key=api_key,
-            timeout=(5, 25),
-        )
-    except Exception as exc:
-        chart_rows = []
-        warnings.append(f"Intraday S&P 500 chart unavailable: {sanitize_error(exc)}")
-    latest_date = str(rows[0].get("timestamp") or "")
-    chart: list[tuple[object, float]] = []
-    if isinstance(chart_rows, list) and chart_rows:
-        newest_day = str(chart_rows[0].get("date", ""))[:10]
-        day_rows = [row for row in chart_rows if str(row.get("date", ""))[:10] == newest_day]
-        for row in reversed(day_rows):
-            if row.get("close") is not None:
-                chart.append((row.get("date"), float(row["close"])))
-        latest_date = day_rows[0].get("date") if day_rows else latest_date
-    market_stamp = pd.to_datetime(latest_date, unit="s", utc=True) if str(latest_date).isdigit() else pd.to_datetime(latest_date, utc=True)
+    for snap in snapshots.values():
+        snap["provider"] = "Financial Modeling Prep"
+    missing = [symbol for symbol in symbols if symbol not in snapshots]
+    if missing:
+        try:
+            fallback_raw = yf.download(tickers=sorted(set(missing)), period="5d", interval="1d", auto_adjust=True, progress=False, group_by="column", threads=False, timeout=15)
+            fallback_prices = _close_frame(fallback_raw)
+            if len(set(missing)) == 1 and list(fallback_prices.columns) == ["Close"]:
+                fallback_prices.columns = missing
+            for symbol, snap in _snapshots(fallback_prices).items():
+                snap["provider"] = "Yahoo Finance (daily close fallback)"
+                snap["as_of"] = str(fallback_prices[symbol].dropna().index[-1])
+                snapshots[symbol] = snap
+            warnings.append("Missing FMP quotes use labelled Yahoo Finance daily closes; these may differ from live quotes.")
+        except Exception as exc:
+            warnings.append(f"Missing-quote fallback unavailable: {sanitize_error(exc)}")
+    unavailable = sorted(set(symbols) - snapshots.keys())
+    if unavailable:
+        warnings.append("No quote coverage for: " + ", ".join(unavailable))
+    market_stamp = pd.to_datetime(rows[0].get("timestamp"), unit="s", utc=True, errors="coerce")
+    if pd.isna(market_stamp):
+        market_stamp = datetime.now(timezone.utc)
+    chart = []  # Historical chart is loaded separately for the selected range.
     movers = sorted(
         ((symbol, snapshots[symbol]) for symbol in MOVER_UNIVERSE if symbol in snapshots),
         key=lambda row: abs(row[1]["percent"]), reverse=True,
@@ -135,29 +144,29 @@ def _load_fmp_market_overview(api_key: str) -> dict[str, Any]:
 
 @st.cache_data(ttl=300, show_spinner=False)
 def load_market_overview(fmp_api_key: str = "") -> dict[str, Any]:
+    warnings = []
     if fmp_api_key.strip():
-        return _load_fmp_market_overview(fmp_api_key.strip())
+        try:
+            return _load_fmp_market_overview(fmp_api_key.strip())
+        except Exception as exc:
+            warnings.append(f"FMP overview unavailable: {sanitize_error(exc)}. Showing Yahoo Finance daily closes.")
     symbols = list(INDEXES.values()) + list(SECTORS.values()) + list(CROSS_ASSETS.values()) + MOVER_UNIVERSE
     raw = yf.download(
         tickers=sorted(set(symbols)), period="5d", interval="1d", auto_adjust=True,
-        progress=False, group_by="column", threads=True,
+        progress=False, group_by="column", threads=False, timeout=15,
     )
     prices = _close_frame(raw)
     snapshots = _snapshots(prices)
+    for symbol, snap in snapshots.items():
+        snap["provider"] = "Yahoo Finance (daily close)"
+        snap["as_of"] = str(prices[symbol].dropna().index[-1])
 
-    intraday_raw = yf.download(
-        tickers="^GSPC", period="1d", interval="5m", auto_adjust=True,
-        progress=False, group_by="column", threads=False,
-    )
-    intraday = _close_frame(intraday_raw)
-    if not intraday.empty:
-        series = pd.to_numeric(intraday.iloc[:, 0], errors="coerce").dropna()
-        chart = [(stamp, float(value)) for stamp, value in series.items()]
-        market_stamp = series.index[-1]
-    else:
-        fallback = pd.to_numeric(prices.get("^GSPC", pd.Series(dtype=float)), errors="coerce").dropna()
-        chart = [(stamp, float(value)) for stamp, value in fallback.items()]
-        market_stamp = fallback.index[-1] if not fallback.empty else datetime.now(timezone.utc)
+    fallback = pd.to_numeric(prices.get("^GSPC", pd.Series(dtype=float)), errors="coerce").dropna()
+    chart = []
+    market_stamp = fallback.index[-1] if not fallback.empty else datetime.now(timezone.utc)
+    missing = sorted(set(symbols) - snapshots.keys())
+    if missing:
+        warnings.append("No quote coverage for: " + ", ".join(missing))
 
     movers = sorted(
         ((symbol, snapshots[symbol]) for symbol in MOVER_UNIVERSE if symbol in snapshots),
@@ -171,5 +180,5 @@ def load_market_overview(fmp_api_key: str = "") -> dict[str, Any]:
         "chart": chart,
         "as_of": market_stamp,
         "fetched_at": datetime.now(timezone.utc),
-        "provider": "Yahoo Finance", "warnings": [],
+        "provider": "Yahoo Finance (daily closes)", "warnings": warnings,
     }

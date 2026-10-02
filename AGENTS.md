@@ -6,6 +6,24 @@ This file defines how coding agents and contributors must work on Axiom Research
 
 The goal is not to add the most features. The goal is to make the existing capabilities trustworthy, connected, fast, explainable, and useful for real investment research.
 
+## Implementation orientation (updated 2026-10-01)
+
+These engineering requirements are the target standard, not a claim that every requirement is already implemented. [PLAN.md](PLAN.md) is the dated source of truth for implementation status, delivery history, verification evidence, and remaining work. Do not infer completion from a module name or a passing test count.
+
+The sidebar currently exposes seven main workspaces plus the isolated **Deep Research V2 cost pilot**. The application entry points are `app.py`, `src/langgraphagenticai/main.py`, and `src/langgraphagenticai/ui/streamlitui/loadui.py`.
+
+| Area | Implementation boundary |
+| --- | --- |
+| Shared presentation | `src/langgraphagenticai/ui/app_shell.py`; page modules orchestrate Streamlit controls |
+| Provider transport | `src/langgraphagenticai/providers/`; shared FMP REST transport and bounded OpenAI clients exist, but adapters and metadata are not yet uniform across every provider |
+| Financial/domain logic | Company snapshot calculations, Equity Report scoring, and `src/langgraphagenticai/portfolio_manager/`; use focused domain modules for new calculations |
+| Research chat | LangGraph graph, nodes, and tools; thread state is session-backed |
+| Deep Research | `src/langgraphagenticai/deep_research/`; V1 orchestration/recovery and isolated V2 routing/validation |
+| Verification | `tests/`; consult the dated inventory in PLAN rather than assuming full workspace or export coverage |
+| Contributor skills | `.agents/skills/`; [project skill guide](docs/PROJECT_SKILLS.md) describes all nine skills and invocation |
+
+Existing ticker handoffs and saved page results use session-state conventions. A canonical typed `ResearchContext`, universal provenance records, and universal freshness UI remain roadmap work. V2 is a pilot; its helpers and fixtures do not establish end-to-end financial accuracy or measured cost savings.
+
 ## Product principles
 
 Every change must improve at least one of these outcomes without materially degrading the others:
@@ -29,6 +47,7 @@ Changes must account for the complete application, not only the active page:
 - **Stock Screener:** FMP universe filtering and metric enrichment.
 - **Portfolio Lab:** historical optimizer plus hybrid AI portfolio manager, constraints, evidence, and reporting.
 - **Deep Research:** evidence collection, planning, report generation, review/recovery, citations, downloads, and optional CrewAI committee.
+- **Deep Research V2:** separate cost pilot with stage-specific routing, compact contexts, mechanical validation, saved-session reuse, and optional quick/full decisions. Preserve V1 behavior when changing the pilot.
 
 ## Architecture requirements
 
@@ -121,7 +140,7 @@ Changes must account for the complete application, not only the active page:
 
 Every behavioral change must add or update tests at the lowest useful level.
 
-Required coverage layers:
+Required coverage targets (current coverage is recorded in PLAN.md; these are not claims of completed coverage):
 
 - Unit tests for calculations, normalization, formatting, validation, and routing.
 - Contract tests with recorded/synthetic responses for FMP, Marketaux, Serper, and yfinance adapters.
@@ -151,6 +170,28 @@ For code changes, agents must:
 - Keep `DEEP_RESEARCH.md` focused on that subsystem; avoid duplicating global architecture guidance.
 - Record architectural decisions that affect multiple workspaces in a short ADR or clearly labeled design note.
 - Use UTF-8 and remove mojibake from user-visible strings and documentation.
+
+## Maintaining the living status record
+
+For each meaningful delivery, update PLAN.md in the same change:
+
+1. Update the affected workspace and roadmap entry using stable IDs R01-R10. Mark only delivered subitems complete; retain unmet acceptance criteria.
+2. Append a delivery entry with date, user outcome, implementation approach, source/test paths, commit or working-tree status, and remaining work.
+3. Record verification separately: command, interpreter/dependency versions, result, test scope, mocks versus live services, and checks not performed. Never present earlier browser evidence as a newly run check.
+4. Keep test totals in PLAN's dated inventory; update README's verification summary when that inventory changes. A passing suite does not establish coverage of untested workflows.
+5. Retain historical review and optimization notes as dated records; link the current status instead of treating old proposals or unchecked lists as implementation truth.
+6. Do not mark a roadmap milestone complete until its acceptance criteria and the definition of done below are satisfied.
+
+Use the project's installed Python 3.11/3.12 environment. For this src-layout repository, the core offline commands from the repository root are:
+
+```powershell
+$env:PYTHONPATH = (Resolve-Path "src").Path
+python -m pytest -q
+python -m compileall -q app.py src
+python -c "import app; import langgraphagenticai.main"
+```
+
+Use pytest for the full inventory; unittest discovery alone misses pytest-style tests. Startup, health, browser interactions, exports, and clean-install checks require their own evidence. Follow [the release-check commands](.agents/skills/axiom-release-check/references/verification-commands.md) for the scope of the change. Documentation-only edits need document/diff validation; do not imply that they required or received a new deployment.
 
 ## Definition of done
 

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Axiom Cost and Performance"
+  short_description: "Reduce rerun latency and repeated research spending"
+  default_prompt: "Use $axiom-cost-performance to measure the affected workflow and reduce repeated calls without weakening evidence or validation."

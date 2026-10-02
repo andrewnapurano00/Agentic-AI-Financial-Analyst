@@ -1,0 +1,4 @@
+interface:
+  display_name: "Axiom Financial Correctness"
+  short_description: "Check fiscal periods, returns, and valuation math"
+  default_prompt: "Use $axiom-financial-correctness to audit the affected company metrics and fix reproducible calculation errors."

@@ -56,9 +56,11 @@ The landing workspace provides an executive market view and an FMP-backed compan
 - Market pulse and index context.
 - Company lookup and canonical ticker handling.
 - Quote, company profile, period-validated fundamentals, valuation, and price performance.
-- Adjusted-price charts and normalized company news.
+- Interactive S&P 500 charts with 1D, 5D, 1M, 3M, and 1Y controls, plus company closing-price charts with 1M, 3M, and 1Y controls.
+- FMP commodity/crypto symbol translation and explicitly labelled Yahoo daily-close fallback for missing quotes. Each chart uses one provider series.
+- Normalized company news.
 - Provider and as-of metadata with missing/partial-data states.
-- Optional evidence-grounded OpenAI summary.
+- Optional evidence-grounded OpenAI summary generated only by Analyze Company; range changes and navigation reuse the saved summary.
 
 ### 2. Top Movers
 
@@ -67,7 +69,7 @@ Top Movers ranks a liquid U.S. equity universe using five trading days of price 
 - Leaders and laggards.
 - Market breadth and sector leadership.
 - Serper news context when configured.
-- Explicit partial-provider coverage warnings.
+- Explicit partial-provider coverage warnings. Displayed leaders/laggards receive one bounded batch of quote enrichment; unavailable average volume is shown as Unavailable rather than zero.
 - Company handoff into downstream research workflows.
 
 ### 3. Research
@@ -287,16 +289,22 @@ $env:PYTHONPATH = (Resolve-Path "src").Path
 python -m pytest -q
 ```
 
-The current verified suite contains **77 passing tests**, covering:
+The 2026-10-01 local audit passed **85 tests**. See [PLAN.md](PLAN.md#verification-ledger) for the dated environment, inventory and coverage gaps. Covered areas include:
 
 - Formatting and response cleanup.
 - Secret redaction and provider hardening.
 - Portfolio constraints and financial invariants.
 - Deep Research planning, evidence, citations, recovery, UI behavior, and exports.
-- Deep Research V2 routing, prompt budgets, deterministic validation, caching, committee accounting, and evaluation fixtures.
-- Application import and health behavior.
+- Deep Research V2 helper routing, prompt limits, mechanical validation, cache keys, estimated committee accounting, and fixture presence.
+- Application configuration validation. Startup/HTTP health checks are separate smoke checks, not covered by `test_app_health.py`.
 
 Live-provider smoke checks should remain explicit and separate from the offline suite.
+
+## Project-specific coding skills
+
+Nine repository skills live in `.agents/skills/` for provider debugging, financial correctness, Streamlit interactions, grounded research, portfolio validation, cost/performance, safe refactoring, exports, and release checks.
+
+In a Codex chat for this project, use a prompt such as `Use $axiom-provider-debug to fix missing ticker data on Top Movers.` See [the project skills guide](docs/PROJECT_SKILLS.md) for selection advice, examples for every skill, and discovery troubleshooting.
 
 ## Architecture
 

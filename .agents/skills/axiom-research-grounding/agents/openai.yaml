@@ -1,0 +1,4 @@
+interface:
+  display_name: "Axiom Research Grounding"
+  short_description: "Ground AI claims and preserve research recovery"
+  default_prompt: "Use $axiom-research-grounding to improve the affected research output and test citations, structured validation, and recovery offline."

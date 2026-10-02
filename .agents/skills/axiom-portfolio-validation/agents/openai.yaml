@@ -1,0 +1,4 @@
+interface:
+  display_name: "Axiom Portfolio Validation"
+  short_description: "Verify allocations, cash, trades, and portfolio risk"
+  default_prompt: "Use $axiom-portfolio-validation to verify the affected weights and rebalance math against the existing constraints."
