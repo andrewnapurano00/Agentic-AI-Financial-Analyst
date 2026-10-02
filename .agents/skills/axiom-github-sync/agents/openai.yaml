@@ -1,0 +1,4 @@
+interface:
+  display_name: "Axiom GitHub Sync"
+  short_description: "Verify, commit, and push project changes to GitHub"
+  default_prompt: "Use $axiom-github-sync to verify, commit, and push the intended current project changes to my GitHub repository."

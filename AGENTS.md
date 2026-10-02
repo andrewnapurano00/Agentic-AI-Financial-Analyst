@@ -20,7 +20,7 @@ The sidebar currently exposes seven main workspaces plus the isolated **Deep Res
 | Research chat | LangGraph graph, nodes, and tools; thread state is session-backed |
 | Deep Research | `src/langgraphagenticai/deep_research/`; V1 orchestration/recovery and isolated V2 routing/validation |
 | Verification | `tests/`; consult the dated inventory in PLAN rather than assuming full workspace or export coverage |
-| Contributor skills | `.agents/skills/`; [project skill guide](docs/PROJECT_SKILLS.md) describes all nine skills and invocation |
+| Contributor skills | `.agents/skills/`; [project skill guide](docs/PROJECT_SKILLS.md) describes all ten skills and invocation, including GitHub commit/push |
 
 Existing ticker handoffs and saved page results use session-state conventions. A canonical typed `ResearchContext`, universal provenance records, and universal freshness UI remain roadmap work. V2 is a pilot; its helpers and fixtures do not establish end-to-end financial accuracy or measured cost savings.
 

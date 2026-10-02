@@ -302,7 +302,7 @@ Live-provider smoke checks should remain explicit and separate from the offline 
 
 ## Project-specific coding skills
 
-Nine repository skills live in `.agents/skills/` for provider debugging, financial correctness, Streamlit interactions, grounded research, portfolio validation, cost/performance, safe refactoring, exports, and release checks.
+Ten repository skills live in `.agents/skills/` for provider debugging, financial correctness, Streamlit interactions, grounded research, portfolio validation, cost/performance, safe refactoring, exports, release checks, and GitHub synchronization. Use `$axiom-github-sync` to request a checked commit and push to this project's repository.
 
 In a Codex chat for this project, use a prompt such as `Use $axiom-provider-debug to fix missing ticker data on Top Movers.` See [the project skills guide](docs/PROJECT_SKILLS.md) for selection advice, examples for every skill, and discovery troubleshooting.
 

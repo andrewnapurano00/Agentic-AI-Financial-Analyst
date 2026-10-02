@@ -1,6 +1,6 @@
 # Axiom project skills
 
-These nine repository skills give Codex reusable workflows for maintaining Axiom Research. They live in `.agents/skills/`, alongside the project, and refer to its actual modules and tests. They are coding workflows; creating them does not add new agents or buttons inside the Streamlit app.
+These ten repository skills give Codex reusable workflows for maintaining Axiom Research. They live in `.agents/skills/`, alongside the project, and refer to its actual modules and tests. They are coding workflows; creating them does not add new agents or buttons inside the Streamlit app.
 
 ## Getting started
 
@@ -37,12 +37,13 @@ No global installation, API key, or additional plugin is needed just to load the
 | [axiom-safe-refactor](../.agents/skills/axiom-safe-refactor/SKILL.md) | You want to extract a focused responsibility from a large module. | `Use $axiom-safe-refactor to extract Equity Report export builders while preserving saved payloads and report content.` |
 | [axiom-export-safety](../.agents/skills/axiom-export-safety/SKILL.md) | PDF/Excel/CSV/JSON content is wrong, unreadable, or potentially unsafe. | `Use $axiom-export-safety to fix the Excel download and test numeric cells, formula injection, and credential filtering.` |
 | [axiom-release-check](../.agents/skills/axiom-release-check/SKILL.md) | You want evidence that a change is ready to hand off or release. | `Use $axiom-release-check to verify the current changes. Report failed and untested checks; do not commit or deploy.` |
+| [axiom-github-sync](../.agents/skills/axiom-github-sync/SKILL.md) | You want a checked commit and push to your GitHub repository. | `Use $axiom-github-sync` |
 
 ## A useful everyday sequence
 
 For a bug, start with the skill that matches the symptom. Ask for a fix when you want changes, or say "review only" when you want findings. The skills distinguish those modes.
 
-For a larger calculation change, combine two relevant skills instead of asking Codex to apply all nine:
+For a larger calculation change, combine two relevant skills instead of asking Codex to apply all ten:
 
 ```text
 Use $axiom-financial-correctness and $axiom-export-safety to fix
@@ -65,7 +66,7 @@ Use $axiom-release-check to verify the change against AGENTS.md.
 Run the relevant offline checks and tell me what remains unverified.
 ```
 
-The release check verifies readiness; committing, deploying, or publishing still requires a separate instruction. Loading a skill does not itself run tests or call providers. The task determines which actions are appropriate.
+The release check verifies readiness; committing, deploying, or publishing still requires a separate instruction. To commit and push, select **Axiom GitHub Sync** from the picker and submit its suggested prompt, or send `Use $axiom-github-sync`. That request authorizes committing and pushing the intended changes to the verified repository and current branch. For inspection only, send `Use $axiom-github-sync for a dry run; do not commit or push`. Opening a skill file does not run it. Git authentication must be available through the normal credential manager; do not paste a token into chat.
 
 ## What a good result should include
 

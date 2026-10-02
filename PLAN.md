@@ -44,7 +44,7 @@ Entry points: [app.py](app.py), [main.py](src/langgraphagenticai/main.py), [side
 | Model-call safety | Bounded direct OpenAI clients. Introduction analysis, saved report/committee actions and Deep Research stages are explicitly initiated and results reused. | No app-wide rerun/navigation/download paid-call regression suite or uniform cost ceiling exists. |
 | Deep Research recovery | Separate evidence/draft/review checkpoints, stage-specific failures, draft preservation, exact review patches and resume paths; model usage estimates when response usage is absent. | Mechanical citation checks are narrower than factual/semantic validation. |
 | Deployment baseline | Python 3.11/3.12 support, developer requirements, dependency constraints, non-root Docker image and health endpoint configuration. | Constraints are not a full transitive lock. Dependency-set parity, clean constrained installs, Docker build/workflow CI and release operations remain unverified. |
-| Contributor workflows | Nine repo-local skills with UI metadata, targeted references and [usage guide](docs/PROJECT_SKILLS.md). | These guide coding agents; they do not add app agents, Jira execution, runtime dependencies or automatic deployments. |
+| Contributor workflows | Ten repo-local skills with UI metadata, targeted references and [usage guide](docs/PROJECT_SKILLS.md), including a requested GitHub sync workflow. | These guide coding agents; they do not add app agents, Jira execution, runtime dependencies or automatic deployments. |
 
 The standalone `crew_ai/stock_picker` example and experimental notebooks are separate from the eight main navigation entries.
 
@@ -60,6 +60,7 @@ Append new rows; do not rewrite previous delivery claims into release certificat
 | D-20261001-01 | Repaired Introduction historical controls and missing commodity/crypto quotes; hardened Top Movers enrichment and missing liquidity; saved summaries survive chart reruns without automatic AI calls. | Current working tree: `market_history.py`, `introduction_tab.py`, `market_overview_data.py`, `top_movers_data.py`, `top_movers_tab.py`, shared shell CSS and `tests/test_market_tabs.py`. V-20261001-01/02 below. |
 | D-20261001-02 | Added nine focused coding skills, invocation guide, metadata and provider/financial/portfolio/export/release references. | Current working tree: `.agents/skills/`, `docs/PROJECT_SKILLS.md`, README. Skill manifests, links, YAML and referenced repository paths validated during that task. |
 | D-20261001-03 | Rebuilt current-state documentation with workspace matrix, dated test inventory, delivery ledger and maintainable roadmap; separated requirements from implementation. | Documentation-only audit. Fresh offline suite and compile/import checks: V-20261001-02. No deployment or new app feature in this entry. |
+| D-20261002-01 | Added `axiom-github-sync`: verifies repository/branch, change scope and applicable checks, then commits/pushes when requested; preserves unrelated work and disallows force-push. Collection now has ten skills. | Skill/docs-only change. Manifest/UI YAML, references and diff checks validated; app tests and live publication not repeated. October 1 work was pushed in commit `930d332`; this skill is a subsequent local change. |
 
 ## Verification ledger
 
