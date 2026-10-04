@@ -399,3 +399,11 @@ The deterministic validator may adjust target weights to enforce position caps, 
 ## License and status
 
 This repository is an actively developed research application. Review the repository license, provider terms, model terms, and market-data redistribution restrictions before production or commercial use.
+
+### Saved V2 result age
+
+Saved V2 results display **Saved result generated**, a UTC timestamp and elapsed age. This records the return of an explicit research or saved-evidence recovery operation, including evidence-only or incomplete output; it does not certify report completeness or evidence freshness. Reopening history, ordinary reruns, cache reuse, decisions and finalization preserve that timestamp. Older results without a valid timezone-aware timestamp show unavailable without fetching data.
+
+Verification for the isolated October 4 timestamp release: **108 offline tests passed**, including 23 timestamp cases; compile/import, local health and a mocked browser saved-result workflow passed. This excludes earlier uncommitted V2 changes. See [PLAN verification](PLAN.md#v-20261004-01---saved-v2-result-generation-age-isolated-release) for scope and deployment limits.
+
+The timestamp change is also installed and browser-verified in the local working tree. Deployment for this run is local only; no Hugging Face publish was requested.

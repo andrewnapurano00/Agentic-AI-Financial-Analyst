@@ -164,6 +164,8 @@ All ten broad milestones remain **partial**. Individual delivered foundations be
 
 ### R02 - Universal data-quality UX
 
+Saved V2 generation-time metadata delivered in AAFA-5 (V-20261004-01); evidence freshness and universal provenance remain open.
+
 **Impact: very high. Effort: medium.** Source/date notes and partial warnings exist in market and research paths; shared shell styling exists.
 
 - [x] Market quote/fallback source notes, unavailable liquidity and partial coverage.
@@ -207,6 +209,8 @@ All ten broad milestones remain **partial**. Individual delivered foundations be
 **Acceptance:** materially smaller mixed modules, stable tested public interfaces, and equivalent report outputs before/after extraction.
 
 ### R06 - Workflow protection
+
+Saved V2 timestamp/reuse interactions have 23 offline cases; the isolated AAFA-5 release inventory is 108 passing cases (V-20261004-01). Remaining workspace/CI criteria stay open.
 
 **Impact: high. Effort: medium-high.** Current inventory is 85 cases; V1 recovery and market controls have direct interaction protection.
 
@@ -303,3 +307,24 @@ Remaining risks, follow-up IDs and next acceptance step:
 ```
 
 A verification entry should retain the exact date/result and scope even after test counts grow. A delivered subitem can be checked while its parent milestone remains partial. Do not erase unverified work by describing a whole feature as done.
+
+### 2026-10-04 - R02 / R06 saved V2 result generation age (AAFA-5)
+
+Working-tree delivery adds a dedicated `deep_research/v2_timestamps.py` helper and bounded V2 UI hooks for an explicit operation-completion timestamp, UTC display and elapsed age. Evidence-only/incomplete returns are labeled as saved results; this timestamp is distinct from evidence freshness and report completeness (D01-D03). Legacy timestamps remain unavailable rather than inferred. History, cache reuse and ordinary reruns preserve saved time; optional decisions and finalization do not advance it. Sources: `src/langgraphagenticai/ui/deep_research_v2_tab.py`, `tests/test_deep_research_v2_timestamps.py`. This delivers only the saved-generation-time subitem; universal provenance/freshness and remaining R02/R06 acceptance criteria stay open. Fresh verification and release evidence are recorded separately by the feature coordinator.
+
+
+### V-20261004-01 - Saved V2 result generation age (isolated release)
+
+AAFA-5 / R02 / R06: the release candidate applies only the timestamp enhancement to committed baseline `619494c`; earlier uncommitted V2 recovery/quarterly work remains local and is excluded. The new helper and 23 timestamp tests are identical in the working tree and isolated release. UI integration uses each version's existing manager factory, with equivalent completed run/resume hooks and read-only rendering.
+
+- Full isolated release inventory: `PYTHONPATH=src; python -m pytest -q` -> **108 passed**, 127 existing Altair/jsonschema deprecation warnings, 57.32s. Anaconda Python 3.12.7, pytest 7.4.4, Streamlit 1.64.0. Offline mocks/fixtures; no paid model or live financial-provider calls. This is the release inventory, not a remeasurement of the larger uncommitted working tree.
+- Working-tree builder evidence: 23 dedicated timestamp tests passed (28.14s); earlier combined run of 22 timestamp + 28 recovery tests passed (50 tests, 49.74s); two temporary tests for pre-existing finalization/decision-retry controls passed (11.56s). Temporary tests are not part of the release inventory.
+- Independent verifier: corrected candidate's 23 timestamp tests passed (30.98s); affected modules compiled and diff checks passed. F01 encoding error in candidate preparation was corrected and rechecked; no unresolved introduced defect or follow-up ticket candidate.
+- Final candidate: `python -m compileall -q app.py src` and import of app/main/timestamp helper/V2 UI passed. Fresh full-app Streamlit startup and `/_stcore/health` passed on port 8530; offline harness health passed on 8531. Health is separate from page-interaction evidence.
+- Fresh browser test used the actual candidate V2 UI with synthetic saved modern/legacy results and mocked research factory; HTTP/model boundaries blocked. History selection displayed explicit legacy-unavailable fallback. A new synthetic operation recorded UTC time, saved reuse retained it, and full rerun/tab navigation/memo download retained the exact timestamp with research operations=1 and external calls=0. Browser screenshots/harness stayed outside the repo; harness PDF was a placeholder, and actual PDF generation was not retested for this metadata-only change.
+- Scope limitations: no live financial-quality run, clean dependency installation, Docker build or hosted deployment verification. Existing Hugging Face Space is identified but has no local authenticated credentials; GitHub has no Actions workflow/deployment records. AAFA-5 remains In Progress until deployed verification. No follow-up tickets were warranted. Broad R02/R06 acceptance criteria remain open.
+
+
+### Local deployment verification - 2026-10-04
+
+The user clarified that deployment means updating the local application; Hugging Face publishing is outside this run. Local source changes are installed in the existing working tree. A fresh local app on port 8533 returned `ok` from `/_stcore/health`; affected modules compiled and app/main/V2 imports passed. A separate offline browser harness on 8532 exercised the actual working-tree V2 UI: modern/legacy history, new generation, saved reuse, Sources tab, memo download and full rerun. UTC timestamp remained `2026-10-04T23:34:54...` across reuse, with research operations=1 and external calls=0. The synthetic report/PDF boundary is mocked; no paid/live financial calls. The earlier isolated-release checks remain separate evidence. This verifies the requested local deployment, not a hosted release. AAFA-5 can complete after the verified scoped commit/push; no follow-up defect ticket was warranted.

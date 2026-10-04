@@ -125,3 +125,7 @@ python -m pytest tests/test_deep_research.py tests/test_deep_research_recovery.p
 ```
 
 Tests use synthetic data and mocked provider/model responses; they do not consume API credits. See [PLAN.md](PLAN.md#verification-ledger) for the current inventory and limits. V2 helper tests and fixture presence do not establish end-to-end quality or achieved savings.
+
+### Saved V2 generation timestamp (AAFA-5)
+
+`result_generated_at` records explicit V2 research or recovery completion in timezone-aware UTC, separately from the run start (`created_at`), stage updates (`updated_at`) and evidence dates. The result panel shows **Saved result generated**, UTC time and age in minutes, hours or days. Evidence-only and incomplete returned results also receive this operation timestamp; it does not mean that a report is complete. Optional decisions and finalization preserve it, as do history selection, cache reuse and ordinary reruns. Missing, malformed or timezone-naive legacy timestamps show unavailable; future timestamps disclose a clock mismatch. No date is backfilled and no provider/model call is triggered by the display.

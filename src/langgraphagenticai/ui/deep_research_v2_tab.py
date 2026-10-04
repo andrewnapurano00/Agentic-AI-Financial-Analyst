@@ -19,6 +19,7 @@ from langgraphagenticai.deep_research.v2 import (
 from langgraphagenticai.tools.finance_tool_registry import get_finance_tools
 from langgraphagenticai.tools.serper_tools import SerperClient
 from langgraphagenticai.ui.deep_research_tab import _render_comparison, _render_crew_decision, _render_sources
+from langgraphagenticai.deep_research.v2_timestamps import format_saved_time, saved_result_caption, stamp_saved_result
 from langgraphagenticai.utils.safety import sanitize_error
 
 
@@ -153,6 +154,8 @@ def render_deep_research_v2_tab(*, openai_api_key: str, fmp_api_key: str, serper
                     )
                     context = collect_app_context(st.session_state, request.symbols) if use_context else []
                     result = manager.run(request, context)
+                    st.session_state["drv2_history"] = stamp_saved_result(
+                        result, st.session_state.get("drv2_history", []))
                     result.update({"v2_config": config, "request_cache_key": lookup_key, "cost_mode": mode,
                                    "cache_key": research_cache_key(request, config, result.get("evidence", [])),
                                    "v2_runtime": {"budget": float(budget), "ollama_base_url": ollama_base_url}})
@@ -200,7 +203,7 @@ def render_deep_research_v2_tab(*, openai_api_key: str, fmp_api_key: str, serper
         return
     lookup = {item["id"]: item for item in history}
     selected = st.selectbox("V2 run history", list(lookup), key="drv2_active_run",
-                            format_func=lambda key: f"{', '.join(lookup[key]['request']['symbols'])} · {lookup[key].get('cost_mode')} · {lookup[key]['status']}")
+                            format_func=lambda key: f"{', '.join(lookup[key]['request']['symbols'])} · {lookup[key].get('cost_mode')} · Run started: {format_saved_time(lookup[key].get('created_at'))} · {key[:6]}")
     result = lookup[selected]
     config = result.get("v2_config", {})
     request = ResearchRequest(**result["request"])
@@ -211,6 +214,7 @@ def render_deep_research_v2_tab(*, openai_api_key: str, fmp_api_key: str, serper
     metrics[2].metric("Model calls", len([d for d in result.get("diagnostics", []) if d.get("model") != "python"]))
     metrics[3].metric("Est. model cost", f"${float(result.get('estimated_model_cost_usd') or 0):.4f}")
     metrics[4].metric("Elapsed", f"{float(result.get('elapsed_seconds') or 0):.1f}s")
+    st.caption(saved_result_caption(result))
     session_cost = sum(float(item.get("estimated_model_cost_usd") or 0) for item in history)
     st.caption(f"V2 session estimated model cost: ${session_cost:.4f}")
     st.caption(f"Cache key: {result.get('cache_key', 'pending')} · Reopening, tabs, and downloads make no model calls.")
@@ -227,6 +231,8 @@ def render_deep_research_v2_tab(*, openai_api_key: str, fmp_api_key: str, serper
                     budget=float(runtime.get("budget", 0.35)), stop_after_evidence=False,
                 )
                 updated = manager.resume(result)
+                st.session_state["drv2_history"] = stamp_saved_result(
+                    updated, st.session_state.get("drv2_history", []))
                 updated.update({"v2_config": config, "request_cache_key": result.get("request_cache_key"),
                                 "cache_key": result.get("cache_key"), "cost_mode": result.get("cost_mode")})
                 st.session_state["drv2_history"] = [updated if item["id"] == selected else item for item in history]
