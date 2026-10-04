@@ -84,3 +84,8 @@ Ready to commit timestamp-only source/tests/docs plus this report on main. The s
 The user clarified that deployment means updating the local application; Hugging Face publishing is outside this run. Local source changes are installed in the existing working tree. A fresh local app on port 8533 returned `ok` from `/_stcore/health`; affected modules compiled and app/main/V2 imports passed. A separate offline browser harness on 8532 exercised the actual working-tree V2 UI: modern/legacy history, new generation, saved reuse, Sources tab, memo download and full rerun. UTC timestamp remained `2026-10-04T23:34:54...` across reuse, with research operations=1 and external calls=0. The synthetic report/PDF boundary is mocked; no paid/live financial calls. The earlier isolated-release checks remain separate evidence. This verifies the requested local deployment, not a hosted release. AAFA-5 can complete after the verified scoped commit/push; no follow-up defect ticket was warranted.
 
 User clarification supersedes the earlier hosting/authentication blocker. Local deployment is verified; source sync remains authorized. Implementation ticket will be completed only after recording verification and scoped GitHub push. Four creation attempts remain unused.
+
+
+### Final delivery ? 2026-10-04
+
+Local deployment was verified as requested; no Hugging Face deployment was performed. Feature commit `31580ef0dd667357bd836849aea9c6d5906eaaf3` was pushed to `origin/main`, and its remote SHA was verified. AAFA-5 received verification comment 10108 and was transitioned to **Done** after local deployment verification. No substantive unresolved issues required follow-up tickets. Unrelated working-tree changes were preserved.
