@@ -18,7 +18,10 @@ from langgraphagenticai.tools.finance_tool_registry import get_finance_tools
 from langgraphagenticai.tools.serper_tools import SerperClient
 
 
-class QuarterlyResearchManager(ResearchManager):
+from .research_workflow import AuditedResearchManager
+
+
+class QuarterlyResearchManager(AuditedResearchManager):
     def run(self, request, app_context=()):
         # Session snapshots may contain provider TTM facts from other workspaces.
         result = super().run(request, app_context=())
@@ -27,13 +30,8 @@ class QuarterlyResearchManager(ResearchManager):
 
 
 def get_v2_finance_tools(fmp_api_key, openai_api_key="", marketaux_api_key=""):
-    # Explicit allowlist: new tools cannot silently introduce TTM dependencies.
-    safe = {"get_company_profile", "get_price_snapshot", "get_latest_earnings_transcript",
-            "get_earnings_transcript", "get_analyst_estimates", "get_price_target_consensus",
-            "get_available_earnings_transcript_periods", "get_company_peers",
-            "get_dcf_valuation", "get_levered_dcf", "get_ratings_snapshot", "get_stock_grades",
-            "get_company_earnings", "get_dividend_history", "get_esg_ratings", "get_esg_bundle"}
-    return [tool for tool in get_finance_tools(fmp_api_key, openai_api_key, marketaux_api_key) if tool.name in safe]
+    from .research_workflow import audited_finance_tools
+    return audited_finance_tools(get_finance_tools(fmp_api_key, openai_api_key, marketaux_api_key))
 
 
 def preflight(config, stages, *, openai_api_key="", groq_api_key="",
@@ -114,7 +112,7 @@ def build_manager(*, request, config, openai_api_key, groq_api_key, fmp_api_key,
         interpretive_review=config["interpretive_review"] or bool(saved and saved.get("status") == "review_pending"),
         max_estimated_cost_usd=budget, stop_after_evidence=stop_after_evidence,
     )
-    manager.comparison_builder = quarterly_comparison_rows if not saved or saved.get("financial_methodology") == METHODOLOGY else manager.comparison_builder
+    manager.comparison_builder = quarterly_comparison_rows
     return manager
 
 

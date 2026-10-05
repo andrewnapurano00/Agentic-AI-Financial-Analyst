@@ -155,10 +155,12 @@ def _financial_basis_table(rows: list[dict], body_style: ParagraphStyle) -> Tabl
             return "-"
         try:
             number = float(value)
-            return f"{number * 100 if derived or abs(number) <= 2 else number:,.1f}%"
+            return f"{number * 100:,.1f}%"
         except (TypeError, ValueError):
             return _format_value(value)
 
+    from .research_metrics import project_sector_row
+    rows = [project_sector_row(row) for row in rows]
     table_rows = [["Company", "Basis", "Period end", "Revenue", "Op. margin", "Net income", "Free cash flow"]]
     for row in rows:
         derived = bool(row.get("TTM methodology"))
@@ -210,6 +212,8 @@ def _comparison_table(rows: list[dict], body_style: ParagraphStyle,
                       sector_frameworks: list[dict] | None = None) -> Table | None:
     if not rows:
         return None
+    from .research_metrics import project_sector_row
+    rows = [project_sector_row(row) for row in rows]
     default_metrics = [
         ("Price", "Price", "money"),
         ("Estimate period", "Forward period", "text"),
@@ -250,35 +254,11 @@ def _comparison_table(rows: list[dict], body_style: ParagraphStyle,
         value = row.get(key)
         if value is None or value == "":
             return "-"
-        if kind == "percent":
-            try:
-                number = float(value)
-                # Provider margins/yields/returns-on-capital are usually fractions;
-                # calculated growth and price changes are already percentage points.
-                derived_fraction = row.get("TTM methodology") and (any(term in key for term in ("Margin", "margin")) or key in {"ROE", "ROA", "Earnings Yield", "FCF Yield", "FCF yield (TTM, fraction)"})
-                if derived_fraction or (abs(number) <= 2 and any(term in key for term in
-                                            ("Margin", "Yield", "ROE", "ROA", "ROIC", "Payout"))):
-                    number *= 100
-                return f"{number:,.1f}%"
-            except (TypeError, ValueError):
-                return _format_value(value)
-        if kind == "multiple":
-            try:
-                return f"{float(value):,.1f}x"
-            except (TypeError, ValueError):
-                return _format_value(value)
-        if kind == "money":
-            try:
-                number = float(value)
-                if abs(number) >= 1_000_000_000:
-                    return f"${number / 1_000_000_000:,.1f}B"
-                if abs(number) >= 1_000_000:
-                    return f"${number / 1_000_000:,.1f}M"
-                return f"${number:,.2f}"
-            except (TypeError, ValueError):
-                return _format_value(value)
-        return _format_value(value)
+        from .research_metrics import format_metric
+        return format_metric(key, value, row)
 
+    from .research_metrics import DISPLAY_LABELS
+    metrics = [(key, DISPLAY_LABELS.get(key,label),kind) for key,label,kind in metrics]
     symbols = [str(row.get("Ticker") or f"Company {index + 1}") for index, row in enumerate(rows)]
     header_style = ParagraphStyle("MatrixHeader", parent=body_style, fontName=BOLD_FONT,
                                   fontSize=8.2, leading=10, textColor=colors.white, alignment=TA_CENTER)
@@ -531,6 +511,9 @@ def build_research_pdf(result: dict) -> bytes:
         story.extend([panel, Spacer(1, 0.18 * inch)])
 
     frameworks = result.get("sector_frameworks", [])
+    from .quarterly_ttm import METHODOLOGY
+    if result.get("financial_methodology") != METHODOLOGY:
+        story.append(Paragraph("Saved legacy financial methodology: original comparison values preserved. Fresh research is required for audited quarterly metrics.", styles["BodyText"]))
     framework_names = list(dict.fromkeys(str(item.get("framework")) for item in frameworks if item.get("framework")))
     if frameworks:
         focus_header = ParagraphStyle("FocusHeader", parent=styles["TableBody"], fontName=BOLD_FONT,
@@ -564,6 +547,18 @@ def build_research_pdf(result: dict) -> bytes:
             Spacer(1, 0.07 * inch), basis, Spacer(1, 0.14 * inch),
         ])
 
+    from .research_metrics import project_sector_row
+    audit_rows = [(row.get("Ticker"), key, contract) for row in [project_sector_row(value) for value in result.get("comparison", [])]
+                  for key, contract in row.get("Metric contracts", {}).items()]
+    if audit_rows:
+        story.append(Paragraph("Metric audit: methodology, units and input basis", styles["Heading2"]))
+        story.append(Paragraph("Forward growth compares FY+2 with FY+1. Latest quarterly balances and matched beginning/end return snapshots are separate. Raw source evidence remains available in audit JSON; arithmetic checks do not certify AI-written numerical claims.", styles["BodyText"]))
+        for symbol,key,contract in audit_rows:
+            text = f"{symbol}: {key}; unit {contract.get('unit')}; currency {contract.get('currency') or 'not applicable/unavailable'}; status {contract.get('status')}; applicability {contract.get('applicability')}; {contract.get('formula')}; "
+            dates = [str(item.get('date')) for item in contract.get('inputs', []) if item.get('date')]
+            text += "Input dates: " + (", ".join(dates) or "unavailable")
+            if contract.get('reason'): text += "; " + contract['reason']
+            story.append(Paragraph(_plain_inline(text), styles["TableBody"]))
     comparison = _comparison_table(result.get("comparison", []), styles["TableBody"], frameworks)
     if comparison:
         story.extend([KeepTogether([

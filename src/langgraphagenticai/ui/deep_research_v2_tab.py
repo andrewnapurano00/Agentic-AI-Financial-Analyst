@@ -8,6 +8,7 @@ import streamlit as st
 
 from langgraphagenticai.deep_research.context import available_context, collect_app_context
 from langgraphagenticai.deep_research.v2_workflow import build_manager, run_decision
+from langgraphagenticai.deep_research.quarterly_ttm import METHODOLOGY
 from langgraphagenticai.deep_research.manager import failure_reason, finalize_report
 from langgraphagenticai.deep_research.models import Evidence, ResearchRequest, dumps, parse_symbols
 from langgraphagenticai.deep_research.presentation import build_research_pdf, clean_report_markdown
@@ -74,7 +75,7 @@ def _render_quick_decision(decision: dict) -> None:
 def render_deep_research_v2_tab(*, openai_api_key: str, fmp_api_key: str, serper_api_key: str = "",
                                 marketaux_api_key: str = "", groq_api_key: str = "") -> None:
     st.subheader("Deep Research V2 · Cost Pilot")
-    st.caption("A separate experimental workflow for comparing lighter models, smaller prompts, deterministic checks, caching, and bounded spend. Deep Research V1 is unchanged.")
+    st.caption("A separate experimental workflow for comparing lighter models, smaller prompts, deterministic checks, caching, and bounded spend. Both versions share audited financial calculations; V2 retains separate model routing and cost controls.")
     st.warning("Pilot output may differ from V1. Validate investment conclusions against the Sources tab before relying on them.")
 
     connections = available_context(st.session_state)
@@ -138,7 +139,7 @@ def render_deep_research_v2_tab(*, openai_api_key: str, fmp_api_key: str, serper
             context = collect_app_context(st.session_state, request.symbols) if use_context else []
             lookup_key = research_cache_key(request, {"routing": config, "runtime": runtime,
                                                       "app_context": [item.to_dict() for item in context]})
-            metadata = {"financial_methodology": "quarterly-ttm-v1", "v2_config": config, "request_cache_key": lookup_key, "cost_mode": mode,
+            metadata = {"financial_methodology": METHODOLOGY, "v2_config": config, "request_cache_key": lookup_key, "cost_mode": mode,
                         "v2_runtime": runtime}
             cached = next((item for item in history if item.get("request_cache_key") == lookup_key
                            and item.get("status") in {"complete", "needs_review", "evidence_ready"}), None)
@@ -219,7 +220,7 @@ def render_deep_research_v2_tab(*, openai_api_key: str, fmp_api_key: str, serper
     retry_label = "Generate report from saved evidence" if status == "evidence_ready" else "Retry review" if result.get("draft") else "Retry report writing"
     if status in {"evidence_ready", "incomplete", "review_pending", "collecting", "reviewing"} and usable:
         st.info("Recovery uses saved evidence and drafts. It does not fetch provider data again.")
-        legacy = result.get("financial_methodology") != "quarterly-ttm-v1"
+        legacy = result.get("financial_methodology") != METHODOLOGY
         if legacy:
             st.warning("Legacy saved evidence uses the earlier financial methodology and may contain provider TTM facts. Start fresh research for quarterly-derived TTM.")
         legacy_ack = st.checkbox("Use legacy saved financial evidence for this recovery", key=f"drv2_legacy_{selected}") if legacy else True

@@ -39,7 +39,7 @@ def technical_snapshot(rows: list[dict]) -> dict:
         return {}
     frame["value"] = pd.to_numeric(frame[price_col], errors="coerce")
     frame = frame.dropna(subset=["date", "value"]).sort_values("date").drop_duplicates("date")
-    frame = frame[frame["value"] > 0]
+    frame = frame[(frame["value"] > 0) & np.isfinite(frame["value"]) & (frame["date"].dt.date <= date.today())]
     if frame.empty:
         return {}
     close = frame["value"].reset_index(drop=True)
@@ -52,6 +52,10 @@ def technical_snapshot(rows: list[dict]) -> dict:
         result[f"sma_{window}"] = float(close.tail(window).mean()) if len(close) >= window else None
     for name, days in (("return_1m_pct", 21), ("return_3m_pct", 63), ("return_1y_pct", 252)):
         result[name] = (last / float(close.iloc[-days - 1]) - 1) * 100 if len(close) > days else None
+    prior_year = frame[frame["date"].dt.year < frame["date"].iloc[-1].year]
+    has_prior_year_end = not prior_year.empty and (date(frame["date"].iloc[-1].year,1,1)-prior_year["date"].iloc[-1].date()).days <= 10
+    result["return_ytd_pct"] = (last / float(prior_year["value"].iloc[-1]) - 1)*100 if has_prior_year_end else None
+    result["ytd_reference_date"] = prior_year["date"].iloc[-1].date().isoformat() if not prior_year.empty else None
     if len(close) > 14:
         delta = close.diff().dropna()
         gains, losses = delta.clip(lower=0), -delta.clip(upper=0)
@@ -90,6 +94,18 @@ def financial_trends(evidence: list[Evidence], symbols: list[str]) -> list[Evide
                              and r.get("period") == latest.get("period")
                              and r.get("reportedCurrency") == latest.get("reportedCurrency")), None)
             if previous is None:
+                continue
+            from .quarterly_ttm import flow_duration
+            if not flow_duration(latest)[0] or not flow_duration(previous)[0]:
+                continue
+            try:
+                latest_date=date.fromisoformat(str(latest["date"]))
+                previous_date=date.fromisoformat(str(previous["date"]))
+                if latest_date>date.today() or not 330<=(latest_date-previous_date).days<=400:
+                    continue
+            except (ValueError,TypeError,KeyError):
+                continue
+            if latest.get("symbol",symbol)!=symbol or previous.get("symbol",symbol)!=symbol or not latest.get("reportedCurrency"):
                 continue
             for field in fields:
                 try:

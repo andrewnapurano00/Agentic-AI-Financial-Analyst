@@ -6,6 +6,8 @@ import streamlit as st
 import pandas as pd
 import altair as alt
 from langgraphagenticai.providers.market_history import load_market_chart, RANGES
+from langgraphagenticai.providers.symbol_history import load_symbol_history, clear_history_cache
+from langgraphagenticai.ui.technical_chart import render_technical_chart
 
 from langgraphagenticai.ui.company_snapshot import (
     generate_company_summary,
@@ -82,7 +84,7 @@ def _company_chart(series: list[dict]) -> str:
     return _line_chart(points)
 
 
-def _render_company_snapshot(snapshot: dict, summary: str) -> None:
+def _render_company_snapshot(snapshot: dict, summary: str, fmp_api_key="", openai_api_key="", model_name="gpt-5") -> None:
     quote, fundamentals, performance = snapshot["quote"], snapshot["fundamentals"], snapshot["performance"]
     pct = quote.get("change_pct") or 0.0
     state = "up" if pct >= 0 else "down"
@@ -112,18 +114,14 @@ def _render_company_snapshot(snapshot: dict, summary: str) -> None:
     error_note = f'<div class="source-warning">Unavailable datasets: {escape(", ".join(source_errors))}</div>' if source_errors else ""
 
     st.subheader(f"{snapshot['symbol']} historical prices")
-    period = st.segmented_control("Company historical range", ["1M", "3M", "1Y"], default="1Y", key=f"intro_company_range_{snapshot['symbol']}") or "1Y"
-    series = pd.DataFrame(performance.get("series", []))
-    if not series.empty:
-        series["date"] = pd.to_datetime(series["date"], errors="coerce")
-        series = series.dropna(subset=["date", "close"]).sort_values("date")
-        if not series.empty:
-            days = {"1M": 31, "3M": 93, "1Y": 366}[period]
-            series = series[series["date"] >= series["date"].max() - pd.Timedelta(days=days)]
-            _interactive_price_chart(series.set_index("date")[["close"]], "close")
-            st.caption(f"FMP | As of {performance.get('as_of', 'unavailable')} | Historical closing prices; price performance, not total return.")
-    else:
-        st.info("Historical company prices unavailable. Other company data is preserved.")
+    period = st.segmented_control("Company historical range", list(RANGES), default="1Y", key=f"intro_company_range_{snapshot['symbol']}") or "1Y"
+    if st.button("Retry company chart", key=f"intro_company_chart_retry_{snapshot['symbol']}"):
+        clear_history_cache()
+    try:
+        chart = load_symbol_history(snapshot["symbol"], fmp_api_key, period, profile.get("currency", ""))
+    except Exception as exc:
+        chart = {"points": [], "warnings": ["Company chart unavailable: " + sanitize_error(exc)]}
+    render_technical_chart(chart, key=f"intro_company_technical_{snapshot['symbol']}", openai_api_key=openai_api_key, model_name=model_name)
     st.markdown(f'''
       <div class="company-head terminal-card"><div><small>COMPANY SNAPSHOT / {escape(snapshot['symbol'])}</small><h2>{escape(snapshot['company'])}</h2><p>{escape(str(profile.get('sector') or 'N/A'))} · {escape(str(profile.get('industry') or 'N/A'))}</p></div>
         <div class="company-price"><span>LAST PRICE</span><strong>${_fmt(quote.get('price'))}</strong><em class="{state}">{pct:+.2f}%</em></div><div class="company-price"><span>MARKET CAP</span><strong>{_money(quote.get('market_cap'))}</strong><em>FMP</em></div></div>
@@ -163,23 +161,20 @@ def _brief(data: dict) -> tuple[str, list[tuple[str, str, str]]]:
     ]
 
 
-def _render_market_chart(fmp_api_key: str) -> None:
+def _render_market_chart(fmp_api_key: str, openai_api_key="", model_name="gpt-5") -> None:
     period = st.segmented_control("S&P 500 historical range", list(RANGES), default="1D", key="intro_chart_range") or "1D"
+    if st.button("Retry market chart", key="intro_market_chart_retry"):
+        load_market_chart.clear()
+        clear_history_cache()
     try:
         chart = load_market_chart(fmp_api_key, period)
     except Exception as exc:
         chart = {"points": [], "warnings": [f"Historical chart unavailable: {sanitize_error(exc)}"], "provider": "Unavailable"}
-    for warning in chart["warnings"]:
-        st.warning(warning)
-    if chart["points"]:
-        frame = pd.DataFrame(chart["points"], columns=["Date", "Index level"]).set_index("Date")
-        _interactive_price_chart(frame, "Index level")
-        st.caption(f"S&P 500 | {period} | {chart['provider']} | As of {frame.index[-1]} | Index points; price performance, not total return.")
-    else:
-        st.info("Historical prices are unavailable for this range. Choose another range or refresh.")
+    chart.setdefault("period", period)
+    render_technical_chart(chart, key="intro_market_technical", openai_api_key=openai_api_key, model_name=model_name)
 
 
-def _dashboard(data: dict, mode: str, fmp_api_key: str = "") -> None:
+def _dashboard(data: dict, mode: str, fmp_api_key: str = "", openai_api_key="", model_name="gpt-5") -> None:
     indexes = data["indexes"]
     sp = indexes.get("S&P 500") or {}
     as_of = data["as_of"]
@@ -226,7 +221,7 @@ def _dashboard(data: dict, mode: str, fmp_api_key: str = "") -> None:
     chart_col, brief_col = st.columns([2.1, 1])
     with chart_col:
         st.markdown(f"**S&P 500 (^GSPC)** &nbsp; {_fmt(sp.get('price'))} &nbsp; {_move(sp)[0]}")
-        _render_market_chart(fmp_api_key)
+        _render_market_chart(fmp_api_key, openai_api_key, model_name)
     with brief_col:
         st.markdown(f'''<aside class="ai-brief terminal-card"><div class="brief-head"><b>MARKET PULSE / RULE-BASED</b><small>{escape(fetched)}</small></div><p>{escape(brief)}</p>{insight_html}</aside>''', unsafe_allow_html=True)
     st.markdown(f'''<div class="intro-grid">
@@ -275,7 +270,7 @@ def render_introduction_tab(
                     except Exception as exc:
                         st.warning(f"AI summary unavailable; company data is preserved: {sanitize_error(exc)}")
                 summary = st.session_state.get(summary_key, "Select Analyze Company to generate an AI summary from the current evidence.")
-            _render_company_snapshot(snapshot, summary)
+            _render_company_snapshot(snapshot, summary, fmp_api_key, openai_api_key, model_name)
         except Exception as exc:
             st.error(f"Company analysis could not be completed: {sanitize_error(exc)}")
             st.info("Check the ticker and provider configuration, then try again. No stale company data is shown.")
@@ -288,6 +283,7 @@ def render_introduction_tab(
         if st.button("REFRESH DATA", use_container_width=True, key="intro_refresh"):
             load_market_overview.clear()
             load_market_chart.clear()
+            clear_history_cache()
             st.rerun()
     with status_col:
         st.caption("Quotes may be delayed by the provider. Cached for 5 minutes; use Refresh Data for a new request.")
@@ -298,7 +294,7 @@ def render_introduction_tab(
             raise RuntimeError("The market provider returned no index quotes.")
         for warning in data.get("warnings", []):
             st.warning(warning)
-        _dashboard(data, mode or "AI Insights", fmp_api_key)
+        _dashboard(data, mode or "AI Insights", fmp_api_key, openai_api_key, model_name)
     except Exception as exc:
         st.error(f"Live market data is temporarily unavailable: {sanitize_error(exc)}")
         st.info("No stale fallback values are displayed. Use Refresh Data to retry the provider.")

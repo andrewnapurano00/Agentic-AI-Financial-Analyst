@@ -140,25 +140,8 @@ def failure_reason(exc: Exception) -> str:
 
 def _analysis_comparison(rows: list[dict], frameworks: list[dict]) -> list[dict]:
     """Keep both accounting bases and sector priorities without sending every UI alias to the model."""
-    fields = [
-        "Ticker", "Company", "Sector", "Industry", "Sector framework", "Quote currency", "Statement currency",
-        "Price", "Market cap", "Statement date", "Statement period", "TTM through", "TTM currency", "TTM methodology", "Balance sheet date",
-        "Revenue (TTM)", "Operating income (TTM)", "EBITDA (TTM)", "Net income (TTM)",
-        "Operating cash flow (TTM)", "Free cash flow (TTM)", "Gross margin (TTM)", "Operating margin (TTM)",
-        "EBITDA margin (TTM)", "Net margin (TTM)", "FCF margin (TTM)", "Cash conversion (TTM)",
-        "Revenue (latest period)", "Operating income (latest period)", "EBITDA (latest period)",
-        "Net income (latest period)", "Operating cash flow (latest period)", "Free cash flow (latest period)",
-        "Gross margin (latest period)", "Operating margin (latest period)", "EBITDA margin (latest period)",
-        "Net margin (latest period)", "FCF margin (latest period)", "Cash conversion (latest period)",
-        "Estimate period", "Forward revenue", "Forward revenue growth (%)", "Forward EPS", "Forward EBITDA",
-        "Forward net income", "P/E (TTM)", "Forward P/E", "P/S (TTM)", "Forward P/S", "P/B (TTM)",
-        "EV/EBITDA (TTM)", "EV/Sales (TTM)", "FCF yield (TTM, fraction)", "Analyst target", "Target upside (%)",
-    ]
-    for framework in frameworks:
-        for metric in framework.get("must_have", []) + framework.get("preferred", []):
-            if metric not in fields:
-                fields.append(metric)
-    return [{key: row[key] for key in fields if row.get(key) is not None} for row in rows]
+    from .model_packets import compact_comparison
+    return compact_comparison(rows)
 
 
 class IncompleteGeneration(RuntimeError):
@@ -563,6 +546,8 @@ class ResearchManager:
         result = {"id": uuid.uuid4().hex[:12], "created_at": utc_now(), "request": asdict(request),
                   "status": "collecting", "report": "", "markdown": "", "plan": {},
                   "evidence": [], "comparison": [], "sector_frameworks": [], "warnings": warnings, "gaps": []}
+        if getattr(self, "financial_methodology", None):
+            result["financial_methodology"] = self.financial_methodology
         self.checkpoint(result.copy())
 
         def save():

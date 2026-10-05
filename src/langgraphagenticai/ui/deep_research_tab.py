@@ -9,7 +9,10 @@ from langgraphagenticai.LLMS.openaillm import OpenAILLM
 from langgraphagenticai.utils.safety import sanitize_error
 from langgraphagenticai.deep_research.context import available_context, collect_app_context
 from langgraphagenticai.deep_research.crew_committee import clean_committee_text, run_investment_committee
-from langgraphagenticai.deep_research.data import FinancialDataSource
+from langgraphagenticai.deep_research.quarterly_data import QuarterlyFinancialDataSource as FinancialDataSource
+from langgraphagenticai.deep_research.research_workflow import AuditedResearchManager, audited_finance_tools
+from langgraphagenticai.deep_research.research_metrics import format_metric, project_sector_row, DISPLAY_LABELS
+from langgraphagenticai.deep_research.quarterly_ttm import METHODOLOGY
 from langgraphagenticai.deep_research.manager import ResearchManager, failure_reason, finalize_report
 from langgraphagenticai.deep_research.models import ResearchRequest, dumps, parse_symbols, safe_url
 from langgraphagenticai.deep_research.presentation import build_research_pdf, clean_report_markdown
@@ -29,9 +32,9 @@ def _manager(openai_api_key, model_name, fmp_api_key, serper_api_key, marketaux_
     if model_name == "gpt-5":
         utility_controls = dict(controls, selected_model="gpt-5-mini", reasoning_effort="minimal")
         utility_llm = OpenAILLM(utility_controls).get_llm_model()
-    return ResearchManager(
+    return AuditedResearchManager(
         llm, FinancialDataSource(fmp_api_key), SerperClient(serper_api_key),
-        get_finance_tools(fmp_api_key, openai_api_key, marketaux_api_key), progress,
+        audited_finance_tools(get_finance_tools(fmp_api_key, openai_api_key, marketaux_api_key)), progress,
         on_text=on_text, checkpoint=checkpoint, utility_llm=utility_llm,
     )
 
@@ -47,46 +50,16 @@ def _import_tickers(key):
         st.session_state["dr_tickers"] = ", ".join(symbols[:4])
 
 
-def _display_metric(metric: str, value, row: dict) -> str:
-    if value is None or (isinstance(value, float) and pd.isna(value)):
-        return "—"
-    if isinstance(value, (int, float)):
-        if any(term in metric for term in ("margin", "Margin", "Yield", "ROE", "ROA", "ROIC", "Payout")) or (row.get("TTM methodology") and metric == "FCF yield (TTM, fraction)"):
-            derived_fraction = row.get("TTM methodology") and (
-                any(term in metric for term in ("margin", "Margin")) or metric in {"ROE", "ROA", "Earnings Yield", "FCF Yield", "FCF yield (TTM, fraction)"})
-            number = float(value) * 100 if derived_fraction or abs(float(value)) <= 2 else float(value)
-            return f"{number:,.1f}%"
-        if any(term in metric for term in ("growth", "Growth", "return", "Return", "upside", "Upside", "% From", "% revenue", "% Revenue")) or (row.get("TTM methodology") and metric in {"Capex to revenue (TTM)", "Capex to revenue (latest period)", "Capex to Revenue"}):
-            return f"{float(value):,.1f}%"
-        if any(term in metric for term in ("P/E", "P/S", "P/B", "P/FCF", "EV/", "EV /", "Debt / EBITDA")):
-            return f"{float(value):,.1f}x"
-        if any(term in metric for term in ("Revenue", "revenue", "income", "Income", "EBITDA", "cash flow", "Cash flow",
-                                           "expenditure", "FCF", "Market cap", "target", "Target", "Price")):
-            currency = row.get("Statement currency") if any(term in metric for term in
-                ("Revenue", "revenue", "income", "Income", "EBITDA", "cash flow", "Cash flow", "expenditure", "FCF")) else row.get("Quote currency")
-            if row.get("TTM methodology") and ("(TTM)" in metric or "(latest period)" in metric):
-                is_cash_flow = any(term in metric for term in ("cash flow", "Cash flow", "expenditure"))
-                if "(TTM)" in metric:
-                    currency = row.get("Cash flow TTM currency" if is_cash_flow else "TTM currency")
-                else:
-                    currency = row.get("Cash flow statement currency" if is_cash_flow else "Statement currency")
-            prefix = f"{currency} " if currency else ""
-            number = float(value)
-            if abs(number) >= 1_000_000_000:
-                return f"{prefix}{number / 1_000_000_000:,.1f}B"
-            if abs(number) >= 1_000_000:
-                return f"{prefix}{number / 1_000_000:,.1f}M"
-            return f"{prefix}{number:,.2f}"
-        return f"{float(value):,.2f}"
-    return str(value)
+def _display_metric(metric, value, row):
+    return format_metric(metric, value, row)
 
 
 def _metric_matrix(frame: pd.DataFrame, fields: list[str]) -> pd.DataFrame:
-    rows = frame.to_dict("records")
+    rows = [project_sector_row(row) for row in frame.to_dict("records")]
     available = [field for field in fields if field in frame.columns and frame[field].notna().any()]
     values = {str(row.get("Ticker")): [_display_metric(field, row.get(field), row) for field in available]
               for row in rows}
-    return pd.DataFrame(values, index=available)
+    return pd.DataFrame(values, index=[DISPLAY_LABELS.get(field,field) for field in available])
 
 
 def _show_metric_matrix(frame: pd.DataFrame, fields: list[str], caption: str) -> None:
@@ -100,11 +73,23 @@ def _show_metric_matrix(frame: pd.DataFrame, fields: list[str], caption: str) ->
 
 
 def _render_comparison(result):
-    frame = pd.DataFrame(result["comparison"])
+    frame = pd.DataFrame([project_sector_row(row) for row in result["comparison"]])
     if frame.empty:
         st.info("No normalized company comparison is available.")
         return
     frameworks = result.get("sector_frameworks", [])
+    if result.get("financial_methodology") != METHODOLOGY:
+        st.warning("Saved legacy financial methodology. Original comparison values are preserved; start fresh research for audited quarterly TTM and metric contracts.")
+    else:
+        with st.expander("Metric audit: formulas, units, source dates and applicability"):
+            audit = [{"Ticker": row.get("Ticker"), "Metric": key, **contract}
+                     for row in frame.to_dict("records") for key,contract in row.get("Metric contracts",{}).items()]
+            audit_frame = pd.DataFrame([{key: dumps(value) if isinstance(value,(dict,list)) else str(value) if value is not None else ""
+                                         for key,value in item.items()} for item in audit])
+            st.dataframe(audit_frame, width="stretch", hide_index=True)
+            st.download_button("Download metric audit CSV", audit_frame.map(lambda value: "'"+value if isinstance(value,str) and value.lstrip().startswith(("=","+","-","@")) else value).to_csv(index=False),
+                "research_metric_audit.csv", "text/csv", key="metric_audit_"+str(result.get("id", "saved")), on_click="ignore")
+        st.caption("Forward growth is FY+2 versus FY+1; registry aliases are retained in the audit. EPS/revenue forward amounts use the nearest genuinely future annual estimate. Latest balance snapshots and matched return-denominator snapshots have separate dates.")
 
     st.markdown("#### Company snapshot")
     cards = st.columns(len(frame.index))
@@ -123,7 +108,7 @@ def _render_comparison(result):
     with snapshot:
         _show_metric_matrix(frame, [
             "Company", "Sector", "Industry", "Sector framework", "Price", "Market cap", "Quote currency",
-            "TTM through", "Statement date", "Statement period", "Statement currency", "Balance sheet date",
+            "TTM through", "Statement date", "Statement period", "Statement currency", "Balance sheet date", "Balance currency", "Quote as of", "Price date", "Price basis",
         ], "Dates and currencies are shown explicitly so unlike periods are not mixed.")
     with ttm_tab:
         _show_metric_matrix(frame, [
@@ -132,7 +117,7 @@ def _render_comparison(result):
             "Free cash flow (TTM)", "Gross margin (TTM)", "Operating margin (TTM)", "EBITDA margin (TTM)",
             "Net margin (TTM)", "OCF margin (TTM)", "FCF margin (TTM)", "Cash conversion (TTM)",
             "R&D as % revenue (TTM)", "Stock-based comp % revenue (TTM)", "Capex to revenue (TTM)",
-        ], ("Calculated TTM: sum of four validated fiscal quarters; matched end balance snapshot. See Sources for dates, currency, formulas and limitations." if any(row.get("TTM methodology") for row in result.get("comparison", [])) else "Trailing twelve months from the dedicated provider statement endpoints. TTM is the latest four-quarter operating view."))
+        ], ("Calculated TTM: sum of four validated fiscal quarters; latest balance shown independently, matched beginning/end balances for ROE/ROA. Standardized quarterly flows are assumed standalone when duration metadata is absent; explicit YTD/unknown durations are rejected. See Sources for dates, currency, formulas and limitations." if any(row.get("TTM methodology") for row in result.get("comparison", [])) else "Trailing twelve months from the dedicated provider statement endpoints. TTM is the latest four-quarter operating view."))
     with statement_tab:
         _show_metric_matrix(frame, [
             "Statement date", "Statement period", "Statement currency", "Cash flow statement date", "Cash flow statement currency", "Revenue (latest period)",
@@ -286,7 +271,8 @@ def render_deep_research_tab(*, openai_api_key: str, model_name: str, fmp_api_ke
             period_label = st.selectbox("Financial statements", ["Annual", "Quarterly"])
             news_days = st.selectbox("News lookback (days)", [7, 30, 90], index=1)
         options = st.columns(3)
-        use_context = options[0].checkbox("Include saved data from other tabs", value=True)
+        use_context = options[0].checkbox("Include saved data from other tabs", value=False, disabled=True)
+        options[0].caption("Fresh research uses audited quarterly statements. Other saved pages have unverified financial bases; saved research remains available below.")
         include_news = options[1].checkbox("Include Serper news and web research", value=bool(serper_api_key))
         use_crewai = options[2].checkbox(
             "Enable CrewAI investment committee",

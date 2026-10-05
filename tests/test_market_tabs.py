@@ -1,15 +1,26 @@
 import pandas as pd
+import pytest
 from streamlit.testing.v1 import AppTest
 
 from langgraphagenticai.providers import market_history
+from langgraphagenticai.providers import symbol_history
 from langgraphagenticai.ui import market_overview_data, top_movers_data
 from langgraphagenticai.ui.top_movers_tab import _rows
+
+
+@pytest.fixture(autouse=True)
+def clear_chart_cache():
+    market_history.load_market_chart.clear()
+    symbol_history.clear_history_cache()
+    yield
+    market_history.load_market_chart.clear()
+    symbol_history.clear_history_cache()
 
 
 def test_chart_ranges_sort_and_filter(monkeypatch):
     rows = [{"date": date, "close": price} for date, price in
             [("2026-09-30 15:00", 101), ("2026-09-29 15:00", 90), ("2026-09-30 09:30", 100)]]
-    monkeypatch.setattr(market_history, "get_fmp_json", lambda *a, **k: rows)
+    monkeypatch.setattr(symbol_history, "get_fmp_json", lambda *a, **k: rows)
     result = market_history.load_market_chart.__wrapped__("test", "1D")
     assert [value for _, value in result["points"]] == [100, 101]
     result = market_history.load_market_chart.__wrapped__("test", "5D")
@@ -17,8 +28,8 @@ def test_chart_ranges_sort_and_filter(monkeypatch):
 
 
 def test_chart_fallback_keeps_one_source(monkeypatch):
-    monkeypatch.setattr(market_history, "get_fmp_json", lambda *a, **k: [])
-    monkeypatch.setattr(market_history.yf, "download", lambda *a, **k: pd.DataFrame(
+    monkeypatch.setattr(symbol_history, "get_fmp_json", lambda *a, **k: [])
+    monkeypatch.setattr(symbol_history.yf, "download", lambda *a, **k: pd.DataFrame(
         {"Close": [1, 2]}, index=pd.date_range("2026-09-29", periods=2)))
     result = market_history.load_market_chart.__wrapped__("test", "1M")
     assert result["provider"] == "Yahoo Finance"
@@ -107,6 +118,9 @@ def test_company_range_reuses_summary(monkeypatch):
                 {"date": "2026-01-01", "close": 90},
                 {"date": "2026-09-01", "close": 99}, {"date": "2026-09-30", "close": 100}]}}
     monkeypatch.setattr(introduction_tab, "load_company_snapshot", lambda *args: snapshot)
+    monkeypatch.setattr(introduction_tab, "load_symbol_history", lambda symbol, key, period, currency: {
+        "symbol": symbol, "period": period, "points": [(pd.Timestamp("2026-09-29"), 99), (pd.Timestamp("2026-09-30"), 100)],
+        "provider": "Synthetic", "warnings": [], "currency": currency})
     def paid(*args):
         raise AssertionError("Company chart reruns must not generate summaries")
     monkeypatch.setattr(introduction_tab, "generate_company_summary", paid)

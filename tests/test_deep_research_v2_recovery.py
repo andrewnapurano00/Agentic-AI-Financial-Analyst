@@ -8,6 +8,7 @@ from streamlit.testing.v1 import AppTest
 
 from langgraphagenticai.deep_research import v2_workflow as workflow
 from langgraphagenticai.deep_research.manager import ResearchManager
+from langgraphagenticai.deep_research.quarterly_ttm import METHODOLOGY
 from langgraphagenticai.deep_research.models import Evidence, ResearchRequest
 from langgraphagenticai.deep_research.v2 import V2ConfigurationError, report_instruction, stage_configuration, validate_report
 from langgraphagenticai.tools.serper_tools import SerperClient
@@ -21,7 +22,7 @@ render_deep_research_v2_tab(openai_api_key="synthetic", fmp_api_key="synthetic")
 
 
 def saved(status="complete"):
-    return {"financial_methodology": "quarterly-ttm-v1", "id": "v2-test", "created_at": "2026-10-02T12:00:00Z", "status": status,
+    return {"financial_methodology": METHODOLOGY, "id": "v2-test", "created_at": "2026-10-02T12:00:00Z", "status": status,
             "request": asdict(ResearchRequest(["AAPL"], include_news=False)),
             "report": REPORT if status in {"complete", "review_pending", "needs_review"} else "",
             "draft": REPORT if status in {"complete", "review_pending", "needs_review"} else "",

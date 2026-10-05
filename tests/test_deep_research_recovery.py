@@ -176,12 +176,24 @@ class RecoveryTests(unittest.TestCase):
         self.assertEqual(manager.llm.stream.call_args.kwargs["max_completion_tokens"], 4500)
         self.assertTrue(all(d["seconds"] >= 0 for d in result["diagnostics"]))
 
-    def test_prompt_budget_keeps_all_company_sources_without_mutation(self):
+    def test_prompt_budget_keeps_balanced_company_facts_without_mutation(self):
         sources = [Evidence(f"E{i:03d}", symbol, "investigation", "Large source", "FMP",
                             {"content": "X" * 40000, "data": [{"value": 1}] * 30})
                    for i, symbol in enumerate(["AAPL", "MSFT", "NVDA", "AMZN"] * 12, 1)]
+        before = dumps([source.to_dict() for source in sources])
         packet = evidence_context(sources, 28000)
-        self.assertEqual(len(packet), len(sources))
+        self.assertGreater(len(packet), 0)
+        self.assertLess(len(packet), len(sources))
+        self.assertEqual(packet[0]["omitted_sources"], len(sources) - len(packet))
+        self.assertTrue({r["id"] for r in packet}.issubset({source.id for source in sources}))
+        counts = [sum(r["symbol"] == symbol for r in packet)
+                  for symbol in ["AAPL", "MSFT", "NVDA", "AMZN"]]
+        self.assertLessEqual(max(counts) - min(counts), 1)
+        for record in packet:
+            self.assertTrue(record["data"]["content"].startswith("X" * 100))
+            self.assertIn("excerpt truncated", record["data"]["content"])
+            self.assertEqual(record["data"]["data"][0]["value"], 1)
+        self.assertEqual(dumps([source.to_dict() for source in sources]), before)
         self.assertLessEqual(len(dumps(packet)), 28000)
         self.assertEqual({r["symbol"] for r in packet}, {"AAPL", "MSFT", "NVDA", "AMZN"})
         self.assertEqual(len(sources[0].data["content"]), 40000)

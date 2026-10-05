@@ -182,22 +182,8 @@ class QuickDecision(BaseModel):
 
 
 def compact_decision_brief(result: dict, max_chars: int = 10000) -> dict:
-    evidence = [Evidence(**item) for item in result.get("evidence", [])]
-    brief = {
-        "request": result.get("request", {}), "created_at": result.get("created_at"),
-        "comparison": compact(result.get("comparison", []), list_limit=8, string_limit=500),
-        "warnings": compact(result.get("warnings", []), list_limit=8, string_limit=300),
-        "gaps": compact(result.get("gaps", []), list_limit=8, string_limit=300),
-        "evidence": evidence_context(evidence, max_chars, focus="valuation growth risk catalysts recommendation"),
-    }
-    text = dumps(brief)
-    if len(text) > max_chars:
-        brief["evidence"] = brief["evidence"][:max(1, len(brief["evidence"]) // 2)]
-        brief["comparison"] = compact(brief["comparison"], list_limit=4, string_limit=240)
-        while len(dumps(brief)) > max_chars and len(brief["evidence"]) > 1:
-            brief["evidence"] = brief["evidence"][:-1]
-        brief["truncated"] = True
-    return json_safe(brief)
+    from .model_packets import bounded_decision_packet
+    return bounded_decision_packet(result,max_chars)
 
 
 def run_quick_decision(result: dict, llm, *, model: str, max_chars: int = 10000) -> tuple[dict, dict]:

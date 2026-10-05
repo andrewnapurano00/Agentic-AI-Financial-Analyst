@@ -69,7 +69,7 @@ def test_collection_no_ttm_and_reuses_quarters(monkeypatch):
         return []
     monkeypatch.setattr(v2_data,"get_fmp_json",fetch)
     evidence=v2_data.QuarterlyFinancialDataSource("synthetic").collect(ResearchRequest(["AAPL"],period="quarter"),lambda _:None)
-    assert len([c for c in calls if "statement" in c[0]])==3
+    assert len([c for c in calls if "statement" in c[0]])==6
     assert next(e for e in evidence if e.category=="income_ttm").data[0]["revenue"]==100
     assert next(e for e in evidence if e.category=="income").data==quarters()
 
@@ -146,6 +146,7 @@ def test_annual_history_preserved_and_cagr_currency_guard(monkeypatch):
     assert source.data==annual
     row=v2_data.quarterly_comparison_rows(evidence,["AAPL"])[0]
     assert row["Revenue CAGR 3Y"]==pytest.approx((2**(1/3)-1)*100)
+    source=next(e for e in evidence if e.category=="income_annual")
     source.data=deepcopy(source.data);source.data[-1]["reportedCurrency"]="EUR"
     assert v2_data.quarterly_comparison_rows(evidence,["AAPL"])[0]["Revenue CAGR 3Y"] is None
 
@@ -243,7 +244,7 @@ def test_mixed_currency_comparison_preserves_independent_flows_and_labels():
 def test_derived_fraction_rendering_has_no_magnitude_guess(metric,value,expected):
     from langgraphagenticai.ui.deep_research_tab import _display_metric
     assert _display_metric(metric,value,{"TTM methodology":"quarterly-ttm-v1"})==expected
-    assert _display_metric("ROE",2.5,{})=="2.5%"
+    assert _display_metric("ROE",2.5,{})=="250.0%"  # Explicit fraction contract replaces magnitude guessing.
 
 
 @pytest.mark.parametrize("metric", ["revenue TTM growth (%)", "R&D as % revenue (TTM)", "Stock-Based Comp % Revenue", "Capex to revenue (TTM)", "Capex to Revenue"])

@@ -6,7 +6,7 @@ This file defines how coding agents and contributors must work on Axiom Research
 
 The goal is not to add the most features. The goal is to make the existing capabilities trustworthy, connected, fast, explainable, and useful for real investment research.
 
-## Implementation orientation (updated 2026-10-01)
+## Implementation orientation (updated 2026-10-04)
 
 These engineering requirements are the target standard, not a claim that every requirement is already implemented. [PLAN.md](PLAN.md) is the dated source of truth for implementation status, delivery history, verification evidence, and remaining work. Do not infer completion from a module name or a passing test count.
 
@@ -15,10 +15,10 @@ The sidebar currently exposes seven main workspaces plus the isolated **Deep Res
 | Area | Implementation boundary |
 | --- | --- |
 | Shared presentation | `src/langgraphagenticai/ui/app_shell.py`; page modules orchestrate Streamlit controls |
-| Provider transport | `src/langgraphagenticai/providers/`; shared FMP REST transport and bounded OpenAI clients exist, but adapters and metadata are not yet uniform across every provider |
-| Financial/domain logic | Company snapshot calculations, Equity Report scoring, and `src/langgraphagenticai/portfolio_manager/`; use focused domain modules for new calculations |
+| Provider transport | `src/langgraphagenticai/providers/`; shared FMP REST transport, bounded OpenAI clients and symbol-aware Introduction history exist, but adapters and metadata are not uniform across every provider |
+| Financial/domain logic | Company snapshots, Equity Report scoring, `portfolio_manager/`, audited research calculations in `deep_research/{quarterly_ttm,research_metrics}.py`, and configurable chart calculations in `technical_analysis/`; preserve each metric basis |
 | Research chat | LangGraph graph, nodes, and tools; thread state is session-backed |
-| Deep Research | `src/langgraphagenticai/deep_research/`; V1 orchestration/recovery and isolated V2 routing/validation |
+| Deep Research | `src/langgraphagenticai/deep_research/`; V1/V2 orchestration stays separate while fresh financial collection, sector applicability, audit contracts and bounded model packets are shared |
 | Verification | `tests/`; consult the dated inventory in PLAN rather than assuming full workspace or export coverage |
 | Contributor skills | `.agents/skills/`; [project skill guide](docs/PROJECT_SKILLS.md) describes all thirteen skills and invocation, including GitHub commit/push |
 
@@ -40,14 +40,25 @@ Every change must improve at least one of these outcomes without materially degr
 
 Changes must account for the complete application, not only the active page:
 
-- **Introduction:** live market overview, company search, price/fundamental snapshot, news, and AI summary.
+- **Introduction:** live market overview, company snapshot/news, eight price-chart horizons, configurable technical indicators, calculated technical summary, and explicit company/technical AI analysis.
 - **Top Movers:** five-trading-day leaders and laggards, sector breadth, Serper news, and company handoff.
 - **Research:** LangGraph finance chat with FMP and Marketaux tools, structured tables, and formatted analyst output.
 - **Equity Report:** sector-aware company/peer analysis, scoring, charts, recommendations, and PDF/Excel/CSV exports.
 - **Stock Screener:** FMP universe filtering and metric enrichment.
 - **Portfolio Lab:** historical optimizer plus hybrid AI portfolio manager, constraints, evidence, and reporting.
-- **Deep Research:** evidence collection, planning, report generation, review/recovery, citations, downloads, and optional CrewAI committee.
-- **Deep Research V2:** separate cost pilot with stage-specific routing, compact contexts, mechanical validation, saved-session reuse, and optional quick/full decisions. Preserve V1 behavior when changing the pilot.
+- **Deep Research:** evidence collection, shared quarterly financial audit and sector-aware comparisons, Serper news coverage, planning, reports, recovery, citations, downloads and optional CrewAI committee.
+- **Deep Research V2:** separate cost pilot with the shared financial audit, stage-specific routing, bounded sector-aware contexts, mechanical validation, saved generation time/age, session reuse and optional quick/full decisions. Keep workflow-specific V1 behavior separate when modifying the pilot.
+
+## Latest delivered boundaries (2026-10-04)
+
+These are scoped deliveries, not completion of the broad R01-R10 roadmap. Preserve their contracts when extending the product; consult PLAN verification records and feature-team reports for exact evidence.
+
+- **AAFA-6, both research versions:** fresh income/cash-flow TTM uses four validated consecutive fiscal quarters; balance facts use independently latest quarterly snapshots. ROE/ROA use matched beginning/end balances, annual CAGR and forward annual estimates remain separate, and unavailable specialist metrics stay missing. `quarterly_data.py`, `research_metrics.py` and `research_workflow.py` share collection/calculation; `sector.py` supplies Equity Report's canonical applicability. Comparisons, PDFs and model contexts respect per-company sectors. Metric audits retain units, currency, dates, formulas and actual source inputs; never replace missing debt/cash with zero or substitute provider TTM/annual facts silently.
+- **Research evidence and saved results:** standardized standalone-quarter assumptions and unknown price/currency meanings must remain disclosed. Serper retrieval time is separate from publication time and requested lookback. Legacy saved financial values remain readable without silent recalculation or provider/model calls; old-evidence recovery requires explicit acknowledgement. V2 generation timestamps describe saved-result operations, not evidence freshness. Unverified cross-workspace financial packets remain disabled. `model_packets.py` bounds complete serialized contexts while retaining substantive sector-projected evidence and explicit omissions.
+- **AAFA-7, Introduction charts:** `providers/symbol_history.py` shares market/company retrieval; `market_history.py` remains a compatibility wrapper. Both charts offer 1D/5D/1M/3M/1Y/3Y/5Y/10Y. Short ranges select one/five observed trading dates; long ranges use daily bars. Fallback replaces a whole series, with no provider stitching. Report actual coverage, source, adjustment basis, timezone, currency/units, as-of and retrieval time; unknown FMP adjustment/timezone and complete-session coverage are not inferred. Future aware timestamps are rejected against the UTC instant; unknown-zone naive records use the documented UTC calendar-date policy, with same-day timing unverifiable.
+- **Technical analysis:** `technical_analysis/{indicators,evidence,agent}.py` separates local SMA/EMA/Wilder RSI/MACD/Bollinger arithmetic, evidence fingerprints and bounded structured AI. `ui/technical_chart.py` renders adjustable bar windows, warmup, separate oscillator panels and period-aware provider wall-clock axes with original timestamp tooltips. Window units are observed bars, not calendar days. Technical AI requires an explicit action and validates identity/evidence references; ordinary controls reuse data and do not call models. Preserve prior results with mismatch/failure notices and disable analysis for invalid settings. Schema/citation checks do not certify every numerical claim in model prose.
+
+Latest offline inventory: **322 passing tests** in the project Python3.12 environment (V-20261004-05). Fresh app health, actual Introduction browser interactions with synthetic services, and independent scoped review passed. Earlier V1/V2 financial browser/export evidence remains dated in V-20261004-04. No live entitlement/financial freshness/model-quality guarantee, clean-install certification or hosted deployment follows from these checks. GitHub synchronization publishes source; deployment requires its own explicitly scoped verification.
 
 ## Architecture requirements
 

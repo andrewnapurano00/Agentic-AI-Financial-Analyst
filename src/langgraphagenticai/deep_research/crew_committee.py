@@ -47,24 +47,8 @@ def _clean_payload_text(value):
 
 def _research_packet(result: dict, *, max_chars: int = 30000) -> str:
     """Build a bounded, credential-free packet from completed research."""
-    evidence_register = [{
-        "id": item.get("id"), "symbol": item.get("symbol"),
-        "category": item.get("category"), "title": item.get("title"),
-        "provider": item.get("provider"), "status": item.get("status"),
-        "note": item.get("note"),
-    } for item in result.get("evidence", [])]
-    packet = {
-        "request": result.get("request", {}),
-        "research_status": result.get("status"),
-        "research_report": result.get("report", "")[:max_chars // 3],
-        "company_comparison": result.get("comparison", []),
-        "sector_frameworks": result.get("sector_frameworks", []),
-        "warnings": result.get("warnings", []),
-        "coverage_gaps": result.get("gaps", []),
-        "evidence_register": evidence_register,
-    }
-    encoded = json.dumps(json_safe(packet), ensure_ascii=False, default=str)
-    return encoded[:max_chars]
+    from .model_packets import bounded_decision_packet
+    return json.dumps(bounded_decision_packet(result,max_chars),ensure_ascii=False,default=str)
 
 
 def run_investment_committee(result: dict, *, openai_api_key: str, model_name: str,

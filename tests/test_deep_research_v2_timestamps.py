@@ -6,6 +6,7 @@ from unittest.mock import Mock
 import pytest
 from streamlit.testing.v1 import AppTest
 
+from langgraphagenticai.deep_research.quarterly_ttm import METHODOLOGY
 from langgraphagenticai.deep_research.models import Evidence, ResearchRequest
 from langgraphagenticai.deep_research.v2 import stage_configuration
 from langgraphagenticai.deep_research.v2_timestamps import (
@@ -22,7 +23,7 @@ render_deep_research_v2_tab(openai_api_key="synthetic", fmp_api_key="synthetic")
 
 def saved(status="complete"):
     return {"id": "timestamp-test", "created_at": None, "status": status,
-            "financial_methodology": "quarterly-ttm-v1",
+            "financial_methodology": METHODOLOGY,
             "request": asdict(ResearchRequest(["AAPL"], include_news=False)),
             "report": "", "draft": "", "evidence": [Evidence(
                 "E001", "AAPL", "income", "Income", "Synthetic", [{"revenue": 5}]).to_dict()],

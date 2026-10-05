@@ -23,7 +23,7 @@ The app contains eight connected workspaces:
 
 | Workspace | Primary use | AI calls |
 |---|---|---|
-| Introduction | Market overview, company search, snapshot, fundamentals, performance, and news | Optional summary |
+| Introduction | Market overview, company snapshot, extended price charts, configurable indicators and technical summary | Explicit company/technical analysis |
 | Top Movers | Five-trading-day leaders and laggards, breadth, sectors, and related news | None by default |
 | Research | LangGraph finance chat with FMP and Marketaux tools | Explicit chat action |
 | Equity Report | Sector-aware company comparison, scoring, charts, exports, and best-buy debate | Optional recommendation and CrewAI debate |
@@ -50,6 +50,10 @@ Selected tickers and completed work can be reused across several workspaces thro
 ## Workspace guide
 
 ### 1. Introduction
+
+Market and company price charts support **1D, 5D, 1M, 3M, 1Y, 3Y, 5Y and 10Y**. Intraday ranges use the latest one/five observed trading dates; longer ranges use daily bars. Company chart history is independent of the snapshot's shorter performance series. Coverage depends on the provider: partial/stale history is disclosed, and no bars are filled or stitched across sources. FMP close adjustment and naive timestamp timezones remain unverified; whole-series Yahoo fallback is explicitly auto-adjusted. Axes preserve provider wall-clock fields, with original timestamps in tooltips. Future aware timestamps are excluded by exact UTC instant; timezone-unknown naive timestamps are excluded only when their calendar date exceeds the current UTC date. Same-day intraday timing cannot be verified for naive timestamps, and no source timezone is invented.
+
+Expand **Technical indicators & settings** to configure SMA, EMA, Wilder RSI, MACD and Bollinger windows (observed bars, up to 500) and the Bollinger deviation multiplier. Calculations use warmup before display trimming; RSI and MACD have separate panels. **Analyze technical evidence with AI** makes one explicit structured OpenAI request using the selected model and saved compact evidence. Settings/range changes make no model calls; previous interpretation remains visible with an input-mismatch notice, and failures preserve it. Identity and evidence references are validated, but model-written numerical claims are not individually certified. No new API key is required beyond optional `OPENAI_API_KEY` and the existing market data configuration. Intraday history caches for five minutes and daily history for one hour; the chart Retry controls refresh history.
 
 The landing workspace provides an executive market view and an FMP-backed company snapshot.
 
@@ -435,3 +439,15 @@ Fresh Serper verification (October 4): 23 focused tests passed independently. Fu
 Serper company-news searches use company name plus ticker, or ticker alone when the name is unavailable. Existing saved news remains unchanged; use **Force fresh research** in V2 or start a new V1 run to collect with the updated query. Empty results, missing response collections and discarded unsafe/unusable rows have distinct diagnostics. No live coverage guarantee is implied.
 
 Updated empty-news correction verification (October 4, V-20261004-03): **224 offline tests passed** in the local app environment (Python 3.12.0 / Streamlit 1.61.1), including 31 Serper regressions. The earlier Anaconda-specific FMP certificate failures did not recur. Restart Streamlit and choose fresh research to apply the simpler company-news queries; existing saved results are retained. Live Serper success remains unverified.
+
+### Audited sector-aware Deep Research financials (2026-10-04 candidate)
+
+Fresh V1 and V2 research share validated quarterly TTM calculations and Equity Report's canonical sector registry. Income/cash-flow amounts use four consecutive fiscal quarters; balance facts use the latest valid quarterly snapshot. ROE/ROA require matched TTM-end and same-quarter prior-year balances. Annual history remains separate for exact three-fiscal-year CAGR, including when the selected reported-period view is quarterly. Forward amounts use the nearest future annual consensus; forward growth compares FY+2 with FY+1. Bank/REIT specialist metrics remain unavailable without validated inputs. Each comparison has a metric audit with units, formulas, source/retrieval dates, status and applicability, downloadable as CSV alongside saved JSON/PDF. Saved legacy comparisons remain labelled and preserved; start fresh research for the new methodology. Cross-workspace financial packets are disabled in both fresh workflows because their basis is unverified. Offline arithmetic does not validate AI-written numerical claims.
+
+Independent-review corrections (isolated candidate, 2026-10-04): metric audit inputs now identify both actual annual CAGR endpoints, beginning/end ROE/ROA snapshots, both annual forward-growth observations and actual estimate/target aliases with their source IDs, dates, values and currencies. Explicit YTD/as-reported/unknown selected-period flows are excluded from comparable latest metrics and model evidence; trends require compatible standalone durations and plausible prior-year dates. Model contexts select balanced substantive company evidence within the serialized budget, retaining omitted sources in the saved audit rather than emitting empty excerpts. `model_packets.py` shares per-company sector projection and compact audited units across analysis, quick decisions and full committee packets, bounds the complete JSON packet, and distinguishes legacy assumptions. Four-company18k/22k evidence and three/four-company10k decision/committee cases are covered offline. Earlier verification remains historical; final correction checks are recorded separately.
+
+
+Sector-aware research verification (October4, AAFA-6): **276 offline tests passed** in the local app environment (Python3.12.0 / Streamlit1.61.1 / pytest9.1.1). Independent financial review, compilation/imports, fresh startup health and recorded browser comparisons/legacy notices passed for both research pages. The served audit CSV was validated; automated browser file-save completion remains unverified. No live financial-provider/model quality or universal standalone-quarter guarantee is established. See [PLAN verification](PLAN.md#v-20261004-04---shared-sector-aware-research-financial-audit-aafa-6). Start fresh research to use audited metrics; saved older results retain their original methodology and numbers.
+
+
+Introduction chart verification (October4, AAFA-7): **322 offline tests passed** in the project Python3.12 environment, including46 new chart/provider/indicator/agent cases. Independent review, compilation/imports, fresh app health and synthetic browser checks passed; all eight ranges were exercised on both market and company charts. Live provider entitlement, complete price coverage and model narrative accuracy remain unverified. See [PLAN verification](PLAN.md#v-20261004-05---introduction-technical-charts-aafa-7). Restart Streamlit to load the local changes; expand Technical indicators & settings and use the explicit AI action when wanted.
