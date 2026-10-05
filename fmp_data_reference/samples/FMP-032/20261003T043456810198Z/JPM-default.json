@@ -1,0 +1,47 @@
+[
+  {
+    "symbol": "JPM",
+    "date": "2026-10-01",
+    "analystRatingsbuy": 9,
+    "analystRatingsHold": 11,
+    "analystRatingsSell": 0,
+    "analystRatingsStrongSell": 0,
+    "analystRatingsStrongBuy": 4
+  },
+  {
+    "symbol": "JPM",
+    "date": "2026-09-01",
+    "analystRatingsbuy": 9,
+    "analystRatingsHold": 11,
+    "analystRatingsSell": 0,
+    "analystRatingsStrongSell": 1,
+    "analystRatingsStrongBuy": 4
+  },
+  {
+    "symbol": "JPM",
+    "date": "2026-08-01",
+    "analystRatingsbuy": 9,
+    "analystRatingsHold": 11,
+    "analystRatingsSell": 0,
+    "analystRatingsStrongSell": 1,
+    "analystRatingsStrongBuy": 4
+  },
+  {
+    "symbol": "JPM",
+    "date": "2026-07-01",
+    "analystRatingsbuy": 9,
+    "analystRatingsHold": 12,
+    "analystRatingsSell": 0,
+    "analystRatingsStrongSell": 0,
+    "analystRatingsStrongBuy": 4
+  },
+  {
+    "symbol": "JPM",
+    "date": "2026-06-01",
+    "analystRatingsbuy": 8,
+    "analystRatingsHold": 12,
+    "analystRatingsSell": 0,
+    "analystRatingsStrongSell": 0,
+    "analystRatingsStrongBuy": 4
+  }
+]

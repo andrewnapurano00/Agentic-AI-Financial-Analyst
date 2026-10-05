@@ -1,0 +1,37 @@
+[
+  {
+    "holder": "AB EQUITY INCOME FUND INC",
+    "shares": 33900,
+    "dateReported": "2026-05-31",
+    "change": 0,
+    "weightPercent": 0.35491832
+  },
+  {
+    "holder": "REAVES UTILITY INCOME FUND",
+    "shares": 300100,
+    "dateReported": "2026-07-31",
+    "change": 0,
+    "weightPercent": 0.35865091
+  },
+  {
+    "holder": "NEOS ETF Trust",
+    "shares": 336544,
+    "dateReported": "2026-06-30",
+    "change": 37557,
+    "weightPercent": 0.01054745
+  },
+  {
+    "holder": "PACE SELECT ADVISORS TRUST",
+    "shares": 19331,
+    "dateReported": "2026-07-31",
+    "change": -12740,
+    "weightPercent": 7.296e-05
+  },
+  {
+    "holder": "Thirdline Real Estate Income Fund",
+    "shares": 200,
+    "dateReported": "2026-06-30",
+    "change": 0,
+    "weightPercent": 0.00369526
+  }
+]

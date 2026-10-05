@@ -1,0 +1,42 @@
+[
+  {
+    "symbol": "CAT",
+    "date": "2026-05-01",
+    "gradingCompany": "Morgan Stanley",
+    "previousGrade": "Underweight",
+    "newGrade": "Equal Weight",
+    "action": "upgrade"
+  },
+  {
+    "symbol": "CAT",
+    "date": "2025-11-06",
+    "gradingCompany": "HSBC Securities",
+    "previousGrade": "Hold",
+    "newGrade": "Buy",
+    "action": "upgrade"
+  },
+  {
+    "symbol": "CAT",
+    "date": "2025-10-03",
+    "gradingCompany": "Erste Group",
+    "previousGrade": "Hold",
+    "newGrade": "Buy",
+    "action": "upgrade"
+  },
+  {
+    "symbol": "CAT",
+    "date": "2025-08-19",
+    "gradingCompany": "Evercore ISI Group",
+    "previousGrade": "In Line",
+    "newGrade": "Outperform",
+    "action": "upgrade"
+  },
+  {
+    "symbol": "CAT",
+    "date": "2025-08-07",
+    "gradingCompany": "Morgan Stanley",
+    "previousGrade": "Equal Weight",
+    "newGrade": "Underweight",
+    "action": "downgrade"
+  }
+]

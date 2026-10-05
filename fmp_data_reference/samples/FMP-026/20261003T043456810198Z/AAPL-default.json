@@ -1,0 +1,52 @@
+[
+  {
+    "title": "Vice President of Corporate Development",
+    "name": "Adrian Perica",
+    "pay": null,
+    "currencyPay": "USD",
+    "gender": "male",
+    "yearBorn": 1974,
+    "titleSince": null,
+    "active": true
+  },
+  {
+    "title": "Senior Vice President of Software Engineering",
+    "name": "Craig Federighi",
+    "pay": null,
+    "currencyPay": "USD",
+    "gender": "male",
+    "yearBorn": 1969,
+    "titleSince": null,
+    "active": true
+  },
+  {
+    "title": "Senior Vice President of Services and Health",
+    "name": "Eduardo H. Cue",
+    "pay": 2807461,
+    "currencyPay": "USD",
+    "gender": "male",
+    "yearBorn": 1964,
+    "titleSince": null,
+    "active": true
+  },
+  {
+    "title": "Senior Vice President of Worldwide Marketing",
+    "name": "Greg Joswiak",
+    "pay": null,
+    "currencyPay": "USD",
+    "gender": "male",
+    "yearBorn": null,
+    "titleSince": null,
+    "active": true
+  },
+  {
+    "title": "Chief Executive Officer & Director",
+    "name": "John Ternus",
+    "pay": 16759518,
+    "currencyPay": "USD",
+    "gender": "male",
+    "yearBorn": 1976,
+    "titleSince": null,
+    "active": true
+  }
+]

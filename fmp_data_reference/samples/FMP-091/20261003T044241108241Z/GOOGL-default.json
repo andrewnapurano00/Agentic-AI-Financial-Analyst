@@ -1,0 +1,14 @@
+[
+  {
+    "symbol": "GOOGL",
+    "lastMonthCount": 2,
+    "lastMonthAvgPriceTarget": 467.5,
+    "lastQuarterCount": 14,
+    "lastQuarterAvgPriceTarget": 431,
+    "lastYearCount": 97,
+    "lastYearAvgPriceTarget": 376.43,
+    "allTimeCount": 272,
+    "allTimeAvgPriceTarget": 247.3,
+    "publishers": "[\"StreetInsider\",\"Benzinga\",\"MarketWatch\",\"Pulse 2.0\",\"Investing\",\"TheStreet\"]"
+  }
+]

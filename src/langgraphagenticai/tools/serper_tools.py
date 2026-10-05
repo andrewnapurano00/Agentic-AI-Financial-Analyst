@@ -28,8 +28,14 @@ class SerperClient:
             raw = response.json()
             if not isinstance(raw, dict) or raw.get("error"):
                 return {"ok": False, "error": "Serper returned an invalid result.", "results": []}
+            collection = "news" if news else "organic"
+            if collection not in raw:
+                return {"ok": False, "error": f"Serper response is missing the expected {collection} result collection.", "results": []}
+            items = raw[collection]
+            if not isinstance(items, list):
+                return {"ok": False, "error": "Serper returned an invalid result collection.", "results": []}
             rows, seen = [], set()
-            for item in raw.get("news" if news else "organic", []) or []:
+            for item in items:
                 if not isinstance(item, dict):
                     continue
                 url = safe_url(item.get("link"))
@@ -45,7 +51,7 @@ class SerperClient:
                 if len(rows) >= limit:
                     break
             return {"ok": bool(rows), "results": rows, "query": query, "retrieved_at": utc_now(),
-                    "error": "" if rows else "No matching search results returned."}
+                    "error": "" if rows else "Serper returned results, but none had usable safe source links." if items else "No matching search results returned."}
         except requests.exceptions.SSLError:
             return {"ok": False, "error": "Serper HTTPS certificate verification failed. Configure a trusted CA bundle for this Python environment.", "results": []}
         except (requests.RequestException, ValueError):

@@ -1,0 +1,37 @@
+[
+  {
+    "symbol": "JPM",
+    "name": "JPMorgan Chase & Co.",
+    "currency": "USD",
+    "exchangeFullName": "New York Stock Exchange",
+    "exchange": "NYSE"
+  },
+  {
+    "symbol": "JPMB",
+    "name": "JPMorgan USD Emerging Markets Sovereign Bond ETF",
+    "currency": "USD",
+    "exchangeFullName": "New York Stock Exchange Arca",
+    "exchange": "AMEX"
+  },
+  {
+    "symbol": "JPMO",
+    "name": "YieldMax JPM Option Income Strategy ETF",
+    "currency": "USD",
+    "exchangeFullName": "New York Stock Exchange Arca",
+    "exchange": "AMEX"
+  },
+  {
+    "symbol": "JPME",
+    "name": "JPMorgan Diversified Return U.S. Mid Cap Equity ETF",
+    "currency": "USD",
+    "exchangeFullName": "New York Stock Exchange Arca",
+    "exchange": "AMEX"
+  },
+  {
+    "symbol": "JPMV",
+    "name": "iShares Edge MSCI Min Vol Japan ETF",
+    "currency": "USD",
+    "exchangeFullName": "New York Stock Exchange Arca",
+    "exchange": "AMEX"
+  }
+]

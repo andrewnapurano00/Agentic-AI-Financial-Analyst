@@ -1,0 +1,14 @@
+[
+  {
+    "symbol": "NEE",
+    "lastMonthCount": 1,
+    "lastMonthAvgPriceTarget": 56,
+    "lastQuarterCount": 9,
+    "lastQuarterAvgPriceTarget": 96,
+    "lastYearCount": 43,
+    "lastYearAvgPriceTarget": 97.49,
+    "allTimeCount": 78,
+    "allTimeAvgPriceTarget": 91.03,
+    "publishers": "[\"StreetInsider\",\"Benzinga\",\"Pulse 2.0\"]"
+  }
+]

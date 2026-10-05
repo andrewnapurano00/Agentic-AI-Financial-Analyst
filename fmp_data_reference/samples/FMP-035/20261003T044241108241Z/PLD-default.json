@@ -1,0 +1,32 @@
+[
+  {
+    "symbol": "AMT",
+    "companyName": "American Tower Corporation",
+    "price": 162.2,
+    "mktCap": 75578712000
+  },
+  {
+    "symbol": "DLR",
+    "companyName": "Digital Realty Trust, Inc.",
+    "price": 178.55,
+    "mktCap": 66059215157
+  },
+  {
+    "symbol": "EGP",
+    "companyName": "EastGroup Properties, Inc.",
+    "price": 195.78,
+    "mktCap": 10527736674
+  },
+  {
+    "symbol": "EQIX",
+    "companyName": "Equinix, Inc.",
+    "price": 1025.72,
+    "mktCap": 101209521764
+  },
+  {
+    "symbol": "EXR",
+    "companyName": "Extra Space Storage Inc.",
+    "price": 133.25,
+    "mktCap": 28151668604
+  }
+]

@@ -1,0 +1,57 @@
+[
+  {
+    "symbol": "CHWM",
+    "date": "2026-10-01",
+    "daa": "2026-10-01T04:00:00.000Z",
+    "company": "Chilwa Minerals Limited",
+    "exchange": "NASDAQ",
+    "actions": "Priced",
+    "shares": 625000,
+    "priceRange": null,
+    "marketCap": 3500000
+  },
+  {
+    "symbol": "EMI",
+    "date": "2026-10-01",
+    "daa": "2026-10-01T04:00:00.000Z",
+    "company": "Encore Medical Inc",
+    "exchange": "NYSE",
+    "actions": "Expected",
+    "shares": null,
+    "priceRange": null,
+    "marketCap": null
+  },
+  {
+    "symbol": "PORTU",
+    "date": "2026-10-01",
+    "daa": "2026-10-01T04:00:00.000Z",
+    "company": "Southport Acquisition Corp. II",
+    "exchange": "NYSE",
+    "actions": "Priced",
+    "shares": 20000000,
+    "priceRange": null,
+    "marketCap": 200000000
+  },
+  {
+    "symbol": "MMEDV",
+    "date": "2026-10-01",
+    "daa": "2026-10-01T04:00:00.000Z",
+    "company": "MiniMed Group, Inc. Common Stock When Issued",
+    "exchange": "NASDAQ",
+    "actions": "Expected",
+    "shares": null,
+    "priceRange": null,
+    "marketCap": null
+  },
+  {
+    "symbol": "TDEM",
+    "date": "2026-10-01",
+    "daa": "2026-10-01T04:00:00.000Z",
+    "company": "T. Rowe Price Dynamic Emerging Markets Bond ETF",
+    "exchange": "NASDAQ",
+    "actions": "Priced",
+    "shares": null,
+    "priceRange": null,
+    "marketCap": 50
+  }
+]

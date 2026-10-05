@@ -1,0 +1,42 @@
+[
+  {
+    "symbol": "AMZN",
+    "date": "2026-10-02",
+    "freeFloat": 91.00180000000002,
+    "floatShares": "9789154627",
+    "outstandingShares": "10757100000",
+    "source": null
+  },
+  {
+    "symbol": "AMZN",
+    "date": "2026-10-01",
+    "freeFloat": 91.00180000000002,
+    "floatShares": "9789154627",
+    "outstandingShares": "10757100000",
+    "source": null
+  },
+  {
+    "symbol": "AMZN",
+    "date": "2026-09-30",
+    "freeFloat": 91.00180000000002,
+    "floatShares": "9789154627",
+    "outstandingShares": "10757100000",
+    "source": null
+  },
+  {
+    "symbol": "AMZN",
+    "date": "2026-09-29",
+    "freeFloat": 91.00180000000002,
+    "floatShares": "9789154627",
+    "outstandingShares": "10757100000",
+    "source": null
+  },
+  {
+    "symbol": "AMZN",
+    "date": "2026-09-28",
+    "freeFloat": 91.00180000000002,
+    "floatShares": "9789154627",
+    "outstandingShares": "10757100000",
+    "source": null
+  }
+]

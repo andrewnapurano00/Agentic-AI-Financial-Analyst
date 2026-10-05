@@ -1,0 +1,37 @@
+[
+  {
+    "symbol": "CIEN",
+    "name": "Ciena Corporation",
+    "rank": 1,
+    "sentiment": 0.711,
+    "lastSentiment": 0.5246
+  },
+  {
+    "symbol": "CCL",
+    "name": "Carnival Corporation & plc",
+    "rank": 2,
+    "sentiment": 0.67808,
+    "lastSentiment": 0.53911
+  },
+  {
+    "symbol": "ADMA",
+    "name": "ADMA Biologics, Inc.",
+    "rank": 3,
+    "sentiment": 0.671,
+    "lastSentiment": 0.637
+  },
+  {
+    "symbol": "CLX",
+    "name": "The Clorox Company",
+    "rank": 4,
+    "sentiment": 0.6595,
+    "lastSentiment": 0.5171
+  },
+  {
+    "symbol": "CLS",
+    "name": "Celestica Inc.",
+    "rank": 5,
+    "sentiment": 0.65577,
+    "lastSentiment": 0.53221
+  }
+]

@@ -1,0 +1,52 @@
+[
+  {
+    "symbol": "PLD",
+    "date": "2025-12-31",
+    "stockPrice": 127.66,
+    "numberOfShares": 938407382,
+    "marketCapitalization": 119797086386,
+    "minusCashAndCashEquivalents": 1145647000,
+    "addTotalDebt": 35037073000,
+    "enterpriseValue": 153688512386
+  },
+  {
+    "symbol": "PLD",
+    "date": "2024-12-31",
+    "stockPrice": 105.7,
+    "numberOfShares": 926172000,
+    "marketCapitalization": 97896380400,
+    "minusCashAndCashEquivalents": 1318591000,
+    "addTotalDebt": 31494568000,
+    "enterpriseValue": 128072357400
+  },
+  {
+    "symbol": "PLD",
+    "date": "2023-12-31",
+    "stockPrice": 133.3,
+    "numberOfShares": 947706000,
+    "marketCapitalization": 126329209800,
+    "minusCashAndCashEquivalents": 530388000,
+    "addTotalDebt": 29598064000,
+    "enterpriseValue": 155396885800
+  },
+  {
+    "symbol": "PLD",
+    "date": "2022-12-31",
+    "stockPrice": 112.73,
+    "numberOfShares": 808910000,
+    "marketCapitalization": 91188424300,
+    "minusCashAndCashEquivalents": 278483000,
+    "addTotalDebt": 24514772000,
+    "enterpriseValue": 115424713300
+  },
+  {
+    "symbol": "PLD",
+    "date": "2021-12-31",
+    "stockPrice": 168.36,
+    "numberOfShares": 760312000,
+    "marketCapitalization": 128006128320,
+    "minusCashAndCashEquivalents": 556117000,
+    "addTotalDebt": 18163499000,
+    "enterpriseValue": 145613510320
+  }
+]

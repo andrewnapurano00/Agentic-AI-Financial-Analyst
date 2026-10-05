@@ -1,0 +1,47 @@
+[
+  {
+    "symbol": "JNJ",
+    "date": "2026-10-13",
+    "epsActual": null,
+    "epsEstimated": 2.78,
+    "revenueActual": null,
+    "revenueEstimated": 25356290000,
+    "lastUpdated": "2026-10-03"
+  },
+  {
+    "symbol": "JNJ",
+    "date": "2026-07-15",
+    "epsActual": 2.9,
+    "epsEstimated": 2.84,
+    "revenueActual": 25310000000,
+    "revenueEstimated": 25062320000,
+    "lastUpdated": "2026-10-03"
+  },
+  {
+    "symbol": "JNJ",
+    "date": "2026-04-14",
+    "epsActual": 2.7,
+    "epsEstimated": 2.68,
+    "revenueActual": 24062000000,
+    "revenueEstimated": 23614670000,
+    "lastUpdated": "2026-07-14"
+  },
+  {
+    "symbol": "JNJ",
+    "date": "2026-01-21",
+    "epsActual": 2.46,
+    "epsEstimated": 2.46,
+    "revenueActual": 24564000000,
+    "revenueEstimated": 24147990000,
+    "lastUpdated": "2026-04-21"
+  },
+  {
+    "symbol": "JNJ",
+    "date": "2025-10-14",
+    "epsActual": 2.8,
+    "epsEstimated": 2.76,
+    "revenueActual": 23993000000,
+    "revenueEstimated": 23755362271,
+    "lastUpdated": "2026-01-13"
+  }
+]

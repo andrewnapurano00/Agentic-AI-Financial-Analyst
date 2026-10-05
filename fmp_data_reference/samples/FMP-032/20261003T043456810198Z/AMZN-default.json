@@ -1,0 +1,47 @@
+[
+  {
+    "symbol": "AMZN",
+    "date": "2026-10-01",
+    "analystRatingsbuy": 42,
+    "analystRatingsHold": 2,
+    "analystRatingsSell": 0,
+    "analystRatingsStrongSell": 0,
+    "analystRatingsStrongBuy": 15
+  },
+  {
+    "symbol": "AMZN",
+    "date": "2026-09-01",
+    "analystRatingsbuy": 45,
+    "analystRatingsHold": 10,
+    "analystRatingsSell": 0,
+    "analystRatingsStrongSell": 1,
+    "analystRatingsStrongBuy": 15
+  },
+  {
+    "symbol": "AMZN",
+    "date": "2026-08-01",
+    "analystRatingsbuy": 45,
+    "analystRatingsHold": 10,
+    "analystRatingsSell": 0,
+    "analystRatingsStrongSell": 0,
+    "analystRatingsStrongBuy": 16
+  },
+  {
+    "symbol": "AMZN",
+    "date": "2026-07-01",
+    "analystRatingsbuy": 48,
+    "analystRatingsHold": 11,
+    "analystRatingsSell": 0,
+    "analystRatingsStrongSell": 0,
+    "analystRatingsStrongBuy": 16
+  },
+  {
+    "symbol": "AMZN",
+    "date": "2026-06-01",
+    "analystRatingsbuy": 48,
+    "analystRatingsHold": 11,
+    "analystRatingsSell": 0,
+    "analystRatingsStrongSell": 0,
+    "analystRatingsStrongBuy": 15
+  }
+]

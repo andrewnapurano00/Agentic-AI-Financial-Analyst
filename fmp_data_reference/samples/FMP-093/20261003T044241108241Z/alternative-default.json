@@ -1,0 +1,67 @@
+[
+  {
+    "symbol": "MKC",
+    "publishedDate": "2026-10-02T10:33:46.000Z",
+    "newsURL": "https://thefly.com/ajax/news_get.php?id=4434551",
+    "newsTitle": "McCormick price target lowered to $47 from $55 at Barclays",
+    "analystName": "",
+    "priceTarget": 47,
+    "adjPriceTarget": 47,
+    "priceWhenPosted": 44.14,
+    "newsPublisher": "TheFly",
+    "newsBaseURL": "thefly.com",
+    "analystCompany": "Barclays"
+  },
+  {
+    "symbol": "TRU",
+    "publishedDate": "2026-10-02T09:51:04.000Z",
+    "newsURL": "https://thefly.com/ajax/news_get.php?id=4434502",
+    "newsTitle": "TransUnion price target lowered to $70 from $85 at Barclays",
+    "analystName": "",
+    "priceTarget": 70,
+    "adjPriceTarget": 70,
+    "priceWhenPosted": 62.18,
+    "newsPublisher": "TheFly",
+    "newsBaseURL": "thefly.com",
+    "analystCompany": "Barclays"
+  },
+  {
+    "symbol": "FICO",
+    "publishedDate": "2026-10-02T09:50:53.000Z",
+    "newsURL": "https://thefly.com/ajax/news_get.php?id=4434501",
+    "newsTitle": "FICO price target lowered to $875 from $935 at Barclays",
+    "analystName": "",
+    "priceTarget": 875,
+    "adjPriceTarget": 875,
+    "priceWhenPosted": 661.75,
+    "newsPublisher": "TheFly",
+    "newsBaseURL": "thefly.com",
+    "analystCompany": "Barclays"
+  },
+  {
+    "symbol": "EFX",
+    "publishedDate": "2026-10-02T09:50:30.000Z",
+    "newsURL": "https://thefly.com/ajax/news_get.php?id=4434498",
+    "newsTitle": "Equifax price target lowered to $155 from $200 at Barclays",
+    "analystName": "",
+    "priceTarget": 155,
+    "adjPriceTarget": 155,
+    "priceWhenPosted": 139.73,
+    "newsPublisher": "TheFly",
+    "newsBaseURL": "thefly.com",
+    "analystCompany": "Barclays"
+  },
+  {
+    "symbol": "BE",
+    "publishedDate": "2026-10-01T10:03:28.000Z",
+    "newsURL": "https://thefly.com/ajax/news_get.php?id=4433613",
+    "newsTitle": "Bloom Energy price target raised to $308 from $276 at Barclays",
+    "analystName": "",
+    "priceTarget": 308,
+    "adjPriceTarget": 308,
+    "priceWhenPosted": 276.98,
+    "newsPublisher": "TheFly",
+    "newsBaseURL": "thefly.com",
+    "analystCompany": "Barclays"
+  }
+]

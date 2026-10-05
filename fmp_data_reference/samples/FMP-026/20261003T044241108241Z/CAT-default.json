@@ -1,0 +1,52 @@
+[
+  {
+    "title": "Chief Legal Officer & General Counsel",
+    "name": "Derek Owens",
+    "pay": null,
+    "currencyPay": "USD",
+    "gender": "male",
+    "yearBorn": 1974,
+    "titleSince": null,
+    "active": true
+  },
+  {
+    "title": "Senior Vice President & Chief Information Officer",
+    "name": "Jamie Engstrom",
+    "pay": null,
+    "currencyPay": "USD",
+    "gender": "female",
+    "yearBorn": 1978,
+    "titleSince": null,
+    "active": true
+  },
+  {
+    "title": "Group President of Services, Distribution & Digital",
+    "name": "Bob De Lange",
+    "pay": 2361317,
+    "currencyPay": "USD",
+    "gender": "male",
+    "yearBorn": 1970,
+    "titleSince": null,
+    "active": true
+  },
+  {
+    "title": "Chief Financial Officer",
+    "name": "Kyle J. Epley",
+    "pay": 2679581,
+    "currencyPay": "USD",
+    "gender": "male",
+    "yearBorn": 1973,
+    "titleSince": null,
+    "active": true
+  },
+  {
+    "title": "Group President of Resource Industries",
+    "name": "Denise C. Johnson",
+    "pay": 2492993,
+    "currencyPay": "USD",
+    "gender": "female",
+    "yearBorn": 1966,
+    "titleSince": null,
+    "active": true
+  }
+]

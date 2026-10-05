@@ -1,0 +1,37 @@
+[
+  {
+    "holder": "HC CAPITAL TRUST",
+    "shares": 47657,
+    "dateReported": "2026-06-30",
+    "change": 0,
+    "weightPercent": 0.00084491
+  },
+  {
+    "holder": "Clough Global Equity Fund",
+    "shares": 3387,
+    "dateReported": "2026-07-31",
+    "change": 0,
+    "weightPercent": 0.03354194
+  },
+  {
+    "holder": "PARNASSUS INCOME FUNDS",
+    "shares": 2332094,
+    "dateReported": "2026-06-30",
+    "change": 0,
+    "weightPercent": 2.60618441
+  },
+  {
+    "holder": "PARNASSUS INCOME FUNDS",
+    "shares": 3606265.76,
+    "dateReported": "2026-06-30",
+    "change": 0,
+    "weightPercent": 4.03010925
+  },
+  {
+    "holder": "Connors Funds",
+    "shares": 2705,
+    "dateReported": "2026-05-31",
+    "change": -200,
+    "weightPercent": 0.11472305
+  }
+]

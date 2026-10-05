@@ -1,0 +1,32 @@
+[
+  {
+    "symbol": "BAC",
+    "companyName": "Bank of America Corporation",
+    "price": 53.75,
+    "mktCap": 381441712500
+  },
+  {
+    "symbol": "BMO",
+    "companyName": "Bank of Montreal",
+    "price": 165.7,
+    "mktCap": 116059033768
+  },
+  {
+    "symbol": "BNS",
+    "companyName": "The Bank of Nova Scotia",
+    "price": 91.19,
+    "mktCap": 111169134806
+  },
+  {
+    "symbol": "C",
+    "companyName": "Citigroup Inc.",
+    "price": 128.5,
+    "mktCap": 220365935000
+  },
+  {
+    "symbol": "CM",
+    "companyName": "Canadian Imperial Bank of Commerce",
+    "price": 111.02,
+    "mktCap": 102872353220
+  }
+]

@@ -1,0 +1,67 @@
+[
+  {
+    "symbol": "CAT",
+    "publishedDate": "2026-09-10T10:23:00.000Z",
+    "newsURL": "https://www.streetinsider.com/Analyst+Comments/Freedom+Broker+Upgrades+Caterpillar+%28CAT%29+to+Buy/27044739.html",
+    "newsTitle": "Freedom Broker Upgrades Caterpillar (CAT) to Buy",
+    "analystName": "",
+    "priceTarget": 980,
+    "adjPriceTarget": 980,
+    "priceWhenPosted": 815.56,
+    "newsPublisher": "StreetInsider",
+    "newsBaseURL": "streetinsider.com",
+    "analystCompany": "Needham"
+  },
+  {
+    "symbol": "CAT",
+    "publishedDate": "2026-08-06T13:14:28.000Z",
+    "newsURL": "https://thefly.com/ajax/news_get.php?id=4404558",
+    "newsTitle": "Caterpillar price target raised to $882 from $845 at DA Davidson",
+    "analystName": "",
+    "priceTarget": 882,
+    "adjPriceTarget": 882,
+    "priceWhenPosted": 870.11,
+    "newsPublisher": "TheFly",
+    "newsBaseURL": "thefly.com",
+    "analystCompany": "D.A. Davidson"
+  },
+  {
+    "symbol": "CAT",
+    "publishedDate": "2026-08-06T09:10:45.000Z",
+    "newsURL": "https://thefly.com/ajax/news_get.php?id=4403399",
+    "newsTitle": "Caterpillar price target raised to $900 from $800 at Barclays",
+    "analystName": "",
+    "priceTarget": 900,
+    "adjPriceTarget": 900,
+    "priceWhenPosted": 871.08,
+    "newsPublisher": "TheFly",
+    "newsBaseURL": "thefly.com",
+    "analystCompany": "Barclays"
+  },
+  {
+    "symbol": "CAT",
+    "publishedDate": "2026-08-05T13:45:00.000Z",
+    "newsURL": "https://www.streetinsider.com/Analyst+Comments/Caterpillar+%28CAT%29+PT+Raised+to+%24980+at+Freedom+Broker/26871593.html",
+    "newsTitle": "Caterpillar (CAT) PT Raised to $980 at Freedom Broker",
+    "analystName": "",
+    "priceTarget": 980,
+    "adjPriceTarget": 980,
+    "priceWhenPosted": 892.07,
+    "newsPublisher": "StreetInsider",
+    "newsBaseURL": "streetinsider.com",
+    "analystCompany": "Truist Financial"
+  },
+  {
+    "symbol": "CAT",
+    "publishedDate": "2026-08-05T13:34:00.000Z",
+    "newsURL": "https://www.streetinsider.com/Analyst+Comments/Bernstein+SocGen+Group+Reiterates+Market+Perform+Rating+on+Caterpillar+%28CAT%29/26871536.html",
+    "newsTitle": "Bernstein SocGen Group Reiterates Market Perform Rating on Caterpillar (CAT)",
+    "analystName": "Chad Dillard",
+    "priceTarget": 1002,
+    "adjPriceTarget": 1002,
+    "priceWhenPosted": 894.52,
+    "newsPublisher": "StreetInsider",
+    "newsBaseURL": "streetinsider.com",
+    "analystCompany": "Bernstein"
+  }
+]

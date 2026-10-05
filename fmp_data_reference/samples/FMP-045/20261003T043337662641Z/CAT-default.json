@@ -1,0 +1,21 @@
+[
+  {
+    "symbol": "CAT",
+    "name": "Caterpillar Inc.",
+    "price": 845.42,
+    "changePercentage": 2.30774,
+    "change": 19.07,
+    "volume": 2378887,
+    "dayLow": 836.46,
+    "dayHigh": 858.87,
+    "yearHigh": 1073.46,
+    "yearLow": 483.55,
+    "marketCap": 389431732540,
+    "priceAvg50": 824.4308,
+    "priceAvg200": 793.8168,
+    "exchange": "NYSE",
+    "open": 840.8,
+    "previousClose": 826.35,
+    "timestamp": 1790971202
+  }
+]

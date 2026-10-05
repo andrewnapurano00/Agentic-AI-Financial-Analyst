@@ -1,0 +1,18 @@
+[
+  {
+    "symbol": "CAT",
+    "companyName": "Caterpillar Inc.",
+    "cik": "0000018230",
+    "exchangeFullName": "New York Stock Exchange",
+    "exchange": "NYSE",
+    "currency": "USD"
+  },
+  {
+    "symbol": "CATR.TO",
+    "companyName": "Caterpillar Inc.",
+    "cik": "0000018230",
+    "exchangeFullName": "Toronto Stock Exchange",
+    "exchange": "TSX",
+    "currency": "CAD"
+  }
+]

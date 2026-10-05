@@ -1,0 +1,57 @@
+[
+  {
+    "symbol": "CAT",
+    "date": "2026-07-20",
+    "recordDate": "2026-07-20",
+    "paymentDate": "2026-08-19",
+    "declarationDate": "2026-06-10",
+    "adjDividend": 1.63,
+    "dividend": 1.63,
+    "yield": 0.7127154923059122,
+    "frequency": "Quarterly"
+  },
+  {
+    "symbol": "CAT",
+    "date": "2026-04-20",
+    "recordDate": "2026-04-20",
+    "paymentDate": "2026-05-19",
+    "declarationDate": "2026-04-08",
+    "adjDividend": 1.51,
+    "dividend": 1.51,
+    "yield": 0.7565130260521042,
+    "frequency": "Quarterly"
+  },
+  {
+    "symbol": "CAT",
+    "date": "2026-01-20",
+    "recordDate": "2026-01-20",
+    "paymentDate": "2026-02-19",
+    "declarationDate": "2025-12-10",
+    "adjDividend": 1.51,
+    "dividend": 1.51,
+    "yield": 0.9443561208267091,
+    "frequency": "Quarterly"
+  },
+  {
+    "symbol": "CAT",
+    "date": "2025-10-20",
+    "recordDate": "2025-10-20",
+    "paymentDate": "2025-11-20",
+    "declarationDate": "2025-10-06",
+    "adjDividend": 1.51,
+    "dividend": 1.51,
+    "yield": 1.09943898490154,
+    "frequency": "Quarterly"
+  },
+  {
+    "symbol": "CAT",
+    "date": "2025-07-21",
+    "recordDate": "2025-07-21",
+    "paymentDate": "2025-08-20",
+    "declarationDate": "2025-06-11",
+    "adjDividend": 1.51,
+    "dividend": 1.51,
+    "yield": 1.3997610164118321,
+    "frequency": "Quarterly"
+  }
+]

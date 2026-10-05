@@ -1,0 +1,47 @@
+[
+  {
+    "symbol": "AMZN",
+    "cik": "0001018724",
+    "companyName": "Amazon.com, Inc.",
+    "industry": "SPECIALTY RETAIL",
+    "year": 2022,
+    "ESGRiskRating": "B-",
+    "industryRank": "114 out of 121"
+  },
+  {
+    "symbol": "AMZN",
+    "cik": "0001018724",
+    "companyName": "Amazon.com, Inc.",
+    "industry": "SPECIALTY RETAIL",
+    "year": 2019,
+    "ESGRiskRating": "B-",
+    "industryRank": "80 out of 85"
+  },
+  {
+    "symbol": "AMZN",
+    "cik": "0001018724",
+    "companyName": "Amazon.com, Inc.",
+    "industry": "SPECIALTY RETAIL",
+    "year": 2001,
+    "ESGRiskRating": "B-",
+    "industryRank": "19 out of 22"
+  },
+  {
+    "symbol": "AMZN",
+    "cik": "0001018724",
+    "companyName": "Amazon.com, Inc.",
+    "industry": "SPECIALTY RETAIL",
+    "year": 2009,
+    "ESGRiskRating": "B-",
+    "industryRank": "33 out of 40"
+  },
+  {
+    "symbol": "AMZN",
+    "cik": "0001018724",
+    "companyName": "Amazon.com, Inc.",
+    "industry": "SPECIALTY RETAIL",
+    "year": 2006,
+    "ESGRiskRating": "B-",
+    "industryRank": "24 out of 29"
+  }
+]

@@ -1,0 +1,32 @@
+[
+  {
+    "symbol": "BABA",
+    "companyName": "Alibaba Group Holding Limited",
+    "price": 105.85,
+    "mktCap": 253708913650
+  },
+  {
+    "symbol": "CASY",
+    "companyName": "Casey's General Stores, Inc.",
+    "price": 617.76,
+    "mktCap": 22860147024
+  },
+  {
+    "symbol": "ETSY",
+    "companyName": "Etsy, Inc.",
+    "price": 72.77,
+    "mktCap": 6905598730
+  },
+  {
+    "symbol": "GME",
+    "companyName": "GameStop Corp.",
+    "price": 24.7,
+    "mktCap": 11082674048
+  },
+  {
+    "symbol": "LITB",
+    "companyName": "LightInTheBox Holding Co., Ltd.",
+    "price": 2.91,
+    "mktCap": 26594226
+  }
+]

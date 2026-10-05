@@ -1,0 +1,26 @@
+[
+  {
+    "symbol": "LIN",
+    "name": "Linde plc",
+    "price": 479.48,
+    "changesPercentage": 2.13654,
+    "change": 10.03,
+    "dayLow": 470.55,
+    "dayHigh": 483.41,
+    "yearHigh": 548.2,
+    "yearLow": 387.78,
+    "marketCap": 221807448000,
+    "priceAvg50": 481.0894,
+    "priceAvg200": 485.91434,
+    "exchange": "NASDAQ",
+    "volume": 2527281,
+    "avgVolume": 2047490,
+    "open": 473.235,
+    "previousClose": 469.45,
+    "eps": 16.83,
+    "pe": 28.49,
+    "earningsAnnouncement": "2026-10-30T04:00:00.000+0000",
+    "sharesOutstanding": 462600000,
+    "timestamp": 1790971201
+  }
+]

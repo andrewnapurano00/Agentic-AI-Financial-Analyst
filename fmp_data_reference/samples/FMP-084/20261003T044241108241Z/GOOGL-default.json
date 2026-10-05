@@ -1,0 +1,52 @@
+[
+  {
+    "symbol": "GOOGL",
+    "date": "2026-06-30",
+    "stockPrice": 353.33,
+    "numberOfShares": 12151000000,
+    "marketCapitalization": 4293312830000,
+    "minusCashAndCashEquivalents": 55911000000,
+    "addTotalDebt": 112756000000,
+    "enterpriseValue": 4350157830000
+  },
+  {
+    "symbol": "GOOGL",
+    "date": "2026-03-31",
+    "stockPrice": 286.86,
+    "numberOfShares": 12099000000,
+    "marketCapitalization": 3470719140000,
+    "minusCashAndCashEquivalents": 38063000000,
+    "addTotalDebt": 90484000000,
+    "enterpriseValue": 3523140140000
+  },
+  {
+    "symbol": "GOOGL",
+    "date": "2025-12-31",
+    "stockPrice": 313.8,
+    "numberOfShares": 12073000000,
+    "marketCapitalization": 3788507400000,
+    "minusCashAndCashEquivalents": 30708000000,
+    "addTotalDebt": 59291000000,
+    "enterpriseValue": 3817090400000
+  },
+  {
+    "symbol": "GOOGL",
+    "date": "2025-09-30",
+    "stockPrice": 243.55,
+    "numberOfShares": 12086000000,
+    "marketCapitalization": 2943545300000,
+    "minusCashAndCashEquivalents": 23090000000,
+    "addTotalDebt": 53301000000,
+    "enterpriseValue": 2973756300000
+  },
+  {
+    "symbol": "GOOGL",
+    "date": "2025-06-30",
+    "stockPrice": 177.39,
+    "numberOfShares": 12122000000,
+    "marketCapitalization": 2150321579999,
+    "minusCashAndCashEquivalents": 21036000000,
+    "addTotalDebt": 41668000000,
+    "enterpriseValue": 2170953579999
+  }
+]

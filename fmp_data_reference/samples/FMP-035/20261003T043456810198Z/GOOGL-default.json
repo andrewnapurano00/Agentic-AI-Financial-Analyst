@@ -1,0 +1,32 @@
+[
+  {
+    "symbol": "AAPL",
+    "companyName": "Apple Inc.",
+    "price": 333.69,
+    "mktCap": 4869931924200
+  },
+  {
+    "symbol": "AVGO",
+    "companyName": "Broadcom Inc.",
+    "price": 355.14,
+    "mktCap": 1689606961200
+  },
+  {
+    "symbol": "CSCO",
+    "companyName": "Cisco Systems, Inc.",
+    "price": 112.2,
+    "mktCap": 442228969413
+  },
+  {
+    "symbol": "FLEX",
+    "companyName": "Flex Ltd.",
+    "price": 116.61,
+    "mktCap": 43076081265
+  },
+  {
+    "symbol": "GRMN",
+    "companyName": "Garmin Ltd.",
+    "price": 281.16,
+    "mktCap": 54222549480
+  }
+]

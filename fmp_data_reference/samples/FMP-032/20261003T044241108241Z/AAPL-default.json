@@ -1,0 +1,47 @@
+[
+  {
+    "symbol": "AAPL",
+    "date": "2026-10-01",
+    "analystRatingsbuy": 19,
+    "analystRatingsHold": 13,
+    "analystRatingsSell": 3,
+    "analystRatingsStrongSell": 3,
+    "analystRatingsStrongBuy": 6
+  },
+  {
+    "symbol": "AAPL",
+    "date": "2026-09-01",
+    "analystRatingsbuy": 19,
+    "analystRatingsHold": 14,
+    "analystRatingsSell": 3,
+    "analystRatingsStrongSell": 3,
+    "analystRatingsStrongBuy": 6
+  },
+  {
+    "symbol": "AAPL",
+    "date": "2026-08-01",
+    "analystRatingsbuy": 22,
+    "analystRatingsHold": 14,
+    "analystRatingsSell": 3,
+    "analystRatingsStrongSell": 2,
+    "analystRatingsStrongBuy": 6
+  },
+  {
+    "symbol": "AAPL",
+    "date": "2026-07-01",
+    "analystRatingsbuy": 23,
+    "analystRatingsHold": 17,
+    "analystRatingsSell": 2,
+    "analystRatingsStrongSell": 2,
+    "analystRatingsStrongBuy": 6
+  },
+  {
+    "symbol": "AAPL",
+    "date": "2026-06-01",
+    "analystRatingsbuy": 23,
+    "analystRatingsHold": 16,
+    "analystRatingsSell": 2,
+    "analystRatingsStrongSell": 2,
+    "analystRatingsStrongBuy": 7
+  }
+]

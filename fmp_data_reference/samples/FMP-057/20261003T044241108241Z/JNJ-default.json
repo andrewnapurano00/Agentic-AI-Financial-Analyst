@@ -1,0 +1,15 @@
+[
+  {
+    "bidSize": 1,
+    "askPrice": 256.25,
+    "volume": 10940983,
+    "askSize": 101,
+    "bidPrice": 255.04,
+    "lastSalePrice": 256.2,
+    "lastSaleSize": 0,
+    "lastSaleTime": 1790985334000,
+    "fmpLast": 256.2,
+    "lastUpdated": 1790985602000,
+    "symbol": "JNJ"
+  }
+]

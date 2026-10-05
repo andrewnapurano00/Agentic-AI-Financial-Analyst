@@ -1,0 +1,62 @@
+[
+  {
+    "symbol": "CAT",
+    "reportedCurrency": "USD",
+    "fiscalYear": "2026",
+    "period": "Q2",
+    "date": "2026-06-30",
+    "averagePPE": 0.22349,
+    "maintenanceCapex": -222850740,
+    "ownersEarnings": 4148149260,
+    "growthCapex": -888149260,
+    "ownersEarningsPerShare": 8.97
+  },
+  {
+    "symbol": "CAT",
+    "reportedCurrency": "USD",
+    "fiscalYear": "2026",
+    "period": "Q1",
+    "date": "2026-03-31",
+    "averagePPE": 0.22349,
+    "maintenanceCapex": -343430660,
+    "ownersEarnings": 1526569340,
+    "growthCapex": -707569340,
+    "ownersEarningsPerShare": 3.28
+  },
+  {
+    "symbol": "CAT",
+    "reportedCurrency": "USD",
+    "fiscalYear": "2025",
+    "period": "Q4",
+    "date": "2025-12-31",
+    "averagePPE": 0.22349,
+    "maintenanceCapex": -689856180,
+    "ownersEarnings": 2901143820,
+    "growthCapex": -652143820,
+    "ownersEarningsPerShare": 6.19
+  },
+  {
+    "symbol": "CAT",
+    "reportedCurrency": "USD",
+    "fiscalYear": "2025",
+    "period": "Q3",
+    "date": "2025-09-30",
+    "averagePPE": 0.22349,
+    "maintenanceCapex": -728613320,
+    "ownersEarnings": 3008386680,
+    "growthCapex": -342386680,
+    "ownersEarningsPerShare": 6.39
+  },
+  {
+    "symbol": "CAT",
+    "reportedCurrency": "USD",
+    "fiscalYear": "2025",
+    "period": "Q2",
+    "date": "2025-06-30",
+    "averagePPE": 0.22349,
+    "maintenanceCapex": -981818800,
+    "ownersEarnings": 2140181200,
+    "growthCapex": 26818800,
+    "ownersEarningsPerShare": 4.54
+  }
+]

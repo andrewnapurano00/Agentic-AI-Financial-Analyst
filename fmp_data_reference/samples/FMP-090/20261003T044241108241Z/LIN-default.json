@@ -1,0 +1,67 @@
+[
+  {
+    "symbol": "LIN",
+    "publishedDate": "2026-09-28T12:08:11.000Z",
+    "newsURL": "https://thefly.com/ajax/news_get.php?id=4431526",
+    "newsTitle": "Linde price target lowered to $538 from $563 at Argus",
+    "analystName": "",
+    "priceTarget": 538,
+    "adjPriceTarget": 538,
+    "priceWhenPosted": 471.79,
+    "newsPublisher": "TheFly",
+    "newsBaseURL": "thefly.com",
+    "analystCompany": "Argus Research"
+  },
+  {
+    "symbol": "LIN",
+    "publishedDate": "2026-09-11T13:34:00.000Z",
+    "newsURL": "https://www.streetinsider.com/Analyst+Comments/Linde+%28LIN%29+PT+Lowered+to+%24563+at+Bernstein+SocGen+Group/27051292.html",
+    "newsTitle": "Linde (LIN) PT Lowered to $563 at Bernstein SocGen Group",
+    "analystName": "James Hooper",
+    "priceTarget": 563,
+    "adjPriceTarget": 563,
+    "priceWhenPosted": 463.92,
+    "newsPublisher": "StreetInsider",
+    "newsBaseURL": "streetinsider.com",
+    "analystCompany": "Bernstein"
+  },
+  {
+    "symbol": "LIN",
+    "publishedDate": "2026-09-10T20:40:15.000Z",
+    "newsURL": "https://thefly.com/ajax/news_get.php?id=4424257",
+    "newsTitle": "Linde initiated with an Overweight at KeyBanc",
+    "analystName": "",
+    "priceTarget": 542,
+    "adjPriceTarget": 542,
+    "priceWhenPosted": 461.62,
+    "newsPublisher": "TheFly",
+    "newsBaseURL": "thefly.com",
+    "analystCompany": "KeyBanc"
+  },
+  {
+    "symbol": "LIN",
+    "publishedDate": "2026-08-10T12:07:24.000Z",
+    "newsURL": "https://thefly.com/ajax/news_get.php?id=4407432",
+    "newsTitle": "Linde price target lowered to $580 from $585 at Goldman Sachs",
+    "analystName": "",
+    "priceTarget": 580,
+    "adjPriceTarget": 580,
+    "priceWhenPosted": 487.37,
+    "newsPublisher": "TheFly",
+    "newsBaseURL": "thefly.com",
+    "analystCompany": "Goldman Sachs"
+  },
+  {
+    "symbol": "LIN",
+    "publishedDate": "2026-08-10T12:04:49.000Z",
+    "newsURL": "https://thefly.com/ajax/news_get.php?id=4407423",
+    "newsTitle": "Linde price target lowered to $546 from $560 at BMO Capital",
+    "analystName": "",
+    "priceTarget": 546,
+    "adjPriceTarget": 546,
+    "priceWhenPosted": 488.14,
+    "newsPublisher": "TheFly",
+    "newsBaseURL": "thefly.com",
+    "analystCompany": "BMO Capital"
+  }
+]

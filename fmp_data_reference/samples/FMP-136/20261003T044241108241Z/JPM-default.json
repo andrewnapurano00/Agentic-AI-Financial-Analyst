@@ -1,0 +1,62 @@
+[
+  {
+    "symbol": "JPM",
+    "date": "2026-10-02",
+    "open": 334,
+    "high": 334.845,
+    "low": 330,
+    "close": 332.38,
+    "volume": 6539384,
+    "change": -1.62,
+    "changePercent": -0.48502994,
+    "vwap": 332.41
+  },
+  {
+    "symbol": "JPM",
+    "date": "2026-10-01",
+    "open": 328.75,
+    "high": 333.58,
+    "low": 325.87,
+    "close": 333.18,
+    "volume": 8164431,
+    "change": 4.43,
+    "changePercent": 1.35,
+    "vwap": 330.345
+  },
+  {
+    "symbol": "JPM",
+    "date": "2026-09-30",
+    "open": 334.89,
+    "high": 336.34,
+    "low": 330.83,
+    "close": 330.83,
+    "volume": 9121168,
+    "change": -4.06,
+    "changePercent": -1.21,
+    "vwap": 333.2225
+  },
+  {
+    "symbol": "JPM",
+    "date": "2026-09-29",
+    "open": 337,
+    "high": 338.75,
+    "low": 333.33,
+    "close": 334.98,
+    "volume": 7258590,
+    "change": -2.02,
+    "changePercent": -0.59941,
+    "vwap": 336.015
+  },
+  {
+    "symbol": "JPM",
+    "date": "2026-09-28",
+    "open": 341.83,
+    "high": 342,
+    "low": 336.3,
+    "close": 336.59,
+    "volume": 10483748,
+    "change": -5.24,
+    "changePercent": -1.53,
+    "vwap": 339.18
+  }
+]

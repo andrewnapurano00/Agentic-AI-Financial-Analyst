@@ -1,0 +1,32 @@
+[
+  {
+    "holder": "Parrish Capital LLC",
+    "shares": 0,
+    "dateReported": "2026-09-30",
+    "change": -609
+  },
+  {
+    "holder": "Noble Wealth Management PBC",
+    "shares": 0,
+    "dateReported": "2026-09-30",
+    "change": -3
+  },
+  {
+    "holder": "BlackRock, Inc.",
+    "shares": 37301875,
+    "dateReported": "2026-06-30",
+    "change": 429603
+  },
+  {
+    "holder": "VANGUARD CAPITAL MANAGEMENT LLC",
+    "shares": 30208556,
+    "dateReported": "2026-06-30",
+    "change": -24514
+  },
+  {
+    "holder": "STATE STREET CORP",
+    "shares": 20344181,
+    "dateReported": "2026-06-30",
+    "change": 719052
+  }
+]

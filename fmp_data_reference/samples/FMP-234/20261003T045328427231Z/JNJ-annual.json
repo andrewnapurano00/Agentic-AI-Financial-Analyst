@@ -1,0 +1,67 @@
+[
+  {
+    "symbol": "JNJ",
+    "fiscalYear": 2025,
+    "period": "FY",
+    "reportedCurrency": "USD",
+    "date": "2025-12-28",
+    "data": {
+      "Asia-Pacific, Africa": 14031000000,
+      "Europe": 21535000000,
+      "UNITED STATES": 53752000000,
+      "Western Hemisphere, excluding U.S.": 4875000000
+    }
+  },
+  {
+    "symbol": "JNJ",
+    "fiscalYear": 2024,
+    "period": "FY",
+    "reportedCurrency": "USD",
+    "date": "2024-12-29",
+    "data": {
+      "Asia-Pacific, Africa": 13593000000,
+      "Europe": 20212000000,
+      "UNITED STATES": 50302000000,
+      "Western Hemisphere, excluding U.S.": 4714000000
+    }
+  },
+  {
+    "symbol": "JNJ",
+    "fiscalYear": 2023,
+    "period": "FY",
+    "reportedCurrency": "USD",
+    "date": "2023-12-31",
+    "data": {
+      "Asia-Pacific, Africa": 13756000000,
+      "Europe": 20410000000,
+      "UNITED STATES": 46444000000,
+      "Western Hemisphere, excluding U.S.": 4549000000
+    }
+  },
+  {
+    "symbol": "JNJ",
+    "fiscalYear": 2022,
+    "period": "FY",
+    "reportedCurrency": "USD",
+    "date": "2022-12-31",
+    "data": {
+      "Europe": 23449000000,
+      "Asia-Pacific, Africa": 16789000000,
+      "UNITED STATES": 48580000000,
+      "Western Hemisphere, excluding U.S.": 6125000000
+    }
+  },
+  {
+    "symbol": "JNJ",
+    "fiscalYear": 2021,
+    "period": "FY",
+    "reportedCurrency": "USD",
+    "date": "2022-01-02",
+    "data": {
+      "Asia-Pacific, Africa": 17275000000,
+      "Europe": 23594000000,
+      "UNITED STATES": 47156000000,
+      "Western Hemisphere, excluding U.S.": 5750000000
+    }
+  }
+]

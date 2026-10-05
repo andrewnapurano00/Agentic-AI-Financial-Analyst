@@ -1,0 +1,52 @@
+[
+  {
+    "title": "CEO, President & Chairman",
+    "name": "Shailesh G. Jejurikar",
+    "pay": 3412523,
+    "currencyPay": "USD",
+    "gender": "male",
+    "yearBorn": 1967,
+    "titleSince": null,
+    "active": true
+  },
+  {
+    "title": "CEO of Fabric & Home Care, and Executive Sponsor for Corporate Sustainability",
+    "name": "Sundar G. Raman",
+    "pay": 2203225,
+    "currencyPay": "USD",
+    "gender": "male",
+    "yearBorn": 1975,
+    "titleSince": null,
+    "active": true
+  },
+  {
+    "title": "President of North America & Chief Sales Officer",
+    "name": "Melinda Sherwood",
+    "pay": null,
+    "currencyPay": "USD",
+    "gender": "female",
+    "yearBorn": 1967,
+    "titleSince": null,
+    "active": true
+  },
+  {
+    "title": "Chief Brand Officer",
+    "name": "Marc S. Pritchard",
+    "pay": 1755334,
+    "currencyPay": "USD",
+    "gender": "male",
+    "yearBorn": 1960,
+    "titleSince": null,
+    "active": true
+  },
+  {
+    "title": "Chief Human Resources Officer",
+    "name": "Balaji Purushothaman",
+    "pay": 3393328,
+    "currencyPay": "USD",
+    "gender": "male",
+    "yearBorn": 1969,
+    "titleSince": null,
+    "active": true
+  }
+]

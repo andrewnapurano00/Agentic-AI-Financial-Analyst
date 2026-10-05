@@ -1,0 +1,72 @@
+[
+  {
+    "date": "2026-10-03 00:00:00",
+    "symbol": "AAPL",
+    "stocktwitsPosts": 4,
+    "twitterPosts": 10,
+    "stocktwitsComments": 0,
+    "twitterComments": 0,
+    "stocktwitsLikes": 2,
+    "twitterLikes": 21,
+    "stocktwitsImpressions": 112690,
+    "twitterImpressions": 381500,
+    "stocktwitsSentiment": 0.5,
+    "twitterSentiment": 0.49426
+  },
+  {
+    "date": "2026-10-02 23:00:00",
+    "symbol": "AAPL",
+    "stocktwitsPosts": 3,
+    "twitterPosts": 5,
+    "stocktwitsComments": 0,
+    "twitterComments": 0,
+    "stocktwitsLikes": 6,
+    "twitterLikes": 21,
+    "stocktwitsImpressions": 253,
+    "twitterImpressions": 182,
+    "stocktwitsSentiment": 0.5,
+    "twitterSentiment": 0.49289
+  },
+  {
+    "date": "2026-10-02 22:00:00",
+    "symbol": "AAPL",
+    "stocktwitsPosts": 3,
+    "twitterPosts": 4,
+    "stocktwitsComments": 1,
+    "twitterComments": 3,
+    "stocktwitsLikes": 7,
+    "twitterLikes": 15,
+    "stocktwitsImpressions": 2209,
+    "twitterImpressions": 4965,
+    "stocktwitsSentiment": 0.5,
+    "twitterSentiment": 0.48271
+  },
+  {
+    "date": "2026-10-02 21:00:00",
+    "symbol": "AAPL",
+    "stocktwitsPosts": 4,
+    "twitterPosts": 4,
+    "stocktwitsComments": 0,
+    "twitterComments": 0,
+    "stocktwitsLikes": 22,
+    "twitterLikes": 15,
+    "stocktwitsImpressions": 1181,
+    "twitterImpressions": 2427,
+    "stocktwitsSentiment": 0.5,
+    "twitterSentiment": 0.49538
+  },
+  {
+    "date": "2026-10-02 20:00:00",
+    "symbol": "AAPL",
+    "stocktwitsPosts": 4,
+    "twitterPosts": 13,
+    "stocktwitsComments": 0,
+    "twitterComments": 0,
+    "stocktwitsLikes": 4,
+    "twitterLikes": 69,
+    "stocktwitsImpressions": 221133,
+    "twitterImpressions": 2386478,
+    "stocktwitsSentiment": 0.5,
+    "twitterSentiment": 0.54614
+  }
+]

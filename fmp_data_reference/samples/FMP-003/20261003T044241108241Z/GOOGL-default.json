@@ -1,0 +1,37 @@
+[
+  {
+    "symbol": "ABEC.F",
+    "name": "Alphabet Inc.",
+    "currency": "EUR",
+    "exchangeFullName": "Frankfurt Stock Exchange",
+    "exchange": "FSX"
+  },
+  {
+    "symbol": "GOOG.TO",
+    "name": "Alphabet Inc.",
+    "currency": "CAD",
+    "exchangeFullName": "Toronto Stock Exchange",
+    "exchange": "TSX"
+  },
+  {
+    "symbol": "GOOG.NE",
+    "name": "Alphabet Inc.",
+    "currency": "CAD",
+    "exchangeFullName": "CBOE CA",
+    "exchange": "NEO"
+  },
+  {
+    "symbol": "ABEC.DE",
+    "name": "Alphabet Inc.",
+    "currency": "EUR",
+    "exchangeFullName": "Deutsche Börse",
+    "exchange": "XETRA"
+  },
+  {
+    "symbol": "GOOGL",
+    "name": "Alphabet Inc.",
+    "currency": "USD",
+    "exchangeFullName": "NASDAQ Global Select",
+    "exchange": "NASDAQ"
+  }
+]

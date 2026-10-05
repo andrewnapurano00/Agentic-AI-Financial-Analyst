@@ -1,0 +1,67 @@
+[
+  {
+    "symbol": "LLY",
+    "publishedDate": "2025-12-01T20:55:11.000Z",
+    "newsURL": "https://thefly.com/permalinks/entry.php/id4248043/2606286394/LLY-Eli-Lilly-price-target-raised-by--at-BofA-heres-why",
+    "newsTitle": "Eli Lilly price target raised to $1,286 from $950 at BofA",
+    "analystName": "Tim Anderson",
+    "priceTarget": 1286,
+    "adjPriceTarget": 1286,
+    "priceWhenPosted": 1057.89,
+    "newsPublisher": "TheFly",
+    "newsBaseURL": "thefly.com",
+    "analystCompany": "National Bank"
+  },
+  {
+    "symbol": "PFE",
+    "publishedDate": "2025-10-01T12:25:33.000Z",
+    "newsURL": "https://thefly.com/permalinks/entry.php/id4206080/7092286394/PFE-Pfizer-drug-pricing-deal-mostly-performative-says-BofA",
+    "newsTitle": "Pfizer drug pricing deal 'mostly performative,' says BofA",
+    "analystName": "Tim Anderson",
+    "priceTarget": 28,
+    "adjPriceTarget": 28,
+    "priceWhenPosted": 27.16,
+    "newsPublisher": "TheFly",
+    "newsBaseURL": "thefly.com",
+    "analystCompany": "UBS"
+  },
+  {
+    "symbol": "CAH",
+    "publishedDate": "2023-04-12T09:24:00.000Z",
+    "newsURL": "https://www.benzinga.com/trading-ideas/long-ideas/23/04/31768582/these-3-health-care-stocks-delivering-high-dividend-yields-are-recommended-by-wall-stree",
+    "newsTitle": "These 3 Health Care Stocks Delivering High-Dividend Yields Are Recommended By Wall Street's Most Accurate Analysts",
+    "analystName": "Tim Anderson",
+    "priceTarget": 127,
+    "adjPriceTarget": 127,
+    "priceWhenPosted": 79.185,
+    "newsPublisher": "Benzinga",
+    "newsBaseURL": "benzinga.com",
+    "analystCompany": "Wolfe Research"
+  },
+  {
+    "symbol": "BIIB",
+    "publishedDate": "2022-02-04T00:00:00.000Z",
+    "newsURL": "http://www.streetinsider.com/Analyst+PT+Change/Biogen+%28BIIB%29+PT+Lowered+to+%24217+at+Wolfe+Research/19558063.html?si_client=tipranks-19558063-b6246f8ead",
+    "newsTitle": "Biogen (BIIB) PT Lowered to $217 at Wolfe Research",
+    "analystName": "Tim Anderson",
+    "priceTarget": 217,
+    "adjPriceTarget": 217,
+    "priceWhenPosted": 221.53,
+    "newsPublisher": "StreetInsider",
+    "newsBaseURL": "streetinsider.com",
+    "analystCompany": "Wolfe Research"
+  },
+  {
+    "symbol": "AMGN",
+    "publishedDate": "2021-11-03T00:00:00.000Z",
+    "newsURL": "http://www.streetinsider.com/Analyst+PT+Change/Amgen+%28AMGN%29+PT+Lowered+to+%24230+at+Wolfe+Research/19149680.html?si_client=tipranks-19149680-2ef2299c9c",
+    "newsTitle": "Amgen (AMGN) PT Lowered to $230 at Wolfe Research",
+    "analystName": "Tim Anderson",
+    "priceTarget": 230,
+    "adjPriceTarget": 230,
+    "priceWhenPosted": 214.47,
+    "newsPublisher": "StreetInsider",
+    "newsBaseURL": "streetinsider.com",
+    "analystCompany": "Wolfe Research"
+  }
+]

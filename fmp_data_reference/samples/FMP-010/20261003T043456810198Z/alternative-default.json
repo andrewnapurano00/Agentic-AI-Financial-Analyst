@@ -1,0 +1,32 @@
+[
+  {
+    "symbol": "VANI",
+    "companyName": "Vivani Medical, Inc.",
+    "tradingCurrency": "USD",
+    "reportingCurrency": "USD"
+  },
+  {
+    "symbol": "KGBLY",
+    "companyName": "Kingboard Laminates Holdings Limited",
+    "tradingCurrency": "USD",
+    "reportingCurrency": "HKD"
+  },
+  {
+    "symbol": "QIFTF",
+    "companyName": "Quorum Information Technologies Inc.",
+    "tradingCurrency": "USD",
+    "reportingCurrency": "CAD"
+  },
+  {
+    "symbol": "NWIFF",
+    "companyName": "Nuinsco Resources Limited",
+    "tradingCurrency": "USD",
+    "reportingCurrency": "CAD"
+  },
+  {
+    "symbol": "HMLN",
+    "companyName": "Hamlin Bank and Trust Company",
+    "tradingCurrency": "USD",
+    "reportingCurrency": "USD"
+  }
+]

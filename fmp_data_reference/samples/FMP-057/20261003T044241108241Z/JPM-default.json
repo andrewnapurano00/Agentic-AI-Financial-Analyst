@@ -1,0 +1,15 @@
+[
+  {
+    "bidSize": 1,
+    "askPrice": 333.04,
+    "volume": 6663819.42378,
+    "askSize": 1,
+    "bidPrice": 332.21,
+    "lastSalePrice": 332.38,
+    "lastSaleSize": 1,
+    "lastSaleTime": 1790985123000,
+    "fmpLast": 332.38,
+    "lastUpdated": 1790985600000,
+    "symbol": "JPM"
+  }
+]

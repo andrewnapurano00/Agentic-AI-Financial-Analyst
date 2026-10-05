@@ -1,0 +1,30 @@
+[
+  {
+    "symbol": "AMZN",
+    "name": "Amazon.com, Inc.",
+    "currency": "USD",
+    "exchangeFullName": "NASDAQ Global Select",
+    "exchange": "NASDAQ"
+  },
+  {
+    "symbol": "AMZN.L",
+    "name": "Leverage Shares - 1x Amazon",
+    "currency": "GBp",
+    "exchangeFullName": "London Stock Exchange",
+    "exchange": "LSE"
+  },
+  {
+    "symbol": "AMZN.NE",
+    "name": "Amazon.com, Inc.",
+    "currency": "CAD",
+    "exchangeFullName": "CBOE CA",
+    "exchange": "NEO"
+  },
+  {
+    "symbol": "AMZN.TO",
+    "name": "Amazon.com, Inc.",
+    "currency": "CAD",
+    "exchangeFullName": "Toronto Stock Exchange",
+    "exchange": "TSX"
+  }
+]

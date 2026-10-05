@@ -1,0 +1,67 @@
+[
+  {
+    "symbol": "JPM",
+    "fiscalYear": 2025,
+    "period": "FY",
+    "reportedCurrency": "USD",
+    "date": "2025-12-31",
+    "data": {
+      "Asia Pacific": 14065000000,
+      "EMEA": 24478000000,
+      "Latin America": 4215000000,
+      "North America": 139689000000
+    }
+  },
+  {
+    "symbol": "JPM",
+    "fiscalYear": 2024,
+    "period": "FY",
+    "reportedCurrency": "USD",
+    "date": "2024-12-31",
+    "data": {
+      "North America": 139323000000,
+      "Latin America/Caribbean": 3885000000,
+      "Europe/Middle East/Africa": 22353000000,
+      "Asia-Pacific": 11995000000
+    }
+  },
+  {
+    "symbol": "JPM",
+    "fiscalYear": 2023,
+    "period": "FY",
+    "reportedCurrency": "USD",
+    "date": "2023-12-30",
+    "data": {
+      "North America": 123231000000,
+      "Europe/Middle East/Africa": 20974000000,
+      "Asia-Pacific": 10605000000,
+      "Latin America/Caribbean": 3294000000
+    }
+  },
+  {
+    "symbol": "JPM",
+    "fiscalYear": 2022,
+    "period": "FY",
+    "reportedCurrency": "USD",
+    "date": "2022-12-30",
+    "data": {
+      "North America": 96727000000,
+      "Europe/Middle East/Africa": 18765000000,
+      "Asia-Pacific": 10025000000,
+      "Latin America/Caribbean": 3178000000
+    }
+  },
+  {
+    "symbol": "JPM",
+    "fiscalYear": 2021,
+    "period": "FY",
+    "reportedCurrency": "USD",
+    "date": "2021-12-30",
+    "data": {
+      "North America": 92678000000,
+      "Europe/Middle East/Africa": 16561000000,
+      "Asia-Pacific": 9654000000,
+      "Latin America/Caribbean": 2756000000
+    }
+  }
+]

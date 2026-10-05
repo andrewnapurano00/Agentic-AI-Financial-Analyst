@@ -1,0 +1,20 @@
+[
+  {
+    "symbol": "XOM",
+    "name": "EXXON MOBIL CORP",
+    "cik": "0000034088",
+    "sicCode": "2911",
+    "industryTitle": "PETROLEUM REFINING",
+    "businessAddress": "['22777 SPRINGWOODS VILLAGE PARKWAY', 'SPRING TX 77389-1425']",
+    "phoneNumber": "9729406000"
+  },
+  {
+    "symbol": "XOM",
+    "name": "EXXONMOBIL HOLDINGS CORP",
+    "cik": "0002115436",
+    "sicCode": "2911",
+    "industryTitle": "PETROLEUM REFINING",
+    "businessAddress": "['22777 SPRINGWOODS VILLAGE PARKWAY', 'SPRING TX 77389']",
+    "phoneNumber": "(972) 940-6000"
+  }
+]

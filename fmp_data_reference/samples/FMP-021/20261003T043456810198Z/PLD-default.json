@@ -1,0 +1,32 @@
+[
+  {
+    "cik": "0001045609",
+    "symbol": "PLD",
+    "title": "1.375% Notes due 2020",
+    "exchange": "NYSE"
+  },
+  {
+    "cik": "0001045609",
+    "symbol": "PLD",
+    "title": "1.375% Notes due 2021",
+    "exchange": "NYSE"
+  },
+  {
+    "cik": "0001045609",
+    "symbol": "PLD",
+    "title": "3.000% Notes due 2022",
+    "exchange": "NYSE"
+  },
+  {
+    "cik": "0001045609",
+    "symbol": "PLD",
+    "title": "3.375% Notes due 2024",
+    "exchange": "NYSE"
+  },
+  {
+    "cik": "0001045609",
+    "symbol": "PLD",
+    "title": "3.000% Notes due 2026",
+    "exchange": "NYSE"
+  }
+]

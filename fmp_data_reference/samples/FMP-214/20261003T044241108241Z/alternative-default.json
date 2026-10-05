@@ -1,0 +1,21 @@
+[
+  {
+    "symbol": "GCUSD",
+    "name": "Gold Futures",
+    "price": 4162.3,
+    "changePercentage": -0.95186,
+    "change": -40,
+    "volume": 165228,
+    "dayLow": 4153.8,
+    "dayHigh": 4259,
+    "yearHigh": 5626.8,
+    "yearLow": 3861.1,
+    "marketCap": null,
+    "priceAvg50": 4373.02,
+    "priceAvg200": 4561.6,
+    "exchange": "COMMODITY",
+    "open": 4204.6,
+    "previousClose": 4202.3,
+    "timestamp": 1790974800
+  }
+]

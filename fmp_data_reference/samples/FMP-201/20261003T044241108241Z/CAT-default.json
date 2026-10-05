@@ -1,0 +1,42 @@
+[
+  {
+    "symbol": "CAT",
+    "date": "2026-09-11",
+    "price": 805,
+    "quantity": 4237,
+    "cusip": "149123101",
+    "name": "CATERPILLAR INC;COM USD1"
+  },
+  {
+    "symbol": "CAT",
+    "date": "2026-09-10",
+    "price": 815.56,
+    "quantity": 1,
+    "cusip": "149123101",
+    "name": "CATERPILLAR INC;COM USD1"
+  },
+  {
+    "symbol": "CAT",
+    "date": "2026-09-09",
+    "price": 822.48,
+    "quantity": 130,
+    "cusip": "149123101",
+    "name": "CATERPILLAR INC;COM USD1"
+  },
+  {
+    "symbol": "CAT",
+    "date": "2026-09-08",
+    "price": 813.94,
+    "quantity": 17,
+    "cusip": "149123101",
+    "name": "CATERPILLAR INC;COM USD1"
+  },
+  {
+    "symbol": "CAT",
+    "date": "2026-09-04",
+    "price": 800.14,
+    "quantity": 14,
+    "cusip": "149123101",
+    "name": "CATERPILLAR INC;COM USD1"
+  }
+]

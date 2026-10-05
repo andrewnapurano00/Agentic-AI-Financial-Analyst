@@ -1,0 +1,42 @@
+[
+  {
+    "symbol": "NEE",
+    "date": "2026-09-09",
+    "price": 83.83,
+    "quantity": 487,
+    "cusip": "65339F101",
+    "name": "NEXTERA ENERGY INC COM"
+  },
+  {
+    "symbol": "NEE",
+    "date": "2026-09-08",
+    "price": 83.43,
+    "quantity": 3,
+    "cusip": "65339F101",
+    "name": "NEXTERA ENERGY INC COM"
+  },
+  {
+    "symbol": "NEE",
+    "date": "2026-09-04",
+    "price": 84.06,
+    "quantity": 881,
+    "cusip": "65339F101",
+    "name": "NEXTERA ENERGY INC COM"
+  },
+  {
+    "symbol": "NEE",
+    "date": "2026-08-31",
+    "price": 81.84,
+    "quantity": 10074,
+    "cusip": "65339F101",
+    "name": "NEXTERA ENERGY INC COM"
+  },
+  {
+    "symbol": "NEE",
+    "date": "2026-08-20",
+    "price": 85.91,
+    "quantity": 440,
+    "cusip": "65339F101",
+    "name": "NEXTERA ENERGY INC COM"
+  }
+]

@@ -1,0 +1,10 @@
+[
+  {
+    "symbol": "JPM",
+    "date": "2026-10-03 02:14:15",
+    "freeFloat": 99.5533,
+    "floatShares": 2667540628,
+    "outstandingShares": 2679510000,
+    "source": "https://www.sec.gov/Archives/edgar/data/19617/000162828026054343/jpm-20260630.htm"
+  }
+]

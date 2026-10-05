@@ -1,0 +1,47 @@
+[
+  {
+    "symbol": "XOM",
+    "cik": "0002115436",
+    "filingDate": "2026-09-25 00:00:00",
+    "acceptedDate": "2026-09-25 17:20:49",
+    "formType": "8-K",
+    "link": "https://www.sec.gov/Archives/edgar/data/2115436/000119312526402986/0001193125-26-402986-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/2115436/000119312526402986/d15072d8k.htm"
+  },
+  {
+    "symbol": "XOM",
+    "cik": "0002115436",
+    "filingDate": "2026-09-25 00:00:00",
+    "acceptedDate": "2026-09-25 16:19:05",
+    "formType": "SD",
+    "link": "https://www.sec.gov/Archives/edgar/data/2115436/000211543626000009/0002115436-26-000009-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/2115436/000211543626000009/xom2025formsd.htm"
+  },
+  {
+    "symbol": "XOM",
+    "cik": "0002115436",
+    "filingDate": "2026-09-25 00:00:00",
+    "acceptedDate": "2026-09-24 21:10:19",
+    "formType": "424B2",
+    "link": "https://www.sec.gov/Archives/edgar/data/2115436/000119312526401391/0001193125-26-401391-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/34088/000119312526401391/d137820d424b2.htm"
+  },
+  {
+    "symbol": "XOM",
+    "cik": "0000034088",
+    "filingDate": "2026-09-25 00:00:00",
+    "acceptedDate": "2026-09-24 21:10:19",
+    "formType": "424B2",
+    "link": "https://www.sec.gov/Archives/edgar/data/34088/000119312526401391/0001193125-26-401391-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/34088/000119312526401391/d137820d424b2.htm"
+  },
+  {
+    "symbol": "XOM",
+    "cik": "0000034088",
+    "filingDate": "2026-09-23 00:00:00",
+    "acceptedDate": "2026-09-23 17:17:57",
+    "formType": "FWP",
+    "link": "https://www.sec.gov/Archives/edgar/data/34088/000119312526399637/0001193125-26-399637-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/34088/000119312526399637/d188276dfwp.htm"
+  }
+]

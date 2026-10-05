@@ -1,6 +1,6 @@
 # Axiom project skills
 
-These ten repository skills give Codex reusable workflows for maintaining Axiom Research. They live in `.agents/skills/`, alongside the project, and refer to its actual modules and tests. They are coding workflows; creating them does not add new agents or buttons inside the Streamlit app.
+These thirteen repository skills give Codex reusable workflows for maintaining Axiom Research. They live in `.agents/skills/`, alongside the project, and refer to its actual modules and tests. They are coding workflows; creating them does not add new agents or buttons inside the Streamlit app.
 
 ## Getting started
 
@@ -38,6 +38,52 @@ No global installation, API key, or additional plugin is needed just to load the
 | [axiom-export-safety](../.agents/skills/axiom-export-safety/SKILL.md) | PDF/Excel/CSV/JSON content is wrong, unreadable, or potentially unsafe. | `Use $axiom-export-safety to fix the Excel download and test numeric cells, formula injection, and credential filtering.` |
 | [axiom-release-check](../.agents/skills/axiom-release-check/SKILL.md) | You want evidence that a change is ready to hand off or release. | `Use $axiom-release-check to verify the current changes. Report failed and untested checks; do not commit or deploy.` |
 | [axiom-github-sync](../.agents/skills/axiom-github-sync/SKILL.md) | You want a checked commit and push to your GitHub repository. | `Use $axiom-github-sync` |
+
+| [code-review-agent](../.agents/skills/code-review-agent/SKILL.md) | You explicitly request an independent reviewer subagent and a saved report. | `Use $code-review-agent to review my local changes.` |
+| [code-review-team](../.agents/skills/code-review-team/SKILL.md) | You explicitly request a reviewer, summarizer, and Jira writer team. | `Use $code-review-team to review Deep Research V2 and create up to six AAFA tickets.` |
+| [feature-development-team](../.agents/skills/feature-development-team/SKILL.md) | You want scoped feature planning or implementation, independent verification, and Jira follow-ups. | `Use $feature-development-team to improve Portfolio Lab rebalance usability.` |
+
+The code review agent runs only when explicitly invoked. It saves each report in `docs/reviews/` as `YYYY-MM-DD-task-name.md`, adding a numeric suffix when needed to preserve earlier reports. Its instructions and picker metadata are maintained in this repository.
+
+## Review team and Jira
+
+`code-review-team` is an explicit-only workflow with three subagents: an independent reviewer, a summarizer/prioritizer, and a Jira writer. It respects a folder/file/feature scope and defaults to local changes against HEAD. Request an audit to include unchanged code.
+
+```text
+Use $code-review-team to review only Deep Research V2 recovery
+and create up to five highest-priority tickets in AAFA.
+```
+
+Invocation authorizes Jira issue creation on `https://bigmeatpete717.atlassian.net` in project `AAFA`, subject to authenticated access and supported project fields. It creates at most six issues per run, checks duplicates first, and creates fewer or zero when appropriate. It does not modify existing tickets or fix code. Reports and ticket outcomes are saved under `docs/reviews/YYYY-MM-DD-task-name-team.md`, with numeric suffixes on collisions.
+
+```text
+Use $code-review-team to audit Portfolio Lab. Dry run only;
+save the review and ticket drafts without creating Jira issues.
+```
+
+The Jira writer needs authenticated Jira tools or an authenticated browser via `agent-browser`; this skill does not install an integration or establish a login. Missing access preserves drafts and reports a blocked publication stage. Creating the skill itself does not run a review or publish tickets.
+
+## Feature development team
+
+Both Jira team workflows prefer Jira/Atlassian MCP tools and check coordinator and child-agent access separately. Missing tools trigger connection/configuration diagnostics, rather than an automatic separate browser login. If only the coordinator has MCP tools, it can publish the writer's verified payloads under the same duplicate checks and durable attempt ledger. Browser fallback requires the user's request or acceptance. A configured server is not proof of authenticated Jira/project access.
+
+The feature team also supports the tested local stdio bridge at `~/.codex/mcp/atlassian/check.py` when native Jira tools are missing. It uses Windows certificate trust and HTTP/2 to work with this workstation's Norton HTTPS inspection. See [Jira MCP access](../.agents/skills/feature-development-team/references/jira-mcp-access.md) for schema discovery, safe JSON arguments and result validation. The coordinator passes this access route to the writer; duplicate checks and the same five-attempt ledger apply. The bridge is local tooling, not a repository runtime dependency, and a stdio `Auth Unsupported` label alone does not establish authentication failure.
+
+The explicit-only `feature-development-team` coordinates a financial data specialist, planner, builder, and independent verifier/Jira writer. The specialist consults task-relevant FMP inventory, ticker coverage, dictionaries, schemas and saved samples before implementation; the builder and verifier receive its dated data handoff. This does not automatically collect live data. It supports scoped plan-only and build runs. A bare invocation defaults to planning and asks for a target. Build requests authorize implementation within the requested outcome; broad product choices are clarified before dependent work.
+
+```text
+Use $feature-development-team in plan-only mode to assess Portfolio Lab
+and create up to five highest-priority improvement tickets in AAFA.
+```
+
+```text
+Use $feature-development-team to build clearer Deep Research V2 recovery
+controls. Add offline tests and create tickets for substantive unresolved work.
+```
+
+Reports are saved as `docs/features/YYYY-MM-DD-task-name-team.md`, preserving earlier runs with numeric suffixes. Plan-only runs publish supported proposals; build runs publish unresolved defects or deferred follow-ups, rather than completed work. Jira defaults to the AAFA site used by the review team and requires authenticated access. Five create attempts is a run-wide maximum, not a target; duplicates and uncertain outcomes are reconciled before further writes.
+
+Add `drafts only` to disable Jira publication while still allowing requested implementation. Add `dry run` to disable both implementation and Jira writes. Invocation does not authorize commits, pushes, deployments, or existing-ticket modifications. Creating the skill does not run it.
 
 ## A useful everyday sequence
 

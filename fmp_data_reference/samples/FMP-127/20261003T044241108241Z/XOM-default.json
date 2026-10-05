@@ -1,0 +1,57 @@
+[
+  {
+    "symbol": "XOM",
+    "date": "2026-08-17",
+    "recordDate": "2026-08-17",
+    "paymentDate": "2026-09-10",
+    "declarationDate": "2026-07-30",
+    "adjDividend": 1.03,
+    "dividend": 1.03,
+    "yield": 2.5517155951938557,
+    "frequency": "Quarterly"
+  },
+  {
+    "symbol": "XOM",
+    "date": "2026-05-15",
+    "recordDate": "2026-05-15",
+    "paymentDate": "2026-06-10",
+    "declarationDate": "2026-04-30",
+    "adjDividend": 1.03,
+    "dividend": 1.03,
+    "yield": 2.583586626139818,
+    "frequency": "Quarterly"
+  },
+  {
+    "symbol": "XOM",
+    "date": "2026-02-12",
+    "recordDate": "2026-02-12",
+    "paymentDate": "2026-03-10",
+    "declarationDate": "2026-01-30",
+    "adjDividend": 1.03,
+    "dividend": 1.03,
+    "yield": 2.6945908090442208,
+    "frequency": "Quarterly"
+  },
+  {
+    "symbol": "XOM",
+    "date": "2025-11-14",
+    "recordDate": "2025-11-14",
+    "paymentDate": "2025-12-10",
+    "declarationDate": "2025-10-31",
+    "adjDividend": 1.03,
+    "dividend": 1.03,
+    "yield": 3.353172939894375,
+    "frequency": "Quarterly"
+  },
+  {
+    "symbol": "XOM",
+    "date": "2025-08-15",
+    "recordDate": "2025-08-15",
+    "paymentDate": "2025-09-10",
+    "declarationDate": "2025-08-01",
+    "adjDividend": 0.99,
+    "dividend": 0.99,
+    "yield": 3.718659029016809,
+    "frequency": "Quarterly"
+  }
+]

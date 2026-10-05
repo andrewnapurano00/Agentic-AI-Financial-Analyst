@@ -1,0 +1,34 @@
+[
+  {
+    "symbol": "GOOG",
+    "companyName": "Alphabet Inc.",
+    "cik": "0001652044",
+    "exchangeFullName": "NASDAQ Global Select",
+    "exchange": "NASDAQ",
+    "currency": "USD"
+  },
+  {
+    "symbol": "GOOGL",
+    "companyName": "Alphabet Inc.",
+    "cik": "0001652044",
+    "exchangeFullName": "NASDAQ Global Select",
+    "exchange": "NASDAQ",
+    "currency": "USD"
+  },
+  {
+    "symbol": "GOOGM",
+    "companyName": "Alphabet Inc. Depository Shs Repr 1/20th Conv Pfd Registered Shs",
+    "cik": "0001652044",
+    "exchangeFullName": "NASDAQ",
+    "exchange": "NASDAQ",
+    "currency": "USD"
+  },
+  {
+    "symbol": "GOOGN",
+    "companyName": "Alphabet Inc. Depository Shs Repr 1/20th Conv Pfd Registered Shs",
+    "cik": "0001652044",
+    "exchangeFullName": "NASDAQ",
+    "exchange": "NASDAQ",
+    "currency": "USD"
+  }
+]

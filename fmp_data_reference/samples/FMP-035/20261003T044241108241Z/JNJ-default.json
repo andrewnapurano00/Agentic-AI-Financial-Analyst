@@ -1,0 +1,32 @@
+[
+  {
+    "symbol": "ABBV",
+    "companyName": "AbbVie Inc.",
+    "price": 262.82,
+    "mktCap": 464348489215
+  },
+  {
+    "symbol": "AMGN",
+    "companyName": "Amgen Inc.",
+    "price": 403.04,
+    "mktCap": 217523912320
+  },
+  {
+    "symbol": "AZN",
+    "companyName": "AstraZeneca PLC",
+    "price": 156.9,
+    "mktCap": 243194808425
+  },
+  {
+    "symbol": "GILD",
+    "companyName": "Gilead Sciences, Inc.",
+    "price": 144.74,
+    "mktCap": 179471109135
+  },
+  {
+    "symbol": "MRK",
+    "companyName": "Merck & Co., Inc.",
+    "price": 144.3,
+    "mktCap": 356395026000
+  }
+]

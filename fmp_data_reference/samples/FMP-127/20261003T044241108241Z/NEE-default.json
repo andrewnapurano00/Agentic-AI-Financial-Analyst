@@ -1,0 +1,57 @@
+[
+  {
+    "symbol": "NEE",
+    "date": "2026-08-28",
+    "recordDate": "2026-08-28",
+    "paymentDate": "2026-09-15",
+    "declarationDate": "2026-07-30",
+    "adjDividend": 0.6232,
+    "dividend": 0.6232,
+    "yield": 2.9766617790811334,
+    "frequency": "Quarterly"
+  },
+  {
+    "symbol": "NEE",
+    "date": "2026-06-05",
+    "recordDate": "2026-06-05",
+    "paymentDate": "2026-06-15",
+    "declarationDate": "2026-05-21",
+    "adjDividend": 0.6232,
+    "dividend": 0.6232,
+    "yield": 2.7719012115563837,
+    "frequency": "Quarterly"
+  },
+  {
+    "symbol": "NEE",
+    "date": "2026-02-27",
+    "recordDate": "2026-02-27",
+    "paymentDate": "2026-03-16",
+    "declarationDate": "2026-02-13",
+    "adjDividend": 0.6232,
+    "dividend": 0.6232,
+    "yield": 2.4770182361096302,
+    "frequency": "Quarterly"
+  },
+  {
+    "symbol": "NEE",
+    "date": "2025-11-21",
+    "recordDate": "2025-11-21",
+    "paymentDate": "2025-12-15",
+    "declarationDate": "2025-10-23",
+    "adjDividend": 0.5665,
+    "dividend": 0.5665,
+    "yield": 2.714422616195496,
+    "frequency": "Quarterly"
+  },
+  {
+    "symbol": "NEE",
+    "date": "2025-08-28",
+    "recordDate": "2025-08-28",
+    "paymentDate": "2025-09-15",
+    "declarationDate": "2025-07-24",
+    "adjDividend": 0.5665,
+    "dividend": 0.5665,
+    "yield": 3.071854626161742,
+    "frequency": "Quarterly"
+  }
+]

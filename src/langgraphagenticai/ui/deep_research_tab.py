@@ -15,6 +15,7 @@ from langgraphagenticai.deep_research.models import ResearchRequest, dumps, pars
 from langgraphagenticai.deep_research.presentation import build_research_pdf, clean_report_markdown
 from langgraphagenticai.tools.finance_tool_registry import get_finance_tools
 from langgraphagenticai.tools.serper_tools import SerperClient
+from langgraphagenticai.ui.research_news import render_serper_news_coverage
 
 
 def _manager(openai_api_key, model_name, fmp_api_key, serper_api_key, marketaux_api_key,
@@ -50,10 +51,12 @@ def _display_metric(metric: str, value, row: dict) -> str:
     if value is None or (isinstance(value, float) and pd.isna(value)):
         return "—"
     if isinstance(value, (int, float)):
-        if any(term in metric for term in ("margin", "Margin", "Yield", "ROE", "ROA", "ROIC", "Payout")):
-            number = float(value) * 100 if abs(float(value)) <= 2 else float(value)
+        if any(term in metric for term in ("margin", "Margin", "Yield", "ROE", "ROA", "ROIC", "Payout")) or (row.get("TTM methodology") and metric == "FCF yield (TTM, fraction)"):
+            derived_fraction = row.get("TTM methodology") and (
+                any(term in metric for term in ("margin", "Margin")) or metric in {"ROE", "ROA", "Earnings Yield", "FCF Yield", "FCF yield (TTM, fraction)"})
+            number = float(value) * 100 if derived_fraction or abs(float(value)) <= 2 else float(value)
             return f"{number:,.1f}%"
-        if any(term in metric for term in ("growth", "Growth", "return", "Return", "upside", "Upside", "% From", "% revenue", "% Revenue")):
+        if any(term in metric for term in ("growth", "Growth", "return", "Return", "upside", "Upside", "% From", "% revenue", "% Revenue")) or (row.get("TTM methodology") and metric in {"Capex to revenue (TTM)", "Capex to revenue (latest period)", "Capex to Revenue"}):
             return f"{float(value):,.1f}%"
         if any(term in metric for term in ("P/E", "P/S", "P/B", "P/FCF", "EV/", "EV /", "Debt / EBITDA")):
             return f"{float(value):,.1f}x"
@@ -61,6 +64,12 @@ def _display_metric(metric: str, value, row: dict) -> str:
                                            "expenditure", "FCF", "Market cap", "target", "Target", "Price")):
             currency = row.get("Statement currency") if any(term in metric for term in
                 ("Revenue", "revenue", "income", "Income", "EBITDA", "cash flow", "Cash flow", "expenditure", "FCF")) else row.get("Quote currency")
+            if row.get("TTM methodology") and ("(TTM)" in metric or "(latest period)" in metric):
+                is_cash_flow = any(term in metric for term in ("cash flow", "Cash flow", "expenditure"))
+                if "(TTM)" in metric:
+                    currency = row.get("Cash flow TTM currency" if is_cash_flow else "TTM currency")
+                else:
+                    currency = row.get("Cash flow statement currency" if is_cash_flow else "Statement currency")
             prefix = f"{currency} " if currency else ""
             number = float(value)
             if abs(number) >= 1_000_000_000:
@@ -118,15 +127,15 @@ def _render_comparison(result):
         ], "Dates and currencies are shown explicitly so unlike periods are not mixed.")
     with ttm_tab:
         _show_metric_matrix(frame, [
-            "TTM through", "TTM currency", "Revenue (TTM)", "Gross profit (TTM)", "Operating income (TTM)",
+            "TTM through", "TTM currency", "Cash flow TTM through", "Cash flow TTM currency", "Revenue (TTM)", "Gross profit (TTM)", "Operating income (TTM)",
             "EBITDA (TTM)", "Net income (TTM)", "Operating cash flow (TTM)", "Capital expenditure (TTM)",
             "Free cash flow (TTM)", "Gross margin (TTM)", "Operating margin (TTM)", "EBITDA margin (TTM)",
             "Net margin (TTM)", "OCF margin (TTM)", "FCF margin (TTM)", "Cash conversion (TTM)",
             "R&D as % revenue (TTM)", "Stock-based comp % revenue (TTM)", "Capex to revenue (TTM)",
-        ], "Trailing twelve months from the dedicated provider statement endpoints. TTM is the latest four-quarter operating view.")
+        ], ("Calculated TTM: sum of four validated fiscal quarters; matched end balance snapshot. See Sources for dates, currency, formulas and limitations." if any(row.get("TTM methodology") for row in result.get("comparison", [])) else "Trailing twelve months from the dedicated provider statement endpoints. TTM is the latest four-quarter operating view."))
     with statement_tab:
         _show_metric_matrix(frame, [
-            "Statement date", "Statement period", "Statement currency", "Revenue (latest period)",
+            "Statement date", "Statement period", "Statement currency", "Cash flow statement date", "Cash flow statement currency", "Revenue (latest period)",
             "Gross profit (latest period)", "Operating income (latest period)", "EBITDA (latest period)",
             "Net income (latest period)", "Operating cash flow (latest period)", "Capital expenditure (latest period)",
             "Free cash flow (latest period)", "Gross margin (latest period)", "Operating margin (latest period)",
@@ -378,16 +387,7 @@ def render_deep_research_tab(*, openai_api_key: str, model_name: str, fmp_api_ke
     if cost is not None and result.get("token_counts_estimated"):
         details.append("cost estimated from text size")
     st.caption(" · ".join(str(value) for value in details if value))
-    if result.get("request", {}).get("include_news"):
-        news_records = [item for item in result.get("evidence", [])
-                        if item.get("category") == "news" and item.get("provider") == "Serper"
-                        and item.get("status") == "ok"]
-        news_items = sum(len(item.get("data", [])) for item in news_records if isinstance(item.get("data"), list))
-        if news_items:
-            covered = len({item.get("symbol") for item in news_records if item.get("symbol")})
-            st.caption(f"Serper news coverage · {news_items} results · {covered}/{len(result['request']['symbols'])} companies · {result['request'].get('news_days', 30)}-day lookback")
-        else:
-            st.warning("Serper news was requested, but no usable news results were saved. Check the data-coverage details and SERPER_API_KEY.")
+    render_serper_news_coverage(result)
     for warning in result["warnings"]:
         st.warning(re.sub(r"(?<!\\)\$", r"\\$", warning))
     if result["gaps"]:

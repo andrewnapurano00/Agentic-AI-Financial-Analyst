@@ -1,0 +1,42 @@
+[
+  {
+    "symbol": "GOOGL",
+    "date": "2026-09-28",
+    "gradingCompany": "Piper Sandler",
+    "previousGrade": "Overweight",
+    "newGrade": "Overweight",
+    "action": "maintain"
+  },
+  {
+    "symbol": "GOOGL",
+    "date": "2026-09-18",
+    "gradingCompany": "Tigress Financial",
+    "previousGrade": "Strong Buy",
+    "newGrade": "Strong Buy",
+    "action": "maintain"
+  },
+  {
+    "symbol": "GOOGL",
+    "date": "2026-09-17",
+    "gradingCompany": "Evercore ISI Group",
+    "previousGrade": "Outperform",
+    "newGrade": "Outperform",
+    "action": "maintain"
+  },
+  {
+    "symbol": "GOOGL",
+    "date": "2026-09-03",
+    "gradingCompany": "Rosenblatt",
+    "previousGrade": "Buy",
+    "newGrade": "Buy",
+    "action": "maintain"
+  },
+  {
+    "symbol": "GOOGL",
+    "date": "2026-07-23",
+    "gradingCompany": "Cantor Fitzgerald",
+    "previousGrade": "Overweight",
+    "newGrade": "Overweight",
+    "action": "maintain"
+  }
+]

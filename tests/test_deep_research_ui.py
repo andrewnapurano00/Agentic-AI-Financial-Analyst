@@ -179,7 +179,8 @@ class ResearchUITests(unittest.TestCase):
         next(b for b in app.button if b.label == "Retry review").click().run()
         self.assertEqual(len(app.exception), 0)
         self.assertEqual(app.session_state["dr_history"][0]["status"], "complete")
-        self.assertEqual(len(app.warning), 0)
+        self.assertEqual([item.value for item in app.warning],
+                         ["Serper news coverage is partial. Some requested companies have no usable saved news; check Sources and evidence gaps."])
         factory.return_value.run.assert_not_called()
 
 

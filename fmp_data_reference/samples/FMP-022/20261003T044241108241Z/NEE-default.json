@@ -1,0 +1,57 @@
+[
+  {
+    "symbol": "NEE",
+    "cik": "0000753308",
+    "acceptanceTime": "2026-02-13 16:19:14",
+    "periodOfReport": "2025-12-31",
+    "companyName": "NextEra Energy, Inc.",
+    "formType": "10-K",
+    "filingDate": "2026-02-13",
+    "employeeCount": 17300,
+    "source": "https://www.sec.gov/Archives/edgar/data/753308/000075330826000015/0000753308-26-000015-index.htm"
+  },
+  {
+    "symbol": "NEE",
+    "cik": "0000753308",
+    "acceptanceTime": "2025-02-14 14:23:43",
+    "periodOfReport": "2024-12-31",
+    "companyName": "NextEra Energy, Inc.",
+    "formType": "10-K",
+    "filingDate": "2025-02-14",
+    "employeeCount": 16700,
+    "source": "https://www.sec.gov/Archives/edgar/data/753308/000075330825000011/0000753308-25-000011-index.htm"
+  },
+  {
+    "symbol": "NEE",
+    "cik": "0000753308",
+    "acceptanceTime": "2024-02-16 17:17:00",
+    "periodOfReport": "2023-12-31",
+    "companyName": "NextEra Energy, Inc.",
+    "formType": "10-K",
+    "filingDate": "2024-02-16",
+    "employeeCount": 16800,
+    "source": "https://www.sec.gov/Archives/edgar/data/753308/000075330824000008/0000753308-24-000008-index.htm"
+  },
+  {
+    "symbol": "NEE",
+    "cik": "0000753308",
+    "acceptanceTime": "2023-02-17 16:25:38",
+    "periodOfReport": "2022-12-31",
+    "companyName": "NextEra Energy, Inc.",
+    "formType": "10-K",
+    "filingDate": "2023-02-17",
+    "employeeCount": 15200,
+    "source": "https://www.sec.gov/Archives/edgar/data/753308/000075330823000019/0000753308-23-000019-index.htm"
+  },
+  {
+    "symbol": "NEE",
+    "cik": "0000753308",
+    "acceptanceTime": "2022-02-18 06:28:58",
+    "periodOfReport": "2021-12-31",
+    "companyName": "NextEra Energy, Inc.",
+    "formType": "10-K",
+    "filingDate": "2022-02-18",
+    "employeeCount": 14900,
+    "source": "https://www.sec.gov/Archives/edgar/data/753308/000075330822000014/0000753308-22-000014-index.htm"
+  }
+]

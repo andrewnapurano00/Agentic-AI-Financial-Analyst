@@ -1,0 +1,47 @@
+[
+  {
+    "symbol": "JPM",
+    "cik": "0000019617",
+    "companyName": "JPMorgan Chase & Co.",
+    "industry": "BANKS - DIVERSIFIED",
+    "year": 1993,
+    "ESGRiskRating": "B+",
+    "industryRank": "21 out of 43"
+  },
+  {
+    "symbol": "JPM",
+    "cik": "0000019617",
+    "companyName": "JPMorgan Chase & Co.",
+    "industry": "BANKS - DIVERSIFIED",
+    "year": 2019,
+    "ESGRiskRating": "B",
+    "industryRank": "14 out of 50"
+  },
+  {
+    "symbol": "JPM",
+    "cik": "0000019617",
+    "companyName": "JPMorgan Chase & Co.",
+    "industry": "BANKS - DIVERSIFIED",
+    "year": 2015,
+    "ESGRiskRating": "B",
+    "industryRank": "18 out of 56"
+  },
+  {
+    "symbol": "JPM",
+    "cik": "0000019617",
+    "companyName": "JPMorgan Chase & Co.",
+    "industry": "BANKS - DIVERSIFIED",
+    "year": 1995,
+    "ESGRiskRating": "B",
+    "industryRank": "13 out of 43"
+  },
+  {
+    "symbol": "JPM",
+    "cik": "0000019617",
+    "companyName": "JPMorgan Chase & Co.",
+    "industry": "BANKS - DIVERSIFIED",
+    "year": 2021,
+    "ESGRiskRating": "B",
+    "industryRank": "14 out of 52"
+  }
+]

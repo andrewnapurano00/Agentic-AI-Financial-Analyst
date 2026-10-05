@@ -1,0 +1,62 @@
+[
+  {
+    "symbol": "GOOGL",
+    "reportedCurrency": "USD",
+    "fiscalYear": "2026",
+    "period": "Q2",
+    "date": "2026-06-30",
+    "averagePPE": 0.52133,
+    "maintenanceCapex": -32741560560,
+    "ownersEarnings": 6327439440,
+    "growthCapex": -12182439440,
+    "ownersEarningsPerShare": 0.51405
+  },
+  {
+    "symbol": "GOOGL",
+    "reportedCurrency": "USD",
+    "fiscalYear": "2026",
+    "period": "Q1",
+    "date": "2026-03-31",
+    "averagePPE": 0.52133,
+    "maintenanceCapex": -25423609540,
+    "ownersEarnings": 20366390460,
+    "growthCapex": -10250390460,
+    "ownersEarningsPerShare": 1.66
+  },
+  {
+    "symbol": "GOOGL",
+    "reportedCurrency": "USD",
+    "fiscalYear": "2025",
+    "period": "Q4",
+    "date": "2025-12-31",
+    "averagePPE": 0.52133,
+    "maintenanceCapex": -18800711200,
+    "ownersEarnings": 33601288800,
+    "growthCapex": -9050288800,
+    "ownersEarningsPerShare": 2.75
+  },
+  {
+    "symbol": "GOOGL",
+    "reportedCurrency": "USD",
+    "fiscalYear": "2025",
+    "period": "Q3",
+    "date": "2025-09-30",
+    "averagePPE": 0.52133,
+    "maintenanceCapex": -16613716261,
+    "ownersEarnings": 31800283739,
+    "growthCapex": -7339283739,
+    "ownersEarningsPerShare": 2.61
+  },
+  {
+    "symbol": "GOOGL",
+    "reportedCurrency": "USD",
+    "fiscalYear": "2025",
+    "period": "Q2",
+    "date": "2025-06-30",
+    "averagePPE": 0.52133,
+    "maintenanceCapex": -16353737620,
+    "ownersEarnings": 11393262380,
+    "growthCapex": -6092262380,
+    "ownersEarningsPerShare": 0.93403
+  }
+]

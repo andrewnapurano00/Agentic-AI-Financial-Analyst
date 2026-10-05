@@ -1,0 +1,57 @@
+[
+  {
+    "2025-12-31": {
+      "Google Search & other": 224532000000,
+      "YouTube ads": 40367000000,
+      "Google Network": 29792000000,
+      "Google subscriptions, platforms, and devices": 48030000000,
+      "Google Cloud": 58705000000,
+      "Other Bets": 1537000000,
+      "Hedging gains (losses)": -127000000
+    }
+  },
+  {
+    "2024-12-31": {
+      "Google Search & other": 198084000000,
+      "YouTube ads": 36147000000,
+      "Google Network": 30359000000,
+      "Google subscriptions, platforms, and devices": 40340000000,
+      "Google Cloud": 43229000000,
+      "Other Bets": 1648000000,
+      "Hedging gains (losses)": 211000000
+    }
+  },
+  {
+    "2023-12-31": {
+      "Google Search & other": 175033000000,
+      "YouTube ads": 31510000000,
+      "Google Network": 31312000000,
+      "Google subscriptions, platforms, and devices": 34688000000,
+      "Google Cloud": 33088000000,
+      "Other Bets": 1527000000,
+      "Hedging gains (losses)": 236000000
+    }
+  },
+  {
+    "2022-12-31": {
+      "Google Search & other": 162450000000,
+      "YouTube ads": 29243000000,
+      "Google Network": 32780000000,
+      "Google subscriptions, platforms, and devices": 29055000000,
+      "Google Cloud": 26280000000,
+      "Other Bets": 1068000000,
+      "Hedging gains (losses)": 1960000000
+    }
+  },
+  {
+    "2021-12-31": {
+      "Google Search & other": 148951000000,
+      "YouTube ads": 28845000000,
+      "Google Network": 31701000000,
+      "Google subscriptions, platforms, and devices": 28032000000,
+      "Google Cloud": 19206000000,
+      "Other Bets": 753000000,
+      "Hedging gains (losses)": 149000000
+    }
+  }
+]

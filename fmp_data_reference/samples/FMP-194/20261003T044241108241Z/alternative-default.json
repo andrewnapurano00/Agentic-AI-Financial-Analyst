@@ -1,0 +1,17 @@
+[
+  {
+    "transactionType": "A-Award"
+  },
+  {
+    "transactionType": "C-Conversion"
+  },
+  {
+    "transactionType": "D-Return"
+  },
+  {
+    "transactionType": "E-ExpireShort"
+  },
+  {
+    "transactionType": "F-InKind"
+  }
+]

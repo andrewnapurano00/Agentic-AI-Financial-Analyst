@@ -70,7 +70,7 @@ def _research_packet(result: dict, *, max_chars: int = 30000) -> str:
 def run_investment_committee(result: dict, *, openai_api_key: str, model_name: str,
                              specialist_model: str | None = None,
                              specialist_provider: str = "OpenAI", groq_api_key: str = "",
-                             packet_max_chars: int = 30000) -> dict:
+                             packet_max_chars: int = 30000, ollama_base_url: str | None = None) -> dict:
     """Run a CrewAI committee over saved research without recollecting data."""
     try:
         from crewai import Agent, Crew, LLM, Process, Task
@@ -93,7 +93,8 @@ def run_investment_committee(result: dict, *, openai_api_key: str, model_name: s
             raise ValueError("A Groq API key is required for Groq committee specialists.")
         specialist_llm = LLM(model=f"groq/{specialist_name}", api_key=groq_api_key, timeout=90, max_retries=1)
     elif specialist_provider.lower() == "ollama":
-        specialist_llm = LLM(model=f"ollama/{specialist_name}", timeout=90, max_retries=1)
+        base_options = {"base_url": ollama_base_url.rstrip("/").removesuffix("/v1")} if ollama_base_url else {}
+        specialist_llm = LLM(model=f"ollama/{specialist_name}", timeout=90, max_retries=1, **base_options)
     else:
         normalized = specialist_name if "/" in specialist_name else f"openai/{specialist_name}"
         specialist_llm = LLM(model=normalized, api_key=openai_api_key, timeout=90, max_retries=1)

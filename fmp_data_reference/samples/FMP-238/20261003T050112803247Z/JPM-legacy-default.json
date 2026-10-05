@@ -1,0 +1,26 @@
+[
+  {
+    "symbol": "JPM",
+    "name": "JPMorgan Chase & Co.",
+    "price": 332.38,
+    "changesPercentage": -0.24011,
+    "change": -0.8,
+    "dayLow": 330,
+    "dayHigh": 334.845,
+    "yearHigh": 366.5,
+    "yearLow": 279.1,
+    "marketCap": 890615533800,
+    "priceAvg50": 352.5872,
+    "priceAvg200": 321.7053,
+    "exchange": "NYSE",
+    "volume": 6539384,
+    "avgVolume": 7677139,
+    "open": 334,
+    "previousClose": 333.18,
+    "eps": 23.23,
+    "pe": 14.31,
+    "earningsAnnouncement": "2026-10-13T12:30:00.000+0000",
+    "sharesOutstanding": 2679510000,
+    "timestamp": 1790971202
+  }
+]

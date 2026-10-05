@@ -1,0 +1,67 @@
+[
+  {
+    "symbol": "PLD",
+    "publishedDate": "2026-09-01T10:31:34.000Z",
+    "newsURL": "https://thefly.com/ajax/news_get.php?id=4419194",
+    "newsTitle": "Prologis price target lowered to $166 from $167 at Wells Fargo",
+    "analystName": "",
+    "priceTarget": 166,
+    "adjPriceTarget": 166,
+    "priceWhenPosted": 139.94,
+    "newsPublisher": "TheFly",
+    "newsBaseURL": "thefly.com",
+    "analystCompany": "Wells Fargo"
+  },
+  {
+    "symbol": "PLD",
+    "publishedDate": "2026-08-04T20:45:05.000Z",
+    "newsURL": "https://thefly.com/ajax/news_get.php?id=4401352",
+    "newsTitle": "RBC upgrades Prologis on 'meaningful value' in data center platform",
+    "analystName": "",
+    "priceTarget": 160,
+    "adjPriceTarget": 160,
+    "priceWhenPosted": 139.05,
+    "newsPublisher": "TheFly",
+    "newsBaseURL": "thefly.com",
+    "analystCompany": "RBC Capital"
+  },
+  {
+    "symbol": "PLD",
+    "publishedDate": "2026-07-31T11:40:12.000Z",
+    "newsURL": "https://thefly.com/ajax/news_get.php?id=4398082",
+    "newsTitle": "Prologis price target raised to $140 from $138 at Baird",
+    "analystName": "Nicholas Thillman",
+    "priceTarget": 140,
+    "adjPriceTarget": 140,
+    "priceWhenPosted": 146.19,
+    "newsPublisher": "TheFly",
+    "newsBaseURL": "thefly.com",
+    "analystCompany": "Robert W. Baird"
+  },
+  {
+    "symbol": "PLD",
+    "publishedDate": "2026-07-23T14:31:06.000Z",
+    "newsURL": "https://thefly.com/ajax/news_get.php?id=4391178",
+    "newsTitle": "Prologis price target raised to $150 from $146 at Scotiabank",
+    "analystName": "",
+    "priceTarget": 150,
+    "adjPriceTarget": 150,
+    "priceWhenPosted": 143.44,
+    "newsPublisher": "TheFly",
+    "newsBaseURL": "thefly.com",
+    "analystCompany": "Scotiabank"
+  },
+  {
+    "symbol": "PLD",
+    "publishedDate": "2026-07-17T11:18:49.000Z",
+    "newsURL": "https://thefly.com/ajax/news_get.php?id=4387020",
+    "newsTitle": "Prologis price target raised to $159 from $150 at Mizuho",
+    "analystName": "",
+    "priceTarget": 159,
+    "adjPriceTarget": 159,
+    "priceWhenPosted": 149.955,
+    "newsPublisher": "TheFly",
+    "newsBaseURL": "thefly.com",
+    "analystCompany": "Mizuho Securities"
+  }
+]

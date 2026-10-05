@@ -1,0 +1,62 @@
+[
+  {
+    "symbol": "AMZN",
+    "date": "2026-10-02",
+    "open": 251.28,
+    "high": 253.5577,
+    "low": 250.0201,
+    "close": 251.52,
+    "volume": 33047205,
+    "change": 0.24,
+    "changePercent": 0.09551098,
+    "vwap": 251.7
+  },
+  {
+    "symbol": "AMZN",
+    "date": "2026-10-01",
+    "open": 251.61,
+    "high": 251.83,
+    "low": 246.12,
+    "close": 248.23,
+    "volume": 33243918,
+    "change": -3.37,
+    "changePercent": -1.34,
+    "vwap": 249.4475
+  },
+  {
+    "symbol": "AMZN",
+    "date": "2026-09-30",
+    "open": 246.79,
+    "high": 252.44,
+    "low": 246.08,
+    "close": 249.15,
+    "volume": 41913110,
+    "change": 2.36,
+    "changePercent": 0.95628,
+    "vwap": 248.615
+  },
+  {
+    "symbol": "AMZN",
+    "date": "2026-09-29",
+    "open": 246.71,
+    "high": 248.84,
+    "low": 245.14,
+    "close": 246.67,
+    "volume": 33730401,
+    "change": -0.035,
+    "changePercent": -0.01621337,
+    "vwap": 246.84
+  },
+  {
+    "symbol": "AMZN",
+    "date": "2026-09-28",
+    "open": 246.63,
+    "high": 247.77,
+    "low": 244.73,
+    "close": 246.15,
+    "volume": 32596709,
+    "change": -0.475,
+    "changePercent": -0.19462,
+    "vwap": 246.32
+  }
+]

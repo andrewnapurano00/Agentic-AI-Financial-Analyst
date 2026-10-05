@@ -1,0 +1,26 @@
+[
+  {
+    "symbol": "AMZN",
+    "name": "Amazon.com, Inc.",
+    "price": 251.52,
+    "changesPercentage": 1.32538,
+    "change": 3.29,
+    "dayLow": 250.0201,
+    "dayHigh": 253.5577,
+    "yearHigh": 287.2,
+    "yearLow": 196,
+    "marketCap": 2705625792000,
+    "priceAvg50": 256.1866,
+    "priceAvg200": 241.218,
+    "exchange": "NASDAQ",
+    "volume": 33047205,
+    "avgVolume": 39280969,
+    "open": 251.28,
+    "previousClose": 248.23,
+    "eps": 12.43,
+    "pe": 20.23,
+    "earningsAnnouncement": "2026-10-29T04:00:00.000+0000",
+    "sharesOutstanding": 10757100000,
+    "timestamp": 1790971201
+  }
+]

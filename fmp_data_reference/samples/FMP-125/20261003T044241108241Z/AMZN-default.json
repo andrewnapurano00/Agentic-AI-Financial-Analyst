@@ -1,0 +1,47 @@
+[
+  {
+    "symbol": "AMZN",
+    "date": "2026-10-29",
+    "epsActual": null,
+    "epsEstimated": 1.96,
+    "revenueActual": null,
+    "revenueEstimated": 202034700000,
+    "lastUpdated": "2026-10-03"
+  },
+  {
+    "symbol": "AMZN",
+    "date": "2026-07-30",
+    "epsActual": 5.75,
+    "epsEstimated": 1.82,
+    "revenueActual": 200606000000,
+    "revenueEstimated": 197034800000,
+    "lastUpdated": "2026-10-03"
+  },
+  {
+    "symbol": "AMZN",
+    "date": "2026-04-29",
+    "epsActual": 2.78,
+    "epsEstimated": 1.63,
+    "revenueActual": 181519000000,
+    "revenueEstimated": 177281400000,
+    "lastUpdated": "2026-07-29"
+  },
+  {
+    "symbol": "AMZN",
+    "date": "2026-02-05",
+    "epsActual": 1.95,
+    "epsEstimated": 1.97,
+    "revenueActual": 213386000000,
+    "revenueEstimated": 211454800000,
+    "lastUpdated": "2026-05-05"
+  },
+  {
+    "symbol": "AMZN",
+    "date": "2025-10-30",
+    "epsActual": 1.95,
+    "epsEstimated": 1.57,
+    "revenueActual": 180169000000,
+    "revenueEstimated": 177913214900,
+    "lastUpdated": "2026-01-25"
+  }
+]

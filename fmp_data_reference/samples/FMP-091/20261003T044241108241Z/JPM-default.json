@@ -1,0 +1,14 @@
+[
+  {
+    "symbol": "JPM",
+    "lastMonthCount": 0,
+    "lastMonthAvgPriceTarget": 0,
+    "lastQuarterCount": 14,
+    "lastQuarterAvgPriceTarget": 373.5,
+    "lastYearCount": 35,
+    "lastYearAvgPriceTarget": 347.74,
+    "allTimeCount": 119,
+    "allTimeAvgPriceTarget": 242.82,
+    "publishers": "[\"StreetInsider\",\"Benzinga\",\"Pulse 2.0\"]"
+  }
+]

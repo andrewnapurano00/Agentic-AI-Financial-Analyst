@@ -1,0 +1,37 @@
+[
+  {
+    "holder": "AB EQUITY INCOME FUND INC",
+    "shares": 49316,
+    "dateReported": "2026-05-31",
+    "change": 1010,
+    "weightPercent": 0.51631716
+  },
+  {
+    "holder": "YCG Funds",
+    "shares": 42509,
+    "dateReported": "2026-05-31",
+    "change": 0,
+    "weightPercent": 0.14370891
+  },
+  {
+    "holder": "HC CAPITAL TRUST",
+    "shares": 154035,
+    "dateReported": "2026-06-30",
+    "change": 712,
+    "weightPercent": 0.00273088
+  },
+  {
+    "holder": "Harbor ETF Trust",
+    "shares": 46241,
+    "dateReported": "2026-07-31",
+    "change": 241,
+    "weightPercent": 0.00061454
+  },
+  {
+    "holder": "CALVERT IMPACT FUND INC",
+    "shares": 19054,
+    "dateReported": "2026-06-30",
+    "change": 1336,
+    "weightPercent": 0.00172427
+  }
+]

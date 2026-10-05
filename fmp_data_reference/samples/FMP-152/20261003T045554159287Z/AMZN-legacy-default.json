@@ -1,0 +1,37 @@
+[
+  {
+    "etfSymbol": "ZWT-T.TO",
+    "assetExposure": "AMZN",
+    "sharesNumber": 59761,
+    "weightPercentage": 9.08,
+    "marketValue": 21101296.17
+  },
+  {
+    "etfSymbol": "ZWT.TO",
+    "assetExposure": "AMZN",
+    "sharesNumber": 59761,
+    "weightPercentage": 9.08,
+    "marketValue": 21101296.17
+  },
+  {
+    "etfSymbol": "ZWA-T.TO",
+    "assetExposure": "AMZN",
+    "sharesNumber": 17225,
+    "weightPercentage": 2.9000000000000004,
+    "marketValue": 6082057.3
+  },
+  {
+    "etfSymbol": "ZWA.TO",
+    "assetExposure": "AMZN",
+    "sharesNumber": 17225,
+    "weightPercentage": 2.9000000000000004,
+    "marketValue": 6082057.3
+  },
+  {
+    "etfSymbol": "ZSP-U.TO",
+    "assetExposure": "AMZN",
+    "sharesNumber": 3128087,
+    "weightPercentage": 3.6900000000000004,
+    "marketValue": 1104511139.74
+  }
+]

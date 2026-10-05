@@ -4,7 +4,7 @@ from __future__ import annotations
 from .models import Evidence, dumps
 
 
-COMMON = {"date", "symbol", "fiscalYear", "calendarYear", "period", "reportedCurrency", "currency"}
+COMMON = {"date", "symbol", "fiscalYear", "calendarYear", "period", "reportedCurrency", "currency", "methodology", "quarters", "formula", "source_records", "growth_pct", "limitations", "quote_as_of", "units", "prior_ttm_unavailable_reason"}
 FIELDS = {
     "profile": {"companyName", "sector", "industry", "description", "country", "exchange", "ceo", "beta", "website"},
     "quote": {"name", "price", "marketCap", "timestamp", "eps", "pe", "volume", "yearHigh", "yearLow"},

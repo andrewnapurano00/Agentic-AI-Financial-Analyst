@@ -1,0 +1,39 @@
+{
+  "api_id": "FMP-043",
+  "basis": "observed_response_shapes_not_json_schema_contract",
+  "generated_at_utc": "2026-10-03T05:06:34.505272+00:00",
+  "sample_files": [
+    "samples/FMP-043/20261003T043456810198Z/alternative-default.json",
+    "samples/FMP-043/20261003T044241108241Z/alternative-default.json"
+  ],
+  "required_fields_asserted": false,
+  "fields": {
+    "$": {
+      "observed_types": [
+        "array"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 0
+    },
+    "$[]": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 10,
+      "observed_missing_in_parent": 0
+    },
+    "$[].industry": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 10,
+      "observed_missing_in_parent": 0
+    }
+  },
+  "limitation": "Observed path/type union, including nulls and missing observations. No assertion of universal requiredness, completeness or non-nullability. Workbook inferred schemas are separate.",
+  "observed_non_json_formats": [],
+  "binary_sample_files": []
+}

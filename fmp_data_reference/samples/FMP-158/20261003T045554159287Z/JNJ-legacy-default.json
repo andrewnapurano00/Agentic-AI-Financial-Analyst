@@ -1,0 +1,47 @@
+[
+  {
+    "symbol": "JNJ",
+    "cik": "0000200406",
+    "companyName": "Johnson & Johnson",
+    "industry": "DRUG MANUFACTURERS - GENERAL",
+    "year": 2015,
+    "ESGRiskRating": "A-",
+    "industryRank": "1 out of 17"
+  },
+  {
+    "symbol": "JNJ",
+    "cik": "0000200406",
+    "companyName": null,
+    "industry": "DRUG MANUFACTURERS - GENERAL",
+    "year": 1998,
+    "ESGRiskRating": "A-",
+    "industryRank": "1 out of 7"
+  },
+  {
+    "symbol": "JNJ",
+    "cik": "0000200406",
+    "companyName": "Johnson & Johnson",
+    "industry": "DRUG MANUFACTURERS - GENERAL",
+    "year": 2023,
+    "ESGRiskRating": "B+",
+    "industryRank": "3 out of 28"
+  },
+  {
+    "symbol": "JNJ",
+    "cik": "0000200406",
+    "companyName": "Johnson & Johnson",
+    "industry": "DRUG MANUFACTURERS - GENERAL",
+    "year": 2008,
+    "ESGRiskRating": "B+",
+    "industryRank": "1 out of 11"
+  },
+  {
+    "symbol": "JNJ",
+    "cik": "0000200406",
+    "companyName": "Johnson & Johnson",
+    "industry": "DRUG MANUFACTURERS - GENERAL",
+    "year": 1999,
+    "ESGRiskRating": "B+",
+    "industryRank": "2 out of 8"
+  }
+]

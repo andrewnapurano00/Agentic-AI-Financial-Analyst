@@ -1,0 +1,42 @@
+[
+  {
+    "symbol": "XOM",
+    "date": "2026-10-01",
+    "gradingCompany": "Wells Fargo",
+    "previousGrade": "Overweight",
+    "newGrade": "Equal Weight",
+    "action": "downgrade"
+  },
+  {
+    "symbol": "XOM",
+    "date": "2026-09-28",
+    "gradingCompany": "TD Cowen",
+    "previousGrade": "Buy",
+    "newGrade": "Buy",
+    "action": "maintain"
+  },
+  {
+    "symbol": "XOM",
+    "date": "2026-09-03",
+    "gradingCompany": "Piper Sandler",
+    "previousGrade": "Neutral",
+    "newGrade": "Neutral",
+    "action": "maintain"
+  },
+  {
+    "symbol": "XOM",
+    "date": "2026-08-19",
+    "gradingCompany": "Morgan Stanley",
+    "previousGrade": "Overweight",
+    "newGrade": "Overweight",
+    "action": "maintain"
+  },
+  {
+    "symbol": "XOM",
+    "date": "2026-08-17",
+    "gradingCompany": "Barclays",
+    "previousGrade": "Overweight",
+    "newGrade": "Overweight",
+    "action": "maintain"
+  }
+]

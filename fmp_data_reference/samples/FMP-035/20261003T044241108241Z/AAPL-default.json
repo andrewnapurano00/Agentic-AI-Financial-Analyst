@@ -1,0 +1,32 @@
+[
+  {
+    "symbol": "GOOGL",
+    "companyName": "Alphabet Inc.",
+    "price": 343.5,
+    "mktCap": 4157075226741
+  },
+  {
+    "symbol": "META",
+    "companyName": "Meta Platforms, Inc.",
+    "price": 728.08,
+    "mktCap": 1854774021886
+  },
+  {
+    "symbol": "MSFT",
+    "companyName": "Microsoft Corporation",
+    "price": 517.53,
+    "mktCap": 3842944891500
+  },
+  {
+    "symbol": "NVDA",
+    "companyName": "NVIDIA Corporation",
+    "price": 233.95,
+    "mktCap": 5666502950000
+  },
+  {
+    "symbol": "NXT",
+    "companyName": "Nextpower Inc.",
+    "price": 84.3,
+    "mktCap": 12784369818
+  }
+]

@@ -1,0 +1,62 @@
+[
+  {
+    "symbol": "GCUSD",
+    "date": "2026-10-02",
+    "open": 4204.6,
+    "high": 4259,
+    "low": 4153.8,
+    "close": 4162.3,
+    "volume": 165228,
+    "change": -42.3,
+    "changePercent": -1.00604,
+    "vwap": 4191.7
+  },
+  {
+    "symbol": "GCUSD",
+    "date": "2026-10-01",
+    "open": 4190.1,
+    "high": 4222.8,
+    "low": 4169.4,
+    "close": 4202.3,
+    "volume": 156277,
+    "change": 12.2,
+    "changePercent": 0.29116,
+    "vwap": 4196.15
+  },
+  {
+    "symbol": "GCUSD",
+    "date": "2026-09-30",
+    "open": 4216.2,
+    "high": 4251.1,
+    "low": 4178.2,
+    "close": 4186.7,
+    "volume": 156277,
+    "change": -29.5,
+    "changePercent": -0.69968,
+    "vwap": 4208.05
+  },
+  {
+    "symbol": "GCUSD",
+    "date": "2026-09-29",
+    "open": 4150.1,
+    "high": 4218.1,
+    "low": 4145.2,
+    "close": 4179.7,
+    "volume": 229031,
+    "change": 29.6,
+    "changePercent": 0.71324,
+    "vwap": 4173.275
+  },
+  {
+    "symbol": "GCUSD",
+    "date": "2026-09-28",
+    "open": 4315,
+    "high": 4315.6,
+    "low": 4143.1,
+    "close": 4168.4,
+    "volume": 229031,
+    "change": -146.6,
+    "changePercent": -3.39745,
+    "vwap": 4235.525
+  }
+]

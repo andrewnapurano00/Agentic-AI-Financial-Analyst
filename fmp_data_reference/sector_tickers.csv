@@ -1,0 +1,12 @@
+ticker,requested_sector,returned_sector,returned_industry,returned_currency,cik,cusip,isin,retrieved_at_utc,status,classification_notes,raw_file
+AAPL,Technology,Technology,Consumer Electronics,USD,0000320193,037833100,US0378331005,2026-10-03T04:33:38.149960+00:00,success,Exact label match,raw/FMP-018/20261003T043337662641Z/db5073142a6e16f4.body
+JPM,Financial Services,Financial Services,Banks - Diversified,USD,0000019617,46625H100,US46625H1005,2026-10-03T04:33:38.451068+00:00,success,Exact label match,raw/FMP-018/20261003T043337662641Z/fc3cc9d001aef415.body
+JNJ,Healthcare,Healthcare,Drug Manufacturers - General,USD,0000200406,478160104,US4781601046,2026-10-03T04:33:39.203545+00:00,success,Exact label match,raw/FMP-018/20261003T043337662641Z/2b5326d227547b23.body
+AMZN,Consumer Cyclical,Consumer Cyclical,Specialty Retail,USD,0001018724,023135106,US0231351067,2026-10-03T04:33:40.255775+00:00,success,Exact label match,raw/FMP-018/20261003T043337662641Z/5b9dd12c6d9cabeb.body
+PG,Consumer Defensive,Consumer Defensive,Household & Personal Products,USD,0000080424,742718109,US7427181091,2026-10-03T04:33:40.711244+00:00,success,Exact label match,raw/FMP-018/20261003T043337662641Z/56766fcef2484a13.body
+CAT,Industrials,Industrials,Agricultural - Machinery,USD,0000018230,149123101,US1491231015,2026-10-03T04:33:41.461468+00:00,success,Exact label match,raw/FMP-018/20261003T043337662641Z/975cbf31b2ec11d8.body
+XOM,Energy,Energy,Oil & Gas Integrated,USD,0000034088,30233Q108,US30233Q1085,2026-10-03T04:33:42.231685+00:00,success,Exact label match,raw/FMP-018/20261003T043337662641Z/5e8d5a8fb934ff02.body
+NEE,Utilities,Utilities,Regulated Electric,USD,0000753308,65339F101,US65339F1012,2026-10-03T04:33:42.957143+00:00,success,Exact label match,raw/FMP-018/20261003T043337662641Z/cbf7b2e05ad262ec.body
+LIN,Basic Materials,Basic Materials,Chemicals - Specialty,USD,0001707925,G54950103,IE000S9YS762,2026-10-03T04:33:43.720758+00:00,success,Exact label match,raw/FMP-018/20261003T043337662641Z/61822819b9cc6084.body
+PLD,Real Estate,Real Estate,REIT - Industrial,USD,0001045609,74340W103,US74340W1036,2026-10-03T04:33:44.467453+00:00,success,Exact label match,raw/FMP-018/20261003T043337662641Z/7872dea5d60f1ec4.body
+GOOGL,Communication Services,Communication Services,Internet Content & Information,USD,0001652044,02079K305,US02079K3059,2026-10-03T04:33:45.204496+00:00,success,Exact label match,raw/FMP-018/20261003T043337662641Z/4b1b6a40d94ba179.body

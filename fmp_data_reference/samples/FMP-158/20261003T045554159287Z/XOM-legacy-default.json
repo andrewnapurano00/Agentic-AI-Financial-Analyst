@@ -1,0 +1,47 @@
+[
+  {
+    "symbol": "XOM",
+    "cik": "0000034088",
+    "companyName": "Exxon Mobil Corporation",
+    "industry": "OIL & GAS INTEGRATED",
+    "year": 1995,
+    "ESGRiskRating": "B",
+    "industryRank": "2 out of 3"
+  },
+  {
+    "symbol": "XOM",
+    "cik": "0000034088",
+    "companyName": "Exxon Mobil Corporation",
+    "industry": "OIL & GAS INTEGRATED",
+    "year": 2020,
+    "ESGRiskRating": "B",
+    "industryRank": "5 out of 16"
+  },
+  {
+    "symbol": "XOM",
+    "cik": "0000034088",
+    "companyName": "Exxon Mobil Corporation",
+    "industry": "OIL & GAS INTEGRATED",
+    "year": 1993,
+    "ESGRiskRating": "B",
+    "industryRank": "1 out of 2"
+  },
+  {
+    "symbol": "XOM",
+    "cik": "0000034088",
+    "companyName": "Exxon Mobil Corporation",
+    "industry": "OIL & GAS INTEGRATED",
+    "year": 2011,
+    "ESGRiskRating": "B",
+    "industryRank": "4 out of 11"
+  },
+  {
+    "symbol": "XOM",
+    "cik": "0000034088",
+    "companyName": "Exxon Mobil Corporation",
+    "industry": "OIL & GAS INTEGRATED",
+    "year": 1998,
+    "ESGRiskRating": "B",
+    "industryRank": "3 out of 5"
+  }
+]

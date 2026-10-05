@@ -1,0 +1,18 @@
+[
+  {
+    "symbol": "PLD",
+    "companyName": "Prologis, Inc.",
+    "cik": "0001045609",
+    "exchangeFullName": "New York Stock Exchange",
+    "exchange": "NYSE",
+    "currency": "USD"
+  },
+  {
+    "symbol": "PLDGP",
+    "companyName": "Prologis, Inc.",
+    "cik": "0001045609",
+    "exchangeFullName": "Other OTC",
+    "exchange": "OTC",
+    "currency": "USD"
+  }
+]

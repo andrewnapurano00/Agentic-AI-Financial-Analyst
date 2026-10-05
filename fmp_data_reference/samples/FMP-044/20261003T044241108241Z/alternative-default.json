@@ -1,0 +1,42 @@
+[
+  {
+    "exchange": "AMEX",
+    "name": "New York Stock Exchange Arca",
+    "countryName": "United States of America",
+    "countryCode": "US",
+    "symbolSuffix": "N/A",
+    "delay": "Real-time"
+  },
+  {
+    "exchange": "AMS",
+    "name": "Euronext Amsterdam",
+    "countryName": "Netherlands",
+    "countryCode": "NL",
+    "symbolSuffix": ".AS",
+    "delay": "Real-time"
+  },
+  {
+    "exchange": "ASX",
+    "name": "Australian Securities Exchange",
+    "countryName": "Australia",
+    "countryCode": "AU",
+    "symbolSuffix": ".AX",
+    "delay": "20 min"
+  },
+  {
+    "exchange": "ATH",
+    "name": "Athens Stock Exchange",
+    "countryName": "Greece",
+    "countryCode": "GR",
+    "symbolSuffix": ".AT",
+    "delay": "15 min"
+  },
+  {
+    "exchange": "BER",
+    "name": "Berlin Stock Exchange",
+    "countryName": "Germany",
+    "countryCode": "DE",
+    "symbolSuffix": ".BE",
+    "delay": "15 min"
+  }
+]

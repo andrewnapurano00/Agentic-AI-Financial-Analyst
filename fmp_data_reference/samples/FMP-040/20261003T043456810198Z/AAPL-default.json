@@ -1,0 +1,42 @@
+[
+  {
+    "symbol": "AAPL",
+    "date": "2026-10-02",
+    "freeFloat": 99.87879921341867,
+    "floatShares": "14576491739",
+    "outstandingShares": "14594180000",
+    "source": null
+  },
+  {
+    "symbol": "AAPL",
+    "date": "2026-10-01",
+    "freeFloat": 99.87879921341867,
+    "floatShares": "14576491739",
+    "outstandingShares": "14594180000",
+    "source": null
+  },
+  {
+    "symbol": "AAPL",
+    "date": "2026-09-30",
+    "freeFloat": 99.87879921341867,
+    "floatShares": "14576491739",
+    "outstandingShares": "14594180000",
+    "source": null
+  },
+  {
+    "symbol": "AAPL",
+    "date": "2026-09-29",
+    "freeFloat": 99.87879921341867,
+    "floatShares": "14576491739",
+    "outstandingShares": "14594180000",
+    "source": null
+  },
+  {
+    "symbol": "AAPL",
+    "date": "2026-09-28",
+    "freeFloat": 99.87879921341867,
+    "floatShares": "14576491739",
+    "outstandingShares": "14594180000",
+    "source": null
+  }
+]

@@ -1,0 +1,37 @@
+[
+  {
+    "holder": "AB EQUITY INCOME FUND INC",
+    "shares": 16410,
+    "dateReported": "2026-05-31",
+    "change": 0,
+    "weightPercent": 0.17180559
+  },
+  {
+    "holder": "NEOS ETF Trust",
+    "shares": 75135,
+    "dateReported": "2026-06-30",
+    "change": 7925,
+    "weightPercent": 0.00235477
+  },
+  {
+    "holder": "HC CAPITAL TRUST",
+    "shares": 31133,
+    "dateReported": "2026-06-30",
+    "change": -18,
+    "weightPercent": 0.00055196
+  },
+  {
+    "holder": "BlackRock Funds II",
+    "shares": 3495,
+    "dateReported": "2026-07-31",
+    "change": 3311,
+    "weightPercent": 1.17e-06
+  },
+  {
+    "holder": "BlackRock Funds II",
+    "shares": 750000,
+    "dateReported": "2026-07-31",
+    "change": 0,
+    "weightPercent": 0.00025055
+  }
+]

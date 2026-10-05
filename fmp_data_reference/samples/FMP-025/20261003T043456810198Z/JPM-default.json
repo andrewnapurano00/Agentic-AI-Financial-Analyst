@@ -1,0 +1,42 @@
+[
+  {
+    "symbol": "JPM",
+    "date": "2026-09-28",
+    "gradingCompany": "HSBC",
+    "previousGrade": "Hold",
+    "newGrade": "Hold",
+    "action": "maintain"
+  },
+  {
+    "symbol": "JPM",
+    "date": "2026-08-14",
+    "gradingCompany": "Wells Fargo",
+    "previousGrade": "Overweight",
+    "newGrade": "Overweight",
+    "action": "maintain"
+  },
+  {
+    "symbol": "JPM",
+    "date": "2026-08-03",
+    "gradingCompany": "UBS",
+    "previousGrade": "Buy",
+    "newGrade": "Buy",
+    "action": "maintain"
+  },
+  {
+    "symbol": "JPM",
+    "date": "2026-07-20",
+    "gradingCompany": "Citigroup",
+    "previousGrade": "Neutral",
+    "newGrade": "Neutral",
+    "action": "maintain"
+  },
+  {
+    "symbol": "JPM",
+    "date": "2026-07-17",
+    "gradingCompany": "Evercore ISI Group",
+    "previousGrade": "Outperform",
+    "newGrade": "Outperform",
+    "action": "maintain"
+  }
+]

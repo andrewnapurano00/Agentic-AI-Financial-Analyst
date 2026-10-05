@@ -1,0 +1,11 @@
+[
+  {
+    "symbol": "JPM",
+    "bidSize": 1,
+    "bidPrice": 332.21,
+    "askSize": 1,
+    "askPrice": 333.04,
+    "volume": 6663819.42378,
+    "timestamp": 1790985600000
+  }
+]

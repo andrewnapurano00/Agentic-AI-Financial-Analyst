@@ -1,0 +1,1686 @@
+{
+  "api_id": "FMP-067",
+  "basis": "observed_response_shapes_not_json_schema_contract",
+  "generated_at_utc": "2026-10-03T05:06:34.826950+00:00",
+  "sample_files": [
+    "samples/FMP-067/20261003T043456810198Z/AAPL-annual.json",
+    "samples/FMP-067/20261003T043456810198Z/AAPL-quarter.json",
+    "samples/FMP-067/20261003T043456810198Z/AMZN-annual.json",
+    "samples/FMP-067/20261003T043456810198Z/AMZN-quarter.json",
+    "samples/FMP-067/20261003T043456810198Z/CAT-annual.json",
+    "samples/FMP-067/20261003T043456810198Z/CAT-quarter.json",
+    "samples/FMP-067/20261003T043456810198Z/GOOGL-annual.json",
+    "samples/FMP-067/20261003T043456810198Z/GOOGL-quarter.json",
+    "samples/FMP-067/20261003T043456810198Z/JNJ-annual.json",
+    "samples/FMP-067/20261003T043456810198Z/JNJ-quarter.json",
+    "samples/FMP-067/20261003T043456810198Z/JPM-annual.json",
+    "samples/FMP-067/20261003T043456810198Z/JPM-quarter.json",
+    "samples/FMP-067/20261003T043456810198Z/LIN-annual.json",
+    "samples/FMP-067/20261003T043456810198Z/LIN-quarter.json",
+    "samples/FMP-067/20261003T043456810198Z/NEE-annual.json",
+    "samples/FMP-067/20261003T043456810198Z/NEE-quarter.json",
+    "samples/FMP-067/20261003T043456810198Z/PG-annual.json",
+    "samples/FMP-067/20261003T043456810198Z/PG-quarter.json",
+    "samples/FMP-067/20261003T043456810198Z/PLD-annual.json",
+    "samples/FMP-067/20261003T043456810198Z/PLD-quarter.json",
+    "samples/FMP-067/20261003T043456810198Z/XOM-annual.json",
+    "samples/FMP-067/20261003T043456810198Z/XOM-quarter.json",
+    "samples/FMP-067/20261003T044241108241Z/AAPL-annual.json",
+    "samples/FMP-067/20261003T044241108241Z/AAPL-quarter.json",
+    "samples/FMP-067/20261003T044241108241Z/AMZN-annual.json",
+    "samples/FMP-067/20261003T044241108241Z/AMZN-quarter.json",
+    "samples/FMP-067/20261003T044241108241Z/CAT-annual.json",
+    "samples/FMP-067/20261003T044241108241Z/CAT-quarter.json",
+    "samples/FMP-067/20261003T044241108241Z/GOOGL-annual.json",
+    "samples/FMP-067/20261003T044241108241Z/GOOGL-quarter.json",
+    "samples/FMP-067/20261003T044241108241Z/JNJ-annual.json",
+    "samples/FMP-067/20261003T044241108241Z/JNJ-quarter.json",
+    "samples/FMP-067/20261003T044241108241Z/JPM-annual.json",
+    "samples/FMP-067/20261003T044241108241Z/JPM-quarter.json",
+    "samples/FMP-067/20261003T044241108241Z/LIN-annual.json",
+    "samples/FMP-067/20261003T044241108241Z/LIN-quarter.json",
+    "samples/FMP-067/20261003T044241108241Z/NEE-annual.json",
+    "samples/FMP-067/20261003T044241108241Z/NEE-quarter.json",
+    "samples/FMP-067/20261003T044241108241Z/PG-annual.json",
+    "samples/FMP-067/20261003T044241108241Z/PG-quarter.json",
+    "samples/FMP-067/20261003T044241108241Z/PLD-annual.json",
+    "samples/FMP-067/20261003T044241108241Z/PLD-quarter.json",
+    "samples/FMP-067/20261003T044241108241Z/XOM-annual.json",
+    "samples/FMP-067/20261003T044241108241Z/XOM-quarter.json"
+  ],
+  "required_fields_asserted": false,
+  "fields": {
+    "$": {
+      "observed_types": [
+        "array"
+      ],
+      "null_observations": 0,
+      "present_observations": 44,
+      "observed_missing_in_parent": 0
+    },
+    "$[]": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 286,
+      "observed_missing_in_parent": 0
+    },
+    "$[].symbol": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 286,
+      "observed_missing_in_parent": 0
+    },
+    "$[].fiscalYear": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 286,
+      "observed_missing_in_parent": 0
+    },
+    "$[].period": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 286,
+      "observed_missing_in_parent": 0
+    },
+    "$[].reportedCurrency": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 286,
+      "observed_missing_in_parent": 0
+    },
+    "$[].date": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 286,
+      "observed_missing_in_parent": 0
+    },
+    "$[].data": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 286,
+      "observed_missing_in_parent": 0
+    },
+    "$[].data.revenuefromcontractwithcustomerexcludingassessedtax": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 118,
+      "observed_missing_in_parent": 168
+    },
+    "$[].data.costofgoodsandservicessold": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 104,
+      "observed_missing_in_parent": 182
+    },
+    "$[].data.grossprofit": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 52,
+      "observed_missing_in_parent": 234
+    },
+    "$[].data.researchanddevelopmentexpense": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 104,
+      "observed_missing_in_parent": 182
+    },
+    "$[].data.sellinggeneralandadministrativeexpense": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 156,
+      "observed_missing_in_parent": 130
+    },
+    "$[].data.operatingexpenses": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 52,
+      "observed_missing_in_parent": 234
+    },
+    "$[].data.operatingincomeloss": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 208,
+      "observed_missing_in_parent": 78
+    },
+    "$[].data.nonoperatingincomeexpense": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 128,
+      "observed_missing_in_parent": 158
+    },
+    "$[].data.incomelossfromcontinuingoperationsbeforeincometaxesextraordinaryitemsnoncontrollinginterest": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 180,
+      "observed_missing_in_parent": 106
+    },
+    "$[].data.incometaxexpensebenefit": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 284,
+      "observed_missing_in_parent": 2
+    },
+    "$[].data.netincomeloss": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 258,
+      "observed_missing_in_parent": 28
+    },
+    "$[].data.earningspersharebasic": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 286,
+      "observed_missing_in_parent": 0
+    },
+    "$[].data.earningspersharediluted": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 286,
+      "observed_missing_in_parent": 0
+    },
+    "$[].data.weightedaveragenumberofsharesoutstandingbasic": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 180,
+      "observed_missing_in_parent": 106
+    },
+    "$[].data.weightedaveragenumberofdilutedsharesoutstanding": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 180,
+      "observed_missing_in_parent": 106
+    },
+    "$[].data.othercomprehensiveincomelossforeigncurrencytransactionandtranslationadjustmentnetoftax": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 150,
+      "observed_missing_in_parent": 136
+    },
+    "$[].data.othercomprehensiveincomelosscashflowhedgegainlossbeforereclassificationaftertax": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 92,
+      "observed_missing_in_parent": 194
+    },
+    "$[].data.othercomprehensiveincomelosscashflowhedgegainlossreclassificationaftertax": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 72,
+      "observed_missing_in_parent": 214
+    },
+    "$[].data.othercomprehensiveincomelosscashflowhedgegainlossafterreclassificationandtax": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 128,
+      "observed_missing_in_parent": 158
+    },
+    "$[].data.othercomprehensiveincomeunrealizedholdinggainlossonsecuritiesarisingduringperiodnetoftax": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 120,
+      "observed_missing_in_parent": 166
+    },
+    "$[].data.othercomprehensiveincomelossreclassificationadjustmentfromaociforsaleofsecuritiesnetoftax": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 90,
+      "observed_missing_in_parent": 196
+    },
+    "$[].data.othercomprehensiveincomelossavailableforsalesecuritiesadjustmentnetoftax": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 142,
+      "observed_missing_in_parent": 144
+    },
+    "$[].data.othercomprehensiveincomelossnetoftaxportionattributabletoparent": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 70,
+      "observed_missing_in_parent": 216
+    },
+    "$[].data.comprehensiveincomenetoftax": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 270,
+      "observed_missing_in_parent": 16
+    },
+    "$[].data.othercomprehensiveincomelossderivativeinstrumentgainlossbeforereclassificationaftertax": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 10,
+      "observed_missing_in_parent": 276
+    },
+    "$[].data.othercomprehensiveincomelossderivativeinstrumentgainlossreclassificationaftertax": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 10,
+      "observed_missing_in_parent": 276
+    },
+    "$[].data.othercomprehensiveincomelossderivativeinstrumentgainlossafterreclassificationandtax": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 10,
+      "observed_missing_in_parent": 276
+    },
+    "$[].data.investmentbankingrevenue": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.principaltransactionsrevenue": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.lendinganddepositrelatedfees": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.assetmanagementfees": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 22,
+      "observed_missing_in_parent": 264
+    },
+    "$[].data.feesandcommissions1": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 22,
+      "observed_missing_in_parent": 264
+    },
+    "$[].data.debtsecuritiesavailableforsalerealizedgainloss": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.mortgagefeesandrelatedincome": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.feesandcommissionscreditanddebitcards1": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.noninterestincomeother": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.noninterestincome": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.interestincomeoperating": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.interestexpenseoperating": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 16,
+      "observed_missing_in_parent": 270
+    },
+    "$[].data.interestincomeexpensenet": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 30,
+      "observed_missing_in_parent": 256
+    },
+    "$[].data.revenuesnetofinterestexpense": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.provisionforloanleaseandotherlosses": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.laborandrelatedexpense": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.occupancynet": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.communicationsandinformationtechnology": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.professionalandcontractservicesexpense": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.marketingandadvertisingexpense": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.othernoninterestexpense": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.noninterestexpense": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.netincomelossavailabletocommonstockholdersbasic": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 80,
+      "observed_missing_in_parent": 206
+    },
+    "$[].data.netincomelossavailabletocommonstockholdersdiluted": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 24,
+      "observed_missing_in_parent": 262
+    },
+    "$[].data.othercomprehensiveincomeavailableforsalesecuritiesadjustmentnetoftaxportionattributabletoparent": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.othercomprehensiveincomeforeigncurrencytransactionandtranslationadjustmentnetoftaxportionattributabletoparent": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.othercomprehensiveincomelossderivativeexcludedcomponentincreasedecreaseafteradjustmentsandtaxparent": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.othercomprehensiveincomelosscashflowhedgegainlossafterreclassificationandtaxparent": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.othercomprehensiveincomedefinedbenefitplansadjustmentnetoftaxportionattributabletoparent": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.othercomprehensiveincomelossfinancialliabilityfairvalueoptionaftertaxandreclassificationadjustmentattributabletoparent": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.interestexpense": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 62,
+      "observed_missing_in_parent": 224
+    },
+    "$[].data.assetmanagementadministrationandcommissions": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 4,
+      "observed_missing_in_parent": 282
+    },
+    "$[].data.researchanddevelopmentexpenseexcludingacquiredinprocesscost": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.researchanddevelopmentinprocess1": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 10,
+      "observed_missing_in_parent": 276
+    },
+    "$[].data.investmentincomeinterest": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 78,
+      "observed_missing_in_parent": 208
+    },
+    "$[].data.interestexpensenonoperating": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 106,
+      "observed_missing_in_parent": 180
+    },
+    "$[].data.othernonoperatingincomeexpense": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 134,
+      "observed_missing_in_parent": 152
+    },
+    "$[].data.restructuringcharges": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 42,
+      "observed_missing_in_parent": 244
+    },
+    "$[].data.incomelossfromcontinuingoperations": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 16,
+      "observed_missing_in_parent": 270
+    },
+    "$[].data.incomelossfromcontinuingoperationsperbasicshare": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 16,
+      "observed_missing_in_parent": 270
+    },
+    "$[].data.incomelossfromcontinuingoperationsperdilutedshare": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 16,
+      "observed_missing_in_parent": 270
+    },
+    "$[].data.othercomprehensiveincomeforeigncurrencytransactionandtranslationgainlossbeforereclassificationandtax": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 52,
+      "observed_missing_in_parent": 234
+    },
+    "$[].data.othercomprehensiveincomelosspensionandotherpostretirementbenefitplansnetpriorservicecostcreditnetofamortizationarisingduringperiodnetoftax": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.othercomprehensiveincomelossreclassificationadjustmentfromaocipensionandotherpostretirementbenefitplansfornetgainlossnetofamortizationnetoftax": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.othercomprehensiveincomelosspensionandothereffectsofexchangeratenetoftax": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 10,
+      "observed_missing_in_parent": 276
+    },
+    "$[].data.othercomprehensiveincomelosspensionandotherpostretirementbenefitplansadjustmentnetoftax": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 124,
+      "observed_missing_in_parent": 162
+    },
+    "$[].data.othercomprehensiveincomelossnetoftax": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 150,
+      "observed_missing_in_parent": 136
+    },
+    "$[].data.comprehensiveincomenetoftaxincludingportionattributabletononcontrollinginterest": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 164,
+      "observed_missing_in_parent": 122
+    },
+    "$[].data.othercomprehensiveincomelossforeigncurrencytranslationadjustmenttax": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 78,
+      "observed_missing_in_parent": 208
+    },
+    "$[].data.othercomprehensiveincomelosspensionandotherpostretirementbenefitplanstax": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 58,
+      "observed_missing_in_parent": 228
+    },
+    "$[].data.othercomprehensiveincomelosscashflowhedgegainlossafterreclassificationtax": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 52,
+      "observed_missing_in_parent": 234
+    },
+    "$[].data.incomelossfromdiscontinuedoperationsnetoftaxattributabletoreportingentity": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 4,
+      "observed_missing_in_parent": 282
+    },
+    "$[].data.discontinuedoperationincomelossfromdiscontinuedoperationnetoftaxperbasicshare": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 284
+    },
+    "$[].data.discontinuedoperationincomelossfromdiscontinuedoperationnetoftaxperdilutedshare": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 4,
+      "observed_missing_in_parent": 282
+    },
+    "$[].data.othercomprehensiveincomefinalizationofpensionandnonpensionpostretirementplanvaluationtax": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 284
+    },
+    "$[].data.researchanddevelopmentinprocess": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 4,
+      "observed_missing_in_parent": 282
+    },
+    "$[].data.othercomprehensiveincomeunrealizedholdinggainlossonsecuritiesarisingduringperiodtax": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 58,
+      "observed_missing_in_parent": 228
+    },
+    "$[].data.salesrevenuegoodsnetpercenttosales": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 12,
+      "observed_missing_in_parent": 274
+    },
+    "$[].data.costofgoodssoldpercenttosales": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 12,
+      "observed_missing_in_parent": 274
+    },
+    "$[].data.grossprofitpercenttosales": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 12,
+      "observed_missing_in_parent": 274
+    },
+    "$[].data.sellinggeneralandadministrativeexpensepercenttosales": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 12,
+      "observed_missing_in_parent": 274
+    },
+    "$[].data.researchanddevelopmentexpenseexcludingacquiredinprocesscostpercenttosales": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 12,
+      "observed_missing_in_parent": 274
+    },
+    "$[].data.researchanddevelopmentinprocesspercenttosales": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 4,
+      "observed_missing_in_parent": 282
+    },
+    "$[].data.investmentincomeinterestpercenttosales": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 12,
+      "observed_missing_in_parent": 274
+    },
+    "$[].data.interestexpensepercenttosales": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 12,
+      "observed_missing_in_parent": 274
+    },
+    "$[].data.othernonoperatingincomeexpensepercenttosales": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 12,
+      "observed_missing_in_parent": 274
+    },
+    "$[].data.restructuringchargepercenttosales": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 10,
+      "observed_missing_in_parent": 276
+    },
+    "$[].data.incomelossfromcontinuingoperationsbeforeincometaxesnoncontrollinginterestpercenttosales": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 12,
+      "observed_missing_in_parent": 274
+    },
+    "$[].data.incometaxexpensebenefitpercenttosales": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 12,
+      "observed_missing_in_parent": 274
+    },
+    "$[].data.incomelossfromcontinuingoperationsnetoftaxattributabletoparentpercentofsales": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 12,
+      "observed_missing_in_parent": 274
+    },
+    "$[].data.fulfillmentexpense": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.technologyandinfrastructureexpense": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 22,
+      "observed_missing_in_parent": 264
+    },
+    "$[].data.marketingexpense": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.generalandadministrativeexpense": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 76,
+      "observed_missing_in_parent": 210
+    },
+    "$[].data.otheroperatingincomeexpensenet": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 78,
+      "observed_missing_in_parent": 208
+    },
+    "$[].data.costsandexpenses": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 104,
+      "observed_missing_in_parent": 182
+    },
+    "$[].data.incomelossfromcontinuingoperationsbeforeincometaxesminorityinterestandincomelossfromequitymethodinvestments": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 78,
+      "observed_missing_in_parent": 208
+    },
+    "$[].data.incomelossfromequitymethodinvestments": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 130,
+      "observed_missing_in_parent": 156
+    },
+    "$[].data.othercomprehensiveincomeforeigncurrencytransactionandtranslationgainlossarisingduringperiodnetoftax": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 76,
+      "observed_missing_in_parent": 210
+    },
+    "$[].data.othercomprehensiveincomelossreclassificationadjustmentfromaocinetoftax": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 8,
+      "observed_missing_in_parent": 278
+    },
+    "$[].data.othercomprehensiveincomeothernetoftax": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 22,
+      "observed_missing_in_parent": 264
+    },
+    "$[].data.othercomprehensiveincomeforeigncurrencytranslationgainlossarisingduringperiodtax": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.othercomprehensiveincomelossreclassificationadjustmentfromaocitax": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 8,
+      "observed_missing_in_parent": 278
+    },
+    "$[].data.othercomprehensiveincomeothertax": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 18,
+      "observed_missing_in_parent": 268
+    },
+    "$[].data.othercomprehensiveincomelossreclassificationadjustmentfromaociforsaleofsecuritiestax": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 28,
+      "observed_missing_in_parent": 258
+    },
+    "$[].data.technologyandcontentexpense": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 4,
+      "observed_missing_in_parent": 282
+    },
+    "$[].data.othercomprehensiveincomelossnetinvestmenthedgegainlossbeforereclassificationandaftertax": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 4,
+      "observed_missing_in_parent": 282
+    },
+    "$[].data.othercomprehensiveincomelossnetinvestmenthedgegainlossbeforereclassificationtax": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 4,
+      "observed_missing_in_parent": 282
+    },
+    "$[].data.revenues": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 116,
+      "observed_missing_in_parent": 170
+    },
+    "$[].data.incomelossincludingportionattributabletononcontrollinginterest": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 22,
+      "observed_missing_in_parent": 264
+    },
+    "$[].data.profitloss": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 148,
+      "observed_missing_in_parent": 138
+    },
+    "$[].data.netincomelossattributabletononcontrollinginterest": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 116,
+      "observed_missing_in_parent": 170
+    },
+    "$[].data.comprehensiveincomenetoftaxattributabletononcontrollinginterest": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 104,
+      "observed_missing_in_parent": 182
+    },
+    "$[].data.othercomprehensiveincomelossavailableforsalesecuritiestax": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 36,
+      "observed_missing_in_parent": 250
+    },
+    "$[].data.impairmentofintangibleassetsindefinitelivedexcludinggoodwill": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 284
+    },
+    "$[].data.incomelossfromcontinuingoperationsbeforeincometaxes": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 4,
+      "observed_missing_in_parent": 282
+    },
+    "$[].data.costofrevenue": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 52,
+      "observed_missing_in_parent": 234
+    },
+    "$[].data.financinginterestexpense": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.profitofconsolidatedcompanies": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.goodwillimpairmentloss": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 284
+    },
+    "$[].data.crudeoilandproductpurchases": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.productionandmanufacturingexpenses": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.depreciationdepletionandamortization": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.explorationexpense": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.netperiodicdefinedbenefitsexpensereversalofexpenseexcludingservicecostcomponent": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 52,
+      "observed_missing_in_parent": 234
+    },
+    "$[].data.taxesother": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.othercomprehensiveincomelossforeigncurrencytransactionandtranslationreclassificationadjustmentfromaocirealizeduponsaleorliquidationnetoftax": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 10,
+      "observed_missing_in_parent": 276
+    },
+    "$[].data.othercomprehensiveincomepostretirementbenefitsrecognizedinnetperiodicpensioncostnetoftax": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.regulatedandunregulatedoperatingrevenue": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.fuelpurchasedpowerandinterchangeexpense": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.utilitiesoperatingexpensemaintenanceandoperations": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.depreciationandamortizationexcludingnuclearfuel": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.taxesexcludingincomeandexcisetaxes": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.disposalgroupnotdiscontinuedoperationgainlossondisposal": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.interestexpenseaggregateexpenses": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.publicutilitiesallowanceforfundsusedduringconstructioncapitalizedcostofequity": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.gainlossoninvestments": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 24,
+      "observed_missing_in_parent": 262
+    },
+    "$[].data.otherthantemporaryimpairmentlossesonsecuritiesheldinnucleardecommissioningfunds": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 10,
+      "observed_missing_in_parent": 276
+    },
+    "$[].data.amountrecognizedinnetperiodicbenefitcostandothercomprehensiveincomelossbeforetax": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.netincomelossattributabletononredeemablenoncontrollinginterest": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 20,
+      "observed_missing_in_parent": 266
+    },
+    "$[].data.othercomprehensiveincomelosspensionandotherpostretirementbenefitplansadjustmentbeforereclassificationadjustmentsnetoftax": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 10,
+      "observed_missing_in_parent": 276
+    },
+    "$[].data.othercomprehensiveincomelossrelatedtoequitymethodinvesteenetoftax": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 12,
+      "observed_missing_in_parent": 274
+    },
+    "$[].data.othercomprehensiveincomelossnetoftaxexcludingimpactofdisposalofbusiness": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 8,
+      "observed_missing_in_parent": 278
+    },
+    "$[].data.othercomprehensiveincomelosscashflowhedgegainlossreclassificationtax": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 36,
+      "observed_missing_in_parent": 250
+    },
+    "$[].data.othercomprehensiveincomelosspensionandotherpostretirementbenefitplansbeforereclassificationadjustmentstax": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 10,
+      "observed_missing_in_parent": 276
+    },
+    "$[].data.othercomprehensiveincomelossreclassificationadjustmentfromaocipensionandotherpostretirementbenefitplansnetoftax": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 6,
+      "observed_missing_in_parent": 280
+    },
+    "$[].data.othercomprehensiveincomelossreclassificationadjustmentfromaocipensionandotherpostretirementbenefitplanstax": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 4,
+      "observed_missing_in_parent": 282
+    },
+    "$[].data.assetrecoverydamagedpropertycosts": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 284
+    },
+    "$[].data.othercomprehensiveincomelossrelatedtoequitymethodinvesteetax": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 284
+    },
+    "$[].data.businesscombinationintegrationrelatedcosts": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 284
+    },
+    "$[].data.otherthantemporaryimpairmentgainlossonsecuritiesheldinnucleardecommissioningfunds": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 12,
+      "observed_missing_in_parent": 274
+    },
+    "$[].data.costofgoodsandserviceexcludingdepreciationdepletionandamortization": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.depreciationandamortization": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 50,
+      "observed_missing_in_parent": 236
+    },
+    "$[].data.incomelossfromcontinuingoperationsbeforeequitymethodinvestmentsnoncontrollinginterest": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.incomelossfromcontinuingoperationsincludingportionattributabletononcontrollinginterest": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 10,
+      "observed_missing_in_parent": 276
+    },
+    "$[].data.othercomprehensiveincomelossforeigncurrencytransactionandtranslationreclassificationadjustmentfromaocirealizeduponsaleorliquidationbeforetax": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 12,
+      "observed_missing_in_parent": 274
+    },
+    "$[].data.othercomprehensiveincomelosspensionandotherpostretirementbenefitplansadjustmentbeforereclassificationadjustmentsandtax": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.othercomprehensiveincomedefinedbenefitplanreclassifiedtoincomestatement": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 22,
+      "observed_missing_in_parent": 264
+    },
+    "$[].data.othercomprehensiveincomelosscashflowhedgegainlossbeforereclassificationandtax": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.othercomprehensiveincomelosscashflowhedgegainlossreclassificationbeforetax": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 24,
+      "observed_missing_in_parent": 262
+    },
+    "$[].data.othercomprehensiveincomelossincludingportionattributabletoredeemablenoncontrollinginterestnetoftax": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.netincomelossincludingportionattributabletononredeemablenoncontrollinginterest": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 6,
+      "observed_missing_in_parent": 280
+    },
+    "$[].data.incomelossfromcontinuingoperationsattributabletononcontrollingentity": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 6,
+      "observed_missing_in_parent": 280
+    },
+    "$[].data.othernonrecurringincomeexpense": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 284
+    },
+    "$[].data.interestanddebtexpense": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 284
+    },
+    "$[].data.incomelossfromdiscontinuedoperationsnetoftax": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 284
+    },
+    "$[].data.incomelossfromdiscontinuedoperationsnetoftaxperdilutedshare": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 284
+    },
+    "$[].data.rentalrevenue": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.managementfeesrevenue": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 10,
+      "observed_missing_in_parent": 276
+    },
+    "$[].data.otherrealestaterevenue": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 10,
+      "observed_missing_in_parent": 276
+    },
+    "$[].data.directcostsofleasedandrentedpropertyorequipment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.servicemanagementcosts": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 10,
+      "observed_missing_in_parent": 276
+    },
+    "$[].data.othercostandexpenseoperating": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 24,
+      "observed_missing_in_parent": 262
+    },
+    "$[].data.operatingexpensesbeforegainsonrealestatetransactionsnet": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 24,
+      "observed_missing_in_parent": 262
+    },
+    "$[].data.operatingincomelossbeforegainslossonrealestatetransactionsnet": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 24,
+      "observed_missing_in_parent": 262
+    },
+    "$[].data.gainsondispositionsofdevelopmentpropertiesandlandnet": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.gainsonotherdispositionsofinvestmentsinrealestatenet": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.gainlossonforeigncurrencyderivativeandothergainslossesandotherincomeexpensenet": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 18,
+      "observed_missing_in_parent": 268
+    },
+    "$[].data.gainslossesonextinguishmentofdebt": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 14,
+      "observed_missing_in_parent": 272
+    },
+    "$[].data.preferredstockdividendsincomestatementimpact": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.othercomprehensiveincomelossnetoftaxportionattributabletononcontrollinginterest": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 24,
+      "observed_missing_in_parent": 262
+    },
+    "$[].data.managementfeesrevenue1": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 12,
+      "observed_missing_in_parent": 274
+    },
+    "$[].data.otherrealestaterevenue1": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 12,
+      "observed_missing_in_parent": 274
+    },
+    "$[].data.servicemanagementcosts1": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 12,
+      "observed_missing_in_parent": 274
+    },
+    "$[].data.gainlossonforeigncurrencyderivativeandothergainsandotherincomeexpensenet": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 284
+    },
+    "$[].data.gainlossonforeigncurrencyandderivativeandotherincomeexpensenet": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 284
+    },
+    "$[].data.gainlossonforeigncurrencyandderivative": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 284
+    },
+    "$[].data.sellingandmarketingexpense": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    }
+  },
+  "limitation": "Observed path/type union, including nulls and missing observations. No assertion of universal requiredness, completeness or non-nullability. Workbook inferred schemas are separate.",
+  "observed_non_json_formats": [],
+  "binary_sample_files": []
+}

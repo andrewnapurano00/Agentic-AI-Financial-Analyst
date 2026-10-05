@@ -1,0 +1,42 @@
+[
+  {
+    "exchange": "ASX",
+    "name": "Australian Securities Exchange",
+    "openingHour": "CLOSED",
+    "closingHour": "CLOSED",
+    "timezone": "Australia/Sydney",
+    "isMarketOpen": false
+  },
+  {
+    "exchange": "BSE",
+    "name": "Bombay Stock Exchange",
+    "openingHour": "CLOSED",
+    "closingHour": "CLOSED",
+    "timezone": "Asia/Kolkata",
+    "isMarketOpen": false
+  },
+  {
+    "exchange": "FSX",
+    "name": "Frankfurt Stock Exchange",
+    "openingHour": "CLOSED",
+    "closingHour": "CLOSED",
+    "timezone": "Europe/Berlin",
+    "isMarketOpen": false
+  },
+  {
+    "exchange": "HKSE",
+    "name": "Hong Kong Stock Exchange",
+    "openingHour": "CLOSED",
+    "closingHour": "CLOSED",
+    "timezone": "Asia/Hong_Kong",
+    "isMarketOpen": false
+  },
+  {
+    "exchange": "LSE",
+    "name": "London Stock Exchange",
+    "openingHour": "CLOSED",
+    "closingHour": "CLOSED",
+    "timezone": "Europe/London",
+    "isMarketOpen": false
+  }
+]

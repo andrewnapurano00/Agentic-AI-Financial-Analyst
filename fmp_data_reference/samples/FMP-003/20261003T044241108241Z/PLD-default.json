@@ -1,0 +1,23 @@
+[
+  {
+    "symbol": "PLD",
+    "name": "Prologis, Inc.",
+    "currency": "USD",
+    "exchangeFullName": "New York Stock Exchange",
+    "exchange": "NYSE"
+  },
+  {
+    "symbol": "0KOD.L",
+    "name": "Prologis, Inc.",
+    "currency": "USD",
+    "exchangeFullName": "London Stock Exchange",
+    "exchange": "LSE"
+  },
+  {
+    "symbol": "PLDGP",
+    "name": "Prologis, Inc.",
+    "currency": "USD",
+    "exchangeFullName": "Other OTC",
+    "exchange": "OTC"
+  }
+]

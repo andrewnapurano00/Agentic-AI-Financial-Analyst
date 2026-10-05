@@ -1,0 +1,57 @@
+[
+  {
+    "symbol": "AGFMF",
+    "date": "2026-10-01",
+    "recordDate": "2026-10-01",
+    "paymentDate": "",
+    "declarationDate": "2026-06-23",
+    "adjDividend": 0.0952,
+    "dividend": 0.0952,
+    "yield": 3.369927862939585,
+    "frequency": "Quarterly"
+  },
+  {
+    "symbol": "LSLPF",
+    "date": "2026-10-01",
+    "recordDate": "2026-05-15",
+    "paymentDate": "",
+    "declarationDate": "2026-03-19",
+    "adjDividend": 0.0986,
+    "dividend": 0.0986,
+    "yield": 4.144021739130435,
+    "frequency": "Semi-Annual"
+  },
+  {
+    "symbol": "0P00016G44",
+    "date": "2026-09-30",
+    "recordDate": "",
+    "paymentDate": "",
+    "declarationDate": "",
+    "adjDividend": 0.0308,
+    "dividend": 0.0308,
+    "yield": 6.197594501718213,
+    "frequency": "Quarterly"
+  },
+  {
+    "symbol": "AAA",
+    "date": "2026-09-30",
+    "recordDate": "2026-09-30",
+    "paymentDate": "2026-10-01",
+    "declarationDate": "",
+    "adjDividend": 0.089,
+    "dividend": 0.089,
+    "yield": 4.665979797979798,
+    "frequency": "Monthly"
+  },
+  {
+    "symbol": "AAAD",
+    "date": "2026-09-30",
+    "recordDate": "2026-09-30",
+    "paymentDate": "2026-10-02",
+    "declarationDate": "",
+    "adjDividend": 0.188,
+    "dividend": 0.188,
+    "yield": 1.630139845543728,
+    "frequency": "Monthly"
+  }
+]

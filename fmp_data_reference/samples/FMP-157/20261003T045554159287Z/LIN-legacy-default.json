@@ -1,0 +1,72 @@
+[
+  {
+    "symbol": "LIN",
+    "cik": "0001707925",
+    "date": "2026-06-30",
+    "environmentalScore": 50.36,
+    "socialScore": 55.56,
+    "governanceScore": 74.18,
+    "ESGScore": 60.03,
+    "companyName": "Linde plc",
+    "industry": "Industrial Inorganic Chemicals",
+    "formType": "10-Q",
+    "acceptedDate": "2026-07-31 10:40:30",
+    "url": "https://www.sec.gov/Archives/edgar/data/1707925/000162828026051289/0001628280-26-051289-index.htm"
+  },
+  {
+    "symbol": "LIN",
+    "cik": "0001707925",
+    "date": "2026-03-31",
+    "environmentalScore": 47.78,
+    "socialScore": 53.41,
+    "governanceScore": 72.79,
+    "ESGScore": 57.99,
+    "companyName": "Linde plc",
+    "industry": "Industrial Inorganic Chemicals",
+    "formType": "10-Q",
+    "acceptedDate": "2026-05-01 10:38:23",
+    "url": "https://www.sec.gov/Archives/edgar/data/1707925/000162828026029165/0001628280-26-029165-index.htm"
+  },
+  {
+    "symbol": "LIN",
+    "cik": "0001707925",
+    "date": "2025-12-31",
+    "environmentalScore": 62.69,
+    "socialScore": 57.39,
+    "governanceScore": 64.8,
+    "ESGScore": 61.63,
+    "companyName": "Linde plc",
+    "industry": "Industrial Inorganic Chemicals",
+    "formType": "10-K",
+    "acceptedDate": "2026-02-25 10:13:21",
+    "url": "https://www.sec.gov/Archives/edgar/data/1707925/000162828026011430/0001628280-26-011430-index.htm"
+  },
+  {
+    "symbol": "LIN",
+    "cik": "0001707925",
+    "date": "2025-09-30",
+    "environmentalScore": 48.12,
+    "socialScore": 58.51,
+    "governanceScore": 72.59,
+    "ESGScore": 59.74,
+    "companyName": "Linde plc",
+    "industry": "Industrial Inorganic Chemicals",
+    "formType": "10-Q",
+    "acceptedDate": "2025-10-31 10:41:58",
+    "url": "https://www.sec.gov/Archives/edgar/data/1707925/000162828025047710/0001628280-25-047710-index.htm"
+  },
+  {
+    "symbol": "LIN",
+    "cik": "0001707925",
+    "date": "2025-06-30",
+    "environmentalScore": 50,
+    "socialScore": 55.36,
+    "governanceScore": 72.51,
+    "ESGScore": 59.29,
+    "companyName": "Linde plc",
+    "industry": "Industrial Inorganic Chemicals",
+    "formType": "10-Q",
+    "acceptedDate": "2025-08-01 10:26:45",
+    "url": "https://www.sec.gov/Archives/edgar/data/1707925/000162828025037164/0001628280-25-037164-index.htm"
+  }
+]

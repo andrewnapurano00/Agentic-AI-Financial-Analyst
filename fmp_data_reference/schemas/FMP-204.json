@@ -1,0 +1,422 @@
+{
+  "api_id": "FMP-204",
+  "basis": "observed_response_shapes_not_json_schema_contract",
+  "generated_at_utc": "2026-10-03T05:06:37.063909+00:00",
+  "sample_files": [
+    "samples/FMP-204/20261003T044241108241Z/alternative-default.json"
+  ],
+  "required_fields_asserted": false,
+  "fields": {
+    "$": {
+      "observed_types": [
+        "array"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[]": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 3,
+      "observed_missing_in_parent": 0
+    },
+    "$[].cik": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 3,
+      "observed_missing_in_parent": 0
+    },
+    "$[].companyName": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 3,
+      "observed_missing_in_parent": 0
+    },
+    "$[].date": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 3,
+      "observed_missing_in_parent": 0
+    },
+    "$[].filingDate": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 3,
+      "observed_missing_in_parent": 0
+    },
+    "$[].acceptedDate": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 3,
+      "observed_missing_in_parent": 0
+    },
+    "$[].formType": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 3,
+      "observed_missing_in_parent": 0
+    },
+    "$[].formSignification": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 3,
+      "observed_missing_in_parent": 0
+    },
+    "$[].nameOfIssuer": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 3,
+      "observed_missing_in_parent": 0
+    },
+    "$[].legalStatusForm": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 3,
+      "observed_missing_in_parent": 0
+    },
+    "$[].jurisdictionOrganization": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 3,
+      "observed_missing_in_parent": 0
+    },
+    "$[].issuerStreet": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 3,
+      "observed_missing_in_parent": 0
+    },
+    "$[].issuerCity": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 3,
+      "observed_missing_in_parent": 0
+    },
+    "$[].issuerStateOrCountry": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 3,
+      "observed_missing_in_parent": 0
+    },
+    "$[].issuerZipCode": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 3,
+      "observed_missing_in_parent": 0
+    },
+    "$[].issuerWebsite": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 3,
+      "observed_missing_in_parent": 0
+    },
+    "$[].intermediaryCompanyName": {
+      "observed_types": [
+        "null",
+        "string"
+      ],
+      "null_observations": 1,
+      "present_observations": 3,
+      "observed_missing_in_parent": 0
+    },
+    "$[].intermediaryCommissionCik": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 3,
+      "observed_missing_in_parent": 0
+    },
+    "$[].intermediaryCommissionFileNumber": {
+      "observed_types": [
+        "null",
+        "string"
+      ],
+      "null_observations": 1,
+      "present_observations": 3,
+      "observed_missing_in_parent": 0
+    },
+    "$[].compensationAmount": {
+      "observed_types": [
+        "null",
+        "string"
+      ],
+      "null_observations": 1,
+      "present_observations": 3,
+      "observed_missing_in_parent": 0
+    },
+    "$[].financialInterest": {
+      "observed_types": [
+        "null",
+        "string"
+      ],
+      "null_observations": 1,
+      "present_observations": 3,
+      "observed_missing_in_parent": 0
+    },
+    "$[].securityOfferedType": {
+      "observed_types": [
+        "null",
+        "string"
+      ],
+      "null_observations": 1,
+      "present_observations": 3,
+      "observed_missing_in_parent": 0
+    },
+    "$[].securityOfferedOtherDescription": {
+      "observed_types": [
+        "null",
+        "string"
+      ],
+      "null_observations": 1,
+      "present_observations": 3,
+      "observed_missing_in_parent": 0
+    },
+    "$[].numberOfSecurityOffered": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 3,
+      "observed_missing_in_parent": 0
+    },
+    "$[].offeringPrice": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 3,
+      "observed_missing_in_parent": 0
+    },
+    "$[].offeringAmount": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 3,
+      "observed_missing_in_parent": 0
+    },
+    "$[].overSubscriptionAccepted": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 3,
+      "observed_missing_in_parent": 0
+    },
+    "$[].overSubscriptionAllocationType": {
+      "observed_types": [
+        "null",
+        "string"
+      ],
+      "null_observations": 1,
+      "present_observations": 3,
+      "observed_missing_in_parent": 0
+    },
+    "$[].maximumOfferingAmount": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 3,
+      "observed_missing_in_parent": 0
+    },
+    "$[].offeringDeadlineDate": {
+      "observed_types": [
+        "null",
+        "string"
+      ],
+      "null_observations": 1,
+      "present_observations": 3,
+      "observed_missing_in_parent": 0
+    },
+    "$[].currentNumberOfEmployees": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 3,
+      "observed_missing_in_parent": 0
+    },
+    "$[].totalAssetMostRecentFiscalYear": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 3,
+      "observed_missing_in_parent": 0
+    },
+    "$[].totalAssetPriorFiscalYear": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 3,
+      "observed_missing_in_parent": 0
+    },
+    "$[].cashAndCashEquiValentMostRecentFiscalYear": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 3,
+      "observed_missing_in_parent": 0
+    },
+    "$[].cashAndCashEquiValentPriorFiscalYear": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 3,
+      "observed_missing_in_parent": 0
+    },
+    "$[].accountsReceivableMostRecentFiscalYear": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 3,
+      "observed_missing_in_parent": 0
+    },
+    "$[].accountsReceivablePriorFiscalYear": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 3,
+      "observed_missing_in_parent": 0
+    },
+    "$[].shortTermDebtMostRecentFiscalYear": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 3,
+      "observed_missing_in_parent": 0
+    },
+    "$[].shortTermDebtPriorFiscalYear": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 3,
+      "observed_missing_in_parent": 0
+    },
+    "$[].longTermDebtMostRecentFiscalYear": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 3,
+      "observed_missing_in_parent": 0
+    },
+    "$[].longTermDebtPriorFiscalYear": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 3,
+      "observed_missing_in_parent": 0
+    },
+    "$[].revenueMostRecentFiscalYear": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 3,
+      "observed_missing_in_parent": 0
+    },
+    "$[].revenuePriorFiscalYear": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 3,
+      "observed_missing_in_parent": 0
+    },
+    "$[].costGoodsSoldMostRecentFiscalYear": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 3,
+      "observed_missing_in_parent": 0
+    },
+    "$[].costGoodsSoldPriorFiscalYear": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 3,
+      "observed_missing_in_parent": 0
+    },
+    "$[].taxesPaidMostRecentFiscalYear": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 3,
+      "observed_missing_in_parent": 0
+    },
+    "$[].taxesPaidPriorFiscalYear": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 3,
+      "observed_missing_in_parent": 0
+    },
+    "$[].netIncomeMostRecentFiscalYear": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 3,
+      "observed_missing_in_parent": 0
+    },
+    "$[].netIncomePriorFiscalYear": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 3,
+      "observed_missing_in_parent": 0
+    }
+  },
+  "limitation": "Observed path/type union, including nulls and missing observations. No assertion of universal requiredness, completeness or non-nullability. Workbook inferred schemas are separate.",
+  "observed_non_json_formats": [],
+  "binary_sample_files": []
+}

@@ -1,0 +1,3027 @@
+{
+  "api_id": "FMP-233",
+  "basis": "observed_response_shapes_not_json_schema_contract",
+  "generated_at_utc": "2026-10-03T05:06:37.448857+00:00",
+  "sample_files": [
+    "samples/FMP-233/20261003T045328427231Z/AAPL-annual.json",
+    "samples/FMP-233/20261003T045328427231Z/AMZN-annual.json",
+    "samples/FMP-233/20261003T045328427231Z/CAT-annual.json",
+    "samples/FMP-233/20261003T045328427231Z/GOOGL-annual.json",
+    "samples/FMP-233/20261003T045328427231Z/JNJ-annual.json",
+    "samples/FMP-233/20261003T045328427231Z/JPM-annual.json",
+    "samples/FMP-233/20261003T045328427231Z/LIN-annual.json",
+    "samples/FMP-233/20261003T045328427231Z/NEE-annual.json",
+    "samples/FMP-233/20261003T045328427231Z/PG-annual.json",
+    "samples/FMP-233/20261003T045328427231Z/PLD-annual.json",
+    "samples/FMP-233/20261003T045328427231Z/XOM-annual.json",
+    "samples/FMP-233/20261003T045554159287Z/AAPL-legacy-annual.json",
+    "samples/FMP-233/20261003T045554159287Z/AMZN-legacy-annual.json",
+    "samples/FMP-233/20261003T045554159287Z/CAT-legacy-annual.json",
+    "samples/FMP-233/20261003T045554159287Z/GOOGL-legacy-annual.json",
+    "samples/FMP-233/20261003T045554159287Z/JNJ-legacy-annual.json",
+    "samples/FMP-233/20261003T045554159287Z/JPM-legacy-annual.json",
+    "samples/FMP-233/20261003T045554159287Z/LIN-legacy-annual.json",
+    "samples/FMP-233/20261003T045554159287Z/NEE-legacy-annual.json",
+    "samples/FMP-233/20261003T045554159287Z/PG-legacy-annual.json",
+    "samples/FMP-233/20261003T045554159287Z/PLD-legacy-annual.json",
+    "samples/FMP-233/20261003T045554159287Z/XOM-legacy-annual.json"
+  ],
+  "required_fields_asserted": false,
+  "fields": {
+    "$": {
+      "observed_types": [
+        "array"
+      ],
+      "null_observations": 0,
+      "present_observations": 22,
+      "observed_missing_in_parent": 0
+    },
+    "$[]": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].symbol": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].fiscalYear": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].period": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].reportedCurrency": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].date": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].data": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].data.Mac": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 50
+    },
+    "$[].data.Service": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 50
+    },
+    "$[].data.Wearables, Home and Accessories": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 50
+    },
+    "$[].data.iPad": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 50
+    },
+    "$[].data.iPhone": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 50
+    },
+    "$[].data.Segment Reconciling Items": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 53
+    },
+    "$[].data.Asset and Wealth Management Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 53
+    },
+    "$[].data.Commercial And Investment Bank": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 53
+    },
+    "$[].data.Consumer & Community Banking": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 50
+    },
+    "$[].data.Segment Reporting, Reconciling Item, Corporate Nonsegment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 53
+    },
+    "$[].data.Corporate & Investment Bank": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 3,
+      "observed_missing_in_parent": 52
+    },
+    "$[].data.Asset & Wealth Management": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 3,
+      "observed_missing_in_parent": 52
+    },
+    "$[].data.Commercial Banking": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 3,
+      "observed_missing_in_parent": 52
+    },
+    "$[].data.Corporate Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 6,
+      "observed_missing_in_parent": 49
+    },
+    "$[].data.Reconciling Items": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 3,
+      "observed_missing_in_parent": 52
+    },
+    "$[].data.Innovative Medicine": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 4,
+      "observed_missing_in_parent": 51
+    },
+    "$[].data.MedTech": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 4,
+      "observed_missing_in_parent": 51
+    },
+    "$[].data.Consumer": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 53
+    },
+    "$[].data.Medical Devices": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 54
+    },
+    "$[].data.Pharmaceutical": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 54
+    },
+    "$[].data.Advertising Services": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 50
+    },
+    "$[].data.Amazon Web Services": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 50
+    },
+    "$[].data.Online Stores": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 50
+    },
+    "$[].data.Other Services": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 50
+    },
+    "$[].data.Physical Stores": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 50
+    },
+    "$[].data.Subscription Services": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 50
+    },
+    "$[].data.Third-Party Seller Services": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 50
+    },
+    "$[].data.Baby, Feminine and Family Care Segment Member": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 50
+    },
+    "$[].data.Beauty Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 50
+    },
+    "$[].data.Fabric Care And Home Care Segment Member": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 50
+    },
+    "$[].data.Grooming Segment Member": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 50
+    },
+    "$[].data.Health Care Segment Member": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 50
+    },
+    "$[].data.Construction Industries": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 50
+    },
+    "$[].data.Resource Industries": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 50
+    },
+    "$[].data.Power & Energy": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 54
+    },
+    "$[].data.Financial Products": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 50
+    },
+    "$[].data.All Other Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 54
+    },
+    "$[].data.Corporate Items and Eliminations": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 54
+    },
+    "$[].data.Energy and Transportation": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 4,
+      "observed_missing_in_parent": 51
+    },
+    "$[].data.Other Segments": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 4,
+      "observed_missing_in_parent": 51
+    },
+    "$[].data.Intersegment Elimination": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 4,
+      "observed_missing_in_parent": 51
+    },
+    "$[].data.Other Revenue": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 54
+    },
+    "$[].data.Chemical Products": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 54
+    },
+    "$[].data.Energy Products": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 54
+    },
+    "$[].data.Specialty Products": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 54
+    },
+    "$[].data.Upstream": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 54
+    },
+    "$[].data.Income From Equity Affiliates": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 54
+    },
+    "$[].data.Chemical Non Us": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 4,
+      "observed_missing_in_parent": 51
+    },
+    "$[].data.Chemical United States": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 4,
+      "observed_missing_in_parent": 51
+    },
+    "$[].data.Energy Products Non US": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 53
+    },
+    "$[].data.Energy Products United States": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 53
+    },
+    "$[].data.Specialty Products Non US": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 53
+    },
+    "$[].data.Specialty Products United States": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 53
+    },
+    "$[].data.Upstream United States": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 4,
+      "observed_missing_in_parent": 51
+    },
+    "$[].data.Upstream Non Us": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 4,
+      "observed_missing_in_parent": 51
+    },
+    "$[].data.Downstream Non US": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 53
+    },
+    "$[].data.Downstream United States": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 53
+    },
+    "$[].data.FPL": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 54
+    },
+    "$[].data.NEER": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 54
+    },
+    "$[].data.NEER Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 53
+    },
+    "$[].data.Florida Power & Light Company": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 54
+    },
+    "$[].data.Franchise And Gross Receipts Taxes": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 53
+    },
+    "$[].data.FPL Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 54
+    },
+    "$[].data.Gulf Power Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 54
+    },
+    "$[].data.Engineering Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 50
+    },
+    "$[].data.APAC Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 50
+    },
+    "$[].data.Americas Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 50
+    },
+    "$[].data.EMEA Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 50
+    },
+    "$[].data.Real Estate Operations Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 50
+    },
+    "$[].data.Strategic Capital Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 50
+    },
+    "$[].data.Google Search & other": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 50
+    },
+    "$[].data.YouTube ads": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 50
+    },
+    "$[].data.Google Network": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 50
+    },
+    "$[].data.Google subscriptions, platforms, and devices": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 50
+    },
+    "$[].data.Google Cloud": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 50
+    },
+    "$[].data.Other Bets": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 50
+    },
+    "$[].data.Hedging gains (losses)": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 50
+    },
+    "$[].2025-09-27": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 109
+    },
+    "$[].2025-09-27.Mac": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2025-09-27.Service": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2025-09-27.Wearables, Home and Accessories": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2025-09-27.iPad": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2025-09-27.iPhone": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2024-09-28": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 109
+    },
+    "$[].2024-09-28.Mac": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2024-09-28.Service": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2024-09-28.Wearables, Home and Accessories": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2024-09-28.iPad": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2024-09-28.iPhone": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2023-09-30": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 109
+    },
+    "$[].2023-09-30.Mac": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2023-09-30.Service": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2023-09-30.Wearables, Home and Accessories": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2023-09-30.iPad": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2023-09-30.iPhone": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2022-09-24": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 109
+    },
+    "$[].2022-09-24.Mac": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2022-09-24.Service": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2022-09-24.Wearables, Home and Accessories": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2022-09-24.iPad": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2022-09-24.iPhone": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2021-09-25": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 109
+    },
+    "$[].2021-09-25.Mac": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2021-09-25.Service": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2021-09-25.Wearables, Home and Accessories": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2021-09-25.iPad": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2021-09-25.iPhone": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2025-12-31": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 8,
+      "observed_missing_in_parent": 102
+    },
+    "$[].2025-12-31.Segment Reconciling Items": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2025-12-31.Asset and Wealth Management Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2025-12-31.Commercial And Investment Bank": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2025-12-31.Consumer & Community Banking": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2025-12-31.Segment Reporting, Reconciling Item, Corporate Nonsegment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2024-12-31": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 7,
+      "observed_missing_in_parent": 103
+    },
+    "$[].2024-12-31.Segment Reconciling Items": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2024-12-31.Asset and Wealth Management Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2024-12-31.Commercial And Investment Bank": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2024-12-31.Consumer & Community Banking": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2024-12-31.Segment Reporting, Reconciling Item, Corporate Nonsegment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2023-12-30": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 109
+    },
+    "$[].2023-12-30.Consumer & Community Banking": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2023-12-30.Corporate & Investment Bank": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2023-12-30.Asset & Wealth Management": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2023-12-30.Commercial Banking": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2023-12-30.Corporate Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2023-12-30.Reconciling Items": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2022-12-30": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 109
+    },
+    "$[].2022-12-30.Consumer & Community Banking": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2022-12-30.Corporate & Investment Bank": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2022-12-30.Asset & Wealth Management": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2022-12-30.Commercial Banking": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2022-12-30.Corporate Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2022-12-30.Reconciling Items": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2021-12-30": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 109
+    },
+    "$[].2021-12-30.Corporate & Investment Bank": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2021-12-30.Consumer & Community Banking": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2021-12-30.Asset & Wealth Management": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2021-12-30.Commercial Banking": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2021-12-30.Corporate Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2021-12-30.Reconciling Items": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2025-12-28": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 109
+    },
+    "$[].2025-12-28.Innovative Medicine": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2025-12-28.MedTech": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2024-12-29": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 109
+    },
+    "$[].2024-12-29.Innovative Medicine": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2024-12-29.MedTech": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2023-12-31": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 7,
+      "observed_missing_in_parent": 103
+    },
+    "$[].2023-12-31.Innovative Medicine": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2023-12-31.MedTech": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2022-12-31": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 8,
+      "observed_missing_in_parent": 102
+    },
+    "$[].2022-12-31.Innovative Medicine": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2022-12-31.MedTech": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2022-12-31.Consumer": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2022-01-02": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 109
+    },
+    "$[].2022-01-02.Consumer": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2022-01-02.Medical Devices": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2022-01-02.Pharmaceutical": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2025-12-31.Advertising Services": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2025-12-31.Amazon Web Services": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2025-12-31.Online Stores": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2025-12-31.Other Services": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2025-12-31.Physical Stores": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2025-12-31.Subscription Services": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2025-12-31.Third-Party Seller Services": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2024-12-31.Advertising Services": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2024-12-31.Amazon Web Services": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2024-12-31.Online Stores": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2024-12-31.Other Services": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2024-12-31.Physical Stores": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2024-12-31.Subscription Services": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2024-12-31.Third-Party Seller Services": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2023-12-31.Advertising Services": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2023-12-31.Amazon Web Services": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2023-12-31.Online Stores": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2023-12-31.Other Services": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2023-12-31.Physical Stores": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2023-12-31.Subscription Services": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2023-12-31.Third-Party Seller Services": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2022-12-31.Advertising Services": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2022-12-31.Amazon Web Services": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2022-12-31.Online Stores": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2022-12-31.Other Services": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2022-12-31.Physical Stores": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2022-12-31.Subscription Services": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2022-12-31.Third-Party Seller Services": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2021-12-31": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 7,
+      "observed_missing_in_parent": 103
+    },
+    "$[].2021-12-31.Advertising Services": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2021-12-31.Amazon Web Services": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2021-12-31.Online Stores": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2021-12-31.Other Services": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2021-12-31.Physical Stores": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2021-12-31.Subscription Services": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2021-12-31.Third-Party Seller Services": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2026-06-30": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 109
+    },
+    "$[].2026-06-30.Baby, Feminine and Family Care Segment Member": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2026-06-30.Beauty Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2026-06-30.Fabric Care And Home Care Segment Member": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2026-06-30.Grooming Segment Member": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2026-06-30.Health Care Segment Member": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2025-06-30": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 109
+    },
+    "$[].2025-06-30.Baby, Feminine and Family Care Segment Member": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2025-06-30.Beauty Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2025-06-30.Fabric Care And Home Care Segment Member": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2025-06-30.Grooming Segment Member": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2025-06-30.Health Care Segment Member": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2024-06-30": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 109
+    },
+    "$[].2024-06-30.Baby, Feminine and Family Care Segment Member": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2024-06-30.Beauty Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2024-06-30.Corporate Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2024-06-30.Fabric Care And Home Care Segment Member": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2024-06-30.Grooming Segment Member": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2024-06-30.Health Care Segment Member": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2023-06-30": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 109
+    },
+    "$[].2023-06-30.Baby, Feminine and Family Care Segment Member": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2023-06-30.Beauty Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2023-06-30.Corporate Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2023-06-30.Fabric Care And Home Care Segment Member": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2023-06-30.Grooming Segment Member": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2023-06-30.Health Care Segment Member": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2022-06-30": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 109
+    },
+    "$[].2022-06-30.Baby, Feminine and Family Care Segment Member": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2022-06-30.Beauty Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2022-06-30.Corporate Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2022-06-30.Fabric Care And Home Care Segment Member": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2022-06-30.Grooming Segment Member": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2022-06-30.Health Care Segment Member": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2025-12-31.Construction Industries": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2025-12-31.Resource Industries": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2025-12-31.Power & Energy": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2025-12-31.Financial Products": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2025-12-31.All Other Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2025-12-31.Corporate Items and Eliminations": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2024-12-31.Construction Industries": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2024-12-31.Energy and Transportation": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2024-12-31.Resource Industries": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2024-12-31.Other Segments": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2024-12-31.Financial Products": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2024-12-31.Intersegment Elimination": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2023-12-31.Construction Industries": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2023-12-31.Energy and Transportation": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2023-12-31.Other Segments": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2023-12-31.Resource Industries": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2023-12-31.Financial Products": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2023-12-31.Intersegment Elimination": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2022-12-31.Construction Industries": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2022-12-31.Energy and Transportation": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2022-12-31.Other Segments": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2022-12-31.Resource Industries": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2022-12-31.Financial Products": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2022-12-31.Intersegment Elimination": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2021-12-31.Construction Industries": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2021-12-31.Energy and Transportation": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2021-12-31.Other Segments": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2021-12-31.Resource Industries": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2021-12-31.Financial Products": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2021-12-31.Intersegment Elimination": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2025-12-31.Other Revenue": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2025-12-31.Chemical Products": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2025-12-31.Energy Products": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2025-12-31.Specialty Products": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2025-12-31.Upstream": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2025-12-31.Income From Equity Affiliates": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2022-12-31.Chemical Non Us": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2022-12-31.Chemical United States": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2022-12-31.Energy Products Non US": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2022-12-31.Energy Products United States": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2022-12-31.Specialty Products Non US": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2022-12-31.Specialty Products United States": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2022-12-31.Upstream United States": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2022-12-31.Upstream Non Us": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2021-12-31.Chemical Non Us": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2021-12-31.Chemical United States": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2021-12-31.Energy Products Non US": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2021-12-31.Energy Products United States": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2021-12-31.Specialty Products Non US": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2021-12-31.Specialty Products United States": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2021-12-31.Upstream Non Us": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2021-12-31.Upstream United States": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2020-12-31": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 109
+    },
+    "$[].2020-12-31.Chemical Non Us": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2020-12-31.Chemical United States": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2020-12-31.Upstream Non Us": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2020-12-31.Upstream United States": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2020-12-31.Downstream Non US": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2020-12-31.Downstream United States": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2019-12-31": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 109
+    },
+    "$[].2019-12-31.Chemical Non Us": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2019-12-31.Chemical United States": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2019-12-31.Upstream Non Us": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2019-12-31.Upstream United States": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2019-12-31.Downstream Non US": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2019-12-31.Downstream United States": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2025-12-31.FPL": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2025-12-31.NEER": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2024-12-31.NEER Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2024-12-31.Florida Power & Light Company": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2023-12-31.Franchise And Gross Receipts Taxes": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2022-12-31.Franchise And Gross Receipts Taxes": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2021-12-31.FPL Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2021-12-31.Gulf Power Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2021-12-31.NEER Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2025-12-31.Engineering Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2025-12-31.APAC Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2025-12-31.Americas Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2025-12-31.EMEA Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2024-12-31.Engineering Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2024-12-31.APAC Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2024-12-31.Americas Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2024-12-31.EMEA Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2023-12-31.Engineering Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2023-12-31.APAC Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2023-12-31.Americas Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2023-12-31.EMEA Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2022-12-31.Engineering Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2022-12-31.APAC Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2022-12-31.Americas Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2022-12-31.EMEA Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2021-12-31.APAC Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2021-12-31.Americas Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2021-12-31.EMEA Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2021-12-31.Engineering Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2025-12-31.Real Estate Operations Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2025-12-31.Strategic Capital Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2024-12-31.Real Estate Operations Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2024-12-31.Strategic Capital Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2023-12-31.Real Estate Operations Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2023-12-31.Strategic Capital Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2022-12-31.Real Estate Operations Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2022-12-31.Strategic Capital Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2021-12-31.Real Estate Operations Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2021-12-31.Strategic Capital Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2025-12-31.Google Search & other": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2025-12-31.YouTube ads": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2025-12-31.Google Network": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2025-12-31.Google subscriptions, platforms, and devices": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2025-12-31.Google Cloud": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2025-12-31.Other Bets": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2025-12-31.Hedging gains (losses)": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2024-12-31.Google Search & other": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2024-12-31.YouTube ads": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2024-12-31.Google Network": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2024-12-31.Google subscriptions, platforms, and devices": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2024-12-31.Google Cloud": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2024-12-31.Other Bets": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2024-12-31.Hedging gains (losses)": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2023-12-31.Google Search & other": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2023-12-31.YouTube ads": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2023-12-31.Google Network": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2023-12-31.Google subscriptions, platforms, and devices": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2023-12-31.Google Cloud": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2023-12-31.Other Bets": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2023-12-31.Hedging gains (losses)": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2022-12-31.Google Search & other": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2022-12-31.YouTube ads": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2022-12-31.Google Network": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2022-12-31.Google subscriptions, platforms, and devices": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2022-12-31.Google Cloud": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2022-12-31.Other Bets": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2022-12-31.Hedging gains (losses)": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 7
+    },
+    "$[].2021-12-31.Google Search & other": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2021-12-31.YouTube ads": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2021-12-31.Google Network": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2021-12-31.Google subscriptions, platforms, and devices": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2021-12-31.Google Cloud": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2021-12-31.Other Bets": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2021-12-31.Hedging gains (losses)": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    }
+  },
+  "limitation": "Observed path/type union, including nulls and missing observations. No assertion of universal requiredness, completeness or non-nullability. Workbook inferred schemas are separate.",
+  "observed_non_json_formats": [],
+  "binary_sample_files": []
+}

@@ -1,0 +1,37 @@
+[
+  {
+    "symbol": "PG",
+    "name": "The Procter & Gamble Company",
+    "currency": "USD",
+    "exchangeFullName": "New York Stock Exchange",
+    "exchange": "NYSE"
+  },
+  {
+    "symbol": "PGJ",
+    "name": "Invesco Golden Dragon China ETF",
+    "currency": "USD",
+    "exchangeFullName": "NASDAQ Global Market",
+    "exchange": "NASDAQ"
+  },
+  {
+    "symbol": "PGR",
+    "name": "The Progressive Corporation",
+    "currency": "USD",
+    "exchangeFullName": "New York Stock Exchange",
+    "exchange": "NYSE"
+  },
+  {
+    "symbol": "PGC",
+    "name": "Peapack-Gladstone Financial Corporation",
+    "currency": "USD",
+    "exchangeFullName": "NASDAQ Global Select",
+    "exchange": "NASDAQ"
+  },
+  {
+    "symbol": "PGM",
+    "name": "iPath Series B Bloomberg Platinum Subindex Total Return ETN",
+    "currency": "USD",
+    "exchangeFullName": "New York Stock Exchange Arca",
+    "exchange": "AMEX"
+  }
+]

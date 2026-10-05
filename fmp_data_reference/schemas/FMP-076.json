@@ -1,0 +1,827 @@
+{
+  "api_id": "FMP-076",
+  "basis": "observed_response_shapes_not_json_schema_contract",
+  "generated_at_utc": "2026-10-03T05:06:35.406098+00:00",
+  "sample_files": [
+    "samples/FMP-076/20261003T045328427231Z/AAPL-annual.json",
+    "samples/FMP-076/20261003T045328427231Z/AMZN-annual.json",
+    "samples/FMP-076/20261003T045328427231Z/CAT-annual.json",
+    "samples/FMP-076/20261003T045328427231Z/GOOGL-annual.json",
+    "samples/FMP-076/20261003T045328427231Z/JNJ-annual.json",
+    "samples/FMP-076/20261003T045328427231Z/JPM-annual.json",
+    "samples/FMP-076/20261003T045328427231Z/LIN-annual.json",
+    "samples/FMP-076/20261003T045328427231Z/NEE-annual.json",
+    "samples/FMP-076/20261003T045328427231Z/PG-annual.json",
+    "samples/FMP-076/20261003T045328427231Z/PLD-annual.json",
+    "samples/FMP-076/20261003T045328427231Z/XOM-annual.json",
+    "samples/FMP-076/20261003T045554159287Z/AAPL-legacy-annual.json",
+    "samples/FMP-076/20261003T045554159287Z/AMZN-legacy-annual.json",
+    "samples/FMP-076/20261003T045554159287Z/CAT-legacy-annual.json",
+    "samples/FMP-076/20261003T045554159287Z/GOOGL-legacy-annual.json",
+    "samples/FMP-076/20261003T045554159287Z/JNJ-legacy-annual.json",
+    "samples/FMP-076/20261003T045554159287Z/JPM-legacy-annual.json",
+    "samples/FMP-076/20261003T045554159287Z/LIN-legacy-annual.json",
+    "samples/FMP-076/20261003T045554159287Z/NEE-legacy-annual.json",
+    "samples/FMP-076/20261003T045554159287Z/PG-legacy-annual.json",
+    "samples/FMP-076/20261003T045554159287Z/PLD-legacy-annual.json",
+    "samples/FMP-076/20261003T045554159287Z/XOM-legacy-annual.json"
+  ],
+  "required_fields_asserted": false,
+  "fields": {
+    "$": {
+      "observed_types": [
+        "array"
+      ],
+      "null_observations": 0,
+      "present_observations": 22,
+      "observed_missing_in_parent": 0
+    },
+    "$[]": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].symbol": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].date": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].fiscalYear": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].period": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].reportedCurrency": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].grossProfitMargin": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].ebitMargin": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].ebitdaMargin": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].operatingProfitMargin": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].pretaxProfitMargin": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].continuousOperationsProfitMargin": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].netProfitMargin": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].bottomLineProfitMargin": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].receivablesTurnover": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].payablesTurnover": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].inventoryTurnover": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].fixedAssetTurnover": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].assetTurnover": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].currentRatio": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].quickRatio": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].solvencyRatio": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].cashRatio": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].priceToEarningsRatio": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].priceToEarningsGrowthRatio": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].forwardPriceToEarningsGrowthRatio": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].priceToEarningsDilutedRatio": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].priceToEarningsDilutedGrowthRatio": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].priceToBookRatio": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].priceToSalesRatio": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].priceToFreeCashFlowRatio": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].priceToOperatingCashFlowRatio": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].debtToAssetsRatio": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].debtToEquityRatio": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].debtToCapitalRatio": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].longTermDebtToCapitalRatio": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].financialLeverageRatio": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].workingCapitalTurnoverRatio": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].operatingCashFlowRatio": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].operatingCashFlowSalesRatio": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].freeCashFlowOperatingCashFlowRatio": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].debtServiceCoverageRatio": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].interestCoverageRatio": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].shortTermOperatingCashFlowCoverageRatio": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].operatingCashFlowCoverageRatio": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].capitalExpenditureCoverageRatio": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].dividendPaidAndCapexCoverageRatio": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].dividendPayoutRatio": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].dividendYield": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].dividendYieldPercentage": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].revenuePerShare": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].netIncomePerShare": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].interestDebtPerShare": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].cashPerShare": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].bookValuePerShare": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].tangibleBookValuePerShare": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].shareholdersEquityPerShare": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].operatingCashFlowPerShare": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].capexPerShare": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].freeCashFlowPerShare": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].netIncomePerEBT": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].ebtPerEbit": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].priceToFairValue": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].debtToMarketCap": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].effectiveTaxRate": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].enterpriseValueMultiple": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].dividendPerShare": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].calendarYear": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].daysOfSalesOutstanding": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].daysOfInventoryOutstanding": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].operatingCycle": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].daysOfPayablesOutstanding": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].cashConversionCycle": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].returnOnAssets": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].returnOnEquity": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].returnOnCapitalEmployed": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].ebitPerRevenue": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].debtRatio": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].debtEquityRatio": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].longTermDebtToCapitalization": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].totalDebtToCapitalization": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].interestCoverage": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].cashFlowToDebtRatio": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].companyEquityMultiplier": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].payoutRatio": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].cashFlowCoverageRatios": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].shortTermCoverageRatios": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].priceBookValueRatio": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].priceEarningsRatio": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].priceToFreeCashFlowsRatio": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].priceToOperatingCashFlowsRatio": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].priceCashFlowRatio": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].priceEarningsToGrowthRatio": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].priceSalesRatio": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    },
+    "$[].priceFairValue": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 55,
+      "observed_missing_in_parent": 55
+    }
+  },
+  "limitation": "Observed path/type union, including nulls and missing observations. No assertion of universal requiredness, completeness or non-nullability. Workbook inferred schemas are separate.",
+  "observed_non_json_formats": [],
+  "binary_sample_files": []
+}

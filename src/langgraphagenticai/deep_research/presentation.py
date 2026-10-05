@@ -150,32 +150,40 @@ def _financial_basis_table(rows: list[dict], body_style: ParagraphStyle) -> Tabl
         except (TypeError, ValueError):
             return _format_value(value)
 
-    def percent(value) -> str:
+    def percent(value, derived=False) -> str:
         if value is None:
             return "-"
         try:
             number = float(value)
-            return f"{number * 100 if abs(number) <= 2 else number:,.1f}%"
+            return f"{number * 100 if derived or abs(number) <= 2 else number:,.1f}%"
         except (TypeError, ValueError):
             return _format_value(value)
 
     table_rows = [["Company", "Basis", "Period end", "Revenue", "Op. margin", "Net income", "Free cash flow"]]
     for row in rows:
+        derived = bool(row.get("TTM methodology"))
+        def cash_amount(value, ttm):
+            if not derived:
+                return amount(value, (row.get("TTM currency") or row.get("Statement currency")) if ttm else row.get("Statement currency"))
+            currency = row.get("Cash flow TTM currency" if ttm else "Cash flow statement currency")
+            through = row.get("Cash flow TTM through" if ttm else "Cash flow statement date")
+            text = amount(value, currency)
+            return text + f" (through {through or 'unavailable'})" if value is not None else text
         ttm_has_statements = any(row.get(field) is not None for field in
                                  ("Revenue (TTM)", "Net income (TTM)", "Free cash flow (TTM)"))
         table_rows.append([
             row.get("Ticker", ""), "TTM" if ttm_has_statements else "TTM ratios", row.get("TTM through") or "-",
             amount(row.get("Revenue (TTM)"), row.get("TTM currency") or row.get("Statement currency")),
-            percent(row.get("Operating margin (TTM)")),
+            percent(row.get("Operating margin (TTM)"), derived),
             amount(row.get("Net income (TTM)"), row.get("TTM currency") or row.get("Statement currency")),
-            amount(row.get("Free cash flow (TTM)"), row.get("TTM currency") or row.get("Statement currency")),
+            cash_amount(row.get("Free cash flow (TTM)"), True),
         ])
         table_rows.append([
             "", str(row.get("Statement period") or "Reported"), row.get("Statement date") or "-",
             amount(row.get("Revenue (latest period)"), row.get("Statement currency")),
-            percent(row.get("Operating margin (latest period)")),
+            percent(row.get("Operating margin (latest period)"), derived),
             amount(row.get("Net income (latest period)"), row.get("Statement currency")),
-            amount(row.get("Free cash flow (latest period)"), row.get("Statement currency")),
+            cash_amount(row.get("Free cash flow (latest period)"), False),
         ])
     header_style = ParagraphStyle("BasisHeader", parent=body_style, fontName=BOLD_FONT,
                                   fontSize=7.2, leading=8.5, textColor=colors.white, alignment=TA_CENTER)
@@ -247,8 +255,9 @@ def _comparison_table(rows: list[dict], body_style: ParagraphStyle,
                 number = float(value)
                 # Provider margins/yields/returns-on-capital are usually fractions;
                 # calculated growth and price changes are already percentage points.
-                if abs(number) <= 2 and any(term in key for term in
-                                            ("Margin", "Yield", "ROE", "ROA", "ROIC", "Payout")):
+                derived_fraction = row.get("TTM methodology") and (any(term in key for term in ("Margin", "margin")) or key in {"ROE", "ROA", "Earnings Yield", "FCF Yield", "FCF yield (TTM, fraction)"})
+                if derived_fraction or (abs(number) <= 2 and any(term in key for term in
+                                            ("Margin", "Yield", "ROE", "ROA", "ROIC", "Payout"))):
                     number *= 100
                 return f"{number:,.1f}%"
             except (TypeError, ValueError):

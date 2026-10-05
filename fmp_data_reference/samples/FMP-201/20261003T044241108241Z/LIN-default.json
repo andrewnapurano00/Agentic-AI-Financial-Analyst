@@ -1,0 +1,42 @@
+[
+  {
+    "symbol": "LIN",
+    "date": "2026-09-11",
+    "price": 461.62,
+    "quantity": 12369,
+    "cusip": "G54950103",
+    "name": "LINDE PLC NEW SHS (IRL)"
+  },
+  {
+    "symbol": "LIN",
+    "date": "2026-09-08",
+    "price": 477.57,
+    "quantity": 64,
+    "cusip": "G54950103",
+    "name": "LINDE PLC NEW SHS (IRL)"
+  },
+  {
+    "symbol": "LIN",
+    "date": "2026-08-27",
+    "price": 490.33,
+    "quantity": 5,
+    "cusip": "G54950103",
+    "name": "LINDE PLC NEW SHS (IRL)"
+  },
+  {
+    "symbol": "LIN",
+    "date": "2026-08-21",
+    "price": 481.29,
+    "quantity": 3094,
+    "cusip": "G54950103",
+    "name": "LINDE PLC NEW SHS (IRL)"
+  },
+  {
+    "symbol": "LIN",
+    "date": "2026-08-20",
+    "price": 481.13,
+    "quantity": 68,
+    "cusip": "G54950103",
+    "name": "LINDE PLC NEW SHS (IRL)"
+  }
+]

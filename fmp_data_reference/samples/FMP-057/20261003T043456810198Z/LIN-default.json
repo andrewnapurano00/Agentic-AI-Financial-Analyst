@@ -1,0 +1,15 @@
+[
+  {
+    "bidSize": 2,
+    "askPrice": 482.188,
+    "volume": 2534284,
+    "askSize": 1,
+    "bidPrice": 470,
+    "lastSalePrice": 482.188,
+    "lastSaleSize": 0,
+    "lastSaleTime": 1790985499000,
+    "fmpLast": 482.188,
+    "lastUpdated": 1790985432000,
+    "symbol": "LIN"
+  }
+]

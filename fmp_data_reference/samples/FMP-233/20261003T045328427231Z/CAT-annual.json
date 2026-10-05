@@ -1,0 +1,77 @@
+[
+  {
+    "symbol": "CAT",
+    "fiscalYear": 2025,
+    "period": "FY",
+    "reportedCurrency": "USD",
+    "date": "2025-12-31",
+    "data": {
+      "Construction Industries": 24800000000,
+      "Resource Industries": 12185000000,
+      "Power & Energy": 27143000000,
+      "Financial Products": 4220000000,
+      "All Other Segment": 46000000,
+      "Corporate Items and Eliminations": -805000000
+    }
+  },
+  {
+    "symbol": "CAT",
+    "fiscalYear": 2024,
+    "period": "FY",
+    "reportedCurrency": "USD",
+    "date": "2024-12-31",
+    "data": {
+      "Construction Industries": 25455000000,
+      "Energy and Transportation": 28854000000,
+      "Resource Industries": 12389000000,
+      "Other Segments": 425000000,
+      "Financial Products": 4053000000,
+      "Intersegment Elimination": -6367000000
+    }
+  },
+  {
+    "symbol": "CAT",
+    "fiscalYear": 2023,
+    "period": "FY",
+    "reportedCurrency": "USD",
+    "date": "2023-12-31",
+    "data": {
+      "Construction Industries": 27418000000,
+      "Energy and Transportation": 28001000000,
+      "Other Segments": 449000000,
+      "Resource Industries": 13583000000,
+      "Financial Products": 3785000000,
+      "Intersegment Elimination": -6176000000
+    }
+  },
+  {
+    "symbol": "CAT",
+    "fiscalYear": 2022,
+    "period": "FY",
+    "reportedCurrency": "USD",
+    "date": "2022-12-31",
+    "data": {
+      "Construction Industries": 25269000000,
+      "Energy and Transportation": 23752000000,
+      "Other Segments": 450000000,
+      "Resource Industries": 12314000000,
+      "Financial Products": 3253000000,
+      "Intersegment Elimination": -5611000000
+    }
+  },
+  {
+    "symbol": "CAT",
+    "fiscalYear": 2021,
+    "period": "FY",
+    "reportedCurrency": "USD",
+    "date": "2021-12-31",
+    "data": {
+      "Construction Industries": 22106000000,
+      "Energy and Transportation": 20287000000,
+      "Other Segments": 511000000,
+      "Resource Industries": 9963000000,
+      "Financial Products": 3073000000,
+      "Intersegment Elimination": -4969000000
+    }
+  }
+]

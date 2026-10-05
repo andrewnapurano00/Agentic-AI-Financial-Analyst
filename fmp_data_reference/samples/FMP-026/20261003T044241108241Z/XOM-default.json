@@ -1,0 +1,52 @@
+[
+  {
+    "title": "Senior Vice President",
+    "name": "Barton Cahir",
+    "pay": 4132439,
+    "currencyPay": "USD",
+    "gender": "male",
+    "yearBorn": 1973,
+    "titleSince": null,
+    "active": true
+  },
+  {
+    "title": "Senior President of ExxonMobil Global Operations",
+    "name": "Jon Gibbs",
+    "pay": 3315918,
+    "currencyPay": "USD",
+    "gender": "male",
+    "yearBorn": 1972,
+    "titleSince": null,
+    "active": true
+  },
+  {
+    "title": "President of ExxonMobil Global Projects Company",
+    "name": "Staale Gjervik",
+    "pay": null,
+    "currencyPay": "USD",
+    "gender": "male",
+    "yearBorn": 1974,
+    "titleSince": null,
+    "active": true
+  },
+  {
+    "title": "Vice President of Human Resources",
+    "name": "Inge A. Van Coppenolle",
+    "pay": null,
+    "currencyPay": "USD",
+    "gender": null,
+    "yearBorn": null,
+    "titleSince": null,
+    "active": true
+  },
+  {
+    "title": "Vice President & President of Low Carbon Solutions",
+    "name": "Barry L. Engle",
+    "pay": null,
+    "currencyPay": "USD",
+    "gender": "male",
+    "yearBorn": 1964,
+    "titleSince": null,
+    "active": true
+  }
+]

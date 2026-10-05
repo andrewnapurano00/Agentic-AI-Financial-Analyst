@@ -1,0 +1,26 @@
+[
+  {
+    "symbol": "PG",
+    "name": "The Procter & Gamble Company",
+    "price": 144.91,
+    "changesPercentage": 0.6669,
+    "change": 0.96,
+    "dayLow": 143.81,
+    "dayHigh": 145.21,
+    "yearHigh": 167.25,
+    "yearLow": 137.62,
+    "marketCap": 344481347061,
+    "priceAvg50": 145.7754,
+    "priceAvg200": 147.6467,
+    "exchange": "NYSE",
+    "volume": 6219527,
+    "avgVolume": 8573796,
+    "open": 144.4,
+    "previousClose": 143.95,
+    "eps": 6.94,
+    "pe": 20.88,
+    "earningsAnnouncement": "2026-10-22T12:30:00.000+0000",
+    "sharesOutstanding": 2377208937,
+    "timestamp": 1790971202
+  }
+]

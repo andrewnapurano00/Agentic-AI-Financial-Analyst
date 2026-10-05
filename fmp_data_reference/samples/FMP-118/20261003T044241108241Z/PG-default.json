@@ -1,0 +1,38 @@
+[
+  {
+    "symbol": "PG",
+    "cik": "0000080424",
+    "filingDate": "2026-09-24 00:00:00",
+    "acceptedDate": "2026-09-24 15:45:18",
+    "formType": "11-K",
+    "link": "https://www.sec.gov/Archives/edgar/data/80424/000008042426000181/0000080424-26-000181-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/80424/000008042426000181/pg-20260924.htm"
+  },
+  {
+    "symbol": "PG",
+    "cik": "0000080424",
+    "filingDate": "2026-09-24 00:00:00",
+    "acceptedDate": "2026-09-24 13:24:30",
+    "formType": "11-K",
+    "link": "https://www.sec.gov/Archives/edgar/data/80424/000008042426000179/0000080424-26-000179-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/80424/000008042426000179/pg-20260923.htm"
+  },
+  {
+    "symbol": "PG",
+    "cik": "0000080424",
+    "filingDate": "2026-09-21 00:00:00",
+    "acceptedDate": "2026-09-21 14:16:41",
+    "formType": "11-K",
+    "link": "https://www.sec.gov/Archives/edgar/data/80424/000008042426000175/0000080424-26-000175-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/80424/000008042426000175/pg-20260921.htm"
+  },
+  {
+    "symbol": "PG",
+    "cik": "0000080424",
+    "filingDate": "2026-09-21 00:00:00",
+    "acceptedDate": "2026-09-21 14:16:23",
+    "formType": "11-K",
+    "link": "https://www.sec.gov/Archives/edgar/data/80424/000008042426000174/0000080424-26-000174-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/80424/000008042426000174/pg-20260921.htm"
+  }
+]

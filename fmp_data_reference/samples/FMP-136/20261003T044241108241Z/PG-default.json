@@ -1,0 +1,62 @@
+[
+  {
+    "symbol": "PG",
+    "date": "2026-10-02",
+    "open": 144.4,
+    "high": 145.21,
+    "low": 143.81,
+    "close": 144.91,
+    "volume": 6219527,
+    "change": 0.51,
+    "changePercent": 0.3531856,
+    "vwap": 144.64
+  },
+  {
+    "symbol": "PG",
+    "date": "2026-10-01",
+    "open": 144.55,
+    "high": 145,
+    "low": 143.4,
+    "close": 143.95,
+    "volume": 7323305,
+    "change": -0.6,
+    "changePercent": -0.41508,
+    "vwap": 144.225
+  },
+  {
+    "symbol": "PG",
+    "date": "2026-09-30",
+    "open": 148.9,
+    "high": 149.23,
+    "low": 145.28,
+    "close": 145.28,
+    "volume": 8582222,
+    "change": -3.62,
+    "changePercent": -2.43,
+    "vwap": 147.1725
+  },
+  {
+    "symbol": "PG",
+    "date": "2026-09-29",
+    "open": 147.95,
+    "high": 148.84,
+    "low": 146.84,
+    "close": 148.32,
+    "volume": 7672514,
+    "change": 0.37,
+    "changePercent": 0.25008,
+    "vwap": 147.9875
+  },
+  {
+    "symbol": "PG",
+    "date": "2026-09-28",
+    "open": 145.86,
+    "high": 149.48,
+    "low": 145.11,
+    "close": 149.03,
+    "volume": 8850100,
+    "change": 3.17,
+    "changePercent": 2.17,
+    "vwap": 147.37
+  }
+]

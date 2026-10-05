@@ -1,0 +1,14 @@
+[
+  {
+    "symbol": "XOM",
+    "lastMonthCount": 3,
+    "lastMonthAvgPriceTarget": 149,
+    "lastQuarterCount": 10,
+    "lastQuarterAvgPriceTarget": 163.7,
+    "lastYearCount": 43,
+    "lastYearAvgPriceTarget": 157.14,
+    "allTimeCount": 123,
+    "allTimeAvgPriceTarget": 129.32,
+    "publishers": "[\"StreetInsider\",\"Benzinga\",\"Pulse 2.0\"]"
+  }
+]

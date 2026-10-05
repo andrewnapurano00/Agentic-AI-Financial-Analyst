@@ -1,0 +1,57 @@
+[
+  {
+    "symbol": "JNJ",
+    "date": "2026-08-25",
+    "recordDate": "2026-08-25",
+    "paymentDate": "2026-09-08",
+    "declarationDate": "2026-07-15",
+    "adjDividend": 1.34,
+    "dividend": 1.34,
+    "yield": 1.93307461375119,
+    "frequency": "Quarterly"
+  },
+  {
+    "symbol": "JNJ",
+    "date": "2026-05-26",
+    "recordDate": "2026-05-26",
+    "paymentDate": "2026-06-09",
+    "declarationDate": "2026-04-14",
+    "adjDividend": 1.34,
+    "dividend": 1.34,
+    "yield": 2.2764792770874966,
+    "frequency": "Quarterly"
+  },
+  {
+    "symbol": "JNJ",
+    "date": "2026-02-24",
+    "recordDate": "2026-02-24",
+    "paymentDate": "2026-03-10",
+    "declarationDate": "2026-01-02",
+    "adjDividend": 1.3,
+    "dividend": 1.3,
+    "yield": 2.1114178983271072,
+    "frequency": "Quarterly"
+  },
+  {
+    "symbol": "JNJ",
+    "date": "2025-11-25",
+    "recordDate": "2025-11-25",
+    "paymentDate": "2025-12-09",
+    "declarationDate": "2025-10-14",
+    "adjDividend": 1.3,
+    "dividend": 1.3,
+    "yield": 2.487056660376446,
+    "frequency": "Quarterly"
+  },
+  {
+    "symbol": "JNJ",
+    "date": "2025-08-26",
+    "recordDate": "2025-08-26",
+    "paymentDate": "2025-09-09",
+    "declarationDate": "2025-07-16",
+    "adjDividend": 1.3,
+    "dividend": 1.3,
+    "yield": 2.878350048161369,
+    "frequency": "Quarterly"
+  }
+]

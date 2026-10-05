@@ -1,0 +1,7 @@
+{
+  "coverage_reconciliation": "Union of historical/current request variants, keyed by API ID/input/variant/endpoint/parameters; latest projection chosen for identical requests.",
+  "rss_label_correction": "FMP-103 global requests were originally repeated under ticker aliases; current coverage represents their actual global input. Original sample files remain preserved.",
+  "batch_extraction_correction": "Removed collector-only redundant FMP-238 bulk aliases from current coverage; correct per-stock quote projections were rebuilt from the cached original bodies without provider requests.",
+  "sampling_annotation_corrections": 66,
+  "raw_response_bodies_modified": false
+}

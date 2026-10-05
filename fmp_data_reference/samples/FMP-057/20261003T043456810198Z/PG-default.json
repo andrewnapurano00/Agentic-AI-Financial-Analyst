@@ -1,0 +1,15 @@
+[
+  {
+    "bidSize": 1,
+    "askPrice": 145.24,
+    "volume": 6219527,
+    "askSize": 7,
+    "bidPrice": 144.5,
+    "lastSalePrice": 144.91,
+    "lastSaleSize": 918,
+    "lastSaleTime": 1790981240000,
+    "fmpLast": 144.91,
+    "lastUpdated": 1790985012000,
+    "symbol": "PG"
+  }
+]

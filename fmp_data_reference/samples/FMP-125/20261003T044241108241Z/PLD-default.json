@@ -1,0 +1,47 @@
+[
+  {
+    "symbol": "PLD",
+    "date": "2026-10-15",
+    "epsActual": null,
+    "epsEstimated": 0.777,
+    "revenueActual": null,
+    "revenueEstimated": 2172293000,
+    "lastUpdated": "2026-10-03"
+  },
+  {
+    "symbol": "PLD",
+    "date": "2026-07-16",
+    "epsActual": 1.13,
+    "epsEstimated": 0.747,
+    "revenueActual": 2177074000,
+    "revenueEstimated": 2161330000,
+    "lastUpdated": "2026-10-03"
+  },
+  {
+    "symbol": "PLD",
+    "date": "2026-04-16",
+    "epsActual": 1.05,
+    "epsEstimated": 0.806,
+    "revenueActual": 2125084000,
+    "revenueEstimated": 2121336000,
+    "lastUpdated": "2026-08-17"
+  },
+  {
+    "symbol": "PLD",
+    "date": "2026-01-21",
+    "epsActual": 1.49,
+    "epsEstimated": 0.737,
+    "revenueActual": 2092107000,
+    "revenueEstimated": 2089203000,
+    "lastUpdated": "2026-08-17"
+  },
+  {
+    "symbol": "PLD",
+    "date": "2025-10-15",
+    "epsActual": 0.82,
+    "epsEstimated": 0.668,
+    "revenueActual": 2054200000,
+    "revenueEstimated": 2029753000,
+    "lastUpdated": "2026-08-17"
+  }
+]

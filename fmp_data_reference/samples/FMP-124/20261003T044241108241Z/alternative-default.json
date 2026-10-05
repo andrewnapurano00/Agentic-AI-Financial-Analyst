@@ -1,0 +1,52 @@
+[
+  {
+    "symbol": "NKE",
+    "exchange": "NYSE",
+    "time": null,
+    "when": null,
+    "date": "2026-10-01",
+    "publicationDate": "2026-10-01",
+    "title": "NIKE, Inc. Reports Fiscal 2027 First Quarter Results",
+    "url": "https://www.businesswire.com/news/home/20261001788082/en/NIKE-Inc.-Reports-Fiscal-2027-First-Quarter-Results/"
+  },
+  {
+    "symbol": "NKE",
+    "exchange": "NYSE",
+    "time": "13:15",
+    "when": "during market",
+    "date": "2026-10-01",
+    "publicationDate": "2026-08-28",
+    "title": "NIKE, Inc. Announces First Quarter Fiscal 2027 Earnings and Conference Call",
+    "url": "https://www.businesswire.com/news/home/20260828161061/en/NIKE-Inc.-Announces-First-Quarter-Fiscal-2027-Earnings-and-Conference-Call/"
+  },
+  {
+    "symbol": "TYGO",
+    "exchange": "NASDAQ",
+    "time": null,
+    "when": null,
+    "date": "2026-09-30",
+    "publicationDate": "2026-08-04",
+    "title": "Tigo Energy Reports Second Quarter 2026 Financial Results",
+    "url": "https://www.businesswire.com/news/home/20260804381344/en/Tigo-Energy-Reports-Second-Quarter-2026-Financial-Results/"
+  },
+  {
+    "symbol": "PAR",
+    "exchange": "NYSE",
+    "time": null,
+    "when": null,
+    "date": "2026-09-30",
+    "publicationDate": "2026-09-30",
+    "title": "AI on the C-Store Customer's Terms: New Consumer Report by PAR Technology",
+    "url": "https://www.businesswire.com/news/home/20260930710100/en/AI-on-the-C-Store-Customer%E2%80%99s-Terms-New-Consumer-Report-by-PAR-Technology/"
+  },
+  {
+    "symbol": "NJDCY",
+    "exchange": "OTC",
+    "time": null,
+    "when": null,
+    "date": "2026-09-30",
+    "publicationDate": "2026-09-30",
+    "title": "Nidec Announces Completion of Submission of the Securities Report for the Fiscal Year Ended March 31, 2026 (53rd Fiscal Year)",
+    "url": "https://www.businesswire.com/news/home/20260930545703/en/Nidec-Announces-Completion-of-Submission-of-the-Securities-Report-for-the-Fiscal-Year-Ended-March-31-2026-53rd-Fiscal-Year/"
+  }
+]

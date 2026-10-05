@@ -1,0 +1,37 @@
+[
+  {
+    "symbol": "0P00000SXJ",
+    "date": "2026-10-02 05:24:10",
+    "freeFloat": 0,
+    "floatShares": 0,
+    "outstandingShares": 14566666
+  },
+  {
+    "symbol": "0P00016G44",
+    "date": "2026-10-02 15:06:50",
+    "freeFloat": 0,
+    "floatShares": 0,
+    "outstandingShares": 153175578
+  },
+  {
+    "symbol": "A",
+    "date": "2026-10-02 16:31:20",
+    "freeFloat": 99.65898021470655,
+    "floatShares": 281468851,
+    "outstandingShares": 282432000
+  },
+  {
+    "symbol": "AA",
+    "date": "2026-10-02 21:27:15",
+    "freeFloat": 99.59216775479426,
+    "floatShares": 262832694,
+    "outstandingShares": 263909000
+  },
+  {
+    "symbol": "AAA",
+    "date": "2026-10-02 22:09:15",
+    "freeFloat": 0,
+    "floatShares": 0,
+    "outstandingShares": 1800263
+  }
+]

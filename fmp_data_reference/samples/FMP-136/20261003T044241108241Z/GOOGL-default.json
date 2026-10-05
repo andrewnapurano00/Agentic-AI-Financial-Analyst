@@ -1,0 +1,62 @@
+[
+  {
+    "symbol": "GOOGL",
+    "date": "2026-10-02",
+    "open": 341.315,
+    "high": 345.77,
+    "low": 341.16,
+    "close": 343.5,
+    "volume": 22734069,
+    "change": 2.19,
+    "changePercent": 0.6401711,
+    "vwap": 343.48
+  },
+  {
+    "symbol": "GOOGL",
+    "date": "2026-10-01",
+    "open": 350.79,
+    "high": 353.22,
+    "low": 335.51,
+    "close": 338.24,
+    "volume": 33269338,
+    "change": -12.55,
+    "changePercent": -3.58,
+    "vwap": 344.44
+  },
+  {
+    "symbol": "GOOGL",
+    "date": "2026-09-30",
+    "open": 344.15,
+    "high": 352.6,
+    "low": 340.99,
+    "close": 344.08,
+    "volume": 37373739,
+    "change": -0.07,
+    "changePercent": -0.02033997,
+    "vwap": 345.455
+  },
+  {
+    "symbol": "GOOGL",
+    "date": "2026-09-29",
+    "open": 341.95,
+    "high": 342.84,
+    "low": 338.02,
+    "close": 340.92,
+    "volume": 21066900,
+    "change": -1.03,
+    "changePercent": -0.30121,
+    "vwap": 340.9325
+  },
+  {
+    "symbol": "GOOGL",
+    "date": "2026-09-28",
+    "open": 340.7,
+    "high": 343.59,
+    "low": 339.56,
+    "close": 342.75,
+    "volume": 19318323,
+    "change": 2.05,
+    "changePercent": 0.6017,
+    "vwap": 341.65
+  }
+]

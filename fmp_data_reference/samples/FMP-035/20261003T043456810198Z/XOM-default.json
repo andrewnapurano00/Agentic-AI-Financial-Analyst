@@ -1,0 +1,32 @@
+[
+  {
+    "symbol": "BP",
+    "companyName": "BP p.l.c.",
+    "price": 44.79,
+    "mktCap": 19576999824
+  },
+  {
+    "symbol": "CVE",
+    "companyName": "Cenovus Energy Inc.",
+    "price": 32.4,
+    "mktCap": 59753538000
+  },
+  {
+    "symbol": "CVX",
+    "companyName": "Chevron Corporation",
+    "price": 206.77,
+    "mktCap": 411803132000
+  },
+  {
+    "symbol": "EC",
+    "companyName": "Ecopetrol S.A.",
+    "price": 16.6,
+    "mktCap": 34126856601
+  },
+  {
+    "symbol": "EQNR",
+    "companyName": "Equinor ASA",
+    "price": 42.56,
+    "mktCap": 101750320000
+  }
+]

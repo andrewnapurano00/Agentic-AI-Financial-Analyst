@@ -1,0 +1,42 @@
+[
+  {
+    "symbol": "XOM",
+    "date": "2026-09-14",
+    "price": 165.99,
+    "quantity": 500,
+    "cusip": "30233Q108",
+    "name": "EXXONMOBIL HLDGS CORPORATION"
+  },
+  {
+    "symbol": "XOM",
+    "date": "2026-09-11",
+    "price": 165.23,
+    "quantity": 4003,
+    "cusip": "30233Q108",
+    "name": "EXXONMOBIL HLDGS CORPORATION"
+  },
+  {
+    "symbol": "XOM",
+    "date": "2026-09-10",
+    "price": 164.23,
+    "quantity": 251,
+    "cusip": "30233Q108",
+    "name": "EXXONMOBIL HLDGS CORPORATION"
+  },
+  {
+    "symbol": "XOM",
+    "date": "2026-08-26",
+    "price": 160.64,
+    "quantity": 53315,
+    "cusip": "30233Q108",
+    "name": "EXXONMOBIL HLDGS CORPORATION"
+  },
+  {
+    "symbol": "XOM",
+    "date": "2026-08-25",
+    "price": 164.05,
+    "quantity": 1647,
+    "cusip": "30233Q108",
+    "name": "EXXONMOBIL HLDGS CORPORATION"
+  }
+]

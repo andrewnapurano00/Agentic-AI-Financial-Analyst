@@ -1,0 +1,67 @@
+[
+  {
+    "symbol": "NEE",
+    "publishedDate": "2026-10-02T13:36:59.000Z",
+    "newsURL": "https://thefly.com/ajax/news_get.php?id=4434821",
+    "newsTitle": "NextEra Energy price target raised to $56 from $55 at Seaport Research",
+    "analystName": "Angie Storozynski",
+    "priceTarget": 56,
+    "adjPriceTarget": 56,
+    "priceWhenPosted": 77.38,
+    "newsPublisher": "TheFly",
+    "newsBaseURL": "thefly.com",
+    "analystCompany": "Seaport Global"
+  },
+  {
+    "symbol": "NEE",
+    "publishedDate": "2026-08-21T12:42:26.000Z",
+    "newsURL": "https://thefly.com/ajax/news_get.php?id=4415118",
+    "newsTitle": "NextEra Energy price target lowered to $114 from $116 at Morgan Stanley",
+    "analystName": "",
+    "priceTarget": 114,
+    "adjPriceTarget": 114,
+    "priceWhenPosted": 85.02,
+    "newsPublisher": "TheFly",
+    "newsBaseURL": "thefly.com",
+    "analystCompany": "Morgan Stanley"
+  },
+  {
+    "symbol": "NEE",
+    "publishedDate": "2026-07-27T13:27:00.000Z",
+    "newsURL": "https://www.streetinsider.com/Analyst+Comments/%27NextEra+Energy+%28NEE%29+Firing+on+All+Cylinders%27%3B+PT+Raised+to+%24108+at+Bernstein+SocGen/26817184.html",
+    "newsTitle": "'NextEra Energy (NEE) Firing on All Cylinders'; PT Raised to $108 at Bernstein SocGen",
+    "analystName": "Sunaina Ocalan",
+    "priceTarget": 108,
+    "adjPriceTarget": 108,
+    "priceWhenPosted": 89.355,
+    "newsPublisher": "StreetInsider",
+    "newsBaseURL": "streetinsider.com",
+    "analystCompany": "Bernstein"
+  },
+  {
+    "symbol": "NEE",
+    "publishedDate": "2026-07-27T11:32:54.000Z",
+    "newsURL": "https://thefly.com/ajax/news_get.php?id=4392736",
+    "newsTitle": "NextEra Energy price target raised to $96 from $94 at BMO Capital",
+    "analystName": "",
+    "priceTarget": 96,
+    "adjPriceTarget": 96,
+    "priceWhenPosted": 89.78,
+    "newsPublisher": "TheFly",
+    "newsBaseURL": "thefly.com",
+    "analystCompany": "BMO Capital"
+  },
+  {
+    "symbol": "NEE",
+    "publishedDate": "2026-07-27T10:31:00.000Z",
+    "newsURL": "https://www.streetinsider.com/Analyst+Comments/Mizuho+Reiterates+Neutral+Rating+on+NextEra+Energy+%28NEE%29/26815584.html",
+    "newsTitle": "Mizuho Reiterates Neutral Rating on NextEra Energy (NEE)",
+    "analystName": "Paul Fremont",
+    "priceTarget": 95,
+    "adjPriceTarget": 95,
+    "priceWhenPosted": 89.78,
+    "newsPublisher": "StreetInsider",
+    "newsBaseURL": "streetinsider.com",
+    "analystCompany": "Mizuho Securities"
+  }
+]

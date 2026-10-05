@@ -1,0 +1,37 @@
+[
+  {
+    "etfSymbol": "ZWT-T.TO",
+    "assetExposure": "AAPL",
+    "sharesNumber": 43747,
+    "weightPercentage": 8.85,
+    "marketValue": 20555126.59
+  },
+  {
+    "etfSymbol": "ZWT.TO",
+    "assetExposure": "AAPL",
+    "sharesNumber": 43747,
+    "weightPercentage": 8.85,
+    "marketValue": 20555126.59
+  },
+  {
+    "etfSymbol": "ZWH-U.TO",
+    "assetExposure": "AAPL",
+    "sharesNumber": 175242,
+    "weightPercentage": 6.4799999999999995,
+    "marketValue": 82339851.73
+  },
+  {
+    "etfSymbol": "ZWH-T.TO",
+    "assetExposure": "AAPL",
+    "sharesNumber": 175242,
+    "weightPercentage": 6.4799999999999995,
+    "marketValue": 82339851.73
+  },
+  {
+    "etfSymbol": "ZWH.TO",
+    "assetExposure": "AAPL",
+    "sharesNumber": 175242,
+    "weightPercentage": 6.4799999999999995,
+    "marketValue": 82339851.73
+  }
+]

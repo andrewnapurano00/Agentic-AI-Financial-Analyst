@@ -14,6 +14,38 @@ from .models import Evidence, ResearchRequest, dumps, json_safe, utc_now
 from .prompt_context import compact, evidence_context
 
 
+class V2ConfigurationError(ValueError):
+    """Only explicitly safe preflight messages may reach the UI."""
+
+
+class V2BudgetError(RuntimeError):
+    pass
+
+
+def report_instruction(request: ResearchRequest, config: dict) -> str:
+    cap = config["depth_draft_tokens"][request.depth]
+    # Reserve room for citations/Markdown and model reasoning. This is a target,
+    # not a guarantee of usable output; diagnostics record actual generation.
+    words = max(300, int(cap * 0.30))
+    per_company = max(70, (words - 180) // len(request.symbols))
+    return (
+        f"Write a compact completed investment memo, at most {words} words total, "
+        f"about {per_company} words per company for {len(request.symbols)} companies. "
+        "Start with ## Executive Investment Thesis. Answer the user's question and horizon; "
+        "never ask for clarification or promise a later report. Use these concise sections: "
+        "Company comparison (business quality, dated financial trends/cash conversion, "
+        "balance sheet, TTM versus latest reported period, forward estimates/valuation, "
+        "technical trend); News, Sentiment & Catalysts; Risks and counterargument; "
+        "Thesis invalidation and monitoring. Discuss every selected ticker on its own sector "
+        "economics. Use a small table only if it saves space. Include dates, currency and "
+        "period labels. Cite exact [E###] next to material factual claims, including the thesis. "
+        "Preserve missing-data limitations; do not invent facts, numerical targets or growth "
+        "between incompatible periods. Use qualitative scenarios when calculations are absent. "
+        "Distinguish provider facts, calculated figures and interpretation. Prefer complete "
+        "concise coverage over lengthy prose; do not add a sources appendix."
+    )
+
+
 CostMode = Literal["Economy", "Balanced", "Maximum quality"]
 
 
@@ -40,7 +72,7 @@ def build_stage_llm(provider: str, model: str, *, openai_api_key: str = "", groq
                     ollama_base_url: str = "http://localhost:11434/v1"):
     """Create a LangChain chat model without coupling the research manager to a provider."""
     provider = provider.lower()
-    common = {"model": model, "timeout": 90, "max_retries": 1}
+    common = {"model": model, "timeout": 90, "max_retries": 0}
     if provider == "openai":
         if not openai_api_key:
             raise ValueError("OPENAI_API_KEY is required for the selected OpenAI stage.")
@@ -133,7 +165,8 @@ def research_cache_key(request: ResearchRequest, config: dict, evidence: list[di
     dates = []
     for item in evidence or []:
         dates.append((item.get("symbol"), item.get("category"), item.get("retrieved_at")))
-    value = {"request": asdict(request), "config": config, "provider_dates": dates}
+    from .quarterly_ttm import METHODOLOGY
+    value = {"financial_methodology": METHODOLOGY, "request": asdict(request), "config": config, "provider_dates": dates}
     return hashlib.sha256(dumps(value).encode("utf-8")).hexdigest()[:20]
 
 
@@ -176,7 +209,10 @@ def run_quick_decision(result: dict, llm, *, model: str, max_chars: int = 10000)
         + ", ".join(symbols) + ". Use NO_BUY and null preferred_ticker when none qualifies."
     )
     started = __import__("time").monotonic()
-    response = structured.invoke(instruction + "\n" + dumps(brief), max_completion_tokens=900)
+    kwargs = {"max_completion_tokens": 900, "timeout": 90}
+    if model in {"gpt-5", "gpt-5-mini", "gpt-5-nano"}:
+        kwargs["reasoning_effort"] = "minimal"
+    response = structured.invoke(instruction + "\n" + dumps(brief), **kwargs)
     parsed = response.get("parsed") if isinstance(response, dict) else response
     raw = response.get("raw") if isinstance(response, dict) else None
     if parsed is None:

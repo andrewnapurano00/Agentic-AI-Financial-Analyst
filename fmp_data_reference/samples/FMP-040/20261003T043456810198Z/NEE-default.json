@@ -1,0 +1,42 @@
+[
+  {
+    "symbol": "NEE",
+    "date": "2026-10-02",
+    "freeFloat": 99.77698638493054,
+    "floatShares": "2081326178",
+    "outstandingShares": "2085978194",
+    "source": null
+  },
+  {
+    "symbol": "NEE",
+    "date": "2026-10-01",
+    "freeFloat": 99.77698638493054,
+    "floatShares": "2081326178",
+    "outstandingShares": "2085978194",
+    "source": null
+  },
+  {
+    "symbol": "NEE",
+    "date": "2026-09-30",
+    "freeFloat": 99.77698638493054,
+    "floatShares": "2081326178",
+    "outstandingShares": "2085978194",
+    "source": null
+  },
+  {
+    "symbol": "NEE",
+    "date": "2026-09-29",
+    "freeFloat": 99.77698638493054,
+    "floatShares": "2081326178",
+    "outstandingShares": "2085978194",
+    "source": null
+  },
+  {
+    "symbol": "NEE",
+    "date": "2026-09-28",
+    "freeFloat": 99.77698638493054,
+    "floatShares": "2081326178",
+    "outstandingShares": "2085978194",
+    "source": null
+  }
+]

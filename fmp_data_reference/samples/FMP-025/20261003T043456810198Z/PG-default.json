@@ -1,0 +1,42 @@
+[
+  {
+    "symbol": "PG",
+    "date": "2026-09-30",
+    "gradingCompany": "TD Cowen",
+    "previousGrade": "Hold",
+    "newGrade": "Hold",
+    "action": "maintain"
+  },
+  {
+    "symbol": "PG",
+    "date": "2026-08-07",
+    "gradingCompany": "Argus Research",
+    "previousGrade": "Buy",
+    "newGrade": "Hold",
+    "action": "downgrade"
+  },
+  {
+    "symbol": "PG",
+    "date": "2026-07-30",
+    "gradingCompany": "Citigroup",
+    "previousGrade": "Buy",
+    "newGrade": "Buy",
+    "action": "maintain"
+  },
+  {
+    "symbol": "PG",
+    "date": "2026-07-30",
+    "gradingCompany": "HSBC",
+    "previousGrade": "Buy",
+    "newGrade": "Hold",
+    "action": "downgrade"
+  },
+  {
+    "symbol": "PG",
+    "date": "2026-07-21",
+    "gradingCompany": "Barclays",
+    "previousGrade": "Equal Weight",
+    "newGrade": "Equal Weight",
+    "action": "maintain"
+  }
+]

@@ -1,0 +1,15 @@
+[
+  {
+    "symbol": "AAPL",
+    "reportedCurrency": "USD",
+    "altmanZScore": 13.15534492099442,
+    "piotroskiScore": 9,
+    "workingCapital": 492000000,
+    "totalAssets": 383266000000,
+    "retainedEarnings": 11326000000,
+    "ebit": 155386000000,
+    "marketCap": 4851527433920,
+    "totalLiabilities": 275746000000,
+    "revenue": 466823000000
+  }
+]

@@ -1,0 +1,52 @@
+[
+  {
+    "symbol": "AAPL",
+    "publishedDate": "2026-10-02 22:43:01",
+    "publisher": "Fool - Investing News",
+    "title": "4 Stocks Delivered About Half of the S&P 500's Gain This Year",
+    "image": "https://images.financialmodelingprep.com/news/4-stocks-delivered-about-half-of-the-sp-500s-20261002.jpg",
+    "site": "fool.com",
+    "text": "If the typical stock trailed, which stocks carried the index?",
+    "url": "https://www.fool.com/investing/2026/10/02/4-stocks-delivered-about-half-of-the-s-and-p-500-s-gain-this-year/"
+  },
+  {
+    "symbol": "AAPL",
+    "publishedDate": "2026-10-02 18:46:01",
+    "publisher": "Zacks Investment Research",
+    "title": "Apple (AAPL) Exceeds Market Returns: Some Facts to Consider",
+    "image": "https://images.financialmodelingprep.com/news/apple-aapl-exceeds-market-returns-some-facts-to-consider-20261002.jpg",
+    "site": "zacks.com",
+    "text": "Apple (AAPL) concluded the recent trading session at $333.69, signifying a +1.02% move from its prior day's close.",
+    "url": "https://www.zacks.com/stock/news/2999671/apple-aapl-exceeds-market-returns-some-facts-to-consider?cid=CS-STOCKNEWSAPI-FT-fundamental_analysis|yseop_template_6-2999671"
+  },
+  {
+    "symbol": "AAPL",
+    "publishedDate": "2026-10-02 18:42:52",
+    "publisher": "Reuters",
+    "title": "Apple says it will flag AI requests for Mac data after Meta's Muse draws complaints",
+    "image": "https://images.financialmodelingprep.com/news/apple-says-it-will-flag-ai-requests-for-mac-20261002.jpg",
+    "site": "reuters.com",
+    "text": "Apple said on Friday that it plans to change its Mac operating system to make it more obvious when AI agents ask ​to access all of the data on Macs.",
+    "url": "https://www.reuters.com/business/retail-consumer/apple-says-it-will-flag-ai-requests-mac-data-after-metas-muse-draws-complaints-2026-10-02/"
+  },
+  {
+    "symbol": "AAPL",
+    "publishedDate": "2026-10-02 17:33:02",
+    "publisher": "Business Insider",
+    "title": "Apple is adding new privacy safeguards for Mac users as AI agents get more powerful",
+    "image": "https://images.financialmodelingprep.com/news/apple-is-adding-new-privacy-safeguards-for-mac-users-20261002.jpg",
+    "site": "businessinsider.com",
+    "text": "Apple plans new controls for apps seeking Full Disk Access on Macs. Users would need to grant more explicit permission before sharing personal digital information.",
+    "url": "https://www.businessinsider.com/apple-planning-tougher-mac-privacy-controls-ai-agents-2026-10"
+  },
+  {
+    "symbol": "AAPL",
+    "publishedDate": "2026-10-02 15:07:21",
+    "publisher": "247 Wallst",
+    "title": "‘Compounding at a Whopping 5%’: Adviser Warns the 11% on Your Statement Is Not What You Keep",
+    "image": null,
+    "site": "247wallst.com",
+    "text": "Your broker statement shows an 11% annual return, but a Canadian CPA breaks down the silent forces that can gut that number before a single dollar reaches your retirement. The real figure may shock you into rethinking every assumption in your financial plan.",
+    "url": "https://247wallst.com/personal-finance/2026/10/02/compounding-at-a-whopping-5-adviser-warns-the-11-on-your-statement-is-not-what-you-keep/"
+  }
+]

@@ -1,0 +1,47 @@
+[
+  {
+    "symbol": "CAT",
+    "cik": "0000018230",
+    "filingDate": "2026-10-01 00:00:00",
+    "acceptedDate": "2026-10-01 17:15:25",
+    "formType": "4",
+    "link": "https://www.sec.gov/Archives/edgar/data/18230/000110465926112893/0001104659-26-112893-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/18230/000110465926112893/xslF345X06/tm2626848-2_4seq1.xml"
+  },
+  {
+    "symbol": "CAT",
+    "cik": "0000018230",
+    "filingDate": "2026-10-01 00:00:00",
+    "acceptedDate": "2026-10-01 17:14:33",
+    "formType": "4",
+    "link": "https://www.sec.gov/Archives/edgar/data/18230/000110465926112891/0001104659-26-112891-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/18230/000110465926112891/xslF345X06/tm2626848-1_4seq1.xml"
+  },
+  {
+    "symbol": "CAT",
+    "cik": "0000018230",
+    "filingDate": "2026-09-28 00:00:00",
+    "acceptedDate": "2026-09-28 15:01:19",
+    "formType": "4",
+    "link": "https://www.sec.gov/Archives/edgar/data/18230/000110465926111315/0001104659-26-111315-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/18230/000110465926111315/xslF345X06/tm2626483-3_4seq1.xml"
+  },
+  {
+    "symbol": "CAT",
+    "cik": "0000018230",
+    "filingDate": "2026-09-28 00:00:00",
+    "acceptedDate": "2026-09-28 15:00:48",
+    "formType": "4",
+    "link": "https://www.sec.gov/Archives/edgar/data/18230/000110465926111313/0001104659-26-111313-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/18230/000110465926111313/xslF345X06/tm2626483-2_4seq1.xml"
+  },
+  {
+    "symbol": "CAT",
+    "cik": "0000018230",
+    "filingDate": "2026-09-28 00:00:00",
+    "acceptedDate": "2026-09-28 15:00:15",
+    "formType": "4",
+    "link": "https://www.sec.gov/Archives/edgar/data/18230/000110465926111312/0001104659-26-111312-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/18230/000110465926111312/xslF345X06/tm2626483-1_4seq1.xml"
+  }
+]

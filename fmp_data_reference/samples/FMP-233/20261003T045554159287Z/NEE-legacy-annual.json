@@ -1,0 +1,31 @@
+[
+  {
+    "2025-12-31": {
+      "FPL": 18262000000,
+      "NEER": 8760000000
+    }
+  },
+  {
+    "2024-12-31": {
+      "NEER Segment": 7542000000,
+      "Florida Power & Light Company": 17019000000
+    }
+  },
+  {
+    "2023-12-31": {
+      "Franchise And Gross Receipts Taxes": 1139000000
+    }
+  },
+  {
+    "2022-12-31": {
+      "Franchise And Gross Receipts Taxes": 1035000000
+    }
+  },
+  {
+    "2021-12-31": {
+      "FPL Segment": 12600000000,
+      "Gulf Power Segment": 1503000000,
+      "NEER Segment": 3053000000
+    }
+  }
+]

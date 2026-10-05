@@ -1,0 +1,57 @@
+[
+  {
+    "symbol": "HTBI",
+    "companyName": "HomeTrust Bancshares, Inc.",
+    "cik": "0001538263",
+    "targetedCompanyName": "Blue Ridge Bankshares, Inc.",
+    "targetedCik": "0000842717",
+    "targetedSymbol": "BRBS",
+    "transactionDate": "2026-10-02",
+    "acceptedDate": "2026-10-02 17:04:52",
+    "link": "https://www.sec.gov/Archives/edgar/data/1538263/000110465926113346/tm2626525-1_s4.htm"
+  },
+  {
+    "symbol": "HTB",
+    "companyName": "HomeTrust Bancshares, Inc.",
+    "cik": "0001538263",
+    "targetedCompanyName": "Blue Ridge Bankshares, Inc.",
+    "targetedCik": "0000842717",
+    "targetedSymbol": "BRBS",
+    "transactionDate": "2026-10-02",
+    "acceptedDate": "2026-10-02 17:04:52",
+    "link": "https://www.sec.gov/Archives/edgar/data/1538263/000110465926113346/tm2626525-1_s4.htm"
+  },
+  {
+    "symbol": "JMSB",
+    "companyName": "John Marshall Bancorp, Inc.",
+    "cik": "0001710482",
+    "targetedCompanyName": "Eagle Financial Services, Inc.",
+    "targetedCik": "0000880641",
+    "targetedSymbol": "EFSI",
+    "transactionDate": "2026-10-02",
+    "acceptedDate": "2026-10-02 16:58:39",
+    "link": "https://www.sec.gov/Archives/edgar/data/1710482/000110465926113340/tm2625851-1_s4.htm"
+  },
+  {
+    "symbol": "IRT",
+    "companyName": "INDEPENDENCE REALTY TRUST, INC.",
+    "cik": "0001466085",
+    "targetedCompanyName": "Centerspace",
+    "targetedCik": "0000798359",
+    "targetedSymbol": "CSR",
+    "transactionDate": "2026-09-23",
+    "acceptedDate": "2026-09-23 20:08:34",
+    "link": "https://www.sec.gov/Archives/edgar/data/1466085/000143774926031092/irt20260826_s4.htm"
+  },
+  {
+    "symbol": "PATK",
+    "companyName": "PATRICK INDUSTRIES INC",
+    "cik": "0000076605",
+    "targetedCompanyName": "LCI Industries",
+    "targetedCik": "0000763744",
+    "targetedSymbol": "LCII",
+    "transactionDate": "2026-09-23",
+    "acceptedDate": "2026-09-23 17:25:33",
+    "link": "https://www.sec.gov/Archives/edgar/data/76605/000162828026063259/patrickindustries-sx4.htm"
+  }
+]

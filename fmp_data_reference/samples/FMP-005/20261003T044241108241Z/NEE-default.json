@@ -1,0 +1,42 @@
+[
+  {
+    "symbol": "NEE",
+    "companyName": "NextEra Energy, Inc.",
+    "cik": "0000753308",
+    "exchangeFullName": "New York Stock Exchange",
+    "exchange": "NYSE",
+    "currency": "USD"
+  },
+  {
+    "symbol": "NEE-PN",
+    "companyName": "NextEra Energy, Inc.",
+    "cik": "0000753308",
+    "exchangeFullName": "New York Stock Exchange",
+    "exchange": "NYSE",
+    "currency": "USD"
+  },
+  {
+    "symbol": "NEE-PP",
+    "companyName": "NextEra Energy Inc",
+    "cik": "0000753308",
+    "exchangeFullName": "New York Stock Exchange",
+    "exchange": "NYSE",
+    "currency": "USD"
+  },
+  {
+    "symbol": "NEE-PQ",
+    "companyName": "NextEra Energy, Inc.",
+    "cik": "0000753308",
+    "exchangeFullName": "New York Stock Exchange",
+    "exchange": "NYSE",
+    "currency": "USD"
+  },
+  {
+    "symbol": "NEE-PR",
+    "companyName": "NextEra Energy, Inc.",
+    "cik": "0000753308",
+    "exchangeFullName": "New York Stock Exchange",
+    "exchange": "NYSE",
+    "currency": "USD"
+  }
+]

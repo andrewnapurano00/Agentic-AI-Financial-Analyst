@@ -1,0 +1,47 @@
+[
+  {
+    "symbol": "ACN",
+    "date": "2026-10-01",
+    "epsActual": 3.29,
+    "epsEstimated": 3.18,
+    "revenueActual": 18680000000,
+    "revenueEstimated": 18031800000,
+    "lastUpdated": "2026-10-03"
+  },
+  {
+    "symbol": "AIXI",
+    "date": "2026-10-01",
+    "epsActual": null,
+    "epsEstimated": null,
+    "revenueActual": null,
+    "revenueEstimated": null,
+    "lastUpdated": "2026-10-03"
+  },
+  {
+    "symbol": "AYI",
+    "date": "2026-10-01",
+    "epsActual": 5.77,
+    "epsEstimated": 5.57,
+    "revenueActual": 1244400000,
+    "revenueEstimated": 1244376000,
+    "lastUpdated": "2026-10-02"
+  },
+  {
+    "symbol": "DKLRF",
+    "date": "2026-10-01",
+    "epsActual": null,
+    "epsEstimated": null,
+    "revenueActual": null,
+    "revenueEstimated": null,
+    "lastUpdated": "2026-10-03"
+  },
+  {
+    "symbol": "DOGZ",
+    "date": "2026-10-01",
+    "epsActual": null,
+    "epsEstimated": null,
+    "revenueActual": 8173342,
+    "revenueEstimated": null,
+    "lastUpdated": "2026-10-03"
+  }
+]

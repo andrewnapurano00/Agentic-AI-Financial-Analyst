@@ -1,0 +1,62 @@
+[
+  {
+    "symbol": "PG",
+    "reportedCurrency": "USD",
+    "fiscalYear": "2026",
+    "period": "Q4",
+    "date": "2026-06-30",
+    "averagePPE": 0.27787,
+    "maintenanceCapex": -935748820,
+    "ownersEarnings": 4961251180,
+    "growthCapex": -87251180,
+    "ownersEarningsPerShare": 2.05
+  },
+  {
+    "symbol": "PG",
+    "reportedCurrency": "USD",
+    "fiscalYear": "2026",
+    "period": "Q3",
+    "date": "2026-03-31",
+    "averagePPE": 0.27787,
+    "maintenanceCapex": -613587670,
+    "ownersEarnings": 3431412330,
+    "growthCapex": -405412330,
+    "ownersEarningsPerShare": 1.42
+  },
+  {
+    "symbol": "PG",
+    "reportedCurrency": "USD",
+    "fiscalYear": "2026",
+    "period": "Q2",
+    "date": "2025-12-31",
+    "averagePPE": 0.27787,
+    "maintenanceCapex": -1076414380,
+    "ownersEarnings": 3895585620,
+    "growthCapex": -90585620,
+    "ownersEarningsPerShare": 1.61
+  },
+  {
+    "symbol": "PG",
+    "reportedCurrency": "USD",
+    "fiscalYear": "2026",
+    "period": "Q1",
+    "date": "2025-09-30",
+    "averagePPE": 0.27787,
+    "maintenanceCapex": -1019662370,
+    "ownersEarnings": 4388337630,
+    "growthCapex": -180337630,
+    "ownersEarningsPerShare": 1.8
+  },
+  {
+    "symbol": "PG",
+    "reportedCurrency": "USD",
+    "fiscalYear": "2025",
+    "period": "Q4",
+    "date": "2025-06-30",
+    "averagePPE": 0.28023,
+    "maintenanceCapex": -895957891,
+    "ownersEarnings": 4089042109,
+    "growthCapex": -100042109,
+    "ownersEarningsPerShare": 1.67
+  }
+]

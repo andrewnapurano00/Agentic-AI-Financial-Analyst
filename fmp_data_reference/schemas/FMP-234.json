@@ -1,0 +1,1939 @@
+{
+  "api_id": "FMP-234",
+  "basis": "observed_response_shapes_not_json_schema_contract",
+  "generated_at_utc": "2026-10-03T05:06:37.471075+00:00",
+  "sample_files": [
+    "samples/FMP-234/20261003T045328427231Z/AAPL-annual.json",
+    "samples/FMP-234/20261003T045328427231Z/AMZN-annual.json",
+    "samples/FMP-234/20261003T045328427231Z/CAT-annual.json",
+    "samples/FMP-234/20261003T045328427231Z/GOOGL-annual.json",
+    "samples/FMP-234/20261003T045328427231Z/JNJ-annual.json",
+    "samples/FMP-234/20261003T045328427231Z/JPM-annual.json",
+    "samples/FMP-234/20261003T045328427231Z/LIN-annual.json",
+    "samples/FMP-234/20261003T045328427231Z/NEE-annual.json",
+    "samples/FMP-234/20261003T045328427231Z/PG-annual.json",
+    "samples/FMP-234/20261003T045328427231Z/PLD-annual.json",
+    "samples/FMP-234/20261003T045328427231Z/XOM-annual.json",
+    "samples/FMP-234/20261003T045554159287Z/AAPL-legacy-annual.json",
+    "samples/FMP-234/20261003T045554159287Z/AMZN-legacy-annual.json",
+    "samples/FMP-234/20261003T045554159287Z/CAT-legacy-annual.json",
+    "samples/FMP-234/20261003T045554159287Z/GOOGL-legacy-annual.json",
+    "samples/FMP-234/20261003T045554159287Z/JNJ-legacy-annual.json",
+    "samples/FMP-234/20261003T045554159287Z/JPM-legacy-annual.json",
+    "samples/FMP-234/20261003T045554159287Z/LIN-legacy-annual.json",
+    "samples/FMP-234/20261003T045554159287Z/NEE-legacy-annual.json",
+    "samples/FMP-234/20261003T045554159287Z/PG-legacy-annual.json",
+    "samples/FMP-234/20261003T045554159287Z/PLD-legacy-annual.json",
+    "samples/FMP-234/20261003T045554159287Z/XOM-legacy-annual.json"
+  ],
+  "required_fields_asserted": false,
+  "fields": {
+    "$": {
+      "observed_types": [
+        "array"
+      ],
+      "null_observations": 0,
+      "present_observations": 22,
+      "observed_missing_in_parent": 0
+    },
+    "$[]": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 100,
+      "observed_missing_in_parent": 0
+    },
+    "$[].symbol": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 50,
+      "observed_missing_in_parent": 50
+    },
+    "$[].fiscalYear": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 50,
+      "observed_missing_in_parent": 50
+    },
+    "$[].period": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 50,
+      "observed_missing_in_parent": 50
+    },
+    "$[].reportedCurrency": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 50,
+      "observed_missing_in_parent": 50
+    },
+    "$[].date": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 50,
+      "observed_missing_in_parent": 50
+    },
+    "$[].data": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 50,
+      "observed_missing_in_parent": 50
+    },
+    "$[].data.Americas Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 45
+    },
+    "$[].data.Europe Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 45
+    },
+    "$[].data.Greater China Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 45
+    },
+    "$[].data.Japan Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 45
+    },
+    "$[].data.Rest of Asia Pacific Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 45
+    },
+    "$[].data.Asia Pacific": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 39
+    },
+    "$[].data.EMEA": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 39
+    },
+    "$[].data.Latin America": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 6,
+      "observed_missing_in_parent": 44
+    },
+    "$[].data.North America": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 10,
+      "observed_missing_in_parent": 40
+    },
+    "$[].data.Latin America/Caribbean": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 4,
+      "observed_missing_in_parent": 46
+    },
+    "$[].data.Europe/Middle East/Africa": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 4,
+      "observed_missing_in_parent": 46
+    },
+    "$[].data.Asia-Pacific": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 4,
+      "observed_missing_in_parent": 46
+    },
+    "$[].data.Asia-Pacific, Africa": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 45
+    },
+    "$[].data.Europe": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 9,
+      "observed_missing_in_parent": 41
+    },
+    "$[].data.UNITED STATES": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 22,
+      "observed_missing_in_parent": 28
+    },
+    "$[].data.Western Hemisphere, excluding U.S.": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 45
+    },
+    "$[].data.Amazon Web Services Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 49
+    },
+    "$[].data.International Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 45
+    },
+    "$[].data.North America Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 45
+    },
+    "$[].data.GERMANY": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 9,
+      "observed_missing_in_parent": 41
+    },
+    "$[].data.JAPAN": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 4,
+      "observed_missing_in_parent": 46
+    },
+    "$[].data.UNITED KINGDOM": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 9,
+      "observed_missing_in_parent": 41
+    },
+    "$[].data.Non-US": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 10,
+      "observed_missing_in_parent": 40
+    },
+    "$[].data.United States": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 45
+    },
+    "$[].data.AUSTRALIA": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 45
+    },
+    "$[].data.BRAZIL": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 45
+    },
+    "$[].data.CHINA": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 45
+    },
+    "$[].data.MEXICO": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 48
+    },
+    "$[].data.Other International": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 45
+    },
+    "$[].data.Real Estate Operations Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 49
+    },
+    "$[].data.Strategic Capital Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 49
+    },
+    "$[].data.U.S.": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 48
+    },
+    "$[].data.Other Americas": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 4,
+      "observed_missing_in_parent": 46
+    },
+    "$[].data.Asia": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 4,
+      "observed_missing_in_parent": 46
+    },
+    "$[].data.Americas Excluding United States": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 45
+    },
+    "$[].2025-09-27": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 99
+    },
+    "$[].2025-09-27.Americas Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2025-09-27.Europe Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2025-09-27.Greater China Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2025-09-27.Japan Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2025-09-27.Rest of Asia Pacific Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2024-09-28": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 99
+    },
+    "$[].2024-09-28.Americas Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2024-09-28.Europe Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2024-09-28.Greater China Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2024-09-28.Japan Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2024-09-28.Rest of Asia Pacific Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2023-09-30": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 99
+    },
+    "$[].2023-09-30.Americas Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2023-09-30.Europe Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2023-09-30.Greater China Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2023-09-30.Japan Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2023-09-30.Rest of Asia Pacific Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2022-09-24": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 99
+    },
+    "$[].2022-09-24.Americas Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2022-09-24.Europe Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2022-09-24.Greater China Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2022-09-24.Japan Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2022-09-24.Rest of Asia Pacific Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2021-09-25": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 99
+    },
+    "$[].2021-09-25.Americas Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2021-09-25.Europe Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2021-09-25.Greater China Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2021-09-25.Japan Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2021-09-25.Rest of Asia Pacific Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2025-12-31": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 7,
+      "observed_missing_in_parent": 93
+    },
+    "$[].2025-12-31.Asia Pacific": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 3,
+      "observed_missing_in_parent": 4
+    },
+    "$[].2025-12-31.EMEA": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 3,
+      "observed_missing_in_parent": 4
+    },
+    "$[].2025-12-31.Latin America": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 5
+    },
+    "$[].2025-12-31.North America": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 5
+    },
+    "$[].2024-12-31": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 7,
+      "observed_missing_in_parent": 93
+    },
+    "$[].2024-12-31.North America": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 5
+    },
+    "$[].2024-12-31.Latin America/Caribbean": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2024-12-31.Europe/Middle East/Africa": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2024-12-31.Asia-Pacific": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2023-12-30": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 99
+    },
+    "$[].2023-12-30.North America": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2023-12-30.Europe/Middle East/Africa": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2023-12-30.Asia-Pacific": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2023-12-30.Latin America/Caribbean": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2022-12-30": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 99
+    },
+    "$[].2022-12-30.North America": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2022-12-30.Europe/Middle East/Africa": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2022-12-30.Asia-Pacific": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2022-12-30.Latin America/Caribbean": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2021-12-30": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 99
+    },
+    "$[].2021-12-30.North America": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2021-12-30.Europe/Middle East/Africa": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2021-12-30.Asia-Pacific": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2021-12-30.Latin America/Caribbean": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2025-12-28": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 99
+    },
+    "$[].2025-12-28.Asia-Pacific, Africa": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2025-12-28.Europe": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2025-12-28.UNITED STATES": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2025-12-28.Western Hemisphere, excluding U.S.": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2024-12-29": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 99
+    },
+    "$[].2024-12-29.Asia-Pacific, Africa": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2024-12-29.Europe": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2024-12-29.UNITED STATES": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2024-12-29.Western Hemisphere, excluding U.S.": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2023-12-31": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 7,
+      "observed_missing_in_parent": 93
+    },
+    "$[].2023-12-31.Asia-Pacific, Africa": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2023-12-31.Europe": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 5
+    },
+    "$[].2023-12-31.UNITED STATES": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 3,
+      "observed_missing_in_parent": 4
+    },
+    "$[].2023-12-31.Western Hemisphere, excluding U.S.": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2022-12-31": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 6,
+      "observed_missing_in_parent": 94
+    },
+    "$[].2022-12-31.Europe": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 5
+    },
+    "$[].2022-12-31.Asia-Pacific, Africa": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 5
+    },
+    "$[].2022-12-31.UNITED STATES": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 3,
+      "observed_missing_in_parent": 3
+    },
+    "$[].2022-12-31.Western Hemisphere, excluding U.S.": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 5
+    },
+    "$[].2022-01-02": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 99
+    },
+    "$[].2022-01-02.Asia-Pacific, Africa": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2022-01-02.Europe": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2022-01-02.UNITED STATES": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2022-01-02.Western Hemisphere, excluding U.S.": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2025-12-31.Amazon Web Services Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2025-12-31.International Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2025-12-31.North America Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2024-12-31.GERMANY": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 5
+    },
+    "$[].2024-12-31.JAPAN": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2024-12-31.International Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2024-12-31.UNITED KINGDOM": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 5
+    },
+    "$[].2024-12-31.North America Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2023-12-31.GERMANY": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 5
+    },
+    "$[].2023-12-31.JAPAN": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2023-12-31.International Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2023-12-31.UNITED KINGDOM": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 5
+    },
+    "$[].2023-12-31.North America Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2022-12-31.GERMANY": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 4
+    },
+    "$[].2022-12-31.JAPAN": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 5
+    },
+    "$[].2022-12-31.International Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 5
+    },
+    "$[].2022-12-31.UNITED KINGDOM": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 4
+    },
+    "$[].2022-12-31.North America Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 5
+    },
+    "$[].2021-12-31": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 95
+    },
+    "$[].2021-12-31.GERMANY": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 3
+    },
+    "$[].2021-12-31.JAPAN": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 4
+    },
+    "$[].2021-12-31.International Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 4
+    },
+    "$[].2021-12-31.UNITED KINGDOM": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 3
+    },
+    "$[].2021-12-31.North America Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 4
+    },
+    "$[].2026-06-30": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 99
+    },
+    "$[].2026-06-30.Non-US": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2026-06-30.UNITED STATES": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2025-06-30": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 99
+    },
+    "$[].2025-06-30.Non-US": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2025-06-30.UNITED STATES": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2024-06-30": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 99
+    },
+    "$[].2024-06-30.Non-US": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2024-06-30.UNITED STATES": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2023-06-30": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 99
+    },
+    "$[].2023-06-30.Non-US": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2023-06-30.UNITED STATES": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2022-06-30": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 99
+    },
+    "$[].2022-06-30.Non-US": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2022-06-30.UNITED STATES": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2024-12-31.Asia Pacific": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 5
+    },
+    "$[].2024-12-31.EMEA": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 5
+    },
+    "$[].2024-12-31.Latin America": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2023-12-31.Asia Pacific": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 5
+    },
+    "$[].2023-12-31.EMEA": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 5
+    },
+    "$[].2023-12-31.Latin America": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2023-12-31.North America": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2022-12-31.Asia Pacific": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 4
+    },
+    "$[].2022-12-31.EMEA": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 4
+    },
+    "$[].2022-12-31.Latin America": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 5
+    },
+    "$[].2022-12-31.North America": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 5
+    },
+    "$[].2021-12-31.Asia Pacific": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 3
+    },
+    "$[].2021-12-31.EMEA": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 3
+    },
+    "$[].2021-12-31.Latin America": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 4
+    },
+    "$[].2021-12-31.North America": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 4
+    },
+    "$[].2025-12-31.Non-US": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2025-12-31.United States": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2024-12-31.Non-US": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2024-12-31.United States": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2023-12-31.United States": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2023-12-31.Non-US": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2022-12-31.United States": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 5
+    },
+    "$[].2022-12-31.Non-US": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 5
+    },
+    "$[].2021-12-31.Non-US": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 4
+    },
+    "$[].2021-12-31.United States": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 4
+    },
+    "$[].2025-12-31.AUSTRALIA": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2025-12-31.BRAZIL": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2025-12-31.CHINA": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2025-12-31.GERMANY": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2025-12-31.MEXICO": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2025-12-31.Other International": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2025-12-31.UNITED KINGDOM": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2025-12-31.UNITED STATES": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 5
+    },
+    "$[].2024-12-31.AUSTRALIA": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2024-12-31.BRAZIL": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2024-12-31.CHINA": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2024-12-31.MEXICO": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2024-12-31.Other International": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2024-12-31.UNITED STATES": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 5
+    },
+    "$[].2023-12-31.AUSTRALIA": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2023-12-31.BRAZIL": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2023-12-31.CHINA": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2023-12-31.Other International": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2022-12-31.AUSTRALIA": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 5
+    },
+    "$[].2022-12-31.BRAZIL": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 5
+    },
+    "$[].2022-12-31.CHINA": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 5
+    },
+    "$[].2022-12-31.Other International": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 5
+    },
+    "$[].2021-12-31.AUSTRALIA": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 4
+    },
+    "$[].2021-12-31.BRAZIL": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 4
+    },
+    "$[].2021-12-31.CHINA": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 4
+    },
+    "$[].2021-12-31.Other International": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 4
+    },
+    "$[].2021-12-31.UNITED STATES": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 3
+    },
+    "$[].2025-12-31.Real Estate Operations Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2025-12-31.Strategic Capital Segment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2024-12-31.U.S.": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2024-12-31.Other Americas": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2024-12-31.Europe": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2024-12-31.Asia": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2023-12-31.Asia": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2023-12-31.U.S.": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2023-12-31.Other Americas": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2017-12-31": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 99
+    },
+    "$[].2017-12-31.Asia": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2017-12-31.Europe": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2017-12-31.Other Americas": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2017-12-31.UNITED STATES": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2016-12-31": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 99
+    },
+    "$[].2016-12-31.Asia": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2016-12-31.Europe": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2016-12-31.Other Americas": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2016-12-31.UNITED STATES": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[].2025-12-31.Americas Excluding United States": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2024-12-31.Americas Excluding United States": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2023-12-31.Americas Excluding United States": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 6
+    },
+    "$[].2022-12-31.Americas Excluding United States": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 5
+    },
+    "$[].2021-12-31.Americas Excluding United States": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 4
+    }
+  },
+  "limitation": "Observed path/type union, including nulls and missing observations. No assertion of universal requiredness, completeness or non-nullability. Workbook inferred schemas are separate.",
+  "observed_non_json_formats": [],
+  "binary_sample_files": []
+}

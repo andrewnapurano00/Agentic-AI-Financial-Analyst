@@ -1,0 +1,37 @@
+[
+  {
+    "symbol": "LIN",
+    "name": "Linde plc",
+    "currency": "USD",
+    "exchangeFullName": "NASDAQ Global Select",
+    "exchange": "NASDAQ"
+  },
+  {
+    "symbol": "LIND",
+    "name": "Lindblad Expeditions Holdings, Inc.",
+    "currency": "USD",
+    "exchangeFullName": "NASDAQ Capital Market",
+    "exchange": "NASDAQ"
+  },
+  {
+    "symbol": "LINC",
+    "name": "Lincoln Educational Services Corporation",
+    "currency": "USD",
+    "exchangeFullName": "NASDAQ Global Select",
+    "exchange": "NASDAQ"
+  },
+  {
+    "symbol": "LINK",
+    "name": "Interlink Electronics, Inc.",
+    "currency": "USD",
+    "exchangeFullName": "NASDAQ",
+    "exchange": "NASDAQ"
+  },
+  {
+    "symbol": "LINE",
+    "name": "Lineage, Inc.",
+    "currency": "USD",
+    "exchangeFullName": "NASDAQ Global Select",
+    "exchange": "NASDAQ"
+  }
+]

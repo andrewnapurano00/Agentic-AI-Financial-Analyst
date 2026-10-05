@@ -1,0 +1,42 @@
+[
+  {
+    "symbol": "GOOGL",
+    "date": "2026-10-02",
+    "freeFloat": 90.29016129310116,
+    "floatShares": "10927015800",
+    "outstandingShares": "12102111286",
+    "source": null
+  },
+  {
+    "symbol": "GOOGL",
+    "date": "2026-10-01",
+    "freeFloat": 90.29016129310116,
+    "floatShares": "10927015800",
+    "outstandingShares": "12102111286",
+    "source": null
+  },
+  {
+    "symbol": "GOOGL",
+    "date": "2026-09-30",
+    "freeFloat": 90.29016129310116,
+    "floatShares": "10927015800",
+    "outstandingShares": "12102111286",
+    "source": null
+  },
+  {
+    "symbol": "GOOGL",
+    "date": "2026-09-29",
+    "freeFloat": 90.29016129310116,
+    "floatShares": "10927015800",
+    "outstandingShares": "12102111286",
+    "source": null
+  },
+  {
+    "symbol": "GOOGL",
+    "date": "2026-09-28",
+    "freeFloat": 90.29016129310116,
+    "floatShares": "10927015800",
+    "outstandingShares": "12102111286",
+    "source": null
+  }
+]

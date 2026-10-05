@@ -1,0 +1,57 @@
+[
+  {
+    "symbol": "PLD",
+    "cik": "0001045609",
+    "acceptanceTime": "2026-02-13 16:21:28",
+    "periodOfReport": "2025-12-31",
+    "companyName": "Prologis, Inc.",
+    "formType": "10-K",
+    "filingDate": "2026-02-13",
+    "employeeCount": 2802,
+    "source": "https://www.sec.gov/Archives/edgar/data/1045609/000119312526051453/0001193125-26-051453-index.htm"
+  },
+  {
+    "symbol": "PLD",
+    "cik": "0001045609",
+    "acceptanceTime": "2025-02-14 16:27:00",
+    "periodOfReport": "2024-12-31",
+    "companyName": "Prologis, Inc.",
+    "formType": "10-K",
+    "filingDate": "2025-02-14",
+    "employeeCount": 2703,
+    "source": "https://www.sec.gov/Archives/edgar/data/1045609/000095017025021272/0000950170-25-021272-index.htm"
+  },
+  {
+    "symbol": "PLD",
+    "cik": "0001045609",
+    "acceptanceTime": "2024-02-13 16:06:27",
+    "periodOfReport": "2023-12-31",
+    "companyName": "Prologis, Inc.",
+    "formType": "10-K",
+    "filingDate": "2024-02-13",
+    "employeeCount": 2574,
+    "source": "https://www.sec.gov/Archives/edgar/data/1045609/000095017024014539/0000950170-24-014539-index.htm"
+  },
+  {
+    "symbol": "PLD",
+    "cik": "0001045609",
+    "acceptanceTime": "2023-02-14 16:54:39",
+    "periodOfReport": "2022-12-31",
+    "companyName": "Prologis, Inc.",
+    "formType": "10-K",
+    "filingDate": "2023-02-14",
+    "employeeCount": 2466,
+    "source": "https://www.sec.gov/Archives/edgar/data/1045609/000156459023001902/0001564590-23-001902-index.htm"
+  },
+  {
+    "symbol": "PLD",
+    "cik": "0001045609",
+    "acceptanceTime": "2022-02-09 17:07:38",
+    "periodOfReport": "2021-12-31",
+    "companyName": "Prologis, Inc.",
+    "formType": "10-K",
+    "filingDate": "2022-02-09",
+    "employeeCount": 2053,
+    "source": "https://www.sec.gov/Archives/edgar/data/1045609/000156459022004436/0001564590-22-004436-index.htm"
+  }
+]

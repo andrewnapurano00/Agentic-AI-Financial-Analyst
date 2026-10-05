@@ -1,0 +1,26 @@
+[
+  {
+    "symbol": "APC.F",
+    "companyName": "Apple Inc.",
+    "cusip": "037833100",
+    "marketCap": 3942086350399.9995
+  },
+  {
+    "symbol": "APC.DE",
+    "companyName": "Apple Inc.",
+    "cusip": "037833100",
+    "marketCap": 3863520570000
+  },
+  {
+    "symbol": "AAPL",
+    "companyName": "Apple Inc.",
+    "cusip": "037833100",
+    "marketCap": 4537071141960
+  },
+  {
+    "symbol": "AAPL.MX",
+    "companyName": "Apple Inc.",
+    "cusip": "037833100",
+    "marketCap": 78694853448000
+  }
+]

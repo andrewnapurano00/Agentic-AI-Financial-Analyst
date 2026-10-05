@@ -1,0 +1,375 @@
+{
+  "api_id": "FMP-207",
+  "basis": "observed_response_shapes_not_json_schema_contract",
+  "generated_at_utc": "2026-10-03T05:06:37.098498+00:00",
+  "sample_files": [
+    "samples/FMP-207/20261003T044241108241Z/alternative-default.json"
+  ],
+  "required_fields_asserted": false,
+  "fields": {
+    "$": {
+      "observed_types": [
+        "array"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[]": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].cik": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].companyName": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].date": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].filingDate": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].acceptedDate": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].formType": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].formSignification": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].entityName": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].issuerStreet": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].issuerCity": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].issuerStateOrCountry": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].issuerStateOrCountryDescription": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].issuerZipCode": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].issuerPhoneNumber": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].jurisdictionOfIncorporation": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].entityType": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].incorporatedWithinFiveYears": {
+      "observed_types": [
+        "boolean",
+        "null"
+      ],
+      "null_observations": 4,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].yearOfIncorporation": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].relatedPersonFirstName": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].relatedPersonLastName": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].relatedPersonStreet": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].relatedPersonCity": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].relatedPersonStateOrCountry": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].relatedPersonStateOrCountryDescription": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].relatedPersonZipCode": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].relatedPersonRelationship": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].industryGroupType": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].revenueRange": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].federalExemptionsExclusions": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].isAmendment": {
+      "observed_types": [
+        "boolean"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].dateOfFirstSale": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].durationOfOfferingIsMoreThanYear": {
+      "observed_types": [
+        "boolean"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].securitiesOfferedAreOfEquityType": {
+      "observed_types": [
+        "boolean"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].isBusinessCombinationTransaction": {
+      "observed_types": [
+        "boolean"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].minimumInvestmentAccepted": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].totalOfferingAmount": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].totalAmountSold": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].totalAmountRemaining": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].hasNonAccreditedInvestors": {
+      "observed_types": [
+        "boolean"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].totalNumberAlreadyInvested": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].salesCommissions": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].findersFees": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].grossProceedsUsed": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    }
+  },
+  "limitation": "Observed path/type union, including nulls and missing observations. No assertion of universal requiredness, completeness or non-nullability. Workbook inferred schemas are separate.",
+  "observed_non_json_formats": [],
+  "binary_sample_files": []
+}

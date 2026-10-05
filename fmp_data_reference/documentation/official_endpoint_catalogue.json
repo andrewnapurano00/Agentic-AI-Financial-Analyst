@@ -1,0 +1,1899 @@
+[
+  {
+    "title": "Stock Symbol Search API",
+    "url": "https://financialmodelingprep.com/stable/search-symbol?query=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Company Name Search API",
+    "url": "https://financialmodelingprep.com/stable/search-name?query=AA",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Search Cik API",
+    "url": "https://financialmodelingprep.com/stable/search-cik?cik=320193",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "CUSIP API",
+    "url": "https://financialmodelingprep.com/stable/search-cusip?cusip=037833100",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Search Isin API",
+    "url": "https://financialmodelingprep.com/stable/search-isin?isin=US0378331005",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Stock Screener API",
+    "url": "https://financialmodelingprep.com/stable/company-screener",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Exchange Variants API",
+    "url": "https://financialmodelingprep.com/stable/search-exchange-variants?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Company Symbols List API",
+    "url": "https://financialmodelingprep.com/stable/stock-list",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Financial Statement Symbols List API",
+    "url": "https://financialmodelingprep.com/stable/financial-statement-symbol-list",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "CIK List API",
+    "url": "https://financialmodelingprep.com/stable/cik-list?page=0&limit=1000",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Symbol Changes List API",
+    "url": "https://financialmodelingprep.com/stable/symbol-change",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "ETF Symbol Search API",
+    "url": "https://financialmodelingprep.com/stable/etf-list",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Actively Trading List API",
+    "url": "https://financialmodelingprep.com/stable/actively-trading-list",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Available Transcript Symbols API",
+    "url": "https://financialmodelingprep.com/stable/earnings-transcript-list",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Available Exchanges API",
+    "url": "https://financialmodelingprep.com/stable/available-exchanges",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Available Sectors API",
+    "url": "https://financialmodelingprep.com/stable/available-sectors",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Available Industries API",
+    "url": "https://financialmodelingprep.com/stable/available-industries",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Available Countries API",
+    "url": "https://financialmodelingprep.com/stable/available-countries",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Company Profile Data API",
+    "url": "https://financialmodelingprep.com/stable/profile?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Company Profile by CIK API",
+    "url": "https://financialmodelingprep.com/stable/profile-cik?cik=320193",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Company Notes API",
+    "url": "https://financialmodelingprep.com/stable/company-notes?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Stock Peer Comparison API",
+    "url": "https://financialmodelingprep.com/stable/stock-peers?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Delisted Companies API",
+    "url": "https://financialmodelingprep.com/stable/delisted-companies?page=0&limit=100",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Company Employee Count API",
+    "url": "https://financialmodelingprep.com/stable/employee-count?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Company Historical Employee Count API",
+    "url": "https://financialmodelingprep.com/stable/historical-employee-count?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Company Market Cap API",
+    "url": "https://financialmodelingprep.com/stable/market-capitalization?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Batch Market Cap API",
+    "url": "https://financialmodelingprep.com/stable/market-capitalization-batch?symbols=AAPL,MSFT,GOOG",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Historical Market Cap API",
+    "url": "https://financialmodelingprep.com/stable/historical-market-capitalization?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Company Share Float & Liquidity API",
+    "url": "https://financialmodelingprep.com/stable/shares-float?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "All Shares Float API",
+    "url": "https://financialmodelingprep.com/stable/shares-float-all?page=0&limit=1000",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Latest Mergers & Acquisitions API",
+    "url": "https://financialmodelingprep.com/stable/mergers-acquisitions-latest?page=0&limit=100",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Search Mergers & Acquisitions API",
+    "url": "https://financialmodelingprep.com/stable/mergers-acquisitions-search?name=Apple",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Company Executives API",
+    "url": "https://financialmodelingprep.com/stable/key-executives?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Executive Compensation API",
+    "url": "https://financialmodelingprep.com/stable/governance-executive-compensation?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Executive Compensation Benchmark API",
+    "url": "https://financialmodelingprep.com/stable/executive-compensation-benchmark",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Stock Quote API",
+    "url": "https://financialmodelingprep.com/stable/quote?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Stock Quote Short API",
+    "url": "https://financialmodelingprep.com/stable/quote-short?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Aftermarket Trade API",
+    "url": "https://financialmodelingprep.com/stable/aftermarket-trade?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Aftermarket Quote API",
+    "url": "https://financialmodelingprep.com/stable/aftermarket-quote?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Financial Ratios TTM API",
+    "url": "https://financialmodelingprep.com/stable/stock-price-change?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Stock Batch Quote API",
+    "url": "https://financialmodelingprep.com/stable/batch-quote?symbols=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Stock Batch Quote Short API",
+    "url": "https://financialmodelingprep.com/stable/batch-quote-short?symbols=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Batch Aftermarket Trade API",
+    "url": "https://financialmodelingprep.com/stable/batch-aftermarket-trade?symbols=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Batch Aftermarket Quote API",
+    "url": "https://financialmodelingprep.com/stable/batch-aftermarket-quote?symbols=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Exchange Stock Quotes API",
+    "url": "https://financialmodelingprep.com/stable/batch-exchange-quote?exchange=NASDAQ",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Mutual Fund Price Quotes API",
+    "url": "https://financialmodelingprep.com/stable/batch-mutualfund-quotes",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "ETF Price Quotes API",
+    "url": "https://financialmodelingprep.com/stable/batch-etf-quotes",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "All Commodities Quotes API",
+    "url": "https://financialmodelingprep.com/stable/batch-commodity-quotes",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "All Cryptocurrencies Quotes API",
+    "url": "https://financialmodelingprep.com/stable/batch-crypto-quotes",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Batch Forex Quotes API",
+    "url": "https://financialmodelingprep.com/stable/batch-forex-quotes",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "All Index Quotes API",
+    "url": "https://financialmodelingprep.com/stable/batch-index-quotes",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Income Statement API",
+    "url": "https://financialmodelingprep.com/stable/income-statement?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Balance Sheet Statement API",
+    "url": "https://financialmodelingprep.com/stable/balance-sheet-statement?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Cash Flow Statement API",
+    "url": "https://financialmodelingprep.com/stable/cash-flow-statement?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Latest Financial Statements API",
+    "url": "https://financialmodelingprep.com/stable/latest-financial-statements?page=0&limit=250",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Income Statements TTM API",
+    "url": "https://financialmodelingprep.com/stable/income-statement-ttm?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Balance Sheet Statements TTM API",
+    "url": "https://financialmodelingprep.com/stable/balance-sheet-statement-ttm?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Cashflow Statements TTM API",
+    "url": "https://financialmodelingprep.com/stable/cash-flow-statement-ttm?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Key Metrics API",
+    "url": "https://financialmodelingprep.com/stable/key-metrics?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Financial Ratios API",
+    "url": "https://financialmodelingprep.com/stable/ratios?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Key Metrics TTM API",
+    "url": "https://financialmodelingprep.com/stable/key-metrics-ttm?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Financial Ratios TTM API",
+    "url": "https://financialmodelingprep.com/stable/ratios-ttm?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Financial Scores API",
+    "url": "https://financialmodelingprep.com/stable/financial-scores?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Owner Earnings API",
+    "url": "https://financialmodelingprep.com/stable/owner-earnings?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Enterprise Values API",
+    "url": "https://financialmodelingprep.com/stable/enterprise-values?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Income Statement Growth API",
+    "url": "https://financialmodelingprep.com/stable/income-statement-growth?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Balance Sheet Statement Growth API",
+    "url": "https://financialmodelingprep.com/stable/balance-sheet-statement-growth?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Cashflow Statement Growth API",
+    "url": "https://financialmodelingprep.com/stable/cash-flow-statement-growth?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Financial Statement Growth API",
+    "url": "https://financialmodelingprep.com/stable/financial-growth?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Financial Reports Dates API",
+    "url": "https://financialmodelingprep.com/stable/financial-reports-dates?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Financial Reports Form 10-K JSON API",
+    "url": "https://financialmodelingprep.com/stable/financial-reports-json?symbol=AAPL&year=2022&period=FY",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Financial Reports Form 10-K XLSX API",
+    "url": "https://financialmodelingprep.com/stable/financial-reports-xlsx?symbol=AAPL&year=2022&period=FY",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Revenue Product Segmentation API",
+    "url": "https://financialmodelingprep.com/stable/revenue-product-segmentation?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Revenue Geographic Segments API",
+    "url": "https://financialmodelingprep.com/stable/revenue-geographic-segmentation?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "As Reported Income Statements API",
+    "url": "https://financialmodelingprep.com/stable/income-statement-as-reported?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "As Reported Balance Statements API",
+    "url": "https://financialmodelingprep.com/stable/balance-sheet-statement-as-reported?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "As Reported Cashflow Statements API",
+    "url": "https://financialmodelingprep.com/stable/cash-flow-statement-as-reported?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "As Reported Financial Statements API",
+    "url": "https://financialmodelingprep.com/stable/financial-statement-full-as-reported?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Stock Chart Light API",
+    "url": "https://financialmodelingprep.com/stable/historical-price-eod/light?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Stock Price and Volume Data API",
+    "url": "https://financialmodelingprep.com/stable/historical-price-eod/full?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Unadjusted Stock Price API",
+    "url": "https://financialmodelingprep.com/stable/historical-price-eod/non-split-adjusted?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Dividend Adjusted Price Chart API",
+    "url": "https://financialmodelingprep.com/stable/historical-price-eod/dividend-adjusted?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "1 Min Interval Stock Chart API",
+    "url": "https://financialmodelingprep.com/stable/historical-chart/1min?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "5 Min Interval Stock Chart API",
+    "url": "https://financialmodelingprep.com/stable/historical-chart/5min?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "15 Min Interval Stock Chart API",
+    "url": "https://financialmodelingprep.com/stable/historical-chart/15min?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "30 Min Interval Stock Chart API",
+    "url": "https://financialmodelingprep.com/stable/historical-chart/30min?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "1 Hour Interval Stock Chart API",
+    "url": "https://financialmodelingprep.com/stable/historical-chart/1hour?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "DCF Valuations Bulk API",
+    "url": "https://financialmodelingprep.com/stable/historical-chart/4hour?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Treasury Rates API",
+    "url": "https://financialmodelingprep.com/stable/treasury-rates",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Economics Indicators API",
+    "url": "https://financialmodelingprep.com/stable/economic-indicators?name=GDP",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Economic Data Releases Calendar API",
+    "url": "https://financialmodelingprep.com/stable/economic-calendar",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Market Risk Premium API",
+    "url": "https://financialmodelingprep.com/stable/market-risk-premium",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Dividends Company API",
+    "url": "https://financialmodelingprep.com/stable/dividends?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Dividends Calendar API",
+    "url": "https://financialmodelingprep.com/stable/dividends-calendar",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Earnings Report API",
+    "url": "https://financialmodelingprep.com/stable/earnings?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Earnings Calendar API",
+    "url": "https://financialmodelingprep.com/stable/earnings-calendar",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "IPOs Calendar API",
+    "url": "https://financialmodelingprep.com/stable/ipos-calendar",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "IPOs Disclosure API",
+    "url": "https://financialmodelingprep.com/stable/ipos-disclosure",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "IPOs Prospectus API",
+    "url": "https://financialmodelingprep.com/stable/ipos-prospectus",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Stock Split Details API",
+    "url": "https://financialmodelingprep.com/stable/splits?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Stock Splits Calendar API",
+    "url": "https://financialmodelingprep.com/stable/splits-calendar",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Latest Earning Transcripts API",
+    "url": "https://financialmodelingprep.com/stable/earning-call-transcript-latest",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Earnings Transcript API",
+    "url": "https://financialmodelingprep.com/stable/earning-call-transcript?symbol=AAPL&year=2020&quarter=3",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Transcripts Dates By Symbol API",
+    "url": "https://financialmodelingprep.com/stable/earning-call-transcript-dates?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "FMP Articles API",
+    "url": "https://financialmodelingprep.com/stable/fmp-articles?page=0&limit=20",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "General News API",
+    "url": "https://financialmodelingprep.com/stable/news/general-latest?page=0&limit=20",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Press Releases API",
+    "url": "https://financialmodelingprep.com/stable/news/press-releases-latest?page=0&limit=20",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Form 13F Filings Dates API",
+    "url": "https://financialmodelingprep.com/stable/institutional-ownership/dates?cik=0001067983",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Filings Extract With Analytics By Holder API",
+    "url": "https://financialmodelingprep.com/stable/institutional-ownership/extract-analytics/holder?symbol=AAPL&year=2023&quarter=3&page=0&limit=10",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Holder Performance Summary API",
+    "url": "https://financialmodelingprep.com/stable/institutional-ownership/holder-performance-summary?cik=0001067983&page=0",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Holders Industry Breakdown API",
+    "url": "https://financialmodelingprep.com/stable/institutional-ownership/holder-industry-breakdown?cik=0001067983&year=2023&quarter=3",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Positions Summary API",
+    "url": "https://financialmodelingprep.com/stable/institutional-ownership/symbol-positions-summary?symbol=AAPL&year=2023&quarter=3",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Industry Performance Summary API",
+    "url": "https://financialmodelingprep.com/stable/institutional-ownership/industry-summary?year=2023&quarter=3",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Financial Estimates API",
+    "url": "https://financialmodelingprep.com/stable/analyst-estimates?symbol=AAPL&period=annual&page=0&limit=10",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Ratings Snapshot API",
+    "url": "https://financialmodelingprep.com/stable/ratings-snapshot?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Historical Ratings API",
+    "url": "https://financialmodelingprep.com/stable/ratings-historical?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Price Target Summary API",
+    "url": "https://financialmodelingprep.com/stable/price-target-summary?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Price Target Consensus API",
+    "url": "https://financialmodelingprep.com/stable/price-target-consensus?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Stock Grades API",
+    "url": "https://financialmodelingprep.com/stable/grades?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Historical Stock Grades API",
+    "url": "https://financialmodelingprep.com/stable/grades-historical?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Stock Grades Summary API",
+    "url": "https://financialmodelingprep.com/stable/grades-consensus?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Market Sector Performance Snapshot API",
+    "url": "https://financialmodelingprep.com/stable/sector-performance-snapshot?date=2024-02-01",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Industry Performance Snapshot API",
+    "url": "https://financialmodelingprep.com/stable/industry-performance-snapshot?date=2024-02-01",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Historical Market Sector Performance API",
+    "url": "https://financialmodelingprep.com/stable/historical-sector-performance?sector=Energy",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Historical Industry Performance API",
+    "url": "https://financialmodelingprep.com/stable/historical-industry-performance?industry=Biotechnology",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Sector Pe Snapshot API",
+    "url": "https://financialmodelingprep.com/stable/sector-pe-snapshot?date=2024-02-01",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Industry Pe Snapshot API",
+    "url": "https://financialmodelingprep.com/stable/industry-pe-snapshot?date=2024-02-01",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Historical Sector PE API",
+    "url": "https://financialmodelingprep.com/stable/historical-sector-pe?sector=Energy",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Historical Industry PE API",
+    "url": "https://financialmodelingprep.com/stable/historical-industry-pe?industry=Biotechnology",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Biggest Stock Gainers API",
+    "url": "https://financialmodelingprep.com/stable/biggest-gainers",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Biggest Stock Losers API",
+    "url": "https://financialmodelingprep.com/stable/biggest-losers",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Top Traded Stocks API",
+    "url": "https://financialmodelingprep.com/stable/most-actives",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Simple Moving Average API",
+    "url": "https://financialmodelingprep.com/stable/technical-indicators/sma?symbol=AAPL&periodLength=10&timeframe=1day",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Exponential Moving Average API",
+    "url": "https://financialmodelingprep.com/stable/technical-indicators/ema?symbol=AAPL&periodLength=10&timeframe=1day",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Weighted Moving Average API",
+    "url": "https://financialmodelingprep.com/stable/technical-indicators/wma?symbol=AAPL&periodLength=10&timeframe=1day",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Double Exponential Moving Average API",
+    "url": "https://financialmodelingprep.com/stable/technical-indicators/dema?symbol=AAPL&periodLength=10&timeframe=1day",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Triple Exponential Moving Average API",
+    "url": "https://financialmodelingprep.com/stable/technical-indicators/tema?symbol=AAPL&periodLength=10&timeframe=1day",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Relative Strength Index API",
+    "url": "https://financialmodelingprep.com/stable/technical-indicators/rsi?symbol=AAPL&periodLength=10&timeframe=1day",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Standard Deviation API",
+    "url": "https://financialmodelingprep.com/stable/technical-indicators/standarddeviation?symbol=AAPL&periodLength=10&timeframe=1day",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Williams API",
+    "url": "https://financialmodelingprep.com/stable/technical-indicators/williams?symbol=AAPL&periodLength=10&timeframe=1day",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Average Directional Index API",
+    "url": "https://financialmodelingprep.com/stable/technical-indicators/adx?symbol=AAPL&periodLength=10&timeframe=1day",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "ETF & Fund Holdings API",
+    "url": "https://financialmodelingprep.com/stable/etf/holdings?symbol=SPY",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "ETF & Mutual Fund Information API",
+    "url": "https://financialmodelingprep.com/stable/etf/info?symbol=SPY",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "ETF & Fund Country Allocation API",
+    "url": "https://financialmodelingprep.com/stable/etf/country-weightings?symbol=SPY",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "ETF Asset Exposure API",
+    "url": "https://financialmodelingprep.com/stable/etf/asset-exposure?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Average Directional Index API",
+    "url": "https://financialmodelingprep.com/stable/etf/sector-weightings?symbol=SPY",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Mutual Fund & ETF Disclosure API",
+    "url": "https://financialmodelingprep.com/stable/funds/disclosure-holders-latest?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Mutual Fund Disclosures API",
+    "url": "https://financialmodelingprep.com/stable/funds/disclosure?symbol=VWO&year=2023&quarter=4",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Mutual Fund & ETF Disclosure Name Search API",
+    "url": "https://financialmodelingprep.com/stable/funds/disclosure-holders-search?name=Federated",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Fund & ETF Disclosures by Date API",
+    "url": "https://financialmodelingprep.com/stable/funds/disclosure-dates?symbol=VWO",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Latest 8-K SEC Filings API",
+    "url": "https://financialmodelingprep.com/stable/sec-filings-8k?from=2024-01-01&to=2024-03-01&page=0&limit=100",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Latest SEC Filings API",
+    "url": "https://financialmodelingprep.com/stable/sec-filings-financials?from=2024-01-01&to=2024-03-01&page=0&limit=100",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "SEC Filings By Form Type API",
+    "url": "https://financialmodelingprep.com/stable/sec-filings-search/form-type?formType=8-K&from=2024-01-01&to=2024-03-01&page=0&limit=100",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "SEC Filings By Symbol API",
+    "url": "https://financialmodelingprep.com/stable/sec-filings-search/symbol?symbol=AAPL&from=2024-01-01&to=2024-03-01&page=0&limit=100",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "SEC Filings By CIK API",
+    "url": "https://financialmodelingprep.com/stable/sec-filings-search/cik?cik=0000320193&from=2024-01-01&to=2024-03-01&page=0&limit=100",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "SEC Filings By Name API",
+    "url": "https://financialmodelingprep.com/stable/sec-filings-company-search/name?company=Berkshire",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "SEC Filings Company Search By Symbol API",
+    "url": "https://financialmodelingprep.com/stable/sec-filings-company-search/symbol?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "SEC Filings Company Search By CIK API",
+    "url": "https://financialmodelingprep.com/stable/sec-filings-company-search/cik?cik=0000320193",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "SEC Company Full Profile API",
+    "url": "https://financialmodelingprep.com/stable/sec-profile?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Industry Classification List API",
+    "url": "https://financialmodelingprep.com/stable/standard-industrial-classification-list",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Industry Classification Search API",
+    "url": "https://financialmodelingprep.com/stable/industry-classification-search",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "All Industry Classification API",
+    "url": "https://financialmodelingprep.com/stable/all-industry-classification",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Latest Insider Trading API",
+    "url": "https://financialmodelingprep.com/stable/insider-trading/latest?page=0&limit=100",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Search Insider Trades API",
+    "url": "https://financialmodelingprep.com/stable/insider-trading/search?page=0&limit=100",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Search Insider Trades by Reporting Name API",
+    "url": "https://financialmodelingprep.com/stable/insider-trading/reporting-name?name=Zuckerberg",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "All Insider Transaction Types API",
+    "url": "https://financialmodelingprep.com/stable/insider-trading-transaction-type",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Insider Trade Statistics API",
+    "url": "https://financialmodelingprep.com/stable/insider-trading/statistics?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "5-Minute Interval Index Price API",
+    "url": "https://financialmodelingprep.com/stable/historical-chart/5min?symbol=^VIX",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "1-Hour Interval Index Price API",
+    "url": "https://financialmodelingprep.com/stable/historical-chart/1hour?symbol=^VIX",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "S&P 500 Index API",
+    "url": "https://financialmodelingprep.com/stable/sp500-constituent",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Nasdaq Index API",
+    "url": "https://financialmodelingprep.com/stable/nasdaq-constituent",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Dow Jones API",
+    "url": "https://financialmodelingprep.com/stable/dowjones-constituent",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Historical S&P 500 API",
+    "url": "https://financialmodelingprep.com/stable/historical-sp500-constituent",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Historical Nasdaq API",
+    "url": "https://financialmodelingprep.com/stable/historical-nasdaq-constituent",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Historical Dow Jones API",
+    "url": "https://financialmodelingprep.com/stable/historical-dowjones-constituent",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Global Exchange Market Hours API",
+    "url": "https://financialmodelingprep.com/stable/exchange-market-hours?exchange=NASDAQ",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Holidays By Exchange API",
+    "url": "https://financialmodelingprep.com/stable/holidays-by-exchange?exchange=NASDAQ",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "All Exchange Market Hours API",
+    "url": "https://financialmodelingprep.com/stable/all-exchange-market-hours",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Commodities List API",
+    "url": "https://financialmodelingprep.com/stable/commodities-list",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Commodities Quote API",
+    "url": "https://financialmodelingprep.com/stable/quote?symbol=GCUSD",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Commodities Quote Short API",
+    "url": "https://financialmodelingprep.com/stable/quote-short?symbol=GCUSD",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Light Chart API",
+    "url": "https://financialmodelingprep.com/stable/historical-price-eod/light?symbol=GCUSD",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Full Chart API",
+    "url": "https://financialmodelingprep.com/stable/historical-price-eod/full?symbol=GCUSD",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "1-Minute Interval Commodities Chart API",
+    "url": "https://financialmodelingprep.com/stable/historical-chart/1min?symbol=GCUSD",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "5-Minute Interval Commodities Chart API",
+    "url": "https://financialmodelingprep.com/stable/historical-chart/5min?symbol=GCUSD",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "1-Hour Interval Commodities Chart API",
+    "url": "https://financialmodelingprep.com/stable/historical-chart/1hour?symbol=GCUSD",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "DCF Valuation API",
+    "url": "https://financialmodelingprep.com/stable/discounted-cash-flow?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Levered DCF API",
+    "url": "https://financialmodelingprep.com/stable/levered-discounted-cash-flow?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Custom DCF Advanced API",
+    "url": "https://financialmodelingprep.com/stable/custom-discounted-cash-flow?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Custom DCF Levered API",
+    "url": "https://financialmodelingprep.com/stable/custom-levered-discounted-cash-flow?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Forex Currency Pairs API",
+    "url": "https://financialmodelingprep.com/stable/forex-list",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Forex Quote API",
+    "url": "https://financialmodelingprep.com/stable/quote?symbol=EURUSD",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Forex Short Quote API",
+    "url": "https://financialmodelingprep.com/stable/quote-short?symbol=EURUSD",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Historical Forex Light Chart API",
+    "url": "https://financialmodelingprep.com/stable/historical-price-eod/light?symbol=EURUSD",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Cryptocurrency Quote Short API",
+    "url": "https://financialmodelingprep.com/stable/historical-price-eod/full?symbol=EURUSD",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "1-Minute Interval Forex Chart API",
+    "url": "https://financialmodelingprep.com/stable/historical-chart/1min?symbol=EURUSD",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "5-Minute Interval Forex Chart API",
+    "url": "https://financialmodelingprep.com/stable/historical-chart/5min?symbol=EURUSD",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "1-Hour Interval Forex Chart API",
+    "url": "https://financialmodelingprep.com/stable/historical-chart/1hour?symbol=EURUSD",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Cryptocurrency List API",
+    "url": "https://financialmodelingprep.com/stable/cryptocurrency-list",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Full Cryptocurrency Quote API",
+    "url": "https://financialmodelingprep.com/stable/quote?symbol=BTCUSD",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Cryptocurrency Quote Short API",
+    "url": "https://financialmodelingprep.com/stable/quote-short?symbol=BTCUSD",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Historical Cryptocurrency Light Chart API",
+    "url": "https://financialmodelingprep.com/stable/historical-price-eod/light?symbol=BTCUSD",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Historical Cryptocurrency Full Chart API",
+    "url": "https://financialmodelingprep.com/stable/historical-price-eod/full?symbol=BTCUSD",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "1-Minute Interval Cryptocurrency Data API",
+    "url": "https://financialmodelingprep.com/stable/historical-chart/1min?symbol=BTCUSD",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "5-Minute Interval Cryptocurrency Data API",
+    "url": "https://financialmodelingprep.com/stable/historical-chart/5min?symbol=BTCUSD",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "1-Hour Interval Cryptocurrency Data API",
+    "url": "https://financialmodelingprep.com/stable/historical-chart/1hour?symbol=BTCUSD",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Latest Senate Financial Disclosures API",
+    "url": "https://financialmodelingprep.com/stable/senate-latest?page=0&limit=100",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Latest House Financial Disclosures API",
+    "url": "https://financialmodelingprep.com/stable/house-latest?page=0&limit=100",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Senate Trading Activity API",
+    "url": "https://financialmodelingprep.com/stable/senate-trades?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Senate Trades By Name API",
+    "url": "https://financialmodelingprep.com/stable/senate-trades-by-name?name=Jerry",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Senate Trades By ID API",
+    "url": "https://financialmodelingprep.com/stable/senate-trades-by-id",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "U.S. House Trades API",
+    "url": "https://financialmodelingprep.com/stable/house-trades?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "House Trades By Name API",
+    "url": "https://financialmodelingprep.com/stable/house-trades-by-name?name=James",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "House Trades By ID API",
+    "url": "https://financialmodelingprep.com/stable/house-trades-by-id",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Senate Profiles API",
+    "url": "https://financialmodelingprep.com/stable/senate-profile",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Senate Positions API",
+    "url": "https://financialmodelingprep.com/stable/senate-positions",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Senate Net Worth API",
+    "url": "https://financialmodelingprep.com/stable/senate-net-worth?senateID=P000197&page=0&limit=250",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Senate Net Worth Aggregated API",
+    "url": "https://financialmodelingprep.com/stable/senate-net-worth-aggregated?senateID=P000197",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "ESG Investment Search API",
+    "url": "https://financialmodelingprep.com/stable/esg-disclosures?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "ESG Ratings API",
+    "url": "https://financialmodelingprep.com/stable/esg-ratings?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "ESG Benchmark Comparison API",
+    "url": "https://financialmodelingprep.com/stable/esg-benchmark",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "COT Report API",
+    "url": "https://financialmodelingprep.com/stable/commitment-of-traders-report",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "COT Analysis By Dates API",
+    "url": "https://financialmodelingprep.com/stable/commitment-of-traders-analysis",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "COT Report List API",
+    "url": "https://financialmodelingprep.com/stable/commitment-of-traders-list",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Latest Crowdfunding Campaigns API",
+    "url": "https://financialmodelingprep.com/stable/crowdfunding-offerings-latest?page=0&limit=100",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Crowdfunding Campaign Search API",
+    "url": "https://financialmodelingprep.com/stable/crowdfunding-offerings-search?name=enotap",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Crowdfunding By CIK API",
+    "url": "https://financialmodelingprep.com/stable/crowdfunding-offerings?cik=0001916078",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Equity Offering Updates API",
+    "url": "https://financialmodelingprep.com/stable/fundraising-latest?page=0&limit=10",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Equity Offering Search API",
+    "url": "https://financialmodelingprep.com/stable/fundraising-search?name=NJOY",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Equity Offering By CIK API",
+    "url": "https://financialmodelingprep.com/stable/fundraising?cik=0001547416",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Company Profile Bulk API",
+    "url": "https://financialmodelingprep.com/stable/profile-bulk?part=0",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Stock Rating Bulk API",
+    "url": "https://financialmodelingprep.com/stable/rating-bulk",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Stock News API",
+    "url": "https://financialmodelingprep.com/stable/news/stock-latest?page=0&limit=20",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Crypto News API",
+    "url": "https://financialmodelingprep.com/stable/news/crypto-latest?page=0&limit=20",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Forex News API",
+    "url": "https://financialmodelingprep.com/stable/news/forex-latest?page=0&limit=20",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Search Press Releases API",
+    "url": "https://financialmodelingprep.com/stable/news/press-releases?symbols=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Search Stock News API",
+    "url": "https://financialmodelingprep.com/stable/news/stock?symbols=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Search Crypto News API",
+    "url": "https://financialmodelingprep.com/stable/news/crypto?symbols=BTCUSD",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Search Forex News API",
+    "url": "https://financialmodelingprep.com/stable/news/forex?symbols=EURUSD",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Institutional Ownership Filings API",
+    "url": "https://financialmodelingprep.com/stable/institutional-ownership/latest?page=0&limit=100",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Filings Extract API",
+    "url": "https://financialmodelingprep.com/stable/institutional-ownership/extract?cik=0001388838&year=2023&quarter=3",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Acquisition Ownership API",
+    "url": "https://financialmodelingprep.com/stable/acquisition-of-beneficial-ownership?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Stock Market Indexes List API",
+    "url": "https://financialmodelingprep.com/stable/index-list",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Index Quote API",
+    "url": "https://financialmodelingprep.com/stable/quote?symbol=^VIX",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Index Short Quote API",
+    "url": "https://financialmodelingprep.com/stable/quote-short?symbol=^VIX",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Historical Index Light Chart API",
+    "url": "https://financialmodelingprep.com/stable/historical-price-eod/light?symbol=^VIX",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Historical Index Full Chart API",
+    "url": "https://financialmodelingprep.com/stable/historical-price-eod/full?symbol=^VIX",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "1-Minute Interval Index Price API",
+    "url": "https://financialmodelingprep.com/stable/historical-chart/1min?symbol=^VIX",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "DCF Valuations Bulk API",
+    "url": "https://financialmodelingprep.com/stable/dcf-bulk",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Financial Scores Bulk API",
+    "url": "https://financialmodelingprep.com/stable/scores-bulk",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Price Target Summary Bulk API",
+    "url": "https://financialmodelingprep.com/stable/price-target-summary-bulk",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "ETF Holder Bulk API",
+    "url": "https://financialmodelingprep.com/stable/etf-holder-bulk?part=1",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Upgrades Downgrades Consensus Bulk API",
+    "url": "https://financialmodelingprep.com/stable/upgrades-downgrades-consensus-bulk",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Key Metrics TTM Bulk API",
+    "url": "https://financialmodelingprep.com/stable/key-metrics-ttm-bulk",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Ratios TTM Bulk API",
+    "url": "https://financialmodelingprep.com/stable/ratios-ttm-bulk",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Stock Peers Bulk API",
+    "url": "https://financialmodelingprep.com/stable/peers-bulk",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Earnings Surprises Bulk API",
+    "url": "https://financialmodelingprep.com/stable/earnings-surprises-bulk?year=2026",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Income Statement Bulk API",
+    "url": "https://financialmodelingprep.com/stable/income-statement-bulk?year=2026&period=Q1",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Income Statement Growth Bulk API",
+    "url": "https://financialmodelingprep.com/stable/income-statement-growth-bulk?year=2026&period=Q1",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Balance Sheet Statement Bulk API",
+    "url": "https://financialmodelingprep.com/stable/balance-sheet-statement-bulk?year=2026&period=Q1",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Balance Sheet Statement Growth Bulk API",
+    "url": "https://financialmodelingprep.com/stable/balance-sheet-statement-growth-bulk?year=2026&period=Q1",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Cash Flow Statement Bulk API",
+    "url": "https://financialmodelingprep.com/stable/cash-flow-statement-bulk?year=2026&period=Q1",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Cash Flow Statement Growth Bulk API",
+    "url": "https://financialmodelingprep.com/stable/cash-flow-statement-growth-bulk?year=2026&period=Q1",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Eod Bulk API",
+    "url": "https://financialmodelingprep.com/stable/eod-bulk?date=2024-10-22",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Analyst Ratings Search API",
+    "url": "https://financialmodelingprep.com/stable/tipranks-search",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Point in time Ratings by Symbol API",
+    "url": "https://financialmodelingprep.com/stable/tipranks-pit-symbol?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Point in time Ratings by Analyst API",
+    "url": "https://financialmodelingprep.com/stable/tipranks-pit-analyst",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Ratings Summary by Symbol API",
+    "url": "https://financialmodelingprep.com/stable/tipranks-symbol-summary?symbol=AAPL",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Ratings Summary by Analyst API",
+    "url": "https://financialmodelingprep.com/stable/tipranks-analyst-summary?expertUID=3c6eb8cf1347a4e5757e628fccb684a93abee587",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Ratings Summary by Firm API",
+    "url": "https://financialmodelingprep.com/stable/tipranks-firm-summary?firmName=Morgan",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  },
+  {
+    "title": "Analyst Directory Lookup API",
+    "url": "https://financialmodelingprep.com/stable/tipranks-analysts",
+    "source": "https://site.financialmodelingprep.com/developer/docs",
+    "verification": "official_documentation_catalogue",
+    "retrieved_date": "2026-10-03"
+  }
+]

@@ -1,0 +1,37 @@
+[
+  {
+    "etfSymbol": "ZWK-T.TO",
+    "assetExposure": "JPM",
+    "sharesNumber": 47627,
+    "weightPercentage": 7.02,
+    "marketValue": 22571954.18
+  },
+  {
+    "etfSymbol": "ZWK.TO",
+    "assetExposure": "JPM",
+    "sharesNumber": 47627,
+    "weightPercentage": 7.02,
+    "marketValue": 22571954.18
+  },
+  {
+    "etfSymbol": "ZWH-U.TO",
+    "assetExposure": "JPM",
+    "sharesNumber": 100028,
+    "weightPercentage": 3.73,
+    "marketValue": 47406459.2
+  },
+  {
+    "etfSymbol": "ZWH-T.TO",
+    "assetExposure": "JPM",
+    "sharesNumber": 100028,
+    "weightPercentage": 3.73,
+    "marketValue": 47406459.2
+  },
+  {
+    "etfSymbol": "ZWH.TO",
+    "assetExposure": "JPM",
+    "sharesNumber": 100028,
+    "weightPercentage": 3.73,
+    "marketValue": 47406459.2
+  }
+]

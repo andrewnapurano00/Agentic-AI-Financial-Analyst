@@ -1,0 +1,52 @@
+[
+  {
+    "symbol": "NEE",
+    "date": "2025-12-31",
+    "stockPrice": 80.28,
+    "numberOfShares": 2089000000,
+    "marketCapitalization": 167704920000,
+    "minusCashAndCashEquivalents": 2812000000,
+    "addTotalDebt": 95619000000,
+    "enterpriseValue": 260511920000
+  },
+  {
+    "symbol": "NEE",
+    "date": "2024-12-31",
+    "stockPrice": 71.69,
+    "numberOfShares": 2057000000,
+    "marketCapitalization": 147466330000,
+    "minusCashAndCashEquivalents": 1487000000,
+    "addTotalDebt": 82333000000,
+    "enterpriseValue": 228312330000
+  },
+  {
+    "symbol": "NEE",
+    "date": "2023-12-31",
+    "stockPrice": 60.74,
+    "numberOfShares": 2026100000,
+    "marketCapitalization": 123065314000,
+    "minusCashAndCashEquivalents": 2690000000,
+    "addTotalDebt": 73211000000,
+    "enterpriseValue": 193586314000
+  },
+  {
+    "symbol": "NEE",
+    "date": "2022-12-31",
+    "stockPrice": 83.6,
+    "numberOfShares": 1972600000,
+    "marketCapitalization": 164909360000,
+    "minusCashAndCashEquivalents": 1601000000,
+    "addTotalDebt": 64966000000,
+    "enterpriseValue": 228274360000
+  },
+  {
+    "symbol": "NEE",
+    "date": "2021-12-31",
+    "stockPrice": 93.36,
+    "numberOfShares": 1962500000,
+    "marketCapitalization": 183219000000,
+    "minusCashAndCashEquivalents": 639000000,
+    "addTotalDebt": 54827000000,
+    "enterpriseValue": 237407000000
+  }
+]

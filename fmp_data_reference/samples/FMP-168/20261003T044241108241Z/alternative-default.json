@@ -1,0 +1,32 @@
+[
+  {
+    "date": "2024-03-01",
+    "sector": "Energy",
+    "exchange": "NASDAQ",
+    "averageChange": 1.3989969286740689
+  },
+  {
+    "date": "2024-02-29",
+    "sector": "Energy",
+    "exchange": "NASDAQ",
+    "averageChange": 0.6259433021814237
+  },
+  {
+    "date": "2024-02-28",
+    "sector": "Energy",
+    "exchange": "NASDAQ",
+    "averageChange": -3.616306250998491
+  },
+  {
+    "date": "2024-02-27",
+    "sector": "Energy",
+    "exchange": "NASDAQ",
+    "averageChange": 2.5372989474052026
+  },
+  {
+    "date": "2024-02-26",
+    "sector": "Energy",
+    "exchange": "NASDAQ",
+    "averageChange": -0.14133508139767376
+  }
+]

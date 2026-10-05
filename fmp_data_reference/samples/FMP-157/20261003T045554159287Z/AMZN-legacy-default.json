@@ -1,0 +1,72 @@
+[
+  {
+    "symbol": "AMZN",
+    "cik": "0001018724",
+    "date": "2026-06-30",
+    "environmentalScore": 47.74,
+    "socialScore": 58.19,
+    "governanceScore": 52.81,
+    "ESGScore": 52.91,
+    "companyName": "Amazon.com, Inc.",
+    "industry": "Retail-Catalog & Mail-Order Houses",
+    "formType": "10-Q",
+    "acceptedDate": "2026-07-30 18:11:13",
+    "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000026/0001018724-26-000026-index.htm"
+  },
+  {
+    "symbol": "AMZN",
+    "cik": "0001018724",
+    "date": "2026-03-31",
+    "environmentalScore": 47.71,
+    "socialScore": 58.05,
+    "governanceScore": 52.17,
+    "ESGScore": 52.64,
+    "companyName": "Amazon.com, Inc.",
+    "industry": "Retail-Catalog & Mail-Order Houses",
+    "formType": "10-Q",
+    "acceptedDate": "2026-04-29 18:48:09",
+    "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000014/0001018724-26-000014-index.htm"
+  },
+  {
+    "symbol": "AMZN",
+    "cik": "0001018724",
+    "date": "2025-12-31",
+    "environmentalScore": 48.89,
+    "socialScore": 58.33,
+    "governanceScore": 53.91,
+    "ESGScore": 53.71,
+    "companyName": "Amazon.com, Inc.",
+    "industry": "Retail-Catalog & Mail-Order Houses",
+    "formType": "10-K",
+    "acceptedDate": "2026-02-05 18:44:31",
+    "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000004/0001018724-26-000004-index.htm"
+  },
+  {
+    "symbol": "AMZN",
+    "cik": "0001018724",
+    "date": "2025-09-30",
+    "environmentalScore": 47.55,
+    "socialScore": 58.31,
+    "governanceScore": 52.91,
+    "ESGScore": 52.92,
+    "companyName": "Amazon.com, Inc.",
+    "industry": "Retail-Catalog & Mail-Order Houses",
+    "formType": "10-Q",
+    "acceptedDate": "2025-10-30 18:18:21",
+    "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872425000123/0001018724-25-000123-index.htm"
+  },
+  {
+    "symbol": "AMZN",
+    "cik": "0001018724",
+    "date": "2025-06-30",
+    "environmentalScore": 47.52,
+    "socialScore": 58.55,
+    "governanceScore": 52.61,
+    "ESGScore": 52.9,
+    "companyName": "Amazon.com, Inc.",
+    "industry": "Retail-Catalog & Mail-Order Houses",
+    "formType": "10-Q",
+    "acceptedDate": "2025-07-31 18:13:08",
+    "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872425000086/0001018724-25-000086-index.htm"
+  }
+]

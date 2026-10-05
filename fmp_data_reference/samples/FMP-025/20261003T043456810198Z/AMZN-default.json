@@ -1,0 +1,42 @@
+[
+  {
+    "symbol": "AMZN",
+    "date": "2026-09-30",
+    "gradingCompany": "Rosenblatt",
+    "previousGrade": "Buy",
+    "newGrade": "Buy",
+    "action": "maintain"
+  },
+  {
+    "symbol": "AMZN",
+    "date": "2026-09-03",
+    "gradingCompany": "Wells Fargo",
+    "previousGrade": "Overweight",
+    "newGrade": "Overweight",
+    "action": "maintain"
+  },
+  {
+    "symbol": "AMZN",
+    "date": "2026-07-31",
+    "gradingCompany": "Benchmark",
+    "previousGrade": "Buy",
+    "newGrade": "Buy",
+    "action": "maintain"
+  },
+  {
+    "symbol": "AMZN",
+    "date": "2026-07-31",
+    "gradingCompany": "Wedbush",
+    "previousGrade": "Outperform",
+    "newGrade": "Outperform",
+    "action": "maintain"
+  },
+  {
+    "symbol": "AMZN",
+    "date": "2026-07-31",
+    "gradingCompany": "TD Cowen",
+    "previousGrade": "Buy",
+    "newGrade": "Buy",
+    "action": "maintain"
+  }
+]

@@ -29,6 +29,9 @@ def _load_current_deep_research() -> None:
         SRC / "langgraphagenticai" / "deep_research" / "crew_committee.py",
         SRC / "langgraphagenticai" / "deep_research" / "manager.py",
         SRC / "langgraphagenticai" / "deep_research" / "v2.py",
+        SRC / "langgraphagenticai" / "deep_research" / "v2_workflow.py",
+        SRC / "langgraphagenticai" / "deep_research" / "quarterly_ttm.py",
+        SRC / "langgraphagenticai" / "deep_research" / "v2_data.py",
         SRC / "langgraphagenticai" / "deep_research" / "presentation.py",
         SRC / "langgraphagenticai" / "ui" / "deep_research_tab.py",
         SRC / "langgraphagenticai" / "ui" / "deep_research_v2_tab.py",
@@ -58,6 +61,9 @@ def _load_current_deep_research() -> None:
             "langgraphagenticai.deep_research.presentation",
             "langgraphagenticai.ui.deep_research_tab",
             "langgraphagenticai.deep_research.v2",
+            "langgraphagenticai.deep_research.v2_workflow",
+            "langgraphagenticai.deep_research.quarterly_ttm",
+            "langgraphagenticai.deep_research.v2_data",
             "langgraphagenticai.ui.deep_research_v2_tab",
         ):
             importlib.reload(importlib.import_module(name))

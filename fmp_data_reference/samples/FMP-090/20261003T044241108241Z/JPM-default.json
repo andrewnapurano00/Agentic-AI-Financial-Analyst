@@ -1,0 +1,67 @@
+[
+  {
+    "symbol": "JPM",
+    "publishedDate": "2026-08-14T10:26:22.000Z",
+    "newsURL": "https://thefly.com/ajax/news_get.php?id=4411398",
+    "newsTitle": "JPMorgan price target raised to $390 from $375 at Wells Fargo",
+    "analystName": "",
+    "priceTarget": 390,
+    "adjPriceTarget": 390,
+    "priceWhenPosted": 363.11,
+    "newsPublisher": "TheFly",
+    "newsBaseURL": "thefly.com",
+    "analystCompany": "Wells Fargo"
+  },
+  {
+    "symbol": "JPM",
+    "publishedDate": "2026-08-03T12:14:15.000Z",
+    "newsURL": "https://thefly.com/ajax/news_get.php?id=4399353",
+    "newsTitle": "JPMorgan price target raised to $400 from $384 at UBS",
+    "analystName": "Erika Najarian",
+    "priceTarget": 400,
+    "adjPriceTarget": 400,
+    "priceWhenPosted": 355.27,
+    "newsPublisher": "TheFly",
+    "newsBaseURL": "thefly.com",
+    "analystCompany": "UBS"
+  },
+  {
+    "symbol": "JPM",
+    "publishedDate": "2026-07-22T23:59:46.000Z",
+    "newsURL": "https://thefly.com/ajax/news_get.php?id=4390418",
+    "newsTitle": "JPMorgan upgraded to Buy from Hold at Deutsche Bank",
+    "analystName": "",
+    "priceTarget": 375,
+    "adjPriceTarget": 375,
+    "priceWhenPosted": 348.21,
+    "newsPublisher": "TheFly",
+    "newsBaseURL": "thefly.com",
+    "analystCompany": "Deutsche Bank"
+  },
+  {
+    "symbol": "JPM",
+    "publishedDate": "2026-07-15T13:33:16.000Z",
+    "newsURL": "https://thefly.com/ajax/news_get.php?id=4385571",
+    "newsTitle": "JPMorgan price target raised to $352 from $344 at Truist",
+    "analystName": "John McDonald",
+    "priceTarget": 352,
+    "adjPriceTarget": 352,
+    "priceWhenPosted": 347.88,
+    "newsPublisher": "TheFly",
+    "newsBaseURL": "thefly.com",
+    "analystCompany": "Truist Financial"
+  },
+  {
+    "symbol": "JPM",
+    "publishedDate": "2026-07-15T11:42:10.000Z",
+    "newsURL": "https://thefly.com/ajax/news_get.php?id=4385338",
+    "newsTitle": "JPMorgan price target raised to $370 from $330 at RBC Capital",
+    "analystName": "Gerard Cassidy",
+    "priceTarget": 370,
+    "adjPriceTarget": 370,
+    "priceWhenPosted": 342.89,
+    "newsPublisher": "TheFly",
+    "newsBaseURL": "thefly.com",
+    "analystCompany": "RBC Capital"
+  }
+]

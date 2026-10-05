@@ -1,0 +1,67 @@
+[
+  {
+    "symbol": "JNJ",
+    "publishedDate": "2026-09-29T09:28:00.000Z",
+    "newsURL": "https://www.streetinsider.com/Analyst+Comments/Johnson+%26+Johnson+%28JNJ%29+PT+Raised+to+%24278+at+BofA+Securities/27116424.html",
+    "newsTitle": "Johnson & Johnson (JNJ) PT Raised to $278 at BofA Securities",
+    "analystName": "",
+    "priceTarget": 278,
+    "adjPriceTarget": 278,
+    "priceWhenPosted": 271.95,
+    "newsPublisher": "StreetInsider",
+    "newsBaseURL": "streetinsider.com",
+    "analystCompany": "New Street"
+  },
+  {
+    "symbol": "JNJ",
+    "publishedDate": "2026-09-10T10:24:06.000Z",
+    "newsURL": "https://thefly.com/ajax/news_get.php?id=4423666",
+    "newsTitle": "Johnson & Johnson price target raised to $320 from $290 at HSBC",
+    "analystName": "",
+    "priceTarget": 320,
+    "adjPriceTarget": 320,
+    "priceWhenPosted": 267.08,
+    "newsPublisher": "TheFly",
+    "newsBaseURL": "thefly.com",
+    "analystCompany": "HSBC"
+  },
+  {
+    "symbol": "JNJ",
+    "publishedDate": "2026-09-02T11:34:19.000Z",
+    "newsURL": "https://thefly.com/ajax/news_get.php?id=4419996",
+    "newsTitle": "Johnson & Johnson assumed with a Buy at UBS",
+    "analystName": "",
+    "priceTarget": 320,
+    "adjPriceTarget": 320,
+    "priceWhenPosted": 271.19,
+    "newsPublisher": "TheFly",
+    "newsBaseURL": "thefly.com",
+    "analystCompany": "UBS"
+  },
+  {
+    "symbol": "JNJ",
+    "publishedDate": "2026-08-06T10:41:27.000Z",
+    "newsURL": "https://thefly.com/ajax/news_get.php?id=4403625",
+    "newsTitle": "Johnson & Johnson price target raised to $287 from $270 at Guggenheim",
+    "analystName": "",
+    "priceTarget": 287,
+    "adjPriceTarget": 287,
+    "priceWhenPosted": 257.59,
+    "newsPublisher": "TheFly",
+    "newsBaseURL": "thefly.com",
+    "analystCompany": "Guggenheim"
+  },
+  {
+    "symbol": "JNJ",
+    "publishedDate": "2026-08-03T18:37:00.000Z",
+    "newsURL": "https://www.streetinsider.com/Analyst+Comments/Johnson+%26+Johnson+%28JNJ%29+PT+Raised+to+%24280+at+Raymond+James/26856978.html",
+    "newsTitle": "Johnson & Johnson (JNJ) PT Raised to $280 at Raymond JamesMember Login",
+    "analystName": "",
+    "priceTarget": 280,
+    "adjPriceTarget": 280,
+    "priceWhenPosted": 254.4472,
+    "newsPublisher": "StreetInsider",
+    "newsBaseURL": "streetinsider.com",
+    "analystCompany": "Raymond James"
+  }
+]

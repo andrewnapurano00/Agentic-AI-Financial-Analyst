@@ -1,0 +1,37 @@
+[
+  {
+    "holder": "Clough Global Opportunities Fund",
+    "shares": 51903,
+    "dateReported": "2026-07-31",
+    "change": -18497,
+    "weightPercent": 0.10081548
+  },
+  {
+    "holder": "Clough Global Opportunities Fund",
+    "shares": 5060000,
+    "dateReported": "2026-07-31",
+    "change": 0,
+    "weightPercent": 9.82845515
+  },
+  {
+    "holder": "Clough Global Opportunities Fund",
+    "shares": 2700000,
+    "dateReported": "2026-07-31",
+    "change": 0,
+    "weightPercent": 5.24443259
+  },
+  {
+    "holder": "NORTHQUEST CAPITAL FUND INC",
+    "shares": 80,
+    "dateReported": "2026-06-30",
+    "change": 0,
+    "weightPercent": 0.21333333
+  },
+  {
+    "holder": "NEOS ETF Trust",
+    "shares": 3935150,
+    "dateReported": "2026-06-30",
+    "change": 386082,
+    "weightPercent": 0.12332943
+  }
+]

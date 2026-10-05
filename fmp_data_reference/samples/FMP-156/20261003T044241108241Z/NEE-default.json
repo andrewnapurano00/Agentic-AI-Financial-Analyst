@@ -1,0 +1,37 @@
+[
+  {
+    "holder": "AB EQUITY INCOME FUND INC",
+    "shares": 79360,
+    "dateReported": "2026-05-31",
+    "change": 31100,
+    "weightPercent": 0.83086483
+  },
+  {
+    "holder": "NEOS ETF Trust",
+    "shares": 338907,
+    "dateReported": "2026-06-30",
+    "change": 36006,
+    "weightPercent": 0.0106215
+  },
+  {
+    "holder": "HC CAPITAL TRUST",
+    "shares": 101018,
+    "dateReported": "2026-06-30",
+    "change": -64,
+    "weightPercent": 0.00179095
+  },
+  {
+    "holder": "BNY Mellon ETF Trust",
+    "shares": 176895,
+    "dateReported": "2026-07-31",
+    "change": -1234,
+    "weightPercent": 0.00612503
+  },
+  {
+    "holder": "Virtus Equity & Convertible Income Fund",
+    "shares": 56740,
+    "dateReported": "2026-07-31",
+    "change": 0,
+    "weightPercent": 0.02361813
+  }
+]

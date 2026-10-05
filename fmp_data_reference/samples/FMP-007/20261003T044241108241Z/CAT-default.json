@@ -1,0 +1,26 @@
+[
+  {
+    "symbol": "CAT",
+    "name": "Caterpillar Inc.",
+    "isin": "US1491231015",
+    "marketCap": 389431732540
+  },
+  {
+    "symbol": "CAT1.DE",
+    "name": "Caterpillar Inc.",
+    "isin": "US1491231015",
+    "marketCap": 346168705500
+  },
+  {
+    "symbol": "CATR.PA",
+    "name": "Caterpillar Inc.",
+    "isin": "US1491231015",
+    "marketCap": 159920328384
+  },
+  {
+    "symbol": "CAT.SW",
+    "name": "Caterpillar Inc.",
+    "isin": "US1491231015",
+    "marketCap": 338826360682
+  }
+]

@@ -1,0 +1,72 @@
+[
+  {
+    "symbol": "PLD",
+    "cik": "0001045609",
+    "date": "2026-06-30",
+    "environmentalScore": 79.84,
+    "socialScore": 69.15,
+    "governanceScore": 75.8,
+    "ESGScore": 74.93,
+    "companyName": "Prologis, Inc.",
+    "industry": "Real Estate Investment Trusts",
+    "formType": "10-Q",
+    "acceptedDate": "2026-07-29 16:13:52",
+    "url": "https://www.sec.gov/Archives/edgar/data/1045609/000119312526323746/0001193125-26-323746-index.htm"
+  },
+  {
+    "symbol": "PLD",
+    "cik": "0001045609",
+    "date": "2026-03-31",
+    "environmentalScore": 79.68,
+    "socialScore": 69.32,
+    "governanceScore": 75.69,
+    "ESGScore": 74.9,
+    "companyName": "Prologis, Inc.",
+    "industry": "Real Estate Investment Trusts",
+    "formType": "10-Q",
+    "acceptedDate": "2026-04-30 17:18:09",
+    "url": "https://www.sec.gov/Archives/edgar/data/1045609/000119312526197850/0001193125-26-197850-index.htm"
+  },
+  {
+    "symbol": "PLD",
+    "cik": "0001045609",
+    "date": "2025-12-31",
+    "environmentalScore": 78.88,
+    "socialScore": 67.28,
+    "governanceScore": 74.96,
+    "ESGScore": 73.71,
+    "companyName": "Prologis, Inc.",
+    "industry": "Real Estate Investment Trusts",
+    "formType": "10-K",
+    "acceptedDate": "2026-02-13 16:21:28",
+    "url": "https://www.sec.gov/Archives/edgar/data/1045609/000119312526051453/0001193125-26-051453-index.htm"
+  },
+  {
+    "symbol": "PLD",
+    "cik": "0001045609",
+    "date": "2025-09-30",
+    "environmentalScore": 80.07,
+    "socialScore": 68.63,
+    "governanceScore": 75.46,
+    "ESGScore": 74.72,
+    "companyName": "Prologis, Inc.",
+    "industry": "Real Estate Investment Trusts",
+    "formType": "10-Q",
+    "acceptedDate": "2025-10-28 16:14:25",
+    "url": "https://www.sec.gov/Archives/edgar/data/1045609/000119312525253512/0001193125-25-253512-index.htm"
+  },
+  {
+    "symbol": "PLD",
+    "cik": "0001045609",
+    "date": "2025-06-30",
+    "environmentalScore": 79.96,
+    "socialScore": 68.56,
+    "governanceScore": 75.48,
+    "ESGScore": 74.67,
+    "companyName": "Prologis, Inc.",
+    "industry": "Real Estate Investment Trusts",
+    "formType": "10-Q",
+    "acceptedDate": "2025-07-29 17:42:06",
+    "url": "https://www.sec.gov/Archives/edgar/data/1045609/000095017025099770/0000950170-25-099770-index.htm"
+  }
+]

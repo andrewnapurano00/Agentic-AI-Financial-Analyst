@@ -1,0 +1,42 @@
+[
+  {
+    "symbol": "PG",
+    "date": "2026-09-14",
+    "price": 145.27,
+    "quantity": 3678,
+    "cusip": "742718109",
+    "name": "PROCTER & GAMBLE;COM NPV"
+  },
+  {
+    "symbol": "PG",
+    "date": "2026-09-11",
+    "price": 142.97,
+    "quantity": 67390,
+    "cusip": "742718109",
+    "name": "PROCTER & GAMBLE;COM NPV"
+  },
+  {
+    "symbol": "PG",
+    "date": "2026-09-08",
+    "price": 146.44,
+    "quantity": 525183,
+    "cusip": "742718109",
+    "name": "PROCTER & GAMBLE;COM NPV"
+  },
+  {
+    "symbol": "PG",
+    "date": "2026-09-02",
+    "price": 146.21,
+    "quantity": 59,
+    "cusip": "742718109",
+    "name": "PROCTER & GAMBLE;COM NPV"
+  },
+  {
+    "symbol": "PG",
+    "date": "2026-08-28",
+    "price": 143.14,
+    "quantity": 172825,
+    "cusip": "742718109",
+    "name": "PROCTER & GAMBLE;COM NPV"
+  }
+]

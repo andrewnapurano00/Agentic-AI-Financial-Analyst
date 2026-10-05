@@ -1,0 +1,21 @@
+[
+  {
+    "symbol": "AMZN",
+    "name": "Amazon.com, Inc.",
+    "price": 251.52,
+    "changePercentage": 1.32538,
+    "change": 3.29,
+    "volume": 33047205,
+    "dayLow": 250.0201,
+    "dayHigh": 253.5577,
+    "yearHigh": 287.2,
+    "yearLow": 196,
+    "marketCap": 2705625792000,
+    "priceAvg50": 256.1866,
+    "priceAvg200": 241.218,
+    "exchange": "NASDAQ",
+    "open": 251.28,
+    "previousClose": 248.23,
+    "timestamp": 1790971201
+  }
+]

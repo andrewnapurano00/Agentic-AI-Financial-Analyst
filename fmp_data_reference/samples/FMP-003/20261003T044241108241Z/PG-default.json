@@ -1,0 +1,16 @@
+[
+  {
+    "symbol": "PG",
+    "name": "The Procter & Gamble Company",
+    "currency": "USD",
+    "exchangeFullName": "New York Stock Exchange",
+    "exchange": "NYSE"
+  },
+  {
+    "symbol": "PG.TO",
+    "name": "The Procter & Gamble Company",
+    "currency": "CAD",
+    "exchangeFullName": "Toronto Stock Exchange",
+    "exchange": "TSX"
+  }
+]

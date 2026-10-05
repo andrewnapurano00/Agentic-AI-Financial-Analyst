@@ -1,0 +1,47 @@
+[
+  {
+    "dateAdded": "September 14, 2026",
+    "addedSecurity": "",
+    "removedTicker": "KHC",
+    "removedSecurity": "Kraft Heinz Co",
+    "date": "2026-09-13",
+    "symbol": "KHC",
+    "reason": "Kraft Heinz moved its stock listing to the NYSE."
+  },
+  {
+    "dateAdded": "August 04, 2026",
+    "addedSecurity": null,
+    "removedTicker": "EA",
+    "removedSecurity": "Electronic Arts",
+    "date": "2026-08-04",
+    "symbol": "EA",
+    "reason": "EA was taken private."
+  },
+  {
+    "dateAdded": "July 7, 2026",
+    "addedSecurity": "Space Exploration Technologies Corp.",
+    "removedTicker": null,
+    "removedSecurity": null,
+    "date": "2026-07-06",
+    "symbol": "SPCX",
+    "reason": "SpaceX was added to the index on an accelerated basis, due to updated rules aimed at incorporating newly public megacap companies at a faster pace."
+  },
+  {
+    "dateAdded": "June 29, 2026",
+    "addedSecurity": "Honeywell Aerospace Inc",
+    "removedTicker": "",
+    "removedSecurity": "",
+    "date": "2026-06-29",
+    "symbol": "HONA",
+    "reason": "Honeywell International spun off Honeywell Aerospace then renamed itself Honeywell Technologies."
+  },
+  {
+    "dateAdded": "June 22, 2026",
+    "addedSecurity": "Astera Labs, Inc. Common Stock",
+    "removedTicker": "INSM",
+    "removedSecurity": "Insmed",
+    "date": "2026-06-22",
+    "symbol": "ALAB",
+    "reason": "Quarterly rebalance"
+  }
+]

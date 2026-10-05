@@ -1,0 +1,32 @@
+[
+  {
+    "holder": "BlackRock, Inc.",
+    "shares": 186838459,
+    "dateReported": "2026-06-30",
+    "change": 8008975
+  },
+  {
+    "holder": "VANGUARD CAPITAL MANAGEMENT LLC",
+    "shares": 136210944,
+    "dateReported": "2026-06-30",
+    "change": 827190
+  },
+  {
+    "holder": "STATE STREET CORP",
+    "shares": 118952736,
+    "dateReported": "2026-06-30",
+    "change": -715182
+  },
+  {
+    "holder": "JPMORGAN CHASE & CO",
+    "shares": 116048771,
+    "dateReported": "2026-06-30",
+    "change": 4060531
+  },
+  {
+    "holder": "MORGAN STANLEY",
+    "shares": 63514030,
+    "dateReported": "2026-06-30",
+    "change": -1237852
+  }
+]

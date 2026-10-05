@@ -1,0 +1,37 @@
+[
+  {
+    "etfSymbol": "ZWH-U.TO",
+    "assetExposure": "CAT",
+    "sharesNumber": 16810,
+    "weightPercentage": 1.5599999999999998,
+    "marketValue": 19759172.59
+  },
+  {
+    "etfSymbol": "ZWH-T.TO",
+    "assetExposure": "CAT",
+    "sharesNumber": 16810,
+    "weightPercentage": 1.5599999999999998,
+    "marketValue": 19759172.59
+  },
+  {
+    "etfSymbol": "ZWH.TO",
+    "assetExposure": "CAT",
+    "sharesNumber": 16810,
+    "weightPercentage": 1.5599999999999998,
+    "marketValue": 19759172.59
+  },
+  {
+    "etfSymbol": "ZWG-T.TO",
+    "assetExposure": "CAT",
+    "sharesNumber": 12205,
+    "weightPercentage": 4.42,
+    "marketValue": 14346264.21
+  },
+  {
+    "etfSymbol": "ZWG.TO",
+    "assetExposure": "CAT",
+    "sharesNumber": 12205,
+    "weightPercentage": 4.42,
+    "marketValue": 14346264.21
+  }
+]

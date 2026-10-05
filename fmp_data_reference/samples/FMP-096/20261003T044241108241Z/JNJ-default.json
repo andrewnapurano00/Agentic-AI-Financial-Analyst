@@ -1,0 +1,42 @@
+[
+  {
+    "symbol": "JNJ",
+    "date": "2026-09-29",
+    "gradingCompany": "JP Morgan",
+    "previousGrade": "Neutral",
+    "newGrade": "Neutral",
+    "action": "maintain"
+  },
+  {
+    "symbol": "JNJ",
+    "date": "2026-09-10",
+    "gradingCompany": "HSBC",
+    "previousGrade": "Buy",
+    "newGrade": "Buy",
+    "action": "maintain"
+  },
+  {
+    "symbol": "JNJ",
+    "date": "2026-09-02",
+    "gradingCompany": "UBS",
+    "previousGrade": "Buy",
+    "newGrade": "Buy",
+    "action": "maintain"
+  },
+  {
+    "symbol": "JNJ",
+    "date": "2026-08-06",
+    "gradingCompany": "Guggenheim",
+    "previousGrade": "Buy",
+    "newGrade": "Buy",
+    "action": "maintain"
+  },
+  {
+    "symbol": "JNJ",
+    "date": "2026-08-03",
+    "gradingCompany": "Wells Fargo",
+    "previousGrade": "Overweight",
+    "newGrade": "Overweight",
+    "action": "maintain"
+  }
+]

@@ -1,0 +1,37 @@
+[
+  {
+    "symbol": "XOM",
+    "name": "Exxon Mobil Corporation",
+    "currency": "USD",
+    "exchangeFullName": "New York Stock Exchange",
+    "exchange": "NYSE"
+  },
+  {
+    "symbol": "XOMX",
+    "name": "Direxion Daily XOM Bull 2X ETF",
+    "currency": "USD",
+    "exchangeFullName": "NASDAQ Global Select",
+    "exchange": "NASDAQ"
+  },
+  {
+    "symbol": "XOMA",
+    "name": "XOMA Royalty Corp.",
+    "currency": "USD",
+    "exchangeFullName": "NASDAQ Global Market",
+    "exchange": "NASDAQ"
+  },
+  {
+    "symbol": "XOMZ",
+    "name": "Direxion Daily XOM Bear 1X ETF",
+    "currency": "USD",
+    "exchangeFullName": "NASDAQ Global Select",
+    "exchange": "NASDAQ"
+  },
+  {
+    "symbol": "XOMO",
+    "name": "YieldMax XOM Option Income Strategy ETF",
+    "currency": "USD",
+    "exchangeFullName": "New York Stock Exchange Arca",
+    "exchange": "AMEX"
+  }
+]

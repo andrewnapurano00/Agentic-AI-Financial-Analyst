@@ -1,0 +1,42 @@
+[
+  {
+    "symbol": "PLD",
+    "date": "2026-09-01",
+    "gradingCompany": "Wells Fargo",
+    "previousGrade": "Overweight",
+    "newGrade": "Overweight",
+    "action": "maintain"
+  },
+  {
+    "symbol": "PLD",
+    "date": "2026-08-05",
+    "gradingCompany": "RBC Capital",
+    "previousGrade": "Sector Perform",
+    "newGrade": "Outperform",
+    "action": "upgrade"
+  },
+  {
+    "symbol": "PLD",
+    "date": "2026-07-23",
+    "gradingCompany": "Scotiabank",
+    "previousGrade": "Sector Perform",
+    "newGrade": "Sector Perform",
+    "action": "maintain"
+  },
+  {
+    "symbol": "PLD",
+    "date": "2026-07-21",
+    "gradingCompany": "Truist Securities",
+    "previousGrade": "Buy",
+    "newGrade": "Buy",
+    "action": "maintain"
+  },
+  {
+    "symbol": "PLD",
+    "date": "2026-07-17",
+    "gradingCompany": "Mizuho",
+    "previousGrade": "Outperform",
+    "newGrade": "Outperform",
+    "action": "maintain"
+  }
+]

@@ -1,0 +1,42 @@
+[
+  {
+    "symbol": "XOM",
+    "date": "2026-10-02",
+    "freeFloat": 99.7667,
+    "floatShares": "4134790974",
+    "outstandingShares": "4144460000",
+    "source": null
+  },
+  {
+    "symbol": "XOM",
+    "date": "2026-10-01",
+    "freeFloat": 99.7667,
+    "floatShares": "4134790974",
+    "outstandingShares": "4144460000",
+    "source": null
+  },
+  {
+    "symbol": "XOM",
+    "date": "2026-09-30",
+    "freeFloat": 99.7667,
+    "floatShares": "4134790974",
+    "outstandingShares": "4144460000",
+    "source": null
+  },
+  {
+    "symbol": "XOM",
+    "date": "2026-09-29",
+    "freeFloat": 99.7667,
+    "floatShares": "4134790974",
+    "outstandingShares": "4144460000",
+    "source": null
+  },
+  {
+    "symbol": "XOM",
+    "date": "2026-09-28",
+    "freeFloat": 99.7667,
+    "floatShares": "4134790974",
+    "outstandingShares": "4144460000",
+    "source": null
+  }
+]

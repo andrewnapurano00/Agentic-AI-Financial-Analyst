@@ -1,0 +1,57 @@
+[
+  {
+    "symbol": "PG",
+    "fiscalYear": 2026,
+    "period": "FY",
+    "reportedCurrency": "USD",
+    "date": "2026-06-30",
+    "data": {
+      "Non-US": 45300000000,
+      "UNITED STATES": 41700000000
+    }
+  },
+  {
+    "symbol": "PG",
+    "fiscalYear": 2025,
+    "period": "FY",
+    "reportedCurrency": "USD",
+    "date": "2025-06-30",
+    "data": {
+      "Non-US": 42700000000,
+      "UNITED STATES": 41600000000
+    }
+  },
+  {
+    "symbol": "PG",
+    "fiscalYear": 2024,
+    "period": "FY",
+    "reportedCurrency": "USD",
+    "date": "2024-06-30",
+    "data": {
+      "Non-US": 43500000000,
+      "UNITED STATES": 40500000000
+    }
+  },
+  {
+    "symbol": "PG",
+    "fiscalYear": 2023,
+    "period": "FY",
+    "reportedCurrency": "USD",
+    "date": "2023-06-30",
+    "data": {
+      "Non-US": 43300000000,
+      "UNITED STATES": 38700000000
+    }
+  },
+  {
+    "symbol": "PG",
+    "fiscalYear": 2022,
+    "period": "FY",
+    "reportedCurrency": "USD",
+    "date": "2022-06-30",
+    "data": {
+      "Non-US": 43700000000,
+      "UNITED STATES": 36500000000
+    }
+  }
+]

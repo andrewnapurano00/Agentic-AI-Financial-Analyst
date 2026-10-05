@@ -1,0 +1,22 @@
+[
+  {
+    "trading_symbol": "NG",
+    "short_name": "Natural Gas (NG)"
+  },
+  {
+    "trading_symbol": "TN",
+    "short_name": "Ultra 10-Year T-Note (TN)"
+  },
+  {
+    "trading_symbol": "A6",
+    "short_name": "Australian Dollar (A6)"
+  },
+  {
+    "trading_symbol": "PA",
+    "short_name": "Palladium (PA)"
+  },
+  {
+    "trading_symbol": "BT",
+    "short_name": "Bitcoin CME Futures (BT)"
+  }
+]

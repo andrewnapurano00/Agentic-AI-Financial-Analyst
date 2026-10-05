@@ -1,0 +1,37 @@
+[
+  {
+    "etfSymbol": "ZWT-T.TO",
+    "assetExposure": "GOOGL",
+    "sharesNumber": 43385,
+    "weightPercentage": 8.98,
+    "marketValue": 20873802.84
+  },
+  {
+    "etfSymbol": "ZWT.TO",
+    "assetExposure": "GOOGL",
+    "sharesNumber": 43385,
+    "weightPercentage": 8.98,
+    "marketValue": 20873802.84
+  },
+  {
+    "etfSymbol": "ZWA-T.TO",
+    "assetExposure": "GOOGL",
+    "sharesNumber": 17225,
+    "weightPercentage": 3.94,
+    "marketValue": 8287455.43
+  },
+  {
+    "etfSymbol": "ZWA.TO",
+    "assetExposure": "GOOGL",
+    "sharesNumber": 17225,
+    "weightPercentage": 3.94,
+    "marketValue": 8287455.43
+  },
+  {
+    "etfSymbol": "ZUQ-U.TO",
+    "assetExposure": "GOOGL",
+    "sharesNumber": 72958,
+    "weightPercentage": 2.3,
+    "marketValue": 35102245.19
+  }
+]

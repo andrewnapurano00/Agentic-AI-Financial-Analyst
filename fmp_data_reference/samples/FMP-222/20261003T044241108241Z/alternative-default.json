@@ -1,0 +1,42 @@
+[
+  {
+    "symbol": "MIOTAUSD",
+    "name": "IOTA USD",
+    "exchange": "CCC",
+    "icoDate": "2017-11-09",
+    "circulatingSupply": 4232705124,
+    "totalSupply": 4788606639
+  },
+  {
+    "symbol": "USDE",
+    "name": "Energi Dollar USD",
+    "exchange": "CCC",
+    "icoDate": "2023-02-15",
+    "circulatingSupply": 6304286374.701883,
+    "totalSupply": 6304286374.701883
+  },
+  {
+    "symbol": "PI2620USD",
+    "name": "Plian USD",
+    "exchange": "CCC",
+    "icoDate": "2018-06-04",
+    "circulatingSupply": 0,
+    "totalSupply": null
+  },
+  {
+    "symbol": "TOKENUSD",
+    "name": "TokenFi",
+    "exchange": "CCC",
+    "icoDate": null,
+    "circulatingSupply": 3961228190.541749,
+    "totalSupply": 10000000000
+  },
+  {
+    "symbol": "ZROUSD",
+    "name": "LayerZero USD",
+    "exchange": "CCC",
+    "icoDate": "2024-06-20",
+    "circulatingSupply": 389930944,
+    "totalSupply": null
+  }
+]

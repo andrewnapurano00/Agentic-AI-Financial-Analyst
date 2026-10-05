@@ -1,0 +1,42 @@
+[
+  {
+    "symbol": "PG",
+    "date": "2026-10-02",
+    "freeFloat": 99.8524635783834,
+    "floatShares": "2373701688",
+    "outstandingShares": "2377208937",
+    "source": null
+  },
+  {
+    "symbol": "PG",
+    "date": "2026-10-01",
+    "freeFloat": 99.8524635783834,
+    "floatShares": "2373701688",
+    "outstandingShares": "2377208937",
+    "source": null
+  },
+  {
+    "symbol": "PG",
+    "date": "2026-09-30",
+    "freeFloat": 99.8524635783834,
+    "floatShares": "2373701688",
+    "outstandingShares": "2377208937",
+    "source": null
+  },
+  {
+    "symbol": "PG",
+    "date": "2026-09-29",
+    "freeFloat": 99.8524635783834,
+    "floatShares": "2373701688",
+    "outstandingShares": "2377208937",
+    "source": null
+  },
+  {
+    "symbol": "PG",
+    "date": "2026-09-28",
+    "freeFloat": 99.8524635783834,
+    "floatShares": "2373701688",
+    "outstandingShares": "2377208937",
+    "source": null
+  }
+]

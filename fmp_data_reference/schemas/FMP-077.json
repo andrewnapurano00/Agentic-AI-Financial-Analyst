@@ -1,0 +1,548 @@
+{
+  "api_id": "FMP-077",
+  "basis": "observed_response_shapes_not_json_schema_contract",
+  "generated_at_utc": "2026-10-03T05:06:35.418661+00:00",
+  "sample_files": [
+    "samples/FMP-077/20261003T044241108241Z/AAPL-default.json",
+    "samples/FMP-077/20261003T044241108241Z/AMZN-default.json",
+    "samples/FMP-077/20261003T044241108241Z/CAT-default.json",
+    "samples/FMP-077/20261003T044241108241Z/GOOGL-default.json",
+    "samples/FMP-077/20261003T044241108241Z/JNJ-default.json",
+    "samples/FMP-077/20261003T044241108241Z/JPM-default.json",
+    "samples/FMP-077/20261003T044241108241Z/LIN-default.json",
+    "samples/FMP-077/20261003T044241108241Z/NEE-default.json",
+    "samples/FMP-077/20261003T044241108241Z/PG-default.json",
+    "samples/FMP-077/20261003T044241108241Z/PLD-default.json",
+    "samples/FMP-077/20261003T044241108241Z/XOM-default.json"
+  ],
+  "required_fields_asserted": false,
+  "fields": {
+    "$": {
+      "observed_types": [
+        "array"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[]": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].symbol": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].grossProfitMarginTTM": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].ebitMarginTTM": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].ebitdaMarginTTM": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].operatingProfitMarginTTM": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].pretaxProfitMarginTTM": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].continuousOperationsProfitMarginTTM": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].netProfitMarginTTM": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].bottomLineProfitMarginTTM": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].receivablesTurnoverTTM": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].payablesTurnoverTTM": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].inventoryTurnoverTTM": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].fixedAssetTurnoverTTM": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].assetTurnoverTTM": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].currentRatioTTM": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].quickRatioTTM": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].solvencyRatioTTM": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].cashRatioTTM": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].priceToEarningsRatioTTM": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].priceToEarningsGrowthRatioTTM": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].forwardPriceToEarningsGrowthRatioTTM": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].priceToEarningsDilutedRatioTTM": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].priceToEarningsDilutedGrowthRatioTTM": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].priceToBookRatioTTM": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].priceToSalesRatioTTM": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].priceToFreeCashFlowRatioTTM": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].priceToOperatingCashFlowRatioTTM": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].debtToAssetsRatioTTM": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].debtToEquityRatioTTM": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].debtToCapitalRatioTTM": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].longTermDebtToCapitalRatioTTM": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].financialLeverageRatioTTM": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].workingCapitalTurnoverRatioTTM": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].operatingCashFlowRatioTTM": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].operatingCashFlowSalesRatioTTM": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].freeCashFlowOperatingCashFlowRatioTTM": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].debtServiceCoverageRatioTTM": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].interestCoverageRatioTTM": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].shortTermOperatingCashFlowCoverageRatioTTM": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].operatingCashFlowCoverageRatioTTM": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].capitalExpenditureCoverageRatioTTM": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].dividendPaidAndCapexCoverageRatioTTM": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].dividendPayoutRatioTTM": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].dividendYieldTTM": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].enterpriseValueTTM": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].revenuePerShareTTM": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].netIncomePerShareTTM": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].interestDebtPerShareTTM": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].cashPerShareTTM": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].bookValuePerShareTTM": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].tangibleBookValuePerShareTTM": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].shareholdersEquityPerShareTTM": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].operatingCashFlowPerShareTTM": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].capexPerShareTTM": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].freeCashFlowPerShareTTM": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].netIncomePerEBTTTM": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].ebtPerEbitTTM": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].priceToFairValueTTM": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].debtToMarketCapTTM": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].effectiveTaxRateTTM": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].enterpriseValueMultipleTTM": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    },
+    "$[].dividendPerShareTTM": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 11,
+      "observed_missing_in_parent": 0
+    }
+  },
+  "limitation": "Observed path/type union, including nulls and missing observations. No assertion of universal requiredness, completeness or non-nullability. Workbook inferred schemas are separate.",
+  "observed_non_json_formats": [],
+  "binary_sample_files": []
+}

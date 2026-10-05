@@ -1,0 +1,21 @@
+[
+  {
+    "symbol": "NEE",
+    "name": "NextEra Energy, Inc.",
+    "price": 76.83,
+    "changePercentage": 0.63527,
+    "change": 0.485,
+    "volume": 18041737,
+    "dayLow": 76.58,
+    "dayHigh": 77.6975,
+    "yearHigh": 98.75,
+    "yearLow": 63.64,
+    "marketCap": 160265704645,
+    "priceAvg50": 83.3238,
+    "priceAvg200": 87.43325,
+    "exchange": "NYSE",
+    "open": 76.755,
+    "previousClose": 76.345,
+    "timestamp": 1790971202
+  }
+]

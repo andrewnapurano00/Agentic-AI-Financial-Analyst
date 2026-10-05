@@ -1,0 +1,14 @@
+[
+  {
+    "symbol": "AMZN",
+    "lastMonthCount": 3,
+    "lastMonthAvgPriceTarget": 299.33,
+    "lastQuarterCount": 31,
+    "lastQuarterAvgPriceTarget": 329.65,
+    "lastYearCount": 117,
+    "lastYearAvgPriceTarget": 308.09,
+    "allTimeCount": 370,
+    "allTimeAvgPriceTarget": 227.85,
+    "publishers": "[\"StreetInsider\",\"Benzinga\",\"MarketWatch\",\"Pulse 2.0\",\"Investing\",\"Barrons\"]"
+  }
+]

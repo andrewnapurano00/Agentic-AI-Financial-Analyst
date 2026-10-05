@@ -1,0 +1,42 @@
+[
+  {
+    "symbol": "NIVF",
+    "price": 0.129,
+    "name": "NewGenIvf Group Limited",
+    "change": 0.028,
+    "changesPercentage": 27.72277,
+    "exchange": "NASDAQ"
+  },
+  {
+    "symbol": "FNGR",
+    "price": 0.248,
+    "name": "FingerMotion, Inc.",
+    "change": 0.0723,
+    "changesPercentage": 41.14969,
+    "exchange": "NASDAQ"
+  },
+  {
+    "symbol": "AMOD",
+    "price": 3.49,
+    "name": "Alpha Modus Holdings, Inc.",
+    "change": 2.32,
+    "changesPercentage": 198.2906,
+    "exchange": "NASDAQ"
+  },
+  {
+    "symbol": "FLUX",
+    "price": 0.64,
+    "name": "Flux Power Holdings, Inc.",
+    "change": 0.2334,
+    "changesPercentage": 57.40285,
+    "exchange": "NASDAQ"
+  },
+  {
+    "symbol": "SCNX",
+    "price": 0.1588,
+    "name": "Scienture Holdings, Inc.",
+    "change": -0.0183,
+    "changesPercentage": -10.33315,
+    "exchange": "NASDAQ"
+  }
+]

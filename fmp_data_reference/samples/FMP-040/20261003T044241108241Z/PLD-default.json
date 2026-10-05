@@ -1,0 +1,42 @@
+[
+  {
+    "symbol": "PLD",
+    "date": "2026-10-02",
+    "freeFloat": 99.7475,
+    "floatShares": "930719983",
+    "outstandingShares": "933076000",
+    "source": null
+  },
+  {
+    "symbol": "PLD",
+    "date": "2026-10-01",
+    "freeFloat": 99.7475,
+    "floatShares": "930719983",
+    "outstandingShares": "933076000",
+    "source": null
+  },
+  {
+    "symbol": "PLD",
+    "date": "2026-09-30",
+    "freeFloat": 99.7475,
+    "floatShares": "930719983",
+    "outstandingShares": "933076000",
+    "source": null
+  },
+  {
+    "symbol": "PLD",
+    "date": "2026-09-29",
+    "freeFloat": 99.7475,
+    "floatShares": "930719983",
+    "outstandingShares": "933076000",
+    "source": null
+  },
+  {
+    "symbol": "PLD",
+    "date": "2026-09-28",
+    "freeFloat": 99.7475,
+    "floatShares": "930719983",
+    "outstandingShares": "933076000",
+    "source": null
+  }
+]

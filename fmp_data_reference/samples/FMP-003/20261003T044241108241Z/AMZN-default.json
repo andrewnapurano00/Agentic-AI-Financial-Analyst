@@ -1,0 +1,37 @@
+[
+  {
+    "symbol": "AMZN.NE",
+    "name": "Amazon.com, Inc.",
+    "currency": "CAD",
+    "exchangeFullName": "CBOE CA",
+    "exchange": "NEO"
+  },
+  {
+    "symbol": "AMZN",
+    "name": "Amazon.com, Inc.",
+    "currency": "USD",
+    "exchangeFullName": "NASDAQ Global Select",
+    "exchange": "NASDAQ"
+  },
+  {
+    "symbol": "0R1O.IL",
+    "name": "Amazon.com, Inc.",
+    "currency": "USD",
+    "exchangeFullName": "International Order Book",
+    "exchange": "IOB"
+  },
+  {
+    "symbol": "AMZN.TO",
+    "name": "Amazon.com, Inc.",
+    "currency": "CAD",
+    "exchangeFullName": "Toronto Stock Exchange",
+    "exchange": "TSX"
+  },
+  {
+    "symbol": "AMZ.DE",
+    "name": "Amazon.com, Inc.",
+    "currency": "EUR",
+    "exchangeFullName": "Deutsche Börse",
+    "exchange": "XETRA"
+  }
+]

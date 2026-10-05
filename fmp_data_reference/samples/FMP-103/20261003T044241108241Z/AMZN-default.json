@@ -1,0 +1,57 @@
+[
+  {
+    "symbol": "ACCV",
+    "publishedDate": "2026-10-03T04:30:00.000Z",
+    "title": "U.S. IPO Weekly Recap: Oura Postpones $2.1 Billion IPO And Accelevation Trades Off, Adding To Market Jitters",
+    "image": "https://images.financialmodelingprep.com/news/us-ipo-weekly-recap-oura-postpones-21-billion-ipo-20261003.jpg",
+    "site": "seekingalpha.com",
+    "text": "One sizable IPO, one direct listing, and one SPAC debuted this week. Three small IPOs, one direct listing, and six SPACs submitted initial filings. No IPOs are currently scheduled for the week ahead, signaling a quiet start to the fourth quarter.",
+    "url": "https://seekingalpha.com/article/4951720-us-ipo-oura-postpones-2-1-billion-ipo-accelevation-trades-off-adding-to-market-jitters",
+    "sentiment": "Positive",
+    "sentimentScore": 0.146
+  },
+  {
+    "symbol": "NAD",
+    "publishedDate": "2026-10-03T04:30:00.000Z",
+    "title": "NAD: Muni Bonds Down Big, 5 Big-Yield CEFs On Sale (8%+ Yields)",
+    "image": "https://images.financialmodelingprep.com/news/nad-muni-bonds-down-big-5-bigyield-cefs-on-20261003.jpg",
+    "site": "seekingalpha.com",
+    "text": "Municipal bonds just sold off hard over the last month, and many big-yield muni-bond CEFs (with yields over 8%) sold off even harder. This article shares data on 5 top big-yield muni-bond CEFs, with a special focus on the Nuveen Quality Municipal Income Fund. After explaining the selloff, big risks, and tax consequences (particularly related to anyone receiving Medicare or Affordable Care Act subsidies), the article concludes with a strong opinion on investing.",
+    "url": "https://seekingalpha.com/article/4951708-nad-muni-bonds-down-big-5-big-yield-cefs-on-sale-8-percent-plus-yields",
+    "sentiment": "Positive",
+    "sentimentScore": 0.258
+  },
+  {
+    "symbol": "GOOG",
+    "publishedDate": "2026-10-03T04:05:00.000Z",
+    "title": "Investor Alert: Robbins LLP Informs Investors of the Alphabet Inc. Class Action Lawsuit",
+    "image": "https://images.financialmodelingprep.com/news/investor-alert-robbins-llp-informs-investors-of-the-alphabet-20261003.jpg",
+    "site": "businesswire.com",
+    "text": "SAN DIEGO--(BUSINESS WIRE)---- $GOOG #Alphabet--Robbins LLP is investigating allegations that Alphabet misled investors regarding the timely launch of Gemini 3.5 Pro.",
+    "url": "https://www.businesswire.com/news/home/20261002359601/en/Investor-Alert-Robbins-LLP-Informs-Investors-of-the-Alphabet-Inc.-Class-Action-Lawsuit/",
+    "sentiment": "Neutral",
+    "sentimentScore": 0.082
+  },
+  {
+    "symbol": "DGII",
+    "publishedDate": "2026-10-03T04:02:34.000Z",
+    "title": "Digi International Acquires Disruptive Technologies to Expand SmartSense IoT Reach",
+    "image": "https://images.financialmodelingprep.com/news/digi-international-acquires-disruptive-technologies-to-expand-smartsense-iot-20261003.jpg",
+    "site": "marketbeat.com",
+    "text": "Digi International NASDAQ: DGII said it has agreed to acquire Oslo, Norway-based wireless sensing company Disruptive Technologies, a transaction the company expects to close following regulatory approval before the end of calendar 2026.",
+    "url": "https://www.marketbeat.com/instant-alerts/event-digi-international-acquires-disruptive-technologies-to-expand-smartsense-iot-reach-2026-10-02/",
+    "sentiment": "Positive",
+    "sentimentScore": 0.132
+  },
+  {
+    "symbol": "AAL",
+    "publishedDate": "2026-10-03T04:02:01.000Z",
+    "title": "American Airlines' pilots union says Spirit's data sale to Google could undermine aviation safety",
+    "image": "https://images.financialmodelingprep.com/news/american-airlines-pilots-union-says-spirits-data-sale-to-20261003.jpg",
+    "site": "businessinsider.com",
+    "text": "The union representing American Airlines pilots objected this week to Spirit's data sale to Google. The union cited privacy and safety concerns and joined prior objections to the sale.",
+    "url": "https://www.businessinsider.com/american-airlines-pilots-union-opposes-spirits-data-sale-to-google-2026-10",
+    "sentiment": "Positive",
+    "sentimentScore": 0.2
+  }
+]

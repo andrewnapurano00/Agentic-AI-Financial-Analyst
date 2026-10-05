@@ -1,0 +1,72 @@
+[
+  {
+    "date": "2026-09-30 08:00:00",
+    "symbol": "PG",
+    "stocktwitsPosts": 1,
+    "twitterPosts": 1,
+    "stocktwitsComments": 0,
+    "twitterComments": 0,
+    "stocktwitsLikes": 0,
+    "twitterLikes": 0,
+    "stocktwitsImpressions": 704,
+    "twitterImpressions": 1137,
+    "stocktwitsSentiment": 0.5,
+    "twitterSentiment": 0.61666
+  },
+  {
+    "date": "2026-09-30 07:00:00",
+    "symbol": "PG",
+    "stocktwitsPosts": 0,
+    "twitterPosts": 0,
+    "stocktwitsComments": 0,
+    "twitterComments": 0,
+    "stocktwitsLikes": 0,
+    "twitterLikes": 0,
+    "stocktwitsImpressions": 0,
+    "twitterImpressions": 0,
+    "stocktwitsSentiment": 0,
+    "twitterSentiment": 0
+  },
+  {
+    "date": "2026-09-30 06:00:00",
+    "symbol": "PG",
+    "stocktwitsPosts": 0,
+    "twitterPosts": 0,
+    "stocktwitsComments": 0,
+    "twitterComments": 0,
+    "stocktwitsLikes": 0,
+    "twitterLikes": 0,
+    "stocktwitsImpressions": 0,
+    "twitterImpressions": 0,
+    "stocktwitsSentiment": 0,
+    "twitterSentiment": 0
+  },
+  {
+    "date": "2026-09-30 05:00:00",
+    "symbol": "PG",
+    "stocktwitsPosts": 0,
+    "twitterPosts": 0,
+    "stocktwitsComments": 0,
+    "twitterComments": 0,
+    "stocktwitsLikes": 0,
+    "twitterLikes": 0,
+    "stocktwitsImpressions": 0,
+    "twitterImpressions": 0,
+    "stocktwitsSentiment": 0,
+    "twitterSentiment": 0
+  },
+  {
+    "date": "2026-09-30 04:00:00",
+    "symbol": "PG",
+    "stocktwitsPosts": 0,
+    "twitterPosts": 0,
+    "stocktwitsComments": 0,
+    "twitterComments": 0,
+    "stocktwitsLikes": 0,
+    "twitterLikes": 0,
+    "stocktwitsImpressions": 0,
+    "twitterImpressions": 0,
+    "stocktwitsSentiment": 0,
+    "twitterSentiment": 0
+  }
+]

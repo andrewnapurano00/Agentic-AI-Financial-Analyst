@@ -1,0 +1,56 @@
+[
+  {
+    "symbol": "NEE",
+    "fiscalYear": 2025,
+    "period": "FY",
+    "reportedCurrency": "USD",
+    "date": "2025-12-31",
+    "data": {
+      "FPL": 18262000000,
+      "NEER": 8760000000
+    }
+  },
+  {
+    "symbol": "NEE",
+    "fiscalYear": 2024,
+    "period": "FY",
+    "reportedCurrency": "USD",
+    "date": "2024-12-31",
+    "data": {
+      "NEER Segment": 7542000000,
+      "Florida Power & Light Company": 17019000000
+    }
+  },
+  {
+    "symbol": "NEE",
+    "fiscalYear": 2023,
+    "period": "FY",
+    "reportedCurrency": "USD",
+    "date": "2023-12-31",
+    "data": {
+      "Franchise And Gross Receipts Taxes": 1139000000
+    }
+  },
+  {
+    "symbol": "NEE",
+    "fiscalYear": 2022,
+    "period": "FY",
+    "reportedCurrency": "USD",
+    "date": "2022-12-31",
+    "data": {
+      "Franchise And Gross Receipts Taxes": 1035000000
+    }
+  },
+  {
+    "symbol": "NEE",
+    "fiscalYear": 2021,
+    "period": "FY",
+    "reportedCurrency": "USD",
+    "date": "2021-12-31",
+    "data": {
+      "FPL Segment": 12600000000,
+      "Gulf Power Segment": 1503000000,
+      "NEER Segment": 3053000000
+    }
+  }
+]

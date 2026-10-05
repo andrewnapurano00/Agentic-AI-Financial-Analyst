@@ -1,0 +1,62 @@
+[
+  {
+    "symbol": "JNJ",
+    "date": "2026-10-02",
+    "open": 259.79,
+    "high": 259.79,
+    "low": 255.12,
+    "close": 256.03,
+    "volume": 10176696,
+    "change": -3.76,
+    "changePercent": -1.44732,
+    "vwap": 256.98
+  },
+  {
+    "symbol": "JNJ",
+    "date": "2026-10-01",
+    "open": 263.68,
+    "high": 263.98,
+    "low": 258.33,
+    "close": 258.66,
+    "volume": 8292415,
+    "change": -5.02,
+    "changePercent": -1.9,
+    "vwap": 261.1625
+  },
+  {
+    "symbol": "JNJ",
+    "date": "2026-09-30",
+    "open": 267.91,
+    "high": 268.48,
+    "low": 264.51,
+    "close": 264.74,
+    "volume": 6343704,
+    "change": -3.17,
+    "changePercent": -1.18,
+    "vwap": 266.41
+  },
+  {
+    "symbol": "JNJ",
+    "date": "2026-09-29",
+    "open": 269.11,
+    "high": 271.89,
+    "low": 265.59,
+    "close": 267.57,
+    "volume": 5621788,
+    "change": -1.54,
+    "changePercent": -0.57226,
+    "vwap": 268.54
+  },
+  {
+    "symbol": "JNJ",
+    "date": "2026-09-28",
+    "open": 270.17,
+    "high": 273.78,
+    "low": 269.27,
+    "close": 271.95,
+    "volume": 7188862,
+    "change": 1.78,
+    "changePercent": 0.65884,
+    "vwap": 271.2925
+  }
+]

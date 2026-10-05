@@ -1,0 +1,37 @@
+[
+  {
+    "symbol": "CAT",
+    "name": "Caterpillar Inc.",
+    "currency": "USD",
+    "exchangeFullName": "New York Stock Exchange",
+    "exchange": "NYSE"
+  },
+  {
+    "symbol": "CATY",
+    "name": "Cathay General Bancorp",
+    "currency": "USD",
+    "exchangeFullName": "NASDAQ Global Select",
+    "exchange": "NASDAQ"
+  },
+  {
+    "symbol": "CATL",
+    "name": "Catalyst Acquisition Corp.",
+    "currency": "USD",
+    "exchangeFullName": "NASDAQ",
+    "exchange": "NASDAQ"
+  },
+  {
+    "symbol": "CATH",
+    "name": "Global X - S&P 500 Catholic Values ETF",
+    "currency": "USD",
+    "exchangeFullName": "NASDAQ Global Market",
+    "exchange": "NASDAQ"
+  },
+  {
+    "symbol": "CATV",
+    "name": "Opus Holdings, Inc.",
+    "currency": "USD",
+    "exchangeFullName": "Other OTC",
+    "exchange": "OTC"
+  }
+]

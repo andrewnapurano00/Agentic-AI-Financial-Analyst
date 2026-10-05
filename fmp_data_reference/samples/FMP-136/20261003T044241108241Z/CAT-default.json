@@ -1,0 +1,62 @@
+[
+  {
+    "symbol": "CAT",
+    "date": "2026-10-02",
+    "open": 840.8,
+    "high": 858.87,
+    "low": 836.46,
+    "close": 845.42,
+    "volume": 2378887,
+    "change": 4.62,
+    "changePercent": 0.54947669,
+    "vwap": 846.92
+  },
+  {
+    "symbol": "CAT",
+    "date": "2026-10-01",
+    "open": 810.58,
+    "high": 833.62,
+    "low": 802.44,
+    "close": 826.35,
+    "volume": 2155793,
+    "change": 15.77,
+    "changePercent": 1.95,
+    "vwap": 818.2475
+  },
+  {
+    "symbol": "CAT",
+    "date": "2026-09-30",
+    "open": 828.5,
+    "high": 831.95,
+    "low": 810.07,
+    "close": 810.79,
+    "volume": 1962761,
+    "change": -17.71,
+    "changePercent": -2.14,
+    "vwap": 820.3275
+  },
+  {
+    "symbol": "CAT",
+    "date": "2026-09-29",
+    "open": 826.53,
+    "high": 829.74,
+    "low": 815.5,
+    "close": 826.64,
+    "volume": 2313854,
+    "change": 0.11,
+    "changePercent": 0.01330865,
+    "vwap": 824.6025
+  },
+  {
+    "symbol": "CAT",
+    "date": "2026-09-28",
+    "open": 821.05,
+    "high": 827.57,
+    "low": 808.2,
+    "close": 819.95,
+    "volume": 2177535,
+    "change": -1.1,
+    "changePercent": -0.13397,
+    "vwap": 819.1925
+  }
+]

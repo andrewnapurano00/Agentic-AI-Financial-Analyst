@@ -1,0 +1,15 @@
+[
+  {
+    "bidSize": 1,
+    "askPrice": 251.4,
+    "volume": 33433392,
+    "askSize": 10,
+    "bidPrice": 251.35,
+    "lastSalePrice": 251.37,
+    "lastSaleSize": 0,
+    "lastSaleTime": 1790985592000,
+    "fmpLast": 251.37,
+    "lastUpdated": 1790985554000,
+    "symbol": "AMZN"
+  }
+]

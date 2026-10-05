@@ -1,0 +1,57 @@
+[
+  {
+    "2025-12-31": {
+      "Advertising Services": 68635000000,
+      "Amazon Web Services": 128725000000,
+      "Online Stores": 269287000000,
+      "Other Services": 5935000000,
+      "Physical Stores": 22561000000,
+      "Subscription Services": 49619000000,
+      "Third-Party Seller Services": 172162000000
+    }
+  },
+  {
+    "2024-12-31": {
+      "Advertising Services": 56214000000,
+      "Amazon Web Services": 107556000000,
+      "Online Stores": 247029000000,
+      "Other Services": 5425000000,
+      "Physical Stores": 21215000000,
+      "Subscription Services": 44374000000,
+      "Third-Party Seller Services": 156146000000
+    }
+  },
+  {
+    "2023-12-31": {
+      "Advertising Services": 46906000000,
+      "Amazon Web Services": 90757000000,
+      "Online Stores": 231872000000,
+      "Other Services": 4958000000,
+      "Physical Stores": 20030000000,
+      "Subscription Services": 40209000000,
+      "Third-Party Seller Services": 140053000000
+    }
+  },
+  {
+    "2022-12-31": {
+      "Advertising Services": 37739000000,
+      "Amazon Web Services": 80096000000,
+      "Online Stores": 220004000000,
+      "Other Services": 4247000000,
+      "Physical Stores": 18963000000,
+      "Subscription Services": 35218000000,
+      "Third-Party Seller Services": 117716000000
+    }
+  },
+  {
+    "2021-12-31": {
+      "Advertising Services": 31160000000,
+      "Amazon Web Services": 62202000000,
+      "Online Stores": 222075000000,
+      "Other Services": 2176000000,
+      "Physical Stores": 17075000000,
+      "Subscription Services": 31768000000,
+      "Third-Party Seller Services": 103366000000
+    }
+  }
+]

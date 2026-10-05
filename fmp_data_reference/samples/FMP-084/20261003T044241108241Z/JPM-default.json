@@ -1,0 +1,52 @@
+[
+  {
+    "symbol": "JPM",
+    "date": "2026-06-30",
+    "stockPrice": 327.33,
+    "numberOfShares": 2788700000,
+    "marketCapitalization": 912825171000,
+    "minusCashAndCashEquivalents": 309811000000,
+    "addTotalDebt": 1237871000000,
+    "enterpriseValue": 1840885171000
+  },
+  {
+    "symbol": "JPM",
+    "date": "2026-03-31",
+    "stockPrice": 294.16,
+    "numberOfShares": 2788700000,
+    "marketCapitalization": 820323992000,
+    "minusCashAndCashEquivalents": 312142000000,
+    "addTotalDebt": 1233435000000,
+    "enterpriseValue": 1741616992000
+  },
+  {
+    "symbol": "JPM",
+    "date": "2025-12-31",
+    "stockPrice": 322.22,
+    "numberOfShares": 2788700000,
+    "marketCapitalization": 898574914000,
+    "minusCashAndCashEquivalents": 343338000000,
+    "addTotalDebt": 942378000000,
+    "enterpriseValue": 1497614914000
+  },
+  {
+    "symbol": "JPM",
+    "date": "2025-09-30",
+    "stockPrice": 315.43,
+    "numberOfShares": 2788700000,
+    "marketCapitalization": 879639641000,
+    "minusCashAndCashEquivalents": 303436000000,
+    "addTotalDebt": 1064132000000,
+    "enterpriseValue": 1640335641000
+  },
+  {
+    "symbol": "JPM",
+    "date": "2025-06-30",
+    "stockPrice": 289.91,
+    "numberOfShares": 2788700000,
+    "marketCapitalization": 808472017000,
+    "minusCashAndCashEquivalents": 420327000000,
+    "addTotalDebt": 1080435000000,
+    "enterpriseValue": 1468580017000
+  }
+]

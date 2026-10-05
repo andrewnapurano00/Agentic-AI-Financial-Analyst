@@ -1,0 +1,42 @@
+[
+  {
+    "symbol": "AMZN",
+    "date": "2026-09-14",
+    "price": 256.78,
+    "quantity": 193,
+    "cusip": "023135106",
+    "name": "AMAZON COM INC;COM USD0.01"
+  },
+  {
+    "symbol": "AMZN",
+    "date": "2026-09-08",
+    "price": 258.51,
+    "quantity": 300,
+    "cusip": "023135106",
+    "name": "AMAZON COM INC;COM USD0.01"
+  },
+  {
+    "symbol": "AMZN",
+    "date": "2026-09-03",
+    "price": 254.98,
+    "quantity": 112,
+    "cusip": "023135106",
+    "name": "AMAZON COM INC;COM USD0.01"
+  },
+  {
+    "symbol": "AMZN",
+    "date": "2026-09-02",
+    "price": 254.92,
+    "quantity": 5765,
+    "cusip": "023135106",
+    "name": "AMAZON COM INC;COM USD0.01"
+  },
+  {
+    "symbol": "AMZN",
+    "date": "2026-08-31",
+    "price": 266.43,
+    "quantity": 86643,
+    "cusip": "023135106",
+    "name": "AMAZON COM INC;COM USD0.01"
+  }
+]

@@ -1,0 +1,32 @@
+[
+  {
+    "symbol": "AGCO",
+    "companyName": "AGCO Corporation",
+    "price": 114.61,
+    "mktCap": 8026336690
+  },
+  {
+    "symbol": "ASTE",
+    "companyName": "Astec Industries, Inc.",
+    "price": 42,
+    "mktCap": 965690460
+  },
+  {
+    "symbol": "DE",
+    "companyName": "Deere & Company",
+    "price": 687,
+    "mktCap": 185447010975
+  },
+  {
+    "symbol": "ETN",
+    "companyName": "Eaton Corporation plc",
+    "price": 436.11,
+    "mktCap": 169341513000
+  },
+  {
+    "symbol": "GE",
+    "companyName": "GE Aerospace",
+    "price": 309.56,
+    "mktCap": 321187851524
+  }
+]

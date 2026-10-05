@@ -1,0 +1,47 @@
+[
+  {
+    "symbol": "CAT",
+    "cik": "0000018230",
+    "companyName": "Caterpillar Inc.",
+    "industry": "AGRICULTURAL - MACHINERY",
+    "year": 2019,
+    "ESGRiskRating": "B",
+    "industryRank": "22 out of 22"
+  },
+  {
+    "symbol": "CAT",
+    "cik": "0000018230",
+    "companyName": "Caterpillar Inc.",
+    "industry": "AGRICULTURAL - MACHINERY",
+    "year": 1997,
+    "ESGRiskRating": "B-",
+    "industryRank": "8 out of 9"
+  },
+  {
+    "symbol": "CAT",
+    "cik": "0000018230",
+    "companyName": "Caterpillar Inc.",
+    "industry": "AGRICULTURAL - MACHINERY",
+    "year": 2001,
+    "ESGRiskRating": "B-",
+    "industryRank": "10 out of 10"
+  },
+  {
+    "symbol": "CAT",
+    "cik": "0000018230",
+    "companyName": "Caterpillar Inc.",
+    "industry": "AGRICULTURAL - MACHINERY",
+    "year": 2015,
+    "ESGRiskRating": "B",
+    "industryRank": "19 out of 19"
+  },
+  {
+    "symbol": "CAT",
+    "cik": "0000018230",
+    "companyName": "Caterpillar Inc.",
+    "industry": "AGRICULTURAL - MACHINERY",
+    "year": 1995,
+    "ESGRiskRating": "B-",
+    "industryRank": "7 out of 7"
+  }
+]

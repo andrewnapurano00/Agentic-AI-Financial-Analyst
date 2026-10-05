@@ -1,0 +1,26 @@
+[
+  {
+    "symbol": "CAT",
+    "name": "Caterpillar Inc.",
+    "price": 845.42,
+    "changesPercentage": 2.30774,
+    "change": 19.07,
+    "dayLow": 836.46,
+    "dayHigh": 858.87,
+    "yearHigh": 1073.46,
+    "yearLow": 483.55,
+    "marketCap": 389431732540,
+    "priceAvg50": 824.4308,
+    "priceAvg200": 793.8168,
+    "exchange": "NYSE",
+    "volume": 2378887,
+    "avgVolume": 2676496,
+    "open": 840.8,
+    "previousClose": 826.35,
+    "eps": 23.82,
+    "pe": 35.49,
+    "earningsAnnouncement": "2026-11-04T05:00:00.000+0000",
+    "sharesOutstanding": 460637000,
+    "timestamp": 1790971202
+  }
+]

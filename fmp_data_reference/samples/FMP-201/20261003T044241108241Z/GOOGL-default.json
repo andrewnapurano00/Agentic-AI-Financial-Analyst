@@ -1,0 +1,42 @@
+[
+  {
+    "symbol": "GOOGL",
+    "date": "2026-09-14",
+    "price": 338.5,
+    "quantity": 2660,
+    "cusip": "02079K305",
+    "name": "ALPHABET INC CAP STK CL A"
+  },
+  {
+    "symbol": "GOOGL",
+    "date": "2026-09-11",
+    "price": 332.6,
+    "quantity": 13,
+    "cusip": "02079K305",
+    "name": "ALPHABET INC CAP STK CL A"
+  },
+  {
+    "symbol": "GOOGL",
+    "date": "2026-09-08",
+    "price": 338.46,
+    "quantity": 33,
+    "cusip": "02079K305",
+    "name": "ALPHABET INC CAP STK CL A"
+  },
+  {
+    "symbol": "GOOGL",
+    "date": "2026-09-04",
+    "price": 342.48,
+    "quantity": 5217,
+    "cusip": "02079K305",
+    "name": "ALPHABET INC CAP STK CL A"
+  },
+  {
+    "symbol": "GOOGL",
+    "date": "2026-08-27",
+    "price": 342,
+    "quantity": 33,
+    "cusip": "02079K305",
+    "name": "ALPHABET INC CAP STK CL A"
+  }
+]

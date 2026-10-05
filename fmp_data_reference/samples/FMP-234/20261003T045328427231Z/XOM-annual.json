@@ -1,0 +1,57 @@
+[
+  {
+    "symbol": "XOM",
+    "fiscalYear": 2025,
+    "period": "FY",
+    "reportedCurrency": "USD",
+    "date": "2025-12-31",
+    "data": {
+      "Non-US": 385546000000,
+      "United States": 276862000000
+    }
+  },
+  {
+    "symbol": "XOM",
+    "fiscalYear": 2024,
+    "period": "FY",
+    "reportedCurrency": "USD",
+    "date": "2024-12-31",
+    "data": {
+      "Non-US": 200590000000,
+      "United States": 138657000000
+    }
+  },
+  {
+    "symbol": "XOM",
+    "fiscalYear": 2023,
+    "period": "FY",
+    "reportedCurrency": "USD",
+    "date": "2023-12-31",
+    "data": {
+      "United States": 127374000000,
+      "Non-US": 207323000000
+    }
+  },
+  {
+    "symbol": "XOM",
+    "fiscalYear": 2022,
+    "period": "FY",
+    "reportedCurrency": "USD",
+    "date": "2022-12-31",
+    "data": {
+      "United States": 149225000000,
+      "Non-US": 249450000000
+    }
+  },
+  {
+    "symbol": "XOM",
+    "fiscalYear": 2021,
+    "period": "FY",
+    "reportedCurrency": "USD",
+    "date": "2021-12-31",
+    "data": {
+      "Non-US": 172456000000,
+      "United States": 104236000000
+    }
+  }
+]

@@ -1,0 +1,52 @@
+[
+  {
+    "symbol": "VYLR",
+    "name": "Vylor Inc.",
+    "sector": "Basic Materials",
+    "subSector": "Agricultural Inputs",
+    "headQuarter": "Johnston, Iowa",
+    "dateFirstAdded": "2026-10-01",
+    "cik": "0002012866",
+    "founded": "2026-10-01"
+  },
+  {
+    "symbol": "BE",
+    "name": "Bloom Energy Corporation",
+    "sector": "Industrials",
+    "subSector": "Electrical Equipment & Parts",
+    "headQuarter": "San Jose, California",
+    "dateFirstAdded": "2026-09-21",
+    "cik": "0001664703",
+    "founded": "2000-12-31"
+  },
+  {
+    "symbol": "ILMN",
+    "name": "Illumina, Inc.",
+    "sector": "Healthcare",
+    "subSector": "Medical - Diagnostics & Research",
+    "headQuarter": "San Diego, California",
+    "dateFirstAdded": "2026-09-21",
+    "cik": "0001110803",
+    "founded": "1998-01-01"
+  },
+  {
+    "symbol": "P",
+    "name": "Everpure, Inc.",
+    "sector": "Technology",
+    "subSector": "Computer Hardware",
+    "headQuarter": "Santa Clara, California",
+    "dateFirstAdded": "2026-09-21",
+    "cik": "0001474432",
+    "founded": "2008-12-31"
+  },
+  {
+    "symbol": "RDDT",
+    "name": "Reddit, Inc.",
+    "sector": "Communication Services",
+    "subSector": "Internet Content & Information",
+    "headQuarter": "San Francisco, CA",
+    "dateFirstAdded": "2026-08-18",
+    "cik": "0001713445",
+    "founded": "2005-06-23"
+  }
+]

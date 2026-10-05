@@ -1,0 +1,14 @@
+[
+  {
+    "symbol": "AAPL",
+    "lastMonthCount": 4,
+    "lastMonthAvgPriceTarget": 354.75,
+    "lastQuarterCount": 17,
+    "lastQuarterAvgPriceTarget": 335.74,
+    "lastYearCount": 66,
+    "lastYearAvgPriceTarget": 315.98,
+    "allTimeCount": 263,
+    "allTimeAvgPriceTarget": 234.17,
+    "publishers": "[\"StreetInsider\",\"Benzinga\",\"Pulse 2.0\",\"MarketWatch\",\"Investing\",\"Barrons\",\"Investor's Business Daily\"]"
+  }
+]

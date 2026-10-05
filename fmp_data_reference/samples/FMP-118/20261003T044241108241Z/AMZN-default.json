@@ -1,0 +1,20 @@
+[
+  {
+    "symbol": "AMZN",
+    "cik": "0001018724",
+    "filingDate": "2026-09-24 00:00:00",
+    "acceptedDate": "2026-09-24 16:05:28",
+    "formType": "CERT",
+    "link": "https://www.sec.gov/Archives/edgar/data/1018724/000135445726000910/0001354457-26-000910-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1018724/000135445726000910/AMZN_8A_Cert_1018724.pdf"
+  },
+  {
+    "symbol": "AMZN",
+    "cik": "0001018724",
+    "filingDate": "2026-09-24 00:00:00",
+    "acceptedDate": "2026-09-24 08:30:49",
+    "formType": "8-A12B",
+    "link": "https://www.sec.gov/Archives/edgar/data/1018724/000110465926110227/0001104659-26-110227-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1018724/000110465926110227/tm2625860d1_8a12b.htm"
+  }
+]

@@ -1,0 +1,37 @@
+[
+  {
+    "symbol": "NEE.TO",
+    "name": "NextEra Energy, Inc.",
+    "currency": "CAD",
+    "exchangeFullName": "Toronto Stock Exchange",
+    "exchange": "TSX"
+  },
+  {
+    "symbol": "NEE-PN",
+    "name": "NextEra Energy, Inc.",
+    "currency": "USD",
+    "exchangeFullName": "New York Stock Exchange",
+    "exchange": "NYSE"
+  },
+  {
+    "symbol": "NEE-PR",
+    "name": "NextEra Energy, Inc.",
+    "currency": "USD",
+    "exchangeFullName": "New York Stock Exchange",
+    "exchange": "NYSE"
+  },
+  {
+    "symbol": "NEE-PQ",
+    "name": "NextEra Energy, Inc.",
+    "currency": "USD",
+    "exchangeFullName": "New York Stock Exchange",
+    "exchange": "NYSE"
+  },
+  {
+    "symbol": "NEE",
+    "name": "NextEra Energy, Inc.",
+    "currency": "USD",
+    "exchangeFullName": "New York Stock Exchange",
+    "exchange": "NYSE"
+  }
+]

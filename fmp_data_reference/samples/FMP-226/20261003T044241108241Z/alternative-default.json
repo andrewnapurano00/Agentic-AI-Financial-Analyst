@@ -1,0 +1,62 @@
+[
+  {
+    "symbol": "BTCUSD",
+    "date": "2026-10-03",
+    "open": 84506.336,
+    "high": 84718.26,
+    "low": 84434.45,
+    "close": 84600.07031,
+    "volume": 41327788032,
+    "change": 93.73,
+    "changePercent": 0.11091986,
+    "vwap": 84584.26
+  },
+  {
+    "symbol": "BTCUSD",
+    "date": "2026-10-02",
+    "open": 84506.336,
+    "high": 84681,
+    "low": 84434.45,
+    "close": 84681,
+    "volume": 44135124992,
+    "change": 174.66,
+    "changePercent": 0.20668746,
+    "vwap": 84598.82
+  },
+  {
+    "symbol": "BTCUSD",
+    "date": "2026-10-01",
+    "open": 83556.14,
+    "high": 85244,
+    "low": 83107.03,
+    "close": 84848.73,
+    "volume": 34180265984,
+    "change": 1292.59,
+    "changePercent": 1.54697,
+    "vwap": 84188.975
+  },
+  {
+    "symbol": "BTCUSD",
+    "date": "2026-09-30",
+    "open": 83638.42,
+    "high": 85613.72,
+    "low": 82911.86,
+    "close": 83556.14,
+    "volume": 36750753792,
+    "change": -82.28,
+    "changePercent": -0.09837584,
+    "vwap": 83930.035
+  },
+  {
+    "symbol": "BTCUSD",
+    "date": "2026-09-29",
+    "open": 83456.74,
+    "high": 84557.01,
+    "low": 82736,
+    "close": 83638.42,
+    "volume": 28029782264,
+    "change": 181.68,
+    "changePercent": 0.21769,
+    "vwap": 83597.0425
+  }
+]

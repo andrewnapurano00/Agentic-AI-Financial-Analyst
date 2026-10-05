@@ -1,0 +1,37 @@
+[
+  {
+    "holder": "NEOS ETF Trust",
+    "shares": 681220,
+    "dateReported": "2026-06-30",
+    "change": 62119,
+    "weightPercent": 0.02134975
+  },
+  {
+    "holder": "Clough Global Equity Fund",
+    "shares": 11919,
+    "dateReported": "2026-07-31",
+    "change": 0,
+    "weightPercent": 0.11803554
+  },
+  {
+    "holder": "MANNING & NAPIER FUND, INC.",
+    "shares": 28984,
+    "dateReported": "2026-07-31",
+    "change": 0,
+    "weightPercent": 0.0046125
+  },
+  {
+    "holder": "Legg Mason ETF Investment Trust",
+    "shares": 46731,
+    "dateReported": "2026-06-30",
+    "change": 14771,
+    "weightPercent": 0.01046934
+  },
+  {
+    "holder": "ALGER PORTFOLIOS",
+    "shares": 11806,
+    "dateReported": "2026-06-30",
+    "change": -56,
+    "weightPercent": 0.02056682
+  }
+]

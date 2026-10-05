@@ -1,0 +1,52 @@
+[
+  {
+    "symbol": "POWW",
+    "cik": "0001015383",
+    "filingDate": "2026-10-02 00:00:00",
+    "acceptedDate": "2026-10-02 17:29:10",
+    "formType": "8-K",
+    "hasFinancials": false,
+    "link": "https://www.sec.gov/Archives/edgar/data/1015383/000149315226045615/0001493152-26-045615-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1015383/000149315226045615/form8-k.htm"
+  },
+  {
+    "symbol": "POWWP",
+    "cik": "0001015383",
+    "filingDate": "2026-10-02 00:00:00",
+    "acceptedDate": "2026-10-02 17:29:10",
+    "formType": "8-K",
+    "hasFinancials": false,
+    "link": "https://www.sec.gov/Archives/edgar/data/1015383/000149315226045615/0001493152-26-045615-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1015383/000149315226045615/form8-k.htm"
+  },
+  {
+    "symbol": "EKSO",
+    "cik": "0001549084",
+    "filingDate": "2026-10-02 00:00:00",
+    "acceptedDate": "2026-10-02 17:27:47",
+    "formType": "8-K",
+    "hasFinancials": false,
+    "link": "https://www.sec.gov/Archives/edgar/data/1549084/000149315226045612/0001493152-26-045612-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1549084/000149315226045612/form8-k.htm"
+  },
+  {
+    "symbol": "RR",
+    "cik": "0001963685",
+    "filingDate": "2026-10-02 00:00:00",
+    "acceptedDate": "2026-10-02 17:25:13",
+    "formType": "8-K",
+    "hasFinancials": false,
+    "link": "https://www.sec.gov/Archives/edgar/data/1963685/000121390026106552/0001213900-26-106552-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1963685/000121390026106552/ea0307478-8k_richtech.htm"
+  },
+  {
+    "symbol": "None",
+    "cik": "0002012839",
+    "filingDate": "2026-10-02 00:00:00",
+    "acceptedDate": "2026-10-02 17:23:50",
+    "formType": "8-K",
+    "hasFinancials": false,
+    "link": "https://www.sec.gov/Archives/edgar/data/2012839/000162828026064662/0001628280-26-064662-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/2012839/000162828026064662/ebdc-20260930.htm"
+  }
+]

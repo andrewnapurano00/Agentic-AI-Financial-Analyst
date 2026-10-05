@@ -1,0 +1,37 @@
+[
+  {
+    "symbol": "PLD",
+    "name": "Prologis, Inc.",
+    "currency": "USD",
+    "exchangeFullName": "New York Stock Exchange",
+    "exchange": "NYSE"
+  },
+  {
+    "symbol": "PLDR",
+    "name": "Putnam Sustainable Leaders ETF",
+    "currency": "USD",
+    "exchangeFullName": "New York Stock Exchange Arca",
+    "exchange": "AMEX"
+  },
+  {
+    "symbol": "PLDGP",
+    "name": "Prologis, Inc.",
+    "currency": "USD",
+    "exchangeFullName": "Other OTC",
+    "exchange": "OTC"
+  },
+  {
+    "symbol": "PLDIF",
+    "name": "PLAID,Inc.",
+    "currency": "USD",
+    "exchangeFullName": "Other OTC",
+    "exchange": "OTC"
+  },
+  {
+    "symbol": "PLDI.TO",
+    "name": "PIMCO Low Duration Monthly Income Fund (Canada)",
+    "currency": "CAD",
+    "exchangeFullName": "Toronto Stock Exchange",
+    "exchange": "TSX"
+  }
+]

@@ -1,0 +1,32 @@
+[
+  {
+    "date": "2026-10-02",
+    "companyName": "NorthStar Earth & Space Enterprises, Inc.",
+    "oldSymbol": "VACI",
+    "newSymbol": "NSTR"
+  },
+  {
+    "date": "2026-10-01",
+    "companyName": "OpenWorld, Inc. Common Stock",
+    "oldSymbol": "VRME",
+    "newSymbol": "OPNW"
+  },
+  {
+    "date": "2026-09-30",
+    "companyName": "FF EAI Robotics Ecosystem Inc. Common Stock",
+    "oldSymbol": "AIXC",
+    "newSymbol": "FFR"
+  },
+  {
+    "date": "2026-09-29",
+    "companyName": "Ives Ultra AI Opportunities Inc. Common Stock",
+    "oldSymbol": "OAIO",
+    "newSymbol": "IVAI"
+  },
+  {
+    "date": "2026-09-28",
+    "companyName": "FG Communities Holdings Inc. 8.00% Cumulative Preferred Stock",
+    "oldSymbol": "FGNXP",
+    "newSymbol": "FGCPP"
+  }
+]

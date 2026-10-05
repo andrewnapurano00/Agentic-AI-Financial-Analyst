@@ -1,0 +1,32 @@
+[
+  {
+    "date": "2026-10-02",
+    "sector": "Basic Materials",
+    "exchange": "NASDAQ",
+    "averageChange": 1.2057399668250701
+  },
+  {
+    "date": "2026-10-02",
+    "sector": "Communication Services",
+    "exchange": "NASDAQ",
+    "averageChange": 0.0022799505484893956
+  },
+  {
+    "date": "2026-10-02",
+    "sector": "Consumer Cyclical",
+    "exchange": "NASDAQ",
+    "averageChange": 0.9825186437165678
+  },
+  {
+    "date": "2026-10-02",
+    "sector": "Consumer Defensive",
+    "exchange": "NASDAQ",
+    "averageChange": -0.15218276005449782
+  },
+  {
+    "date": "2026-10-02",
+    "sector": "Energy",
+    "exchange": "NASDAQ",
+    "averageChange": 0.6092632243033913
+  }
+]

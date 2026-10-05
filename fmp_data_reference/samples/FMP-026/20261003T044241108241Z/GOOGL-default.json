@@ -1,0 +1,52 @@
+[
+  {
+    "title": "Head of Investor Relations",
+    "name": "James H. Friedland",
+    "pay": null,
+    "currencyPay": "USD",
+    "gender": "male",
+    "yearBorn": 1970,
+    "titleSince": null,
+    "active": true
+  },
+  {
+    "title": "President of Global Affairs, Chief Legal Officer & Company Secretary",
+    "name": "J. Kent Walker",
+    "pay": 1015596,
+    "currencyPay": "USD",
+    "gender": "male",
+    "yearBorn": 1961,
+    "titleSince": null,
+    "active": true
+  },
+  {
+    "title": "Senior Vice President & Chief Business Officer of Google",
+    "name": "Philipp Schindler",
+    "pay": 1623997,
+    "currencyPay": "USD",
+    "gender": "male",
+    "yearBorn": 1971,
+    "titleSince": null,
+    "active": true
+  },
+  {
+    "title": "Chief Executive Officer & Director",
+    "name": "Sundar Pichai",
+    "pay": 10906079,
+    "currencyPay": "USD",
+    "gender": "male",
+    "yearBorn": 1973,
+    "titleSince": null,
+    "active": true
+  },
+  {
+    "title": "Senior Vice President & Chief Financial Officer",
+    "name": "Anat Ashkenazi",
+    "pay": 1087961,
+    "currencyPay": "USD",
+    "gender": "female",
+    "yearBorn": 1973,
+    "titleSince": null,
+    "active": true
+  }
+]

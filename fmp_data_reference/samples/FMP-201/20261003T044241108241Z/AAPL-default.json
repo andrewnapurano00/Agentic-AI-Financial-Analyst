@@ -1,0 +1,42 @@
+[
+  {
+    "symbol": "AAPL",
+    "date": "2026-09-14",
+    "price": 332.27,
+    "quantity": 15390,
+    "cusip": "037833100",
+    "name": "APPLE INC;COM NPV"
+  },
+  {
+    "symbol": "AAPL",
+    "date": "2026-09-11",
+    "price": 326.57,
+    "quantity": 2134,
+    "cusip": "037833100",
+    "name": "APPLE INC;COM NPV"
+  },
+  {
+    "symbol": "AAPL",
+    "date": "2026-09-10",
+    "price": 315.34,
+    "quantity": 469,
+    "cusip": "037833100",
+    "name": "APPLE INC;COM NPV"
+  },
+  {
+    "symbol": "AAPL",
+    "date": "2026-09-04",
+    "price": 328.21,
+    "quantity": 93,
+    "cusip": "037833100",
+    "name": "APPLE INC;COM NPV"
+  },
+  {
+    "symbol": "AAPL",
+    "date": "2026-09-03",
+    "price": 324.96,
+    "quantity": 1332,
+    "cusip": "037833100",
+    "name": "APPLE INC;COM NPV"
+  }
+]

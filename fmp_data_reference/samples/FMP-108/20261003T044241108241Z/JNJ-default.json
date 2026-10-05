@@ -1,0 +1,72 @@
+[
+  {
+    "date": "2026-10-02 19:00:00",
+    "symbol": "JNJ",
+    "stocktwitsPosts": 1,
+    "twitterPosts": 3,
+    "stocktwitsComments": 1,
+    "twitterComments": 2,
+    "stocktwitsLikes": 4,
+    "twitterLikes": 18,
+    "stocktwitsImpressions": 152,
+    "twitterImpressions": 547,
+    "stocktwitsSentiment": 0.5,
+    "twitterSentiment": 0.61387
+  },
+  {
+    "date": "2026-10-02 18:00:00",
+    "symbol": "JNJ",
+    "stocktwitsPosts": 0,
+    "twitterPosts": 0,
+    "stocktwitsComments": 0,
+    "twitterComments": 0,
+    "stocktwitsLikes": 0,
+    "twitterLikes": 0,
+    "stocktwitsImpressions": 0,
+    "twitterImpressions": 0,
+    "stocktwitsSentiment": 0,
+    "twitterSentiment": 0
+  },
+  {
+    "date": "2026-10-02 17:00:00",
+    "symbol": "JNJ",
+    "stocktwitsPosts": 1,
+    "twitterPosts": 2,
+    "stocktwitsComments": 2,
+    "twitterComments": 2,
+    "stocktwitsLikes": 9,
+    "twitterLikes": 11,
+    "stocktwitsImpressions": 152,
+    "twitterImpressions": 385,
+    "stocktwitsSentiment": 0.5,
+    "twitterSentiment": 0.56171
+  },
+  {
+    "date": "2026-10-02 16:00:00",
+    "symbol": "JNJ",
+    "stocktwitsPosts": 0,
+    "twitterPosts": 0,
+    "stocktwitsComments": 0,
+    "twitterComments": 0,
+    "stocktwitsLikes": 0,
+    "twitterLikes": 0,
+    "stocktwitsImpressions": 0,
+    "twitterImpressions": 0,
+    "stocktwitsSentiment": 0,
+    "twitterSentiment": 0
+  },
+  {
+    "date": "2026-10-02 15:00:00",
+    "symbol": "JNJ",
+    "stocktwitsPosts": 0,
+    "twitterPosts": 0,
+    "stocktwitsComments": 0,
+    "twitterComments": 0,
+    "stocktwitsLikes": 0,
+    "twitterLikes": 0,
+    "stocktwitsImpressions": 0,
+    "twitterImpressions": 0,
+    "stocktwitsSentiment": 0,
+    "twitterSentiment": 0
+  }
+]

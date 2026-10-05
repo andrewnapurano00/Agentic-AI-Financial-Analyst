@@ -1,0 +1,32 @@
+{
+  "api_references": 259,
+  "coverage_cases": 1816,
+  "case_statuses": {
+    "success": 1467,
+    "bounded_download": 17,
+    "restricted": 283,
+    "empty": 18,
+    "not_found": 11,
+    "success_non_json": 15,
+    "api_error": 1,
+    "not_present_in_bounded_bulk": 4
+  },
+  "apis_with_actual_samples": 218,
+  "sample_files": 2132,
+  "dictionary_entries": 17314,
+  "observed_dictionary_entries": 17228,
+  "workbook_only_entries": 86,
+  "apis_tracked": 259,
+  "api_references_with_all_11_stock_samples": 99,
+  "original_raw_bodies_verified": 1631,
+  "total_persisted_request_attempts": 1631,
+  "credential_scan_files": 5726,
+  "apis_with_complete_binary_samples": 2,
+  "apis_with_actual_json_or_complete_binary_samples": 220,
+  "mapping_statuses": {
+    "official_catalogue_verified_replacement": 215,
+    "no_current_replacement_verified": 40,
+    "official_legacy_documentation_correction": 1,
+    "official_legacy_websocket_documented": 3
+  }
+}

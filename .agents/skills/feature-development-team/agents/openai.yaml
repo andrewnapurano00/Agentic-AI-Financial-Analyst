@@ -1,0 +1,6 @@
+interface:
+  display_name: "Feature Development Team"
+  short_description: "Map financial data, build, review, and ticket follow-ups"
+  default_prompt: "Use $feature-development-team in plan-only mode to assess a workspace I specify and create up to five highest-priority nonduplicate improvement tickets in AAFA."
+policy:
+  allow_implicit_invocation: false

@@ -1,0 +1,37 @@
+[
+  {
+    "symbol": "CATR.PA",
+    "name": "Caterpillar Inc.",
+    "currency": "EUR",
+    "exchangeFullName": "Euronext Paris",
+    "exchange": "PAR"
+  },
+  {
+    "symbol": "CAT.SW",
+    "name": "Caterpillar Inc.",
+    "currency": "CHF",
+    "exchangeFullName": "Swiss Exchange",
+    "exchange": "SIX"
+  },
+  {
+    "symbol": "CAT",
+    "name": "Caterpillar Inc.",
+    "currency": "USD",
+    "exchangeFullName": "New York Stock Exchange",
+    "exchange": "NYSE"
+  },
+  {
+    "symbol": "CATR.TO",
+    "name": "Caterpillar Inc.",
+    "currency": "CAD",
+    "exchangeFullName": "Toronto Stock Exchange",
+    "exchange": "TSX"
+  },
+  {
+    "symbol": "CAT1.DE",
+    "name": "Caterpillar Inc.",
+    "currency": "EUR",
+    "exchangeFullName": "Deutsche Börse",
+    "exchange": "XETRA"
+  }
+]

@@ -1,0 +1,57 @@
+[
+  {
+    "symbol": "PG",
+    "cik": "0000080424",
+    "acceptanceTime": "2026-08-04 16:11:35",
+    "periodOfReport": "2026-06-30",
+    "companyName": "The Procter & Gamble Company",
+    "formType": "10-K",
+    "filingDate": "2026-08-04",
+    "employeeCount": 104000,
+    "source": "https://www.sec.gov/Archives/edgar/data/80424/000008042426000103/0000080424-26-000103-index.htm"
+  },
+  {
+    "symbol": "PG",
+    "cik": "0000080424",
+    "acceptanceTime": "2025-08-04 16:20:16",
+    "periodOfReport": "2025-06-30",
+    "companyName": "The Procter & Gamble Company",
+    "formType": "10-K",
+    "filingDate": "2025-08-04",
+    "employeeCount": 109000,
+    "source": "https://www.sec.gov/Archives/edgar/data/80424/000008042425000076/0000080424-25-000076-index.htm"
+  },
+  {
+    "symbol": "PG",
+    "cik": "0000080424",
+    "acceptanceTime": "2024-08-05 16:16:53",
+    "periodOfReport": "2024-06-30",
+    "companyName": "The Procter & Gamble Company",
+    "formType": "10-K",
+    "filingDate": "2024-08-05",
+    "employeeCount": 108000,
+    "source": "https://www.sec.gov/Archives/edgar/data/80424/000008042424000083/0000080424-24-000083-index.htm"
+  },
+  {
+    "symbol": "PG",
+    "cik": "0000080424",
+    "acceptanceTime": "2023-08-04 16:16:13",
+    "periodOfReport": "2023-06-30",
+    "companyName": "The Procter & Gamble Company",
+    "formType": "10-K",
+    "filingDate": "2023-08-04",
+    "employeeCount": 107000,
+    "source": "https://www.sec.gov/Archives/edgar/data/80424/000008042423000073/0000080424-23-000073-index.htm"
+  },
+  {
+    "symbol": "PG",
+    "cik": "0000080424",
+    "acceptanceTime": "2022-08-05 16:21:50",
+    "periodOfReport": "2022-06-30",
+    "companyName": "The Procter & Gamble Company",
+    "formType": "10-K",
+    "filingDate": "2022-08-05",
+    "employeeCount": 106000,
+    "source": "https://www.sec.gov/Archives/edgar/data/80424/000008042422000064/0000080424-22-000064-index.htm"
+  }
+]

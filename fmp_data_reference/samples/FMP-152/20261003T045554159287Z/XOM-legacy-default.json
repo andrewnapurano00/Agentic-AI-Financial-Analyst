@@ -1,0 +1,37 @@
+[
+  {
+    "etfSymbol": "ZYUS.AX",
+    "assetExposure": "XOM",
+    "sharesNumber": 4636,
+    "weightPercentage": 1.58,
+    "marketValue": 1096628
+  },
+  {
+    "etfSymbol": "ZWH-U.TO",
+    "assetExposure": "XOM",
+    "sharesNumber": 160574,
+    "weightPercentage": 2.9499999999999997,
+    "marketValue": 37417878.23
+  },
+  {
+    "etfSymbol": "ZWH-T.TO",
+    "assetExposure": "XOM",
+    "sharesNumber": 160574,
+    "weightPercentage": 2.9499999999999997,
+    "marketValue": 37417878.23
+  },
+  {
+    "etfSymbol": "ZWH.TO",
+    "assetExposure": "XOM",
+    "sharesNumber": 160574,
+    "weightPercentage": 2.9499999999999997,
+    "marketValue": 37417878.23
+  },
+  {
+    "etfSymbol": "ZWG-T.TO",
+    "assetExposure": "XOM",
+    "sharesNumber": 55063,
+    "weightPercentage": 3.9600000000000004,
+    "marketValue": 12831097.37
+  }
+]

@@ -1,0 +1,32 @@
+[
+  {
+    "symbol": "AEP",
+    "companyName": "American Electric Power Company, Inc.",
+    "price": 119.57,
+    "mktCap": 65093549290
+  },
+  {
+    "symbol": "D",
+    "companyName": "Dominion Energy, Inc.",
+    "price": 61.31,
+    "mktCap": 53923735933
+  },
+  {
+    "symbol": "DUK",
+    "companyName": "Duke Energy Corporation",
+    "price": 114.13,
+    "mktCap": 88975291480
+  },
+  {
+    "symbol": "ETR",
+    "companyName": "Entergy Corporation",
+    "price": 100.91,
+    "mktCap": 47087784463
+  },
+  {
+    "symbol": "GEV",
+    "companyName": "GE Vernova Inc.",
+    "price": 988.7,
+    "mktCap": 263324030320
+  }
+]

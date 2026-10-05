@@ -1,0 +1,37 @@
+[
+  {
+    "etfSymbol": "ZSP-U.TO",
+    "assetExposure": "PLD",
+    "sharesNumber": 303229,
+    "weightPercentage": 0.18,
+    "marketValue": 55287634.72
+  },
+  {
+    "etfSymbol": "ZSP.TO",
+    "assetExposure": "PLD",
+    "sharesNumber": 303229,
+    "weightPercentage": 0.18,
+    "marketValue": 55287634.72
+  },
+  {
+    "etfSymbol": "ZPA7.DE",
+    "assetExposure": "PLD",
+    "sharesNumber": 67170,
+    "weightPercentage": 0.33929769361512585,
+    "marketValue": 6414785.556133775
+  },
+  {
+    "etfSymbol": "ZPA6N.MX",
+    "assetExposure": "PLD",
+    "sharesNumber": 67170,
+    "weightPercentage": 0.33929769361512585,
+    "marketValue": 154735499.03031132
+  },
+  {
+    "etfSymbol": "ZPA6N.MCO",
+    "assetExposure": "PLD",
+    "sharesNumber": 67170,
+    "weightPercentage": 0.33929769361512585,
+    "marketValue": 154735499.03031132
+  }
+]

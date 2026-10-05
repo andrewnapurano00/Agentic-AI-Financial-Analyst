@@ -1,0 +1,57 @@
+[
+  {
+    "symbol": "LIN",
+    "date": "2026-09-03",
+    "recordDate": "2026-09-03",
+    "paymentDate": "2026-09-17",
+    "declarationDate": "2026-07-28",
+    "adjDividend": 1.6,
+    "dividend": 1.6,
+    "yield": 1.306538916194861,
+    "frequency": "Quarterly"
+  },
+  {
+    "symbol": "LIN",
+    "date": "2026-06-04",
+    "recordDate": "2026-06-04",
+    "paymentDate": "2026-06-18",
+    "declarationDate": "2026-04-27",
+    "adjDividend": 1.6,
+    "dividend": 1.6,
+    "yield": 1.221795250763622,
+    "frequency": "Quarterly"
+  },
+  {
+    "symbol": "LIN",
+    "date": "2026-03-11",
+    "recordDate": "2026-03-11",
+    "paymentDate": "2026-03-26",
+    "declarationDate": "2026-02-24",
+    "adjDividend": 1.6,
+    "dividend": 1.6,
+    "yield": 1.2667428096770843,
+    "frequency": "Quarterly"
+  },
+  {
+    "symbol": "LIN",
+    "date": "2025-12-03",
+    "recordDate": "2025-12-03",
+    "paymentDate": "2025-12-17",
+    "declarationDate": "2025-10-27",
+    "adjDividend": 1.5,
+    "dividend": 1.5,
+    "yield": 1.4664548454112185,
+    "frequency": "Quarterly"
+  },
+  {
+    "symbol": "LIN",
+    "date": "2025-09-04",
+    "recordDate": "2025-09-04",
+    "paymentDate": "2025-09-18",
+    "declarationDate": "2025-07-29",
+    "adjDividend": 1.5,
+    "dividend": 1.5,
+    "yield": 1.2468511187789748,
+    "frequency": "Quarterly"
+  }
+]

@@ -1,0 +1,32 @@
+[
+  {
+    "cik": "0001652044",
+    "symbol": "GOOG",
+    "title": "2.375% Senior Notes due 2028",
+    "exchange": "NASDAQ"
+  },
+  {
+    "cik": "0001652044",
+    "symbol": "GOOG",
+    "title": "2.500% Senior Notes due 2029",
+    "exchange": "NASDAQ"
+  },
+  {
+    "cik": "0001652044",
+    "symbol": "GOOG",
+    "title": "2.875% Senior Notes due 2031",
+    "exchange": "NASDAQ"
+  },
+  {
+    "cik": "0001652044",
+    "symbol": "GOOG",
+    "title": "3.000% Senior Notes due 2033",
+    "exchange": "NASDAQ"
+  },
+  {
+    "cik": "0001652044",
+    "symbol": "GOOG",
+    "title": "3.125% Senior Notes due 2034",
+    "exchange": "NASDAQ"
+  }
+]

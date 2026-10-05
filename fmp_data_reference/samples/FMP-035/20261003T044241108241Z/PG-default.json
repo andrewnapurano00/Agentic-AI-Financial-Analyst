@@ -1,0 +1,32 @@
+[
+  {
+    "symbol": "CL",
+    "companyName": "Colgate-Palmolive Company",
+    "price": 84.26,
+    "mktCap": 67423925140
+  },
+  {
+    "symbol": "CLX",
+    "companyName": "The Clorox Company",
+    "price": 80.41,
+    "mktCap": 9723257610
+  },
+  {
+    "symbol": "COST",
+    "companyName": "Costco Wholesale Corporation",
+    "price": 920.65,
+    "mktCap": 408288941350
+  },
+  {
+    "symbol": "EPC",
+    "companyName": "Edgewell Personal Care Company",
+    "price": 26.97,
+    "mktCap": 1242813362
+  },
+  {
+    "symbol": "KMB",
+    "companyName": "Kimberly-Clark Corporation",
+    "price": 94.36,
+    "mktCap": 31321858400
+  }
+]

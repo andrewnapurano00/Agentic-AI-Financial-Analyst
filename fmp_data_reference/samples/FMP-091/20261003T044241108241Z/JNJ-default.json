@@ -1,0 +1,14 @@
+[
+  {
+    "symbol": "JNJ",
+    "lastMonthCount": 2,
+    "lastMonthAvgPriceTarget": 299,
+    "lastQuarterCount": 18,
+    "lastQuarterAvgPriceTarget": 285.94,
+    "lastYearCount": 57,
+    "lastYearAvgPriceTarget": 248.14,
+    "allTimeCount": 103,
+    "allTimeAvgPriceTarget": 215.92,
+    "publishers": "[\"StreetInsider\",\"Benzinga\",\"Pulse 2.0\"]"
+  }
+]

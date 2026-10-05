@@ -1,0 +1,72 @@
+[
+  {
+    "date": "2021-09-30",
+    "fillingDate": "2021-11-15",
+    "acceptedDate": "2021-11-15",
+    "cik": "0001388838",
+    "cusip": "595112103",
+    "tickercusip": "MU",
+    "nameOfIssuer": "MICRON TECHNOLOGY INC",
+    "shares": 7760,
+    "titleOfClass": "COM",
+    "value": 551000,
+    "link": "https://www.sec.gov/Archives/edgar/data/1388838/000117266121002324/0001172661-21-002324-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1388838/000117266121002324/infotable.xml"
+  },
+  {
+    "date": "2021-09-30",
+    "fillingDate": "2021-11-15",
+    "acceptedDate": "2021-11-15",
+    "cik": "0001388838",
+    "cusip": "302081104",
+    "tickercusip": "EXLS",
+    "nameOfIssuer": "EXLSERVICE HOLDINGS INC",
+    "shares": 80953,
+    "titleOfClass": "COM",
+    "value": 9967000,
+    "link": "https://www.sec.gov/Archives/edgar/data/1388838/000117266121002324/0001172661-21-002324-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1388838/000117266121002324/infotable.xml"
+  },
+  {
+    "date": "2021-09-30",
+    "fillingDate": "2021-11-15",
+    "acceptedDate": "2021-11-15",
+    "cik": "0001388838",
+    "cusip": "231082801",
+    "tickercusip": "CMLS",
+    "nameOfIssuer": "CUMULUS MEDIA INC",
+    "shares": 39900,
+    "titleOfClass": "COM CL A",
+    "value": 489000,
+    "link": "https://www.sec.gov/Archives/edgar/data/1388838/000117266121002324/0001172661-21-002324-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1388838/000117266121002324/infotable.xml"
+  },
+  {
+    "date": "2021-09-30",
+    "fillingDate": "2021-11-15",
+    "acceptedDate": "2021-11-15",
+    "cik": "0001388838",
+    "cusip": "03212B103",
+    "tickercusip": "AMPY",
+    "nameOfIssuer": "AMPLIFY ENERGY CORP NEW",
+    "shares": 48730,
+    "titleOfClass": "COM",
+    "value": 259000,
+    "link": "https://www.sec.gov/Archives/edgar/data/1388838/000117266121002324/0001172661-21-002324-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1388838/000117266121002324/infotable.xml"
+  },
+  {
+    "date": "2021-09-30",
+    "fillingDate": "2021-11-15",
+    "acceptedDate": "2021-11-15",
+    "cik": "0001388838",
+    "cusip": "16411R208",
+    "tickercusip": "LNG",
+    "nameOfIssuer": "CHENIERE ENERGY INC",
+    "shares": 55842,
+    "titleOfClass": "COM NEW",
+    "value": 5454000,
+    "link": "https://www.sec.gov/Archives/edgar/data/1388838/000117266121002324/0001172661-21-002324-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1388838/000117266121002324/infotable.xml"
+  }
+]

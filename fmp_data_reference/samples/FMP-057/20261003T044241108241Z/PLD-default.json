@@ -1,0 +1,15 @@
+[
+  {
+    "bidSize": 3,
+    "askPrice": 132,
+    "volume": 3811300,
+    "askSize": 3,
+    "bidPrice": 126,
+    "lastSalePrice": 128.91,
+    "lastSaleSize": 480,
+    "lastSaleTime": 1790978425000,
+    "fmpLast": 128.91,
+    "lastUpdated": 1790985603000,
+    "symbol": "PLD"
+  }
+]

@@ -1,0 +1,21 @@
+[
+  {
+    "symbol": "LIN",
+    "name": "Linde plc",
+    "price": 479.48,
+    "changePercentage": 2.13654,
+    "change": 10.03,
+    "volume": 2527281,
+    "dayLow": 470.55,
+    "dayHigh": 483.41,
+    "yearHigh": 548.2,
+    "yearLow": 387.78,
+    "marketCap": 221807448000,
+    "priceAvg50": 481.0894,
+    "priceAvg200": 485.91434,
+    "exchange": "NASDAQ",
+    "open": 473.235,
+    "previousClose": 469.45,
+    "timestamp": 1790971201
+  }
+]

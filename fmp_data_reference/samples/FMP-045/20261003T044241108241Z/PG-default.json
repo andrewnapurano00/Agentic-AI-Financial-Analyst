@@ -1,0 +1,21 @@
+[
+  {
+    "symbol": "PG",
+    "name": "The Procter & Gamble Company",
+    "price": 144.91,
+    "changePercentage": 0.6669,
+    "change": 0.96,
+    "volume": 6219527,
+    "dayLow": 143.81,
+    "dayHigh": 145.21,
+    "yearHigh": 167.25,
+    "yearLow": 137.62,
+    "marketCap": 344481347061,
+    "priceAvg50": 145.7754,
+    "priceAvg200": 147.6467,
+    "exchange": "NYSE",
+    "open": 144.4,
+    "previousClose": 143.95,
+    "timestamp": 1790971202
+  }
+]

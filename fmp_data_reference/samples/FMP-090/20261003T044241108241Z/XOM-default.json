@@ -1,0 +1,67 @@
+[
+  {
+    "symbol": "XOM",
+    "publishedDate": "2026-09-25T09:36:54.000Z",
+    "newsURL": "https://thefly.com/ajax/news_get.php?id=4430791",
+    "newsTitle": "Exxon Mobil price target raised to $172 from $158 at HSBC",
+    "analystName": "",
+    "priceTarget": 90,
+    "adjPriceTarget": 90,
+    "priceWhenPosted": 162.05,
+    "newsPublisher": "TheFly",
+    "newsBaseURL": "thefly.com",
+    "analystCompany": "HSBC"
+  },
+  {
+    "symbol": "XOM",
+    "publishedDate": "2026-09-25T09:36:54.000Z",
+    "newsURL": "https://thefly.com/ajax/news_get.php?id=4430791",
+    "newsTitle": "Exxon Mobil price target raised to $172 from $158 at HSBC",
+    "analystName": "",
+    "priceTarget": 172,
+    "adjPriceTarget": 172,
+    "priceWhenPosted": 162.05,
+    "newsPublisher": "TheFly",
+    "newsBaseURL": "thefly.com",
+    "analystCompany": "UBS"
+  },
+  {
+    "symbol": "XOM",
+    "publishedDate": "2026-09-03T10:44:15.000Z",
+    "newsURL": "https://thefly.com/ajax/news_get.php?id=4420673",
+    "newsTitle": "Exxon Mobil price target raised to $185 from $158 at Piper Sandler",
+    "analystName": "",
+    "priceTarget": 185,
+    "adjPriceTarget": 185,
+    "priceWhenPosted": 164.17,
+    "newsPublisher": "TheFly",
+    "newsBaseURL": "thefly.com",
+    "analystCompany": "Piper Sandler"
+  },
+  {
+    "symbol": "XOM",
+    "publishedDate": "2026-08-19T13:16:55.000Z",
+    "newsURL": "https://thefly.com/ajax/news_get.php?id=4413856",
+    "newsTitle": "Exxon Mobil price target raised to $177 from $168 at Morgan Stanley",
+    "analystName": "",
+    "priceTarget": 177,
+    "adjPriceTarget": 177,
+    "priceWhenPosted": 167.97,
+    "newsPublisher": "TheFly",
+    "newsBaseURL": "thefly.com",
+    "analystCompany": "Morgan Stanley"
+  },
+  {
+    "symbol": "XOM",
+    "publishedDate": "2026-08-17T09:13:34.000Z",
+    "newsURL": "https://thefly.com/ajax/news_get.php?id=4412123",
+    "newsTitle": "Exxon Mobil price target lowered to $177 from $182 at Barclays",
+    "analystName": "",
+    "priceTarget": 177,
+    "adjPriceTarget": 177,
+    "priceWhenPosted": 160.09,
+    "newsPublisher": "TheFly",
+    "newsBaseURL": "thefly.com",
+    "analystCompany": "Barclays"
+  }
+]

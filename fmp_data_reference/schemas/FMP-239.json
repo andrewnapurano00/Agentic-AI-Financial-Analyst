@@ -1,0 +1,105 @@
+{
+  "api_id": "FMP-239",
+  "basis": "observed_response_shapes_not_json_schema_contract",
+  "generated_at_utc": "2026-10-03T05:06:37.534861+00:00",
+  "sample_files": [
+    "samples/FMP-239/20261003T045554159287Z/AAPL-bulk.json",
+    "samples/FMP-239/20261003T045554159287Z/AMZN-bulk.json",
+    "samples/FMP-239/20261003T045554159287Z/CAT-bulk.json",
+    "samples/FMP-239/20261003T045554159287Z/GOOGL-bulk.json",
+    "samples/FMP-239/20261003T045554159287Z/JNJ-bulk.json",
+    "samples/FMP-239/20261003T045554159287Z/JPM-bulk.json",
+    "samples/FMP-239/20261003T045554159287Z/LIN-bulk.json",
+    "samples/FMP-239/20261003T045554159287Z/NEE-bulk.json",
+    "samples/FMP-239/20261003T045554159287Z/PG-bulk.json",
+    "samples/FMP-239/20261003T045554159287Z/PLD-bulk.json",
+    "samples/FMP-239/20261003T045554159287Z/XOM-bulk.json",
+    "samples/FMP-239/20261003T045554159287Z/alternative-legacy-default.json"
+  ],
+  "required_fields_asserted": false,
+  "fields": {
+    "$": {
+      "observed_types": [
+        "array"
+      ],
+      "null_observations": 0,
+      "present_observations": 12,
+      "observed_missing_in_parent": 0
+    },
+    "$[]": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 12,
+      "observed_missing_in_parent": 0
+    },
+    "$[].symbol": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 12,
+      "observed_missing_in_parent": 0
+    },
+    "$[].date": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 12,
+      "observed_missing_in_parent": 0
+    },
+    "$[].open": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 12,
+      "observed_missing_in_parent": 0
+    },
+    "$[].low": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 12,
+      "observed_missing_in_parent": 0
+    },
+    "$[].high": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 12,
+      "observed_missing_in_parent": 0
+    },
+    "$[].close": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 12,
+      "observed_missing_in_parent": 0
+    },
+    "$[].adjClose": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 12,
+      "observed_missing_in_parent": 0
+    },
+    "$[].volume": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 12,
+      "observed_missing_in_parent": 0
+    }
+  },
+  "limitation": "Observed path/type union, including nulls and missing observations. No assertion of universal requiredness, completeness or non-nullability. Workbook inferred schemas are separate.",
+  "observed_non_json_formats": [],
+  "binary_sample_files": []
+}

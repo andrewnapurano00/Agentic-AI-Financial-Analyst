@@ -1,0 +1,231 @@
+{
+  "api_id": "FMP-046",
+  "basis": "observed_response_shapes_not_json_schema_contract",
+  "generated_at_utc": "2026-10-03T05:06:34.545544+00:00",
+  "sample_files": [
+    "samples/FMP-046/20261003T043456810198Z/AAPL-default.json",
+    "samples/FMP-046/20261003T043456810198Z/AMZN-default.json",
+    "samples/FMP-046/20261003T043456810198Z/CAT-default.json",
+    "samples/FMP-046/20261003T043456810198Z/GOOGL-default.json",
+    "samples/FMP-046/20261003T043456810198Z/JNJ-default.json",
+    "samples/FMP-046/20261003T043456810198Z/JPM-default.json",
+    "samples/FMP-046/20261003T043456810198Z/LIN-default.json",
+    "samples/FMP-046/20261003T043456810198Z/NEE-default.json",
+    "samples/FMP-046/20261003T043456810198Z/PG-default.json",
+    "samples/FMP-046/20261003T043456810198Z/PLD-default.json",
+    "samples/FMP-046/20261003T043456810198Z/XOM-default.json",
+    "samples/FMP-046/20261003T044241108241Z/AAPL-default.json",
+    "samples/FMP-046/20261003T044241108241Z/AMZN-default.json",
+    "samples/FMP-046/20261003T044241108241Z/CAT-default.json",
+    "samples/FMP-046/20261003T044241108241Z/GOOGL-default.json",
+    "samples/FMP-046/20261003T044241108241Z/JNJ-default.json",
+    "samples/FMP-046/20261003T044241108241Z/JPM-default.json",
+    "samples/FMP-046/20261003T044241108241Z/LIN-default.json",
+    "samples/FMP-046/20261003T044241108241Z/NEE-default.json",
+    "samples/FMP-046/20261003T044241108241Z/PG-default.json",
+    "samples/FMP-046/20261003T044241108241Z/PLD-default.json",
+    "samples/FMP-046/20261003T044241108241Z/XOM-default.json"
+  ],
+  "required_fields_asserted": false,
+  "fields": {
+    "$": {
+      "observed_types": [
+        "array"
+      ],
+      "null_observations": 0,
+      "present_observations": 22,
+      "observed_missing_in_parent": 0
+    },
+    "$[]": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 22,
+      "observed_missing_in_parent": 0
+    },
+    "$[].symbol": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 22,
+      "observed_missing_in_parent": 0
+    },
+    "$[].name": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 22,
+      "observed_missing_in_parent": 0
+    },
+    "$[].price": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 22,
+      "observed_missing_in_parent": 0
+    },
+    "$[].changesPercentage": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 22,
+      "observed_missing_in_parent": 0
+    },
+    "$[].change": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 22,
+      "observed_missing_in_parent": 0
+    },
+    "$[].dayLow": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 22,
+      "observed_missing_in_parent": 0
+    },
+    "$[].dayHigh": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 22,
+      "observed_missing_in_parent": 0
+    },
+    "$[].yearHigh": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 22,
+      "observed_missing_in_parent": 0
+    },
+    "$[].yearLow": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 22,
+      "observed_missing_in_parent": 0
+    },
+    "$[].marketCap": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 22,
+      "observed_missing_in_parent": 0
+    },
+    "$[].priceAvg50": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 22,
+      "observed_missing_in_parent": 0
+    },
+    "$[].priceAvg200": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 22,
+      "observed_missing_in_parent": 0
+    },
+    "$[].exchange": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 22,
+      "observed_missing_in_parent": 0
+    },
+    "$[].volume": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 22,
+      "observed_missing_in_parent": 0
+    },
+    "$[].avgVolume": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 22,
+      "observed_missing_in_parent": 0
+    },
+    "$[].open": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 22,
+      "observed_missing_in_parent": 0
+    },
+    "$[].previousClose": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 22,
+      "observed_missing_in_parent": 0
+    },
+    "$[].eps": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 22,
+      "observed_missing_in_parent": 0
+    },
+    "$[].pe": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 22,
+      "observed_missing_in_parent": 0
+    },
+    "$[].earningsAnnouncement": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 22,
+      "observed_missing_in_parent": 0
+    },
+    "$[].sharesOutstanding": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 22,
+      "observed_missing_in_parent": 0
+    },
+    "$[].timestamp": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 22,
+      "observed_missing_in_parent": 0
+    }
+  },
+  "limitation": "Observed path/type union, including nulls and missing observations. No assertion of universal requiredness, completeness or non-nullability. Workbook inferred schemas are separate.",
+  "observed_non_json_formats": [],
+  "binary_sample_files": []
+}

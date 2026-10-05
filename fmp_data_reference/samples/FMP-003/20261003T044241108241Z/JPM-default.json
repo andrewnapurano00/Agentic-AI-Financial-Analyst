@@ -1,0 +1,37 @@
+[
+  {
+    "symbol": "JPM.TO",
+    "name": "JPMorgan Chase & Co.",
+    "currency": "CAD",
+    "exchangeFullName": "Toronto Stock Exchange",
+    "exchange": "TSX"
+  },
+  {
+    "symbol": "CMC.DE",
+    "name": "JPMorgan Chase & Co.",
+    "currency": "EUR",
+    "exchangeFullName": "Deutsche Börse",
+    "exchange": "XETRA"
+  },
+  {
+    "symbol": "JPM-PK",
+    "name": "JPMorgan Chase & Co.",
+    "currency": "USD",
+    "exchangeFullName": "New York Stock Exchange",
+    "exchange": "NYSE"
+  },
+  {
+    "symbol": "JPM.NE",
+    "name": "JPMorgan Chase & Co.",
+    "currency": "CAD",
+    "exchangeFullName": "CBOE CA",
+    "exchange": "NEO"
+  },
+  {
+    "symbol": "JPM-PL",
+    "name": "JPMorgan Chase & Co.",
+    "currency": "USD",
+    "exchangeFullName": "New York Stock Exchange",
+    "exchange": "NYSE"
+  }
+]

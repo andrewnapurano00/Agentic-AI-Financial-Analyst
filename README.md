@@ -289,20 +289,21 @@ $env:PYTHONPATH = (Resolve-Path "src").Path
 python -m pytest -q
 ```
 
-The 2026-10-01 local audit passed **85 tests**. See [PLAN.md](PLAN.md#verification-ledger) for the dated environment, inventory and coverage gaps. Covered areas include:
+The 2026-10-03 quarterly-TTM verification collected **170 cases**: all **166 application cases passed**, plus two passing and two failing standalone FMP-reference cases. The two existing reference failures concern certificate export after truststore SSL injection. Independent financial/UI/PDF checks passed; startup/health and an offline browser workflow also passed. See [PLAN.md](PLAN.md#v-20261003-01---quarterly-derived-v2-ttm) for exact commands, inventory and remaining limits. Covered areas include:
 
 - Formatting and response cleanup.
 - Secret redaction and provider hardening.
 - Portfolio constraints and financial invariants.
 - Deep Research planning, evidence, citations, recovery, UI behavior, and exports.
-- Deep Research V2 helper routing, prompt limits, mechanical validation, cache keys, estimated committee accounting, and fixture presence.
+- Deep Research V2 helper routing, prompt limits, mechanical validation, cache keys, estimated committee accounting, and fixture presence. Quarterly TTM cases protect fiscal/currency/security alignment, missing inputs, ratios, no-TTM calls, and UI/PDF financial units.
+- V2 saved-evidence/report-review recovery, failure statuses, provider preflight, budget blocks, optional decision isolation and mocked Streamlit interactions. See [recovery controls](DEEP_RESEARCH.md#recovery-and-generation-controls-aafa-2).
 - Application configuration validation. Startup/HTTP health checks are separate smoke checks, not covered by `test_app_health.py`.
 
 Live-provider smoke checks should remain explicit and separate from the offline suite.
 
 ## Project-specific coding skills
 
-Ten repository skills live in `.agents/skills/` for provider debugging, financial correctness, Streamlit interactions, grounded research, portfolio validation, cost/performance, safe refactoring, exports, release checks, and GitHub synchronization. Use `$axiom-github-sync` to request a checked commit and push to this project's repository.
+Thirteen repository skills live in `.agents/skills/` for provider debugging, financial correctness, Streamlit interactions, grounded research, portfolio validation, cost/performance, safe refactoring, exports, release checks, GitHub synchronization, independent review, a review team with Jira ticket creation, and a feature development team. Use `$axiom-github-sync` to request a checked commit and push to this project's repository.
 
 In a Codex chat for this project, use a prompt such as `Use $axiom-provider-debug to fix missing ticker data on Top Movers.` See [the project skills guide](docs/PROJECT_SKILLS.md) for selection advice, examples for every skill, and discovery troubleshooting.
 
@@ -400,6 +401,23 @@ The deterministic validator may adjust target weights to enforce position caps, 
 
 This repository is an actively developed research application. Review the repository license, provider terms, model terms, and market-data redistribution restrictions before production or commercial use.
 
+For an independent code review, invoke `Use $code-review-agent`. The project skill lives in `.agents/skills/code-review-agent/` and saves uniquely named task reports in `docs/reviews/`.
+
+For a three-agent review and Jira triage, invoke `Use $code-review-team`. The reviewer passes findings to a summarizer, then a Jira writer creates up to six highest-priority nonduplicate issues in `AAFA` on `https://bigmeatpete717.atlassian.net`. Reports go to `docs/reviews/`; authenticated Jira access is required for publication. Add `dry run` to save drafts without Jira writes. See the [project skill guide](docs/PROJECT_SKILLS.md#review-team-and-jira) for scoped examples.
+
+For scoped feature improvements, invoke `Use $feature-development-team` with a workspace and desired outcome. It coordinates a financial data specialist, planner, builder, and independent verifier/Jira writer, capped at five creation attempts. Financial data choices use task-relevant `fmp_data_reference` coverage, fields and saved samples; live collection requires separate explicit authorization. Use `plan-only` to propose improvements, `drafts only` to disable Jira writes, or `dry run` to disable code changes and Jira writes. Delivery reports go to `docs/features/`. See [feature team examples](docs/PROJECT_SKILLS.md#feature-development-team).
+
+Jira team workflows use MCP first, checking tool availability, authentication and project permissions separately. If a child agent lacks tools, the coordinator may publish its verified drafts under the same ledger and duplicate checks. Browser login is an explicit fallback. Diagnose local configured servers with `codex mcp list`; configuration alone does not establish authenticated access.
+
+When native Jira tools are missing, the feature development team can use the working local MCP stdio bridge without a separate browser login. Its [access reference](.agents/skills/feature-development-team/references/jira-mcp-access.md) documents the helper, Windows trust/HTTP/2 configuration, payload handling and result checks. This workstation-specific tooling keeps the existing publication budget and authorization boundaries.
+
+
+### Deep Research V2 quarterly financial basis
+
+V2 derives supported TTM flows, margins, valuation ratios and average-balance ROE/ROA from validated quarterly statements, with separate dated balance snapshots. It avoids TTM endpoints and TTM-backed investigation bundles. Select **Force fresh research** to obtain this basis; older saved evidence remains explicitly labeled. V1 retains its existing behavior.
+
+Missing or incompatible inputs remain unavailable; unsupported provider formulas are not reconstructed. Saved cross-workspace packets are excluded in this mode, and the disabled control explains why. See [the quarterly financial methodology](DEEP_RESEARCH.md#v2-quarterly-derived-ttm-2026-10-03) for calculation conventions, currencies, period handling and limitations.
+
 ### Saved V2 result age
 
 Saved V2 results display **Saved result generated**, a UTC timestamp and elapsed age. This records the return of an explicit research or saved-evidence recovery operation, including evidence-only or incomplete output; it does not certify report completeness or evidence freshness. Reopening history, ordinary reruns, cache reuse, decisions and finalization preserve that timestamp. Older results without a valid timezone-aware timestamp show unavailable without fetching data.
@@ -407,3 +425,13 @@ Saved V2 results display **Saved result generated**, a UTC timestamp and elapsed
 Verification for the isolated October 4 timestamp release: **108 offline tests passed**, including 23 timestamp cases; compile/import, local health and a mocked browser saved-result workflow passed. This excludes earlier uncommitted V2 changes. See [PLAN verification](PLAN.md#v-20261004-01---saved-v2-result-generation-age-isolated-release) for scope and deployment limits.
 
 The timestamp change is also installed and browser-verified in the local working tree. Deployment for this run is local only; no Hugging Face publish was requested.
+
+### Serper news in Deep Research (2026-10-04)
+
+Both Deep Research workspaces use `SERPER_API_KEY` for per-company news and optional planner-requested web research. Enable the news control and choose the requested 7/30/90-day lookback. Saved results show Serper article counts, company coverage, and retrieval timestamps, with warnings for missing or partial coverage. Article publication dates are provider-supplied; requesting a lookback does not independently verify article freshness. Reopening saved results or generating a report from saved evidence does not refresh news. Start fresh research to collect newer evidence.
+
+Fresh Serper verification (October 4): 23 focused tests passed independently. Full local inventory: **214 passed, 2 failed**; both failures are the existing FMP reference collector TLS certificate-export issue. Local app health and synthetic browser checks passed for both research pages. This is offline verification, not proof of live Serper access; see PLAN V-20261004-02.
+
+Serper company-news searches use company name plus ticker, or ticker alone when the name is unavailable. Existing saved news remains unchanged; use **Force fresh research** in V2 or start a new V1 run to collect with the updated query. Empty results, missing response collections and discarded unsafe/unusable rows have distinct diagnostics. No live coverage guarantee is implied.
+
+Updated empty-news correction verification (October 4, V-20261004-03): **224 offline tests passed** in the local app environment (Python 3.12.0 / Streamlit 1.61.1), including 31 Serper regressions. The earlier Anaconda-specific FMP certificate failures did not recur. Restart Streamlit and choose fresh research to apply the simpler company-news queries; existing saved results are retained. Live Serper success remains unverified.

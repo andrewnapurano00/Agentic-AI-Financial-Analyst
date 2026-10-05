@@ -1,0 +1,15 @@
+[
+  {
+    "bidSize": 1,
+    "askPrice": 89.5,
+    "volume": 18187234.92223,
+    "askSize": 800,
+    "bidPrice": 76.72,
+    "lastSalePrice": 76.85,
+    "lastSaleSize": 1152,
+    "lastSaleTime": 1790985041000,
+    "fmpLast": 76.85,
+    "lastUpdated": 1790985608000,
+    "symbol": "NEE"
+  }
+]

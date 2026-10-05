@@ -1,0 +1,42 @@
+[
+  {
+    "symbol": "NEE",
+    "date": "2026-10-02",
+    "gradingCompany": "Seaport Global",
+    "previousGrade": "Sell",
+    "newGrade": "Sell",
+    "action": "maintain"
+  },
+  {
+    "symbol": "NEE",
+    "date": "2026-09-18",
+    "gradingCompany": "Morgan Stanley",
+    "previousGrade": "Overweight",
+    "newGrade": "Overweight",
+    "action": "maintain"
+  },
+  {
+    "symbol": "NEE",
+    "date": "2026-08-21",
+    "gradingCompany": "Morgan Stanley",
+    "previousGrade": "Overweight",
+    "newGrade": "Overweight",
+    "action": "maintain"
+  },
+  {
+    "symbol": "NEE",
+    "date": "2026-07-27",
+    "gradingCompany": "BMO Capital",
+    "previousGrade": "Outperform",
+    "newGrade": "Outperform",
+    "action": "maintain"
+  },
+  {
+    "symbol": "NEE",
+    "date": "2026-07-20",
+    "gradingCompany": "BMO Capital",
+    "previousGrade": "Outperform",
+    "newGrade": "Outperform",
+    "action": "maintain"
+  }
+]

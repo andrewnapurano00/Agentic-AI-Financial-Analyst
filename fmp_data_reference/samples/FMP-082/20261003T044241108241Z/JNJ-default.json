@@ -1,0 +1,15 @@
+[
+  {
+    "symbol": "JNJ",
+    "reportedCurrency": "USD",
+    "altmanZScore": 5.326867150322642,
+    "piotroskiScore": 8,
+    "workingCapital": 4879000000,
+    "totalAssets": 201060000000,
+    "retainedEarnings": 171665000000,
+    "ebit": 25981000000,
+    "marketCap": 617006291448,
+    "totalLiabilities": 116090000000,
+    "revenue": 97929000000
+  }
+]

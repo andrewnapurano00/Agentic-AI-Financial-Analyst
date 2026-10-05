@@ -1,0 +1,47 @@
+[
+  {
+    "symbol": "LIN",
+    "date": "2026-10-30",
+    "epsActual": null,
+    "epsEstimated": 4.52,
+    "revenueActual": null,
+    "revenueEstimated": 9160991000,
+    "lastUpdated": "2026-10-03"
+  },
+  {
+    "symbol": "LIN",
+    "date": "2026-07-31",
+    "epsActual": 4.5,
+    "epsEstimated": 4.49,
+    "revenueActual": 9289000000,
+    "revenueEstimated": 9015894000,
+    "lastUpdated": "2026-10-03"
+  },
+  {
+    "symbol": "LIN",
+    "date": "2026-05-01",
+    "epsActual": 4.33,
+    "epsEstimated": 4.27,
+    "revenueActual": 8781000000,
+    "revenueEstimated": 8598241000,
+    "lastUpdated": "2026-08-01"
+  },
+  {
+    "symbol": "LIN",
+    "date": "2026-02-05",
+    "epsActual": 4.2,
+    "epsEstimated": 4.18,
+    "revenueActual": 8764000000,
+    "revenueEstimated": 8642192000,
+    "lastUpdated": "2026-05-05"
+  },
+  {
+    "symbol": "LIN",
+    "date": "2025-10-31",
+    "epsActual": 4.21,
+    "epsEstimated": 4.18,
+    "revenueActual": 8615000000,
+    "revenueEstimated": 8619868650,
+    "lastUpdated": "2026-01-31"
+  }
+]

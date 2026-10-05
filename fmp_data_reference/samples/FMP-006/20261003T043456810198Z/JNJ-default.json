@@ -1,0 +1,20 @@
+[
+  {
+    "symbol": "JNJ",
+    "companyName": "Johnson & Johnson",
+    "cusip": "478160104",
+    "marketCap": 613102256014.5599
+  },
+  {
+    "symbol": "JNJ.DE",
+    "companyName": "Johnson & Johnson",
+    "cusip": "478160104",
+    "marketCap": 529454721760.89996
+  },
+  {
+    "symbol": "JNJ.SW",
+    "companyName": "Johnson & Johnson",
+    "cusip": "478160104",
+    "marketCap": 514874835249.05
+  }
+]

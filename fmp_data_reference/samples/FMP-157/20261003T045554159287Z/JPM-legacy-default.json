@@ -1,0 +1,72 @@
+[
+  {
+    "symbol": "JPM",
+    "cik": "0000019617",
+    "date": "2026-06-30",
+    "environmentalScore": 61.18,
+    "socialScore": 73.34,
+    "governanceScore": 65.65,
+    "ESGScore": 66.73,
+    "companyName": "JPMorgan Chase & Co.",
+    "industry": "National Commercial Banks",
+    "formType": "10-Q",
+    "acceptedDate": "2026-08-06 16:19:03",
+    "url": "https://www.sec.gov/Archives/edgar/data/19617/000162828026054343/0001628280-26-054343-index.htm"
+  },
+  {
+    "symbol": "JPM",
+    "cik": "0000019617",
+    "date": "2026-03-31",
+    "environmentalScore": 60.62,
+    "socialScore": 72.86,
+    "governanceScore": 65.24,
+    "ESGScore": 66.24,
+    "companyName": "JPMorgan Chase & Co.",
+    "industry": "National Commercial Banks",
+    "formType": "10-Q",
+    "acceptedDate": "2026-05-01 16:18:43",
+    "url": "https://www.sec.gov/Archives/edgar/data/19617/000162828026029344/0001628280-26-029344-index.htm"
+  },
+  {
+    "symbol": "JPM",
+    "cik": "0000019617",
+    "date": "2025-12-31",
+    "environmentalScore": 58.3,
+    "socialScore": 71.21,
+    "governanceScore": 62.34,
+    "ESGScore": 63.95,
+    "companyName": "JPMorgan Chase & Co.",
+    "industry": "National Commercial Banks",
+    "formType": "10-K",
+    "acceptedDate": "2026-02-13 16:20:00",
+    "url": "https://www.sec.gov/Archives/edgar/data/19617/000162828026008131/0001628280-26-008131-index.htm"
+  },
+  {
+    "symbol": "JPM",
+    "cik": "0000019617",
+    "date": "2025-09-30",
+    "environmentalScore": 61.33,
+    "socialScore": 73.37,
+    "governanceScore": 65.52,
+    "ESGScore": 66.74,
+    "companyName": "JPMorgan Chase & Co.",
+    "industry": "National Commercial Banks",
+    "formType": "10-Q",
+    "acceptedDate": "2025-11-04 16:18:08",
+    "url": "https://www.sec.gov/Archives/edgar/data/19617/000162828025048859/0001628280-25-048859-index.htm"
+  },
+  {
+    "symbol": "JPM",
+    "cik": "0000019617",
+    "date": "2025-06-30",
+    "environmentalScore": 61.27,
+    "socialScore": 73.06,
+    "governanceScore": 65.54,
+    "ESGScore": 66.62,
+    "companyName": "JPMorgan Chase & Co.",
+    "industry": "National Commercial Banks",
+    "formType": "10-Q",
+    "acceptedDate": "2025-08-05 16:18:22",
+    "url": "https://www.sec.gov/Archives/edgar/data/19617/000001961725000615/0000019617-25-000615-index.htm"
+  }
+]

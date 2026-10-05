@@ -1,0 +1,67 @@
+[
+  {
+    "symbol": "GOOGL",
+    "publishedDate": "2026-09-17T20:50:08.000Z",
+    "newsURL": "https://thefly.com/ajax/news_get.php?id=4427567",
+    "newsTitle": "Alphabet price target raised to $485 from $415 at Tigress Financial",
+    "analystName": "Ivan Feinseth",
+    "priceTarget": 485,
+    "adjPriceTarget": 485,
+    "priceWhenPosted": 347.33,
+    "newsPublisher": "TheFly",
+    "newsBaseURL": "thefly.com",
+    "analystCompany": "Tigress Financial"
+  },
+  {
+    "symbol": "GOOGL",
+    "publishedDate": "2026-09-16T22:18:32.000Z",
+    "newsURL": "https://thefly.com/ajax/news_get.php?id=4426929",
+    "newsTitle": "Alphabet price target raised to $450 from $420 at Evercore ISI",
+    "analystName": "Mark Mahaney",
+    "priceTarget": 450,
+    "adjPriceTarget": 450,
+    "priceWhenPosted": 342.87,
+    "newsPublisher": "TheFly",
+    "newsBaseURL": "thefly.com",
+    "analystCompany": "Evercore ISI"
+  },
+  {
+    "symbol": "GOOGL",
+    "publishedDate": "2026-07-23T13:01:00.000Z",
+    "newsURL": "https://thefly.com/ajax/news_get.php?id=4391036",
+    "newsTitle": "Alphabet price target lowered to $350 from $375 at DA Davidson",
+    "analystName": "",
+    "priceTarget": 350,
+    "adjPriceTarget": 350,
+    "priceWhenPosted": 316.02,
+    "newsPublisher": "TheFly",
+    "newsBaseURL": "thefly.com",
+    "analystCompany": "D.A. Davidson"
+  },
+  {
+    "symbol": "GOOGL",
+    "publishedDate": "2026-07-23T12:11:03.000Z",
+    "newsURL": "https://thefly.com/ajax/news_get.php?id=4390887",
+    "newsTitle": "Alphabet price target raised to $465 from $455 at BMO Capital",
+    "analystName": "Brian Pitz",
+    "priceTarget": 465,
+    "adjPriceTarget": 465,
+    "priceWhenPosted": 321.44,
+    "newsPublisher": "TheFly",
+    "newsBaseURL": "thefly.com",
+    "analystCompany": "BMO Capital"
+  },
+  {
+    "symbol": "GOOGL",
+    "publishedDate": "2026-07-23T11:50:56.000Z",
+    "newsURL": "https://thefly.com/ajax/news_get.php?id=4390829",
+    "newsTitle": "Alphabet price target raised to $440 from $435 at Roth Capital",
+    "analystName": "",
+    "priceTarget": 440,
+    "adjPriceTarget": 440,
+    "priceWhenPosted": 342.09,
+    "newsPublisher": "TheFly",
+    "newsBaseURL": "thefly.com",
+    "analystCompany": "Roth Capital"
+  }
+]

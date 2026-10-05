@@ -1,0 +1,72 @@
+[
+  {
+    "symbol": "PG",
+    "cik": "0000080424",
+    "date": "2026-06-30",
+    "environmentalScore": 74.62,
+    "socialScore": 72.17,
+    "governanceScore": 67.1,
+    "ESGScore": 71.3,
+    "companyName": "The Procter & Gamble Company",
+    "industry": "Soap, Detergents, Cleang Preparations, Perfumes, Cosmetics",
+    "formType": "10-K",
+    "acceptedDate": "2026-08-04 16:11:35",
+    "url": "https://www.sec.gov/Archives/edgar/data/80424/000008042426000103/0000080424-26-000103-index.htm"
+  },
+  {
+    "symbol": "PG",
+    "cik": "0000080424",
+    "date": "2026-03-31",
+    "environmentalScore": 75.8,
+    "socialScore": 75.12,
+    "governanceScore": 66.76,
+    "ESGScore": 72.56,
+    "companyName": "The Procter & Gamble Company",
+    "industry": "Soap, Detergents, Cleang Preparations, Perfumes, Cosmetics",
+    "formType": "10-Q",
+    "acceptedDate": "2026-04-24 16:14:30",
+    "url": "https://www.sec.gov/Archives/edgar/data/80424/000008042426000060/0000080424-26-000060-index.htm"
+  },
+  {
+    "symbol": "PG",
+    "cik": "0000080424",
+    "date": "2025-12-31",
+    "environmentalScore": 75.7,
+    "socialScore": 75.42,
+    "governanceScore": 66.75,
+    "ESGScore": 72.62,
+    "companyName": "The Procter & Gamble Company",
+    "industry": "Soap, Detergents, Cleang Preparations, Perfumes, Cosmetics",
+    "formType": "10-Q",
+    "acceptedDate": "2026-01-22 21:51:22",
+    "url": "https://www.sec.gov/Archives/edgar/data/80424/000008042426000011/0000080424-26-000011-index.htm"
+  },
+  {
+    "symbol": "PG",
+    "cik": "0000080424",
+    "date": "2025-09-30",
+    "environmentalScore": 75.33,
+    "socialScore": 74.86,
+    "governanceScore": 65.85,
+    "ESGScore": 72.01,
+    "companyName": "The Procter & Gamble Company",
+    "industry": "Soap, Detergents, Cleang Preparations, Perfumes, Cosmetics",
+    "formType": "10-Q",
+    "acceptedDate": "2025-10-24 16:24:02",
+    "url": "https://www.sec.gov/Archives/edgar/data/80424/000008042425000245/0000080424-25-000245-index.htm"
+  },
+  {
+    "symbol": "PG",
+    "cik": "0000080424",
+    "date": "2025-06-30",
+    "environmentalScore": 75.14,
+    "socialScore": 72.53,
+    "governanceScore": 66.91,
+    "ESGScore": 71.52,
+    "companyName": "The Procter & Gamble Company",
+    "industry": "Soap, Detergents, Cleang Preparations, Perfumes, Cosmetics",
+    "formType": "10-K",
+    "acceptedDate": "2025-08-04 16:20:16",
+    "url": "https://www.sec.gov/Archives/edgar/data/80424/000008042425000076/0000080424-25-000076-index.htm"
+  }
+]

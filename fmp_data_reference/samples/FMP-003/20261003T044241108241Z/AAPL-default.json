@@ -1,0 +1,37 @@
+[
+  {
+    "symbol": "AAPL.MX",
+    "name": "Apple Inc.",
+    "currency": "MXN",
+    "exchangeFullName": "Mexican Stock Exchange",
+    "exchange": "MEX"
+  },
+  {
+    "symbol": "AAPL.TO",
+    "name": "Apple Inc.",
+    "currency": "CAD",
+    "exchangeFullName": "Toronto Stock Exchange",
+    "exchange": "TSX"
+  },
+  {
+    "symbol": "AAPL",
+    "name": "Apple Inc.",
+    "currency": "USD",
+    "exchangeFullName": "NASDAQ Global Select",
+    "exchange": "NASDAQ"
+  },
+  {
+    "symbol": "AAPL.NE",
+    "name": "Apple Inc.",
+    "currency": "CAD",
+    "exchangeFullName": "CBOE CA",
+    "exchange": "NEO"
+  },
+  {
+    "symbol": "AAPL.DE",
+    "name": "Apple Inc.",
+    "currency": "EUR",
+    "exchangeFullName": "Deutsche Börse",
+    "exchange": "XETRA"
+  }
+]

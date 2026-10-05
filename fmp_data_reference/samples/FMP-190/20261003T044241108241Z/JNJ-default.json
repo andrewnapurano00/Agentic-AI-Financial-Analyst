@@ -1,0 +1,32 @@
+[
+  {
+    "holder": "BlackRock, Inc.",
+    "shares": 212098264,
+    "dateReported": "2026-06-30",
+    "change": -1287282
+  },
+  {
+    "holder": "VANGUARD CAPITAL MANAGEMENT LLC",
+    "shares": 157226374,
+    "dateReported": "2026-06-30",
+    "change": 621004
+  },
+  {
+    "holder": "STATE STREET CORP",
+    "shares": 133776025,
+    "dateReported": "2026-06-30",
+    "change": 299737
+  },
+  {
+    "holder": "VANGUARD PORTFOLIO MANAGEMENT LLC",
+    "shares": 64370816,
+    "dateReported": "2026-06-30",
+    "change": 856380
+  },
+  {
+    "holder": "GEODE CAPITAL MANAGEMENT, LLC",
+    "shares": 59086417,
+    "dateReported": "2026-06-30",
+    "change": -78445
+  }
+]

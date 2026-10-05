@@ -1,0 +1,37 @@
+[
+  {
+    "symbol": "NRG",
+    "name": "NRG Energy, Inc.",
+    "rank": 1,
+    "sentiment": 0.51333,
+    "sentimentChange": 133.33182
+  },
+  {
+    "symbol": "PDD",
+    "name": "PDD Holdings Inc.",
+    "rank": 2,
+    "sentiment": 0.6,
+    "sentimentChange": 80.72289
+  },
+  {
+    "symbol": "ALIT",
+    "name": "Alight, Inc.",
+    "rank": 3,
+    "sentiment": 0.64367,
+    "sentimentChange": 56.73655
+  },
+  {
+    "symbol": "CIEN",
+    "name": "Ciena Corporation",
+    "rank": 4,
+    "sentiment": 0.711,
+    "sentimentChange": 35.53183
+  },
+  {
+    "symbol": "TER",
+    "name": "Teradyne, Inc.",
+    "rank": 5,
+    "sentiment": 0.65517,
+    "sentimentChange": 39.6951
+  }
+]

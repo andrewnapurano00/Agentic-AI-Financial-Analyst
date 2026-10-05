@@ -1,0 +1,37 @@
+[
+  {
+    "symbol": "XONA.DE",
+    "name": "Exxon Mobil Corporation",
+    "currency": "EUR",
+    "exchangeFullName": "Deutsche Börse",
+    "exchange": "XETRA"
+  },
+  {
+    "symbol": "XOM.MX",
+    "name": "Exxon Mobil Corporation",
+    "currency": "MXN",
+    "exchangeFullName": "Mexican Stock Exchange",
+    "exchange": "MEX"
+  },
+  {
+    "symbol": "XOM.SW",
+    "name": "Exxon Mobil Corporation",
+    "currency": "CHF",
+    "exchangeFullName": "Swiss Exchange",
+    "exchange": "SIX"
+  },
+  {
+    "symbol": "XOM",
+    "name": "Exxon Mobil Corporation",
+    "currency": "USD",
+    "exchangeFullName": "New York Stock Exchange",
+    "exchange": "NYSE"
+  },
+  {
+    "symbol": "XOM.NE",
+    "name": "Exxon Mobil Corporation",
+    "currency": "CAD",
+    "exchangeFullName": "CBOE CA",
+    "exchange": "NEO"
+  }
+]

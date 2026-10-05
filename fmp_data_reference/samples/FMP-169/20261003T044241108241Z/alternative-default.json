@@ -1,0 +1,42 @@
+[
+  {
+    "symbol": "AMOD",
+    "price": 3.49,
+    "name": "Alpha Modus Holdings, Inc.",
+    "change": 2.32,
+    "changesPercentage": 198.2906,
+    "exchange": "NASDAQ"
+  },
+  {
+    "symbol": "SDEV",
+    "price": 7.48,
+    "name": "NovaBay Pharmaceuticals, Inc.",
+    "change": 3.82,
+    "changesPercentage": 104.37158,
+    "exchange": "NYSE"
+  },
+  {
+    "symbol": "CRANR",
+    "price": 0.17,
+    "name": "Crane Harbor Acquisition Corp. II Rights",
+    "change": 0.0698,
+    "changesPercentage": 69.66068,
+    "exchange": "NASDAQ"
+  },
+  {
+    "symbol": "XRPN",
+    "price": 39.42,
+    "name": "Armada Acquisition Corp. II",
+    "change": 15.99,
+    "changesPercentage": 68.24584,
+    "exchange": "NASDAQ"
+  },
+  {
+    "symbol": "FLUX",
+    "price": 0.64,
+    "name": "Flux Power Holdings, Inc.",
+    "change": 0.2334,
+    "changesPercentage": 57.40285,
+    "exchange": "NASDAQ"
+  }
+]

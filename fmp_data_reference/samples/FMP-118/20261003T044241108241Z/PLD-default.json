@@ -1,0 +1,47 @@
+[
+  {
+    "symbol": "PLD",
+    "cik": "0001045609",
+    "filingDate": "2026-10-02 00:00:00",
+    "acceptedDate": "2026-10-02 16:30:52",
+    "formType": "4",
+    "link": "https://www.sec.gov/Archives/edgar/data/1045609/000119312526412441/0001193125-26-412441-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1045609/000119312526412441/xslF345X06/ownership.xml"
+  },
+  {
+    "symbol": "PLD",
+    "cik": "0001045609",
+    "filingDate": "2026-10-02 00:00:00",
+    "acceptedDate": "2026-10-02 16:30:47",
+    "formType": "4",
+    "link": "https://www.sec.gov/Archives/edgar/data/1045609/000119312526412438/0001193125-26-412438-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1045609/000119312526412438/xslF345X06/ownership.xml"
+  },
+  {
+    "symbol": "PLD",
+    "cik": "0001045609",
+    "filingDate": "2026-10-02 00:00:00",
+    "acceptedDate": "2026-10-02 16:30:45",
+    "formType": "4",
+    "link": "https://www.sec.gov/Archives/edgar/data/1045609/000119312526412437/0001193125-26-412437-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1045609/000119312526412437/xslF345X06/ownership.xml"
+  },
+  {
+    "symbol": "PLD",
+    "cik": "0001045609",
+    "filingDate": "2026-10-02 00:00:00",
+    "acceptedDate": "2026-10-02 16:30:42",
+    "formType": "4",
+    "link": "https://www.sec.gov/Archives/edgar/data/1045609/000119312526412435/0001193125-26-412435-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1045609/000119312526412435/xslF345X06/ownership.xml"
+  },
+  {
+    "symbol": "PLD",
+    "cik": "0001045609",
+    "filingDate": "2026-10-02 00:00:00",
+    "acceptedDate": "2026-10-02 16:30:36",
+    "formType": "4",
+    "link": "https://www.sec.gov/Archives/edgar/data/1045609/000119312526412433/0001193125-26-412433-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1045609/000119312526412433/xslF345X06/ownership.xml"
+  }
+]

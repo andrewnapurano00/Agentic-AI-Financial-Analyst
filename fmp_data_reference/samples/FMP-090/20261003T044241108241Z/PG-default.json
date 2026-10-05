@@ -1,0 +1,67 @@
+[
+  {
+    "symbol": "PG",
+    "publishedDate": "2026-08-24T13:03:00.000Z",
+    "newsURL": "https://www.streetinsider.com/Analyst+Comments/Procter+%26+Gamble+%28PG%29+PT+Raised+to+%24149+at+Bernstein+SocGen+Group/26964992.html",
+    "newsTitle": "Procter & Gamble (PG) PT Raised to $149 at Bernstein SocGen Group",
+    "analystName": "Cristian Rios",
+    "priceTarget": 149,
+    "adjPriceTarget": 149,
+    "priceWhenPosted": 146.25,
+    "newsPublisher": "StreetInsider",
+    "newsBaseURL": "streetinsider.com",
+    "analystCompany": "Bernstein"
+  },
+  {
+    "symbol": "PG",
+    "publishedDate": "2026-07-30T10:33:23.000Z",
+    "newsURL": "https://thefly.com/ajax/news_get.php?id=4396103",
+    "newsTitle": "HSBC downgrades Procter & Gamble to Hold after 'weak' Q4",
+    "analystName": "Diego Serrano",
+    "priceTarget": 149,
+    "adjPriceTarget": 149,
+    "priceWhenPosted": 146.15,
+    "newsPublisher": "TheFly",
+    "newsBaseURL": "thefly.com",
+    "analystCompany": "HSBC"
+  },
+  {
+    "symbol": "PG",
+    "publishedDate": "2026-07-29T23:38:21.000Z",
+    "newsURL": "https://thefly.com/ajax/news_get.php?id=4395898",
+    "newsTitle": "Procter & Gamble downgraded to Hold from Buy at HSBC",
+    "analystName": "",
+    "priceTarget": 142,
+    "adjPriceTarget": 142,
+    "priceWhenPosted": 146.15,
+    "newsPublisher": "TheFly",
+    "newsBaseURL": "thefly.com",
+    "analystCompany": "HSBC"
+  },
+  {
+    "symbol": "PG",
+    "publishedDate": "2026-07-21T10:05:07.000Z",
+    "newsURL": "https://thefly.com/ajax/news_get.php?id=4388415",
+    "newsTitle": "Procter & Gamble price target raised to $152 from $146 at Barclays",
+    "analystName": "",
+    "priceTarget": 152,
+    "adjPriceTarget": 152,
+    "priceWhenPosted": 149.14,
+    "newsPublisher": "TheFly",
+    "newsBaseURL": "thefly.com",
+    "analystCompany": "Barclays"
+  },
+  {
+    "symbol": "PG",
+    "publishedDate": "2026-06-11T20:18:21.000Z",
+    "newsURL": "https://thefly.com/ajax/news_get.php?id=4369828",
+    "newsTitle": "Procter & Gamble initiated with a Market Perform at Bernstein",
+    "analystName": "",
+    "priceTarget": 156,
+    "adjPriceTarget": 156,
+    "priceWhenPosted": 148.32,
+    "newsPublisher": "TheFly",
+    "newsBaseURL": "thefly.com",
+    "analystCompany": "Bernstein"
+  }
+]

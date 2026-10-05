@@ -51,3 +51,8 @@ reports/
 checkpoints/
 models/
 .cache/
+
+# Local FMP collection responses and transport diagnostics
+/fmp_data_reference/raw/
+/fmp_data_reference/documentation/*.html
+/fmp_data_reference/documentation/windows_ca_bundle.pem

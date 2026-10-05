@@ -1,0 +1,57 @@
+[
+  {
+    "symbol": "PLD",
+    "date": "2026-09-16",
+    "recordDate": "2026-09-16",
+    "paymentDate": "2026-09-30",
+    "declarationDate": "2026-09-02",
+    "adjDividend": 1.07,
+    "dividend": 1.07,
+    "yield": 3.155376102886197,
+    "frequency": "Quarterly"
+  },
+  {
+    "symbol": "PLD",
+    "date": "2026-06-16",
+    "recordDate": "2026-06-16",
+    "paymentDate": "2026-06-30",
+    "declarationDate": "2026-04-28",
+    "adjDividend": 1.07,
+    "dividend": 1.07,
+    "yield": 2.8469750889679712,
+    "frequency": "Quarterly"
+  },
+  {
+    "symbol": "PLD",
+    "date": "2026-03-17",
+    "recordDate": "2026-03-17",
+    "paymentDate": "2026-03-31",
+    "declarationDate": "2026-02-12",
+    "adjDividend": 1.07,
+    "dividend": 1.07,
+    "yield": 3.077847008482846,
+    "frequency": "Quarterly"
+  },
+  {
+    "symbol": "PLD",
+    "date": "2025-12-16",
+    "recordDate": "2025-12-16",
+    "paymentDate": "2025-12-31",
+    "declarationDate": "2025-12-03",
+    "adjDividend": 1.01,
+    "dividend": 1.01,
+    "yield": 3.1658960896481467,
+    "frequency": "Quarterly"
+  },
+  {
+    "symbol": "PLD",
+    "date": "2025-09-16",
+    "recordDate": "2025-09-16",
+    "paymentDate": "2025-09-30",
+    "declarationDate": "2025-08-29",
+    "adjDividend": 1.01,
+    "dividend": 1.01,
+    "yield": 3.4990791896869244,
+    "frequency": "Quarterly"
+  }
+]

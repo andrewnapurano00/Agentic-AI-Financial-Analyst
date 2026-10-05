@@ -1,0 +1,30 @@
+[
+  {
+    "symbol": "JNJ.SW",
+    "name": "Johnson & Johnson",
+    "currency": "CHF",
+    "exchangeFullName": "Swiss Exchange",
+    "exchange": "SIX"
+  },
+  {
+    "symbol": "JNJ.DE",
+    "name": "Johnson & Johnson",
+    "currency": "EUR",
+    "exchangeFullName": "Deutsche Börse",
+    "exchange": "XETRA"
+  },
+  {
+    "symbol": "JNJ.TO",
+    "name": "Johnson & Johnson",
+    "currency": "CAD",
+    "exchangeFullName": "Toronto Stock Exchange",
+    "exchange": "TSX"
+  },
+  {
+    "symbol": "JNJ",
+    "name": "Johnson & Johnson",
+    "currency": "USD",
+    "exchangeFullName": "New York Stock Exchange",
+    "exchange": "NYSE"
+  }
+]

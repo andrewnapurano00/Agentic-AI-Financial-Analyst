@@ -1,0 +1,1068 @@
+{
+  "api_id": "FMP-175",
+  "basis": "observed_response_shapes_not_json_schema_contract",
+  "generated_at_utc": "2026-10-03T05:06:36.643146+00:00",
+  "sample_files": [
+    "samples/FMP-175/20261003T045554159287Z/alternative-legacy-default.json"
+  ],
+  "required_fields_asserted": false,
+  "fields": {
+    "$": {
+      "observed_types": [
+        "array"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[]": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].symbol": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].date": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].short_name": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].sector": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].market_and_exchange_names": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].as_of_date_in_form_yymmdd": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].cftc_contract_market_code": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].cftc_market_code": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].cftc_region_code": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].cftc_commodity_code": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].open_interest_all": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].noncomm_positions_long_all": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].noncomm_positions_short_all": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].noncomm_postions_spread_all": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].comm_positions_long_all": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].comm_positions_short_all": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].tot_rept_positions_long_all": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].tot_rept_positions_short_all": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].nonrept_positions_long_all": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].nonrept_positions_short_all": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].open_interest_old": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].noncomm_positions_long_old": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].noncomm_positions_short_old": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].noncomm_positions_spread_old": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].comm_positions_long_old": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].comm_positions_short_old": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].tot_rept_positions_long_old": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].tot_rept_positions_short_old": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].nonrept_positions_long_old": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].nonrept_positions_short_old": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].open_interest_other": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].noncomm_positions_long_other": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].noncomm_positions_short_other": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].noncomm_positions_spread_other": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].comm_positions_long_other": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].comm_positions_short_other": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].tot_rept_positions_long_other": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].tot_rept_positions_short_other": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].nonrept_positions_long_other": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].nonrept_positions_short_other": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].change_in_open_interest_all": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].change_in_noncomm_long_all": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].change_in_noncomm_short_all": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].change_in_noncomm_spead_all": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].change_in_comm_long_all": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].change_in_comm_short_all": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].change_in_tot_rept_long_all": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].change_in_tot_rept_short_all": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].change_in_nonrept_long_all": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].change_in_nonrept_short_all": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].pct_of_open_interest_all": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].pct_of_oi_noncomm_long_all": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].pct_of_oi_noncomm_short_all": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].pct_of_oi_noncomm_spread_all": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].pct_of_oi_comm_long_all": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].pct_of_oi_comm_short_all": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].pct_of_oi_tot_rept_long_all": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].pct_of_oi_tot_rept_short_all": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].pct_of_oi_nonrept_long_all": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].pct_of_oi_nonrept_short_all": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].pct_of_open_interest_ol": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].pct_of_oi_noncomm_long_ol": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].pct_of_oi_noncomm_short_ol": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].pct_of_oi_noncomm_spread_ol": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].pct_of_oi_comm_long_ol": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].pct_of_oi_comm_short_ol": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].pct_of_oi_tot_rept_long_ol": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].pct_of_oi_tot_rept_short_ol": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].pct_of_oi_nonrept_long_ol": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].pct_of_oi_nonrept_short_ol": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].pct_of_open_interest_other": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].pct_of_oi_noncomm_long_other": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].pct_of_oi_noncomm_short_other": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].pct_of_oi_noncomm_spread_other": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].pct_of_oi_comm_long_other": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].pct_of_oi_comm_short_other": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].pct_of_oi_tot_rept_long_other": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].pct_of_oi_tot_rept_short_other": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].pct_of_oi_nonrept_long_other": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].pct_of_oi_nonrept_short_other": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].traders_tot_all": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].traders_noncomm_long_all": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].traders_noncomm_short_all": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].traders_noncomm_spread_all": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].traders_comm_long_all": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].traders_comm_short_all": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].traders_tot_rept_long_all": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].traders_tot_rept_short_all": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].traders_tot_ol": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].traders_noncomm_long_ol": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].traders_noncomm_short_ol": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].traders_noncomm_spead_ol": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].traders_comm_long_ol": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].traders_comm_short_ol": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].traders_tot_rept_long_ol": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].traders_tot_rept_short_ol": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].traders_tot_other": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].traders_noncomm_long_other": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].traders_noncomm_short_other": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].traders_noncomm_spread_other": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].traders_comm_long_other": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].traders_comm_short_other": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].traders_tot_rept_long_other": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].traders_tot_rept_short_other": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].conc_gross_le_4_tdr_long_all": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].conc_gross_le_4_tdr_short_all": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].conc_gross_le_8_tdr_long_all": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].conc_gross_le_8_tdr_short_all": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].conc_net_le_4_tdr_long_all": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].conc_net_le_4_tdr_short_all": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].conc_net_le_8_tdr_long_all": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].conc_net_le_8_tdr_short_all": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].conc_gross_le_4_tdr_long_ol": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].conc_gross_le_4_tdr_short_ol": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].conc_gross_le_8_tdr_long_ol": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].conc_gross_le_8_tdr_short_ol": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].conc_net_le_4_tdr_long_ol": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].conc_net_le_4_tdr_short_ol": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].conc_net_le_8_tdr_long_ol": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].conc_net_le_8_tdr_short_ol": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].conc_gross_le_4_tdr_long_other": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].conc_gross_le_4_tdr_short_other": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].conc_gross_le_8_tdr_long_other": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].conc_gross_le_8_tdr_short_other": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].conc_net_le_4_tdr_long_other": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].conc_net_le_4_tdr_short_other": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].conc_net_le_8_tdr_long_other": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].conc_net_le_8_tdr_short_other": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].contract_units": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    }
+  },
+  "limitation": "Observed path/type union, including nulls and missing observations. No assertion of universal requiredness, completeness or non-nullability. Workbook inferred schemas are separate.",
+  "observed_non_json_formats": [],
+  "binary_sample_files": []
+}

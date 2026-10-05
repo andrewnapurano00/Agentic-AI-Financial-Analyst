@@ -1,0 +1,47 @@
+[
+  {
+    "symbol": "JPM",
+    "cik": "0000019617",
+    "filingDate": "2026-10-02 00:00:00",
+    "acceptedDate": "2026-10-02 17:27:00",
+    "formType": "424B3",
+    "link": "https://www.sec.gov/Archives/edgar/data/19617/000121390026106556/0001213900-26-106556-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/19617/000121390026106556/ea0307535-01_424b3.htm"
+  },
+  {
+    "symbol": "JPM",
+    "cik": "0000019617",
+    "filingDate": "2026-10-02 00:00:00",
+    "acceptedDate": "2026-10-02 17:26:04",
+    "formType": "424B2",
+    "link": "https://www.sec.gov/Archives/edgar/data/19617/000121390026106554/0001213900-26-106554-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/19617/000121390026106554/ea0307534-01_424b2.htm"
+  },
+  {
+    "symbol": "JPM",
+    "cik": "0000019617",
+    "filingDate": "2026-10-02 00:00:00",
+    "acceptedDate": "2026-10-02 17:24:12",
+    "formType": "424B2",
+    "link": "https://www.sec.gov/Archives/edgar/data/19617/000191870426030485/0001918704-26-030485-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/19617/000191870426030485/form424b2.htm"
+  },
+  {
+    "symbol": "JPM",
+    "cik": "0000019617",
+    "filingDate": "2026-10-02 00:00:00",
+    "acceptedDate": "2026-10-02 17:23:14",
+    "formType": "424B2",
+    "link": "https://www.sec.gov/Archives/edgar/data/19617/000121390026106549/0001213900-26-106549-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/19617/000121390026106549/ea0307590-01_424b2.htm"
+  },
+  {
+    "symbol": "JPM",
+    "cik": "0000019617",
+    "filingDate": "2026-10-02 00:00:00",
+    "acceptedDate": "2026-10-02 17:22:54",
+    "formType": "FWP",
+    "link": "https://www.sec.gov/Archives/edgar/data/19617/000121390026106548/0001213900-26-106548-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/19617/000121390026106548/ea0307618-01_fwp.htm"
+  }
+]

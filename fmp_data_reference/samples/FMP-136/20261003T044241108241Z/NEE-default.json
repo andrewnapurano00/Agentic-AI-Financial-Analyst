@@ -1,0 +1,62 @@
+[
+  {
+    "symbol": "NEE",
+    "date": "2026-10-02",
+    "open": 76.755,
+    "high": 77.6975,
+    "low": 76.58,
+    "close": 76.83,
+    "volume": 18041737,
+    "change": 0.075,
+    "changePercent": 0.0977135,
+    "vwap": 77.04
+  },
+  {
+    "symbol": "NEE",
+    "date": "2026-10-01",
+    "open": 75.5,
+    "high": 76.53,
+    "low": 74.41,
+    "close": 76.35,
+    "volume": 21199326,
+    "change": 0.85,
+    "changePercent": 1.13,
+    "vwap": 75.6975
+  },
+  {
+    "symbol": "NEE",
+    "date": "2026-09-30",
+    "open": 76.33,
+    "high": 76.5,
+    "low": 75.57,
+    "close": 75.74,
+    "volume": 13483513,
+    "change": -0.59,
+    "changePercent": -0.77296,
+    "vwap": 76.035
+  },
+  {
+    "symbol": "NEE",
+    "date": "2026-09-29",
+    "open": 75.09,
+    "high": 76.18,
+    "low": 74.78,
+    "close": 75.89,
+    "volume": 11349358,
+    "change": 0.8,
+    "changePercent": 1.07,
+    "vwap": 75.485
+  },
+  {
+    "symbol": "NEE",
+    "date": "2026-09-28",
+    "open": 76.03,
+    "high": 76.22,
+    "low": 75.15,
+    "close": 75.49,
+    "volume": 13927600,
+    "change": -0.54,
+    "changePercent": -0.71025,
+    "vwap": 75.7225
+  }
+]

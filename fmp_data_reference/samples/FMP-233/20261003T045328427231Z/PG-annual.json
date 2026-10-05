@@ -1,0 +1,75 @@
+[
+  {
+    "symbol": "PG",
+    "fiscalYear": 2026,
+    "period": "FY",
+    "reportedCurrency": "USD",
+    "date": "2026-06-30",
+    "data": {
+      "Baby, Feminine and Family Care Segment Member": 20401000000,
+      "Beauty Segment": 16023000000,
+      "Fabric Care And Home Care Segment Member": 30314000000,
+      "Grooming Segment Member": 6918000000,
+      "Health Care Segment Member": 12456000000
+    }
+  },
+  {
+    "symbol": "PG",
+    "fiscalYear": 2025,
+    "period": "FY",
+    "reportedCurrency": "USD",
+    "date": "2025-06-30",
+    "data": {
+      "Baby, Feminine and Family Care Segment Member": 20248000000,
+      "Beauty Segment": 14964000000,
+      "Fabric Care And Home Care Segment Member": 29617000000,
+      "Grooming Segment Member": 6662000000,
+      "Health Care Segment Member": 11998000000
+    }
+  },
+  {
+    "symbol": "PG",
+    "fiscalYear": 2024,
+    "period": "FY",
+    "reportedCurrency": "USD",
+    "date": "2024-06-30",
+    "data": {
+      "Baby, Feminine and Family Care Segment Member": 20277000000,
+      "Beauty Segment": 15220000000,
+      "Corporate Segment": 601000000,
+      "Fabric Care And Home Care Segment Member": 29495000000,
+      "Grooming Segment Member": 6654000000,
+      "Health Care Segment Member": 11793000000
+    }
+  },
+  {
+    "symbol": "PG",
+    "fiscalYear": 2023,
+    "period": "FY",
+    "reportedCurrency": "USD",
+    "date": "2023-06-30",
+    "data": {
+      "Baby, Feminine and Family Care Segment Member": 20217000000,
+      "Beauty Segment": 15008000000,
+      "Corporate Segment": 765000000,
+      "Fabric Care And Home Care Segment Member": 28371000000,
+      "Grooming Segment Member": 6419000000,
+      "Health Care Segment Member": 11226000000
+    }
+  },
+  {
+    "symbol": "PG",
+    "fiscalYear": 2022,
+    "period": "FY",
+    "reportedCurrency": "USD",
+    "date": "2022-06-30",
+    "data": {
+      "Baby, Feminine and Family Care Segment Member": 19736000000,
+      "Beauty Segment": 14740000000,
+      "Corporate Segment": 744000000,
+      "Fabric Care And Home Care Segment Member": 27556000000,
+      "Grooming Segment Member": 6587000000,
+      "Health Care Segment Member": 10824000000
+    }
+  }
+]

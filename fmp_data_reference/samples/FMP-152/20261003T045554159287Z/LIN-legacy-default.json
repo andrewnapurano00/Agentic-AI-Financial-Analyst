@@ -1,0 +1,37 @@
+[
+  {
+    "etfSymbol": "ZALT",
+    "assetExposure": "LIN",
+    "sharesNumber": 5608,
+    "weightPercentage": 0.33,
+    "marketValue": 2632675.6
+  },
+  {
+    "etfSymbol": "YOKE",
+    "assetExposure": "LIN",
+    "sharesNumber": 421,
+    "weightPercentage": 0.09,
+    "marketValue": 200000
+  },
+  {
+    "etfSymbol": "YLDY",
+    "assetExposure": "LIN",
+    "sharesNumber": 197,
+    "weightPercentage": 0.44,
+    "marketValue": 92481.65
+  },
+  {
+    "etfSymbol": "XYLG",
+    "assetExposure": "LIN",
+    "sharesNumber": 480,
+    "weightPercentage": 0.33,
+    "marketValue": 225336
+  },
+  {
+    "etfSymbol": "XYLD",
+    "assetExposure": "LIN",
+    "sharesNumber": 24106,
+    "weightPercentage": 0.33,
+    "marketValue": 11316561.7
+  }
+]

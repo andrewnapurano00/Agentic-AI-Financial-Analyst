@@ -1,0 +1,72 @@
+[
+  {
+    "symbol": "GOOGL",
+    "cik": "0001652044",
+    "date": "2026-06-30",
+    "environmentalScore": 74.91,
+    "socialScore": 56.9,
+    "governanceScore": 58.34,
+    "ESGScore": 63.38,
+    "companyName": "Alphabet Inc.",
+    "industry": "Services-Computer Programming, Data Processing, Etc.",
+    "formType": "10-Q",
+    "acceptedDate": "2026-07-22 21:15:54",
+    "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000071/0001652044-26-000071-index.htm"
+  },
+  {
+    "symbol": "GOOGL",
+    "cik": "0001652044",
+    "date": "2026-03-31",
+    "environmentalScore": 74.63,
+    "socialScore": 56.43,
+    "governanceScore": 57.56,
+    "ESGScore": 62.87,
+    "companyName": "Alphabet Inc.",
+    "industry": "Services-Computer Programming, Data Processing, Etc.",
+    "formType": "10-Q",
+    "acceptedDate": "2026-04-29 21:02:11",
+    "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000048/0001652044-26-000048-index.htm"
+  },
+  {
+    "symbol": "GOOGL",
+    "cik": "0001652044",
+    "date": "2025-12-31",
+    "environmentalScore": 70.28,
+    "socialScore": 54.57,
+    "governanceScore": 55.31,
+    "ESGScore": 60.05,
+    "companyName": "Alphabet Inc.",
+    "industry": "Services-Computer Programming, Data Processing, Etc.",
+    "formType": "10-K",
+    "acceptedDate": "2026-02-04 21:56:03",
+    "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000018/0001652044-26-000018-index.htm"
+  },
+  {
+    "symbol": "GOOGL",
+    "cik": "0001652044",
+    "date": "2025-09-30",
+    "environmentalScore": 74.1,
+    "socialScore": 56.09,
+    "governanceScore": 59.39,
+    "ESGScore": 63.2,
+    "companyName": "Alphabet Inc.",
+    "industry": "Services-Computer Programming, Data Processing, Etc.",
+    "formType": "10-Q",
+    "acceptedDate": "2025-10-29 21:55:01",
+    "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204425000091/0001652044-25-000091-index.htm"
+  },
+  {
+    "symbol": "GOOGL",
+    "cik": "0001652044",
+    "date": "2025-06-30",
+    "environmentalScore": 73.44,
+    "socialScore": 55.72,
+    "governanceScore": 59.42,
+    "ESGScore": 62.86,
+    "companyName": "Alphabet Inc.",
+    "industry": "Services-Computer Programming, Data Processing, Etc.",
+    "formType": "10-Q",
+    "acceptedDate": "2025-07-23 19:44:01",
+    "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204425000062/0001652044-25-000062-index.htm"
+  }
+]

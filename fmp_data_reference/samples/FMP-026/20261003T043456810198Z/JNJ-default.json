@@ -1,0 +1,52 @@
+[
+  {
+    "title": "Chief Compliance Officer",
+    "name": "Dirk Brinckman",
+    "pay": null,
+    "currencyPay": "USD",
+    "gender": "male",
+    "yearBorn": null,
+    "titleSince": null,
+    "active": true
+  },
+  {
+    "title": "Controller & Chief Accounting Officer",
+    "name": "Robert J. Decker Jr.",
+    "pay": null,
+    "currencyPay": "USD",
+    "gender": "male",
+    "yearBorn": 1973,
+    "titleSince": null,
+    "active": true
+  },
+  {
+    "title": "Vice President of Investor Relations",
+    "name": "Ryan Koors",
+    "pay": null,
+    "currencyPay": "USD",
+    "gender": "male",
+    "yearBorn": null,
+    "titleSince": null,
+    "active": true
+  },
+  {
+    "title": "Executive Vice President & Worldwide Chairman of Innovative Medicine",
+    "name": "Jennifer L. Taubert",
+    "pay": 3313021,
+    "currencyPay": "USD",
+    "gender": "female",
+    "yearBorn": 1964,
+    "titleSince": null,
+    "active": true
+  },
+  {
+    "title": "Executive Vice President and Chief Technical Operations & Risk Officer",
+    "name": "Kathryn E. Wengel",
+    "pay": null,
+    "currencyPay": "USD",
+    "gender": "female",
+    "yearBorn": 1966,
+    "titleSince": null,
+    "active": true
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "symbol": "XOM",
+    "companyName": "Exxon Mobil Corporation",
+    "cusip": "30233Q108",
+    "marketCap": 644214862400
+  },
+  {
+    "symbol": "7DZ.DE",
+    "companyName": "Exxonmobil Holdings Corporation",
+    "cusip": "30233Q108",
+    "marketCap": 554511031332.36
+  },
+  {
+    "symbol": "XOM.SW",
+    "companyName": "Exxon Mobil Corporation",
+    "cusip": "30233Q108",
+    "marketCap": 588629973390
+  },
+  {
+    "symbol": "XOM.MX",
+    "companyName": "Exxon Mobil Corporation",
+    "cusip": "30233Q108",
+    "marketCap": 11096023552674
+  }
+]

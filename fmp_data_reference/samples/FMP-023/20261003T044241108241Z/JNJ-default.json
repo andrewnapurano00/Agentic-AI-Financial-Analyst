@@ -1,0 +1,57 @@
+[
+  {
+    "symbol": "JNJ",
+    "cik": "0000200406",
+    "acceptanceTime": "2026-02-11 16:06:11",
+    "periodOfReport": "2025-12-28",
+    "companyName": "Johnson & Johnson",
+    "formType": "10-K",
+    "filingDate": "2026-02-11",
+    "employeeCount": 138200,
+    "source": "https://www.sec.gov/Archives/edgar/data/200406/000020040626000016/0000200406-26-000016-index.htm"
+  },
+  {
+    "symbol": "JNJ",
+    "cik": "0000200406",
+    "acceptanceTime": "2025-02-13 16:07:39",
+    "periodOfReport": "2024-12-29",
+    "companyName": "Johnson & Johnson",
+    "formType": "10-K",
+    "filingDate": "2025-02-13",
+    "employeeCount": 138100,
+    "source": "https://www.sec.gov/Archives/edgar/data/200406/000020040625000038/0000200406-25-000038-index.htm"
+  },
+  {
+    "symbol": "JNJ",
+    "cik": "0000200406",
+    "acceptanceTime": "2024-02-16 16:12:22",
+    "periodOfReport": "2023-12-31",
+    "companyName": "Johnson & Johnson",
+    "formType": "10-K",
+    "filingDate": "2024-02-16",
+    "employeeCount": 131900,
+    "source": "https://www.sec.gov/Archives/edgar/data/200406/000020040624000013/0000200406-24-000013-index.htm"
+  },
+  {
+    "symbol": "JNJ",
+    "cik": "0000200406",
+    "acceptanceTime": "2023-02-16 16:01:53",
+    "periodOfReport": "2023-01-01",
+    "companyName": "Johnson & Johnson",
+    "formType": "10-K",
+    "filingDate": "2023-02-16",
+    "employeeCount": 152700,
+    "source": "https://www.sec.gov/Archives/edgar/data/200406/000020040623000016/0000200406-23-000016-index.htm"
+  },
+  {
+    "symbol": "JNJ",
+    "cik": "0000200406",
+    "acceptanceTime": "2022-02-17 16:06:50",
+    "periodOfReport": "2022-01-02",
+    "companyName": "Johnson & Johnson",
+    "formType": "10-K",
+    "filingDate": "2022-02-17",
+    "employeeCount": 141700,
+    "source": "https://www.sec.gov/Archives/edgar/data/200406/000020040622000022/0000200406-22-000022-index.htm"
+  }
+]

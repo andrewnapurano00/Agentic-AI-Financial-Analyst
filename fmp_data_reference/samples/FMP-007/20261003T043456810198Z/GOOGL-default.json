@@ -1,0 +1,26 @@
+[
+  {
+    "symbol": "GOOGL",
+    "name": "Alphabet Inc.",
+    "isin": "US02079K3059",
+    "marketCap": 4157075226740.9995
+  },
+  {
+    "symbol": "ABEA.DE",
+    "name": "Alphabet Inc.",
+    "isin": "US02079K3059",
+    "marketCap": 3678436725380
+  },
+  {
+    "symbol": "ABEA.F",
+    "name": "Alphabet Inc.",
+    "isin": "US02079K3059",
+    "marketCap": 3689328625536.9995
+  },
+  {
+    "symbol": "GOOGL.SW",
+    "name": "Alphabet Inc.",
+    "isin": "US02079K3059",
+    "marketCap": 3399483060236.9995
+  }
+]

@@ -1,0 +1,15 @@
+[
+  {
+    "symbol": "AMZN",
+    "reportedCurrency": "USD",
+    "altmanZScore": 4.688813075726401,
+    "piotroskiScore": 6,
+    "workingCapital": 7990000000,
+    "totalAssets": 1095689000000,
+    "retainedEarnings": 343438000000,
+    "ebit": 178797000000,
+    "marketCap": 2715629895000,
+    "totalLiabilities": 544069000000,
+    "revenue": 775680000000
+  }
+]

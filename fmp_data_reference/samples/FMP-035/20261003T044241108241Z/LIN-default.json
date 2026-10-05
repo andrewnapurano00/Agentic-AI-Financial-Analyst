@@ -1,0 +1,32 @@
+[
+  {
+    "symbol": "APD",
+    "companyName": "Air Products and Chemicals, Inc.",
+    "price": 277.57,
+    "mktCap": 61810822562
+  },
+  {
+    "symbol": "AVNT",
+    "companyName": "Avient Corporation",
+    "price": 41.17,
+    "mktCap": 3775707575
+  },
+  {
+    "symbol": "ECL",
+    "companyName": "Ecolab Inc.",
+    "price": 273.7,
+    "mktCap": 77029580600
+  },
+  {
+    "symbol": "ESI",
+    "companyName": "Element Solutions Inc",
+    "price": 37.93,
+    "mktCap": 9243196368
+  },
+  {
+    "symbol": "FUL",
+    "companyName": "H.B. Fuller Company",
+    "price": 50.2,
+    "mktCap": 2700128032
+  }
+]

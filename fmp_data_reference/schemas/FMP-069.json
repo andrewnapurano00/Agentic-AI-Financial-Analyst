@@ -1,0 +1,2089 @@
+{
+  "api_id": "FMP-069",
+  "basis": "observed_response_shapes_not_json_schema_contract",
+  "generated_at_utc": "2026-10-03T05:06:34.859362+00:00",
+  "sample_files": [
+    "samples/FMP-069/20261003T043456810198Z/AAPL-annual.json",
+    "samples/FMP-069/20261003T043456810198Z/AAPL-quarter.json",
+    "samples/FMP-069/20261003T043456810198Z/AMZN-annual.json",
+    "samples/FMP-069/20261003T043456810198Z/AMZN-quarter.json",
+    "samples/FMP-069/20261003T043456810198Z/CAT-annual.json",
+    "samples/FMP-069/20261003T043456810198Z/CAT-quarter.json",
+    "samples/FMP-069/20261003T043456810198Z/GOOGL-annual.json",
+    "samples/FMP-069/20261003T043456810198Z/GOOGL-quarter.json",
+    "samples/FMP-069/20261003T043456810198Z/JNJ-annual.json",
+    "samples/FMP-069/20261003T043456810198Z/JNJ-quarter.json",
+    "samples/FMP-069/20261003T043456810198Z/JPM-annual.json",
+    "samples/FMP-069/20261003T043456810198Z/JPM-quarter.json",
+    "samples/FMP-069/20261003T043456810198Z/LIN-annual.json",
+    "samples/FMP-069/20261003T043456810198Z/LIN-quarter.json",
+    "samples/FMP-069/20261003T043456810198Z/NEE-annual.json",
+    "samples/FMP-069/20261003T043456810198Z/NEE-quarter.json",
+    "samples/FMP-069/20261003T043456810198Z/PG-annual.json",
+    "samples/FMP-069/20261003T043456810198Z/PG-quarter.json",
+    "samples/FMP-069/20261003T043456810198Z/PLD-annual.json",
+    "samples/FMP-069/20261003T043456810198Z/PLD-quarter.json",
+    "samples/FMP-069/20261003T043456810198Z/XOM-annual.json",
+    "samples/FMP-069/20261003T043456810198Z/XOM-quarter.json",
+    "samples/FMP-069/20261003T044241108241Z/AAPL-annual.json",
+    "samples/FMP-069/20261003T044241108241Z/AAPL-quarter.json",
+    "samples/FMP-069/20261003T044241108241Z/AMZN-annual.json",
+    "samples/FMP-069/20261003T044241108241Z/AMZN-quarter.json",
+    "samples/FMP-069/20261003T044241108241Z/CAT-annual.json",
+    "samples/FMP-069/20261003T044241108241Z/CAT-quarter.json",
+    "samples/FMP-069/20261003T044241108241Z/GOOGL-annual.json",
+    "samples/FMP-069/20261003T044241108241Z/GOOGL-quarter.json",
+    "samples/FMP-069/20261003T044241108241Z/JNJ-annual.json",
+    "samples/FMP-069/20261003T044241108241Z/JNJ-quarter.json",
+    "samples/FMP-069/20261003T044241108241Z/JPM-annual.json",
+    "samples/FMP-069/20261003T044241108241Z/JPM-quarter.json",
+    "samples/FMP-069/20261003T044241108241Z/LIN-annual.json",
+    "samples/FMP-069/20261003T044241108241Z/LIN-quarter.json",
+    "samples/FMP-069/20261003T044241108241Z/NEE-annual.json",
+    "samples/FMP-069/20261003T044241108241Z/NEE-quarter.json",
+    "samples/FMP-069/20261003T044241108241Z/PG-annual.json",
+    "samples/FMP-069/20261003T044241108241Z/PG-quarter.json",
+    "samples/FMP-069/20261003T044241108241Z/PLD-annual.json",
+    "samples/FMP-069/20261003T044241108241Z/PLD-quarter.json",
+    "samples/FMP-069/20261003T044241108241Z/XOM-annual.json",
+    "samples/FMP-069/20261003T044241108241Z/XOM-quarter.json"
+  ],
+  "required_fields_asserted": false,
+  "fields": {
+    "$": {
+      "observed_types": [
+        "array"
+      ],
+      "null_observations": 0,
+      "present_observations": 44,
+      "observed_missing_in_parent": 0
+    },
+    "$[]": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 286,
+      "observed_missing_in_parent": 0
+    },
+    "$[].symbol": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 286,
+      "observed_missing_in_parent": 0
+    },
+    "$[].fiscalYear": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 286,
+      "observed_missing_in_parent": 0
+    },
+    "$[].period": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 286,
+      "observed_missing_in_parent": 0
+    },
+    "$[].reportedCurrency": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 286,
+      "observed_missing_in_parent": 0
+    },
+    "$[].date": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 286,
+      "observed_missing_in_parent": 0
+    },
+    "$[].data": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 286,
+      "observed_missing_in_parent": 0
+    },
+    "$[].data.cashcashequivalentsrestrictedcashandrestrictedcashequivalents": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 260,
+      "observed_missing_in_parent": 26
+    },
+    "$[].data.netincomeloss": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 156,
+      "observed_missing_in_parent": 130
+    },
+    "$[].data.depreciationdepletionandamortization": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 156,
+      "observed_missing_in_parent": 130
+    },
+    "$[].data.sharebasedcompensation": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 158,
+      "observed_missing_in_parent": 128
+    },
+    "$[].data.othernoncashincomeexpense": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 168,
+      "observed_missing_in_parent": 118
+    },
+    "$[].data.increasedecreaseinaccountsreceivable": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 130,
+      "observed_missing_in_parent": 156
+    },
+    "$[].data.increasedecreaseinotherreceivables": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.increasedecreaseininventories": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 166,
+      "observed_missing_in_parent": 120
+    },
+    "$[].data.increasedecreaseinotheroperatingassets": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 132,
+      "observed_missing_in_parent": 154
+    },
+    "$[].data.increasedecreaseinaccountspayable": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 126,
+      "observed_missing_in_parent": 160
+    },
+    "$[].data.increasedecreaseinotheroperatingliabilities": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 78,
+      "observed_missing_in_parent": 208
+    },
+    "$[].data.netcashprovidedbyusedinoperatingactivities": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 282,
+      "observed_missing_in_parent": 4
+    },
+    "$[].data.paymentstoacquireavailableforsalesecuritiesdebt": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 52,
+      "observed_missing_in_parent": 234
+    },
+    "$[].data.proceedsfrommaturitiesprepaymentsandcallsofavailableforsalesecurities": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 52,
+      "observed_missing_in_parent": 234
+    },
+    "$[].data.proceedsfromsaleofavailableforsalesecuritiesdebt": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 52,
+      "observed_missing_in_parent": 234
+    },
+    "$[].data.paymentstoacquirepropertyplantandequipment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 182,
+      "observed_missing_in_parent": 104
+    },
+    "$[].data.paymentsforproceedsfromotherinvestingactivities": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 160,
+      "observed_missing_in_parent": 126
+    },
+    "$[].data.netcashprovidedbyusedininvestingactivities": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 282,
+      "observed_missing_in_parent": 4
+    },
+    "$[].data.paymentsrelatedtotaxwithholdingforsharebasedcompensation": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 50,
+      "observed_missing_in_parent": 236
+    },
+    "$[].data.paymentsofdividends": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 138,
+      "observed_missing_in_parent": 148
+    },
+    "$[].data.paymentsforrepurchaseofcommonstock": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 214,
+      "observed_missing_in_parent": 72
+    },
+    "$[].data.proceedsfromissuanceoflongtermdebt": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 122,
+      "observed_missing_in_parent": 164
+    },
+    "$[].data.repaymentsoflongtermdebt": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 144,
+      "observed_missing_in_parent": 142
+    },
+    "$[].data.proceedsfromrepaymentsofcommercialpaper": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 52,
+      "observed_missing_in_parent": 234
+    },
+    "$[].data.proceedsfrompaymentsforotherfinancingactivities": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 138,
+      "observed_missing_in_parent": 148
+    },
+    "$[].data.netcashprovidedbyusedinfinancingactivities": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 282,
+      "observed_missing_in_parent": 4
+    },
+    "$[].data.cashcashequivalentsrestrictedcashandrestrictedcashequivalentsperiodincreasedecreaseincludingexchangerateeffect": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 284,
+      "observed_missing_in_parent": 2
+    },
+    "$[].data.incometaxespaidnet": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 70,
+      "observed_missing_in_parent": 216
+    },
+    "$[].data.interestpaidnet": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 96,
+      "observed_missing_in_parent": 190
+    },
+    "$[].data.deferredincometaxexpensebenefit": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 194,
+      "observed_missing_in_parent": 92
+    },
+    "$[].data.increasedecreaseincontractwithcustomerliability": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 82,
+      "observed_missing_in_parent": 204
+    },
+    "$[].data.paymentstoacquirebusinessesnetofcashacquired": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 98,
+      "observed_missing_in_parent": 188
+    },
+    "$[].data.paymentstoacquireotherinvestments": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 28,
+      "observed_missing_in_parent": 258
+    },
+    "$[].data.proceedsfromsaleandmaturityofotherinvestments": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 28,
+      "observed_missing_in_parent": 258
+    },
+    "$[].data.proceedsfromissuanceofcommonstock": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 54,
+      "observed_missing_in_parent": 232
+    },
+    "$[].data.provisionforloanleaseandotherlosses": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.depreciationamortizationandaccretionnet": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.paymentsfororiginationandpurchasesofloansheldforsale": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.proceedsfromsalessecuritizationsandpaydownsofloansheldforsale": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.increasedecreaseinfinancialinstrumentsusedinoperatingactivities": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.increasedecreaseincashcollateralforborrowedsecurities": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.increasedecreaseinaccruedinterestsandaccountsreceivable": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.increasedecreaseinprepaiddeferredexpenseandotherassets": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 50,
+      "observed_missing_in_parent": 236
+    },
+    "$[].data.increasedecreaseintradingliabilities": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.increasedecreaseinaccountspayableandotherliabilities": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.otheroperatingactivitiescashflowstatement": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 70,
+      "observed_missing_in_parent": 216
+    },
+    "$[].data.proceedsfrompaymentsforfederalfundssoldandsecuritiespurchasedunderagreementstoresellnet": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.proceedsfrommaturitiesprepaymentsandcallsofheldtomaturitysecurities": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.paymentstoacquireheldtomaturitysecurities": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.proceedsfromsaleoffinancereceivables": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 52,
+      "observed_missing_in_parent": 234
+    },
+    "$[].data.proceedsfrompaymentsforotherloansandleases": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.increasedecreaseindeposits": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.increasedecreaseinfederalfundspurchasedandsecuritiessoldunderagreementstorepurchasenet": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.proceedsfromshorttermdebt": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 70,
+      "observed_missing_in_parent": 216
+    },
+    "$[].data.increasedecreaseinbeneficialinterestsissuedbyconsolidatedvariableinterestentities": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.proceedsfromissuanceoflongtermdebtandcapitalsecuritiesnet": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.repaymentsoflongtermdebtandcapitalsecurities": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.proceedsfromissuanceofpreferredstockandpreferencestock": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 14,
+      "observed_missing_in_parent": 272
+    },
+    "$[].data.paymentsforrepurchaseofredeemablepreferredstock": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 12,
+      "observed_missing_in_parent": 274
+    },
+    "$[].data.effectofexchangerateoncashcashequivalentsrestrictedcashandrestrictedcashequivalents": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 196,
+      "observed_missing_in_parent": 90
+    },
+    "$[].data.businesscombinationbargainpurchasegainrecognizedamount": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 4,
+      "observed_missing_in_parent": 282
+    },
+    "$[].data.equitysecuritiesgainlossonshareexchange": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 284
+    },
+    "$[].data.repaymentsofshorttermdebt": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 54,
+      "observed_missing_in_parent": 232
+    },
+    "$[].data.businesscombinationprovisionalinformationinitialaccountingincompleteadjustmentbargainpurchasegainrecognizedamount": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 6,
+      "observed_missing_in_parent": 280
+    },
+    "$[].data.assetimpairmentcharges": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 20,
+      "observed_missing_in_parent": 266
+    },
+    "$[].data.researchanddevelopmentexpense": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 6,
+      "observed_missing_in_parent": 280
+    },
+    "$[].data.gainlossonsalesofassetsandassetimpairmentcharges": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 22,
+      "observed_missing_in_parent": 264
+    },
+    "$[].data.provisionfordoubtfulaccounts": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 20,
+      "observed_missing_in_parent": 266
+    },
+    "$[].data.increasedecreaseinaccountspayableandaccruedliabilities": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 64,
+      "observed_missing_in_parent": 222
+    },
+    "$[].data.proceedsfromsaleofproductiveassets": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 54,
+      "observed_missing_in_parent": 232
+    },
+    "$[].data.paymentstoacquiredinprocessresearchanddevelopmentassets": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 6,
+      "observed_missing_in_parent": 280
+    },
+    "$[].data.paymentstoacquireinvestments": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.proceedsfromsalematurityandcollectionsofinvestments": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.proceedspaymentsfromtocreditsupportagreementsinvestingactivities": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.paymentsofordinarydividends": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.proceedsfromexerciseofstockoptionsandexcesstaxbenefits": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.proceedspaymentsfromtocreditsupportagreementsfinancingactivities": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.cashcashequivalentsrestrictedcashandrestrictedcashequivalentscontinuingoperations": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 10,
+      "observed_missing_in_parent": 276
+    },
+    "$[].data.interestpaid": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.incometaxespaid": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.treasurystockissuedforemployeecompensationandstockoptionplansnetofcashproceeds": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 10,
+      "observed_missing_in_parent": 276
+    },
+    "$[].data.settlementofconvertibledebtacquiredfromshockwave": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 284
+    },
+    "$[].data.noncashorpartnoncashacquisitionvalueofassetsacquired1": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 10,
+      "observed_missing_in_parent": 276
+    },
+    "$[].data.noncashorpartnoncashacquisitionvalueofliabilitiesassumed1": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 10,
+      "observed_missing_in_parent": 276
+    },
+    "$[].data.noncashorpartnoncashacquisitionnetnonmonetaryassetsacquiredliabilitiesassumed1": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 10,
+      "observed_missing_in_parent": 276
+    },
+    "$[].data.discontinuedoperationgainlossondisposalofdiscontinuedoperationnetoftax": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 284
+    },
+    "$[].data.proceedsfromissuanceoflongtermdebttransferredinbusinessseparation": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 284
+    },
+    "$[].data.proceedsfromissuanceinitialpublicoffering": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 284
+    },
+    "$[].data.paymentsmadeinbusinessseparation": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 284
+    },
+    "$[].data.businesscombinationcontingentconsiderationarrangementschangeinamountofcontingentconsiderationliability1": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 6,
+      "observed_missing_in_parent": 280
+    },
+    "$[].data.inprocessresearchanddevelopmentcharge": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 10,
+      "observed_missing_in_parent": 276
+    },
+    "$[].data.repaymentsofseniordebt": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 10,
+      "observed_missing_in_parent": 276
+    },
+    "$[].data.paymentstoacquireinprocessresearchanddevelopmentassets": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 6,
+      "observed_missing_in_parent": 280
+    },
+    "$[].data.increasedecreaseinaccountsreceivableandotheroperatingassets": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.increasedecreaseinothernoncurrentassets": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 48,
+      "observed_missing_in_parent": 238
+    },
+    "$[].data.increasedecreaseinaccruedliabilitiesandotheroperatingliabilities": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.paymentstoacquireproductiveassets": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.proceedsfrompropertyplantandequipmentsalesandincentives": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.paymentstoacquirebusinessesnetofcashacquiredandpaymentstoacquirenonmarketablesecuritiesandother": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 6,
+      "observed_missing_in_parent": 280
+    },
+    "$[].data.proceedsfromsaleandmaturityofmarketablesecurities": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 78,
+      "observed_missing_in_parent": 208
+    },
+    "$[].data.paymentstoacquiremarketablesecurities": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 78,
+      "observed_missing_in_parent": 208
+    },
+    "$[].data.financeleaseprincipalpayments": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.repaymentsoflongtermfinancingobligations": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.effectofexchangerateoncashcashequivalentsrestrictedcashandrestrictedcashequivalentsincludingdisposalgroupanddiscontinuedoperations": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 46,
+      "observed_missing_in_parent": 240
+    },
+    "$[].data.paymentstoacquirebusinessesnetofcashacquiredandother": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 4,
+      "observed_missing_in_parent": 282
+    },
+    "$[].data.proceedsfromshorttermdebtandotherfinancingactivities": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 4,
+      "observed_missing_in_parent": 282
+    },
+    "$[].data.repaymentsofshorttermdebtandotherfinancingactivities": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 4,
+      "observed_missing_in_parent": 282
+    },
+    "$[].data.effectofexchangerateoncashandcashequivalents": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 4,
+      "observed_missing_in_parent": 282
+    },
+    "$[].data.profitloss": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 140,
+      "observed_missing_in_parent": 146
+    },
+    "$[].data.gainlossondispositionofassets1": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 62,
+      "observed_missing_in_parent": 224
+    },
+    "$[].data.paymentsforproceedsfrominvestments": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.proceedsfromshorttermdebtmaturinginmorethanthreemonths": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 30,
+      "observed_missing_in_parent": 256
+    },
+    "$[].data.repaymentsofshorttermdebtmaturinginmorethanthreemonths": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 48,
+      "observed_missing_in_parent": 238
+    },
+    "$[].data.proceedsfromrepaymentsofshorttermdebtmaturinginthreemonthsorless": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 52,
+      "observed_missing_in_parent": 234
+    },
+    "$[].data.proceedsfromstockoptionsexercisedandotherfinancingactivities": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.impairmentofintangibleassetsindefinitelivedexcludinggoodwill": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 284
+    },
+    "$[].data.increasedecreaseinotheroperatingcapitalnet": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 46,
+      "observed_missing_in_parent": 240
+    },
+    "$[].data.othernoncashexpense": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 12,
+      "observed_missing_in_parent": 274
+    },
+    "$[].data.definedbenefitplanactuarialgainloss": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 10,
+      "observed_missing_in_parent": 276
+    },
+    "$[].data.noncashgainlossondivestiture": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 6,
+      "observed_missing_in_parent": 280
+    },
+    "$[].data.increasedecreaseinreceivables": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.increasedecreaseinaccruedliabilities": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 52,
+      "observed_missing_in_parent": 234
+    },
+    "$[].data.increasedecreaseinemployeerelatedliabilities": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.paymentstoacquireequipmentonlease": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.proceedsfromsaleofpropertyplantandequipment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.paymentstoacquirefinancereceivables": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.proceedsfromcollectionoffinancereceivables": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.proceedsfromdivestitureofbusinessesnetofcashdivested": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 18,
+      "observed_missing_in_parent": 268
+    },
+    "$[].data.paymentsofdividendscommonstock": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 78,
+      "observed_missing_in_parent": 208
+    },
+    "$[].data.proceedsfromissuanceorsaleofequity": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 28,
+      "observed_missing_in_parent": 258
+    },
+    "$[].data.paymentsforexcisetaxonpurchaseofcommonstock": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 4,
+      "observed_missing_in_parent": 282
+    },
+    "$[].data.proceedsfromdebtmaturinginmorethanthreemonths": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.repaymentsofdebtmaturinginmorethanthreemonths": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.noncashlossondivestiture": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 284
+    },
+    "$[].data.goodwillimpairmentloss": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 284
+    },
+    "$[].data.pensionandotherpostretirementbenefitsexpensereversalofexpensenoncash": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 10,
+      "observed_missing_in_parent": 276
+    },
+    "$[].data.otherlongtermobligationsexpenseandpaymentsadjustment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 10,
+      "observed_missing_in_parent": 276
+    },
+    "$[].data.incomelossfromequitymethodinvestmentsnetofdividendsordistributions": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 10,
+      "observed_missing_in_parent": 276
+    },
+    "$[].data.increasedecreaseinaccountsandnotesreceivable": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 10,
+      "observed_missing_in_parent": 276
+    },
+    "$[].data.proceedsfromsalesofbusinessaffiliateandproductiveassets": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 52,
+      "observed_missing_in_parent": 234
+    },
+    "$[].data.additionalinvestmentsandadvances": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.proceedsfromsaleandcollectionofreceivables": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.proceedsfromrepaymentsofotherdebt": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.paymentforcontingentconsiderationliabilityfinancingactivities": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 8,
+      "observed_missing_in_parent": 278
+    },
+    "$[].data.paymentsofdividendsminorityinterest": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.proceedsfrompaymentstominorityshareholders": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.proceedsfromnoncontrollinginterestedformajorprojects": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 284
+    },
+    "$[].data.shorttermdebtassumedby3rdparty": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 284
+    },
+    "$[].data.cashacquiredfromacquisition": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 284
+    },
+    "$[].data.proceedsfromnoncontrollinginterestsformajorprojects": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 8,
+      "observed_missing_in_parent": 278
+    },
+    "$[].data.longtermdebtassumedby3rdparty": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 284
+    },
+    "$[].data.increasedecreaseinothercurrentassetsandliabilitiesnet": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 12,
+      "observed_missing_in_parent": 274
+    },
+    "$[].data.interestpaidcapitalized": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 12,
+      "observed_missing_in_parent": 274
+    },
+    "$[].data.rightofuseassetobtainedinexchangeforoperatingleaseliability": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 12,
+      "observed_missing_in_parent": 274
+    },
+    "$[].data.rightofuseassetobtainedinexchangeforfinanceleaseliability": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 16,
+      "observed_missing_in_parent": 270
+    },
+    "$[].data.depreciationandamortization": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 76,
+      "observed_missing_in_parent": 210
+    },
+    "$[].data.nuclearfuelandotheramortization": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.unrealizedgainlossonderivativesandcommoditycontracts": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.unrealizedgainlossononequitysecuritiesheldindecommissioningfunds": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 8,
+      "observed_missing_in_parent": 278
+    },
+    "$[].data.foreigncurrencytransactiongainlossbeforetax": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.costrecoveryclausesandfranchisefees": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.incomelossfromequitymethodinvestments": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 50,
+      "observed_missing_in_parent": 236
+    },
+    "$[].data.equitymethodinvestmentdividendsordistributions": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 50,
+      "observed_missing_in_parent": 236
+    },
+    "$[].data.increasedecreaseinrecoverablepropertydamagecosts": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.increasedecreaseinothercurrentassets": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.increasedecreaseinothercurrentliabilities": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.increasedecreaseinothernoncurrentliabilities": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.capitalexpendituresoffpl": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 24,
+      "observed_missing_in_parent": 262
+    },
+    "$[].data.capitalexpendituresofpublicutility": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 10,
+      "observed_missing_in_parent": 276
+    },
+    "$[].data.independentpowerinvestments": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.paymentsforproceedsfromnuclearfuel": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.othercapitalexpenditures": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 10,
+      "observed_missing_in_parent": 276
+    },
+    "$[].data.proceedsfromsaleofindependentpowerinvestments": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.proceedsfromdecommissioningfund": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.paymentstoinvestindecommissioningfund": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.saleofdifferentialmembershipinterests": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 10,
+      "observed_missing_in_parent": 276
+    },
+    "$[].data.paymentstodifferentialmembershipinvestors": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 4,
+      "observed_missing_in_parent": 282
+    },
+    "$[].data.proceedsfromothershorttermdebt": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 24,
+      "observed_missing_in_parent": 262
+    },
+    "$[].data.repaymentsofothershorttermdebt": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 18,
+      "observed_missing_in_parent": 268
+    },
+    "$[].data.proceedsfromrepaymentsofrelatedpartydebt": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.incometaxespaidreceivednet": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 22,
+      "observed_missing_in_parent": 264
+    },
+    "$[].data.capitalexpendituresincurredbutnotyetpaid": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 32,
+      "observed_missing_in_parent": 254
+    },
+    "$[].data.proceedsfromcontributionsfromparent": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 6,
+      "observed_missing_in_parent": 280
+    },
+    "$[].data.increasedecreaseinconstructionworkinprogressandcontractliability": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 4,
+      "observed_missing_in_parent": 282
+    },
+    "$[].data.capitalexpendituresoffplsegment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 284
+    },
+    "$[].data.capitalexpendituresofgulfpowersegment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 284
+    },
+    "$[].data.proceedsfromminorityshareholders": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 44,
+      "observed_missing_in_parent": 242
+    },
+    "$[].data.capitalexpendituresofpublicutilitiesfplconsolidated": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 12,
+      "observed_missing_in_parent": 274
+    },
+    "$[].data.proceedspaymentsfromothercapitalexpenditures": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 12,
+      "observed_missing_in_parent": 274
+    },
+    "$[].data.netincomelossattributabletononcontrollinginterest": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 16,
+      "observed_missing_in_parent": 270
+    },
+    "$[].data.incomelossfromcontinuingoperationsincludingportionattributabletononcontrollinginterest": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 10,
+      "observed_missing_in_parent": 276
+    },
+    "$[].data.deferredincometaxexpensebenefitexcludingtaxactimpact": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.allocatedsharebasedcompensationexpense": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 22,
+      "observed_missing_in_parent": 264
+    },
+    "$[].data.noncashchargesandother": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 10,
+      "observed_missing_in_parent": 276
+    },
+    "$[].data.increasedecreaseincontractwithcustomerassetandliability": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.pensioncontributions": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.proceedsfromrepaymentsofshorttermdebt": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.incomelossattributabletononcontrollinginterest": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 6,
+      "observed_missing_in_parent": 280
+    },
+    "$[].data.incomelossfromdiscontinuedoperationsnetoftaxattributabletoreportingentity": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 284
+    },
+    "$[].data.netcashprovidedbyusedinoperatingactivitiescontinuingoperations": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 284
+    },
+    "$[].data.netcashprovidedbyusedininvestingactivitiescontinuingoperations": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 284
+    },
+    "$[].data.netcashprovidedbyusedinfinancingactivitiescontinuingoperations": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 284
+    },
+    "$[].data.cashcashequivalentsrestrictedcashandrestrictedcashequivalentsincludingdisposalgroupanddiscontinuedoperations": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 24,
+      "observed_missing_in_parent": 262
+    },
+    "$[].data.straightlinerentsandamortizationofaboveandbelowmarketleases": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 24,
+      "observed_missing_in_parent": 262
+    },
+    "$[].data.increasedecreaseinoperatingreceivablesfromunconsolidatedentities": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 24,
+      "observed_missing_in_parent": 262
+    },
+    "$[].data.amortizationoffinancingcostsanddiscounts": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 24,
+      "observed_missing_in_parent": 262
+    },
+    "$[].data.gainsondispositionsofdevelopmentpropertiesandlandnet": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.gainsonotherdispositionsofinvestmentsinrealestatenet": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.foreigncurrencytransactiongainlossunrealized": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 24,
+      "observed_missing_in_parent": 262
+    },
+    "$[].data.gainslossesonextinguishmentofdebt": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 14,
+      "observed_missing_in_parent": 272
+    },
+    "$[].data.increasedecreaseinoperatingliabilities": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 24,
+      "observed_missing_in_parent": 262
+    },
+    "$[].data.paymentstodeveloprealestateassets": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 22,
+      "observed_missing_in_parent": 264
+    },
+    "$[].data.paymentstoacquirerealestate": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 24,
+      "observed_missing_in_parent": 262
+    },
+    "$[].data.paymentsforleasingcostscommissionsandtenantimprovements": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 24,
+      "observed_missing_in_parent": 262
+    },
+    "$[].data.paymentforpropertyimprovements": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 24,
+      "observed_missing_in_parent": 262
+    },
+    "$[].data.proceedsfromrealestateandrealestatejointventures": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 24,
+      "observed_missing_in_parent": 262
+    },
+    "$[].data.paymentstoinvestmentsinandadvancestounconsolidatedentities": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 24,
+      "observed_missing_in_parent": 262
+    },
+    "$[].data.proceedsfromequitymethodinvestmentdividendsordistributionsreturnofcapital": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 24,
+      "observed_missing_in_parent": 262
+    },
+    "$[].data.proceedsfromhedgeinvestingactivities": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 20,
+      "observed_missing_in_parent": 266
+    },
+    "$[].data.paymentsforhedgeinvestingactivities": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 10,
+      "observed_missing_in_parent": 276
+    },
+    "$[].data.paymentstoacquireshortterminvestments": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 284
+    },
+    "$[].data.paymentstominorityshareholdersexcludingparentcompanydistributions": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 24,
+      "observed_missing_in_parent": 262
+    },
+    "$[].data.paymentsforrepurchaseofredeemablenoncontrollinginterest": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 24,
+      "observed_missing_in_parent": 262
+    },
+    "$[].data.redemptionofcommonlimitedpartnershipunits": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 6,
+      "observed_missing_in_parent": 280
+    },
+    "$[].data.paymentoffinancingandstockissuancecosts": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 24,
+      "observed_missing_in_parent": 262
+    },
+    "$[].data.netproceedsfrompaymentsoncreditfacilitiesandcommercialpaper": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 16,
+      "observed_missing_in_parent": 270
+    },
+    "$[].data.repurchaseofandrepaymentsondebtexcludinglineofcredit": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 24,
+      "observed_missing_in_parent": 262
+    },
+    "$[].data.proceedsfromissuanceofdebtexcludinglineofcredit": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 24,
+      "observed_missing_in_parent": 262
+    },
+    "$[].data.increasedecreaseinoperatingassets": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 6,
+      "observed_missing_in_parent": 280
+    },
+    "$[].data.paymentstorealestateandotherdevelopment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 284
+    },
+    "$[].data.proceedsfromcollectionofnotesreceivable": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 284
+    },
+    "$[].data.proceedsfromrepaymentsoflinesofcredit": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 6,
+      "observed_missing_in_parent": 280
+    },
+    "$[].data.taxespaidforsharesofparentwithheld": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 4,
+      "observed_missing_in_parent": 282
+    },
+    "$[].data.cashandcashequivalentsatcarryingvalue": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 284
+    },
+    "$[].data.proceedsfrommaturitiesprepaymentsandcallsofshortterminvestments": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 4,
+      "observed_missing_in_parent": 282
+    },
+    "$[].data.depreciation": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 22,
+      "observed_missing_in_parent": 264
+    },
+    "$[].data.deferredincometaxesandtaxcredits": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.debtandequitysecuritiesgainloss": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.increasedecreaseinincometaxes": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.increasedecreaseinaccruedrevenueshare": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 22,
+      "observed_missing_in_parent": 264
+    },
+    "$[].data.acquisitionsnetofcashacquiredandpurchasesofintangibleandotherassets": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.netproceedspaymentsrelatedtostockbasedawardactivities": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.proceedsfromdebtnetofissuancecosts": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.repaymentsofdebtandcapitalleaseobligations": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 26,
+      "observed_missing_in_parent": 260
+    },
+    "$[].data.depreciationandimpairmentondispositionofpropertyandequipment": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 4,
+      "observed_missing_in_parent": 282
+    },
+    "$[].data.amortizationandimpairmentofintangibleassets": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 4,
+      "observed_missing_in_parent": 282
+    }
+  },
+  "limitation": "Observed path/type union, including nulls and missing observations. No assertion of universal requiredness, completeness or non-nullability. Workbook inferred schemas are separate.",
+  "observed_non_json_formats": [],
+  "binary_sample_files": []
+}

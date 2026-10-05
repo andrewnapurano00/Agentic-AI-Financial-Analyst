@@ -1,0 +1,37 @@
+[
+  {
+    "holder": "NEOS ETF Trust",
+    "shares": 2235992,
+    "dateReported": "2026-06-30",
+    "change": 230471,
+    "weightPercent": 0.07007703
+  },
+  {
+    "holder": "T. Rowe Price International Funds, Inc.",
+    "shares": 675885,
+    "dateReported": "2026-07-31",
+    "change": -125500,
+    "weightPercent": 0.00710782
+  },
+  {
+    "holder": "VELA Funds",
+    "shares": 9956,
+    "dateReported": "2026-06-30",
+    "change": -2217,
+    "weightPercent": 0.01112723
+  },
+  {
+    "holder": "CALVERT IMPACT FUND INC",
+    "shares": 2731,
+    "dateReported": "2026-06-30",
+    "change": -472,
+    "weightPercent": 0.00024714
+  },
+  {
+    "holder": "HARBOR FUNDS",
+    "shares": 2942838,
+    "dateReported": "2026-07-31",
+    "change": 0,
+    "weightPercent": 0.07155323
+  }
+]

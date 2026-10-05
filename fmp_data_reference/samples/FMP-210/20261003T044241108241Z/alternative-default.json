@@ -1,0 +1,67 @@
+[
+  {
+    "date": "2026-10-01 01:30:00",
+    "country": "AU",
+    "event": "Balance of Trade (Aug)",
+    "currency": "AUD",
+    "previous": 1.351,
+    "estimate": 2,
+    "actual": 0.495,
+    "change": -0.856,
+    "impact": "High",
+    "changePercentage": -63.36,
+    "unit": "B"
+  },
+  {
+    "date": "2026-10-01 01:30:00",
+    "country": "AU",
+    "event": "Balance of Trade",
+    "currency": "AUD",
+    "previous": 1.923,
+    "estimate": null,
+    "actual": null,
+    "change": null,
+    "impact": "Medium",
+    "changePercentage": null,
+    "unit": "B"
+  },
+  {
+    "date": "2026-10-01 01:30:00",
+    "country": "AU",
+    "event": "RBA Financial Stability Review",
+    "currency": "AUD",
+    "previous": null,
+    "estimate": null,
+    "actual": null,
+    "change": null,
+    "impact": "Medium",
+    "changePercentage": null,
+    "unit": null
+  },
+  {
+    "date": "2026-10-01 01:30:00",
+    "country": "AU",
+    "event": "Imports MoM (Aug)",
+    "currency": "AUD",
+    "previous": -2.4,
+    "estimate": null,
+    "actual": 5.8,
+    "change": 8.2,
+    "impact": "Low",
+    "changePercentage": 341.667,
+    "unit": "%"
+  },
+  {
+    "date": "2026-10-01 01:30:00",
+    "country": "AU",
+    "event": "Exports MoM (Aug)",
+    "currency": "AUD",
+    "previous": -3.6,
+    "estimate": null,
+    "actual": 3.7,
+    "change": 7.3,
+    "impact": "Low",
+    "changePercentage": 202.778,
+    "unit": "%"
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "symbol": "PLD",
+    "name": "Prologis, Inc.",
+    "price": 128.91,
+    "changesPercentage": 0.56951,
+    "change": 0.73,
+    "dayLow": 128.125,
+    "dayHigh": 129.72,
+    "yearHigh": 153.35,
+    "yearLow": 111.03,
+    "marketCap": 120282827160,
+    "priceAvg50": 139.0142,
+    "priceAvg200": 137.9279,
+    "exchange": "NYSE",
+    "volume": 3811300,
+    "avgVolume": 4079046,
+    "open": 128.555,
+    "previousClose": 128.18,
+    "eps": 4.49,
+    "pe": 28.71,
+    "earningsAnnouncement": "2026-10-15T12:30:00.000+0000",
+    "sharesOutstanding": 933076000,
+    "timestamp": 1790971367
+  }
+]

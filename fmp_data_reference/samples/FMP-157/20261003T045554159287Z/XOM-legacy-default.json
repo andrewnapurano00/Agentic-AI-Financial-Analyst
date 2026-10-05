@@ -1,0 +1,72 @@
+[
+  {
+    "symbol": "XOM",
+    "cik": "0002115436",
+    "date": "2026-06-30",
+    "environmentalScore": 58.67,
+    "socialScore": 75.98,
+    "governanceScore": 70.79,
+    "ESGScore": 68.48,
+    "companyName": "Exxon Mobil Corporation",
+    "industry": "Petroleum Refining",
+    "formType": "10-Q",
+    "acceptedDate": "2026-08-03 14:55:38",
+    "url": "https://www.sec.gov/Archives/edgar/data/34088/000003408826000093/0000034088-26-000093-index.htm"
+  },
+  {
+    "symbol": "XOM",
+    "cik": "0000034088",
+    "date": "2026-03-31",
+    "environmentalScore": 58.5,
+    "socialScore": 75.98,
+    "governanceScore": 72.02,
+    "ESGScore": 68.83,
+    "companyName": "Exxon Mobil Corporation",
+    "industry": "Petroleum Refining",
+    "formType": "10-Q",
+    "acceptedDate": "2026-05-04 12:40:35",
+    "url": "https://www.sec.gov/Archives/edgar/data/34088/000003408826000067/0000034088-26-000067-index.htm"
+  },
+  {
+    "symbol": "XOM",
+    "cik": "0000034088",
+    "date": "2025-12-31",
+    "environmentalScore": 56.14,
+    "socialScore": 73.72,
+    "governanceScore": 68.92,
+    "ESGScore": 66.26,
+    "companyName": "Exxon Mobil Corporation",
+    "industry": "Petroleum Refining",
+    "formType": "10-K",
+    "acceptedDate": "2026-02-18 16:06:52",
+    "url": "https://www.sec.gov/Archives/edgar/data/34088/000003408826000045/0000034088-26-000045-index.htm"
+  },
+  {
+    "symbol": "XOM",
+    "cik": "0000034088",
+    "date": "2025-09-30",
+    "environmentalScore": 58.15,
+    "socialScore": 76.66,
+    "governanceScore": 70.16,
+    "ESGScore": 68.32,
+    "companyName": "Exxon Mobil Corporation",
+    "industry": "Petroleum Refining",
+    "formType": "10-Q",
+    "acceptedDate": "2025-11-03 12:45:47",
+    "url": "https://www.sec.gov/Archives/edgar/data/34088/000003408825000061/0000034088-25-000061-index.htm"
+  },
+  {
+    "symbol": "XOM",
+    "cik": "0000034088",
+    "date": "2025-06-30",
+    "environmentalScore": 58.38,
+    "socialScore": 76.63,
+    "governanceScore": 70.78,
+    "ESGScore": 68.6,
+    "companyName": "Exxon Mobil Corporation",
+    "industry": "Petroleum Refining",
+    "formType": "10-Q",
+    "acceptedDate": "2025-08-04 12:47:59",
+    "url": "https://www.sec.gov/Archives/edgar/data/34088/000003408825000042/0000034088-25-000042-index.htm"
+  }
+]

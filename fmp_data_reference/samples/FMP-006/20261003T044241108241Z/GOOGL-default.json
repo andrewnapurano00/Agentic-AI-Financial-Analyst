@@ -1,0 +1,26 @@
+[
+  {
+    "symbol": "ABEA.DE",
+    "companyName": "Alphabet Inc.",
+    "cusip": "02079K305",
+    "marketCap": 3948313807057.5
+  },
+  {
+    "symbol": "GOOGL.SW",
+    "companyName": "Alphabet Inc.",
+    "cusip": "02079K305",
+    "marketCap": 3217346285383.1
+  },
+  {
+    "symbol": "ABEA.F",
+    "companyName": "Alphabet Inc.",
+    "cusip": "02079K305",
+    "marketCap": 3957390390522
+  },
+  {
+    "symbol": "GOOGL",
+    "companyName": "Alphabet Inc.",
+    "cusip": "02079K305",
+    "marketCap": 4552935286906.06
+  }
+]

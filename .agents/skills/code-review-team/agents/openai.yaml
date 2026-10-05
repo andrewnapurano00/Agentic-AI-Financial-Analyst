@@ -1,0 +1,6 @@
+interface:
+  display_name: "Code Review Team"
+  short_description: "Review, summarize, and create up to six Jira tickets"
+  default_prompt: "Use $code-review-team to review my local changes, summarize the findings, and create up to six highest-priority nonduplicate tickets in Jira project AAFA."
+policy:
+  allow_implicit_invocation: false

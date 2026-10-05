@@ -1,0 +1,15 @@
+[
+  {
+    "symbol": "JPM",
+    "reportedCurrency": "USD",
+    "altmanZScore": 0.21035966003839537,
+    "piotroskiScore": 4,
+    "workingCapital": -601210000000,
+    "totalAssets": 5015069000000,
+    "retainedEarnings": 445020000000,
+    "ebit": 83898000000,
+    "marketCap": 892759141800,
+    "totalLiabilities": 4640471000000,
+    "revenue": 297633000000
+  }
+]

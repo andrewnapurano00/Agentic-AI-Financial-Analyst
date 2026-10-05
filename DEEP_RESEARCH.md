@@ -4,6 +4,18 @@
 
 ## V2 cost pilot
 
+### Recovery and generation controls (AAFA-2)
+
+V2 distinguishes completed reports, unresolved review issues, pending review, incomplete generation, and saved evidence. Warnings and evidence gaps remain visible. **Retry report writing** uses saved evidence; **Retry review** reuses the saved draft. **Generate report from saved evidence** completes an evidence-only run. Recovery preserves the original routes, budget, Ollama URL, history and diagnostics. Retries require an explicit click; ordinary reruns and downloads make no model calls.
+
+Evidence-only mode includes collection, planning and targeted investigation, but no report writing or decision. Models are constructed only when their stage is invoked; missing required provider settings receive a safe stage-specific message. Resume paths do not construct collection tools. V2 uses compact company-count-aware prompts and minimal reasoning for supported GPT-5 planning/drafting/review stages, within the existing token caps. V1's long-form prompt and generation defaults remain unchanged. Completion limits cover reasoning as well as visible output; the new prompt targets are not a live quality or savings benchmark.
+
+Optional quick decisions and committees run only after a completed report is saved and selected. Their errors do not change the research result; **Retry decision** retries that stage alone. After report recovery, a requested decision requires a separate **Run saved decision stage** click. Reports with unresolved review issues require explicit finalization with caveats before a decision is eligible. Failed requests with unavailable usage reserve projected cost for retry budgeting; estimates remain labelled, and unknown-price models are not a universal hard-dollar guarantee. Blocked stages record diagnostics without being counted as model calls. Mechanical report checks run again after review patches.
+
+Saved-result lookup includes runtime/decision options and allowlisted saved app context; changing those inputs cannot silently reuse incompatible results. It still does not automatically refresh live provider evidence. Use **Force fresh research** when new evidence is required. Download controls do not rerun the workflow. History labels use stable creation times; the current status is displayed separately.
+
+Offline V2 recovery/interaction coverage lives in `tests/test_deep_research_v2_recovery.py`. Live model/provider quality and the original AAFA-1 generation trigger remain unverified.
+
 V2 adds Economy, Balanced, and Maximum quality profiles; stage-specific OpenAI/Groq/Ollama routing; reduced report and evidence limits; deterministic report validation; optional interpretive review; compact quick-decision and CrewAI paths; exact-result reuse; stop-after-evidence/later-generation controls; fixed evaluation cases; and per-stage/session token, latency, and estimated-cost diagnostics. Groq and Ollama failures are surfaced and never silently rerouted. The final report and committee lead stay on the configured hosted OpenAI model until the evaluation set supports changing that policy.
 
 Launch the existing app with `streamlit run app.py`, then open **Deep Research**.
@@ -126,6 +138,29 @@ python -m pytest tests/test_deep_research.py tests/test_deep_research_recovery.p
 
 Tests use synthetic data and mocked provider/model responses; they do not consume API credits. See [PLAN.md](PLAN.md#verification-ledger) for the current inventory and limits. V2 helper tests and fixture presence do not establish end-to-end quality or achieved savings.
 
+
+### V2 quarterly-derived TTM (2026-10-03)
+
+V2 now collects up to eight quarterly income, cash-flow and balance-sheet statements through the shared FMP REST transport. It sums four consecutive, unique fiscal quarters for TTM flows, uses the matched end balance snapshot, and calculates supported margins and valuation ratios with explicit currency/window checks. Annual selections still collect annual history for CAGR. No dedicated TTM endpoint or TTM-backed investigation bundle is used in V2; V1 retains its existing behavior.
+
+Sources retain fiscal quarters, dates, reporting currency, retrieval time, calculation formulas and missing-data limitations. Market-cap valuation requires matching known quote/report currency and positive denominators. Simplified EV subtracts cash equivalents and excludes preferred/minority interests; shares/EPS are not summed and unsupported provider formulas remain unavailable. Invalid or ambiguous quarters leave the affected TTM dataset missing while successful datasets survive.
+
+The cache key includes the quarterly methodology version. Earlier saved runs remain readable; recovery from their earlier financial evidence requires an explicit legacy-evidence acknowledgment. Start fresh research to obtain the quarterly-derived basis. All saved cross-workspace app packets are excluded from new V2 collection to prevent older provider TTM facts overriding calculated evidence. This change does not establish live provider entitlement or measured cost savings.
+
+Review corrections (2026-10-03): prior-TTM growth requires eight consecutive quarters with one security and currency, including the boundary between current and prior windows; invalid prior history preserves current TTM. Quote/profile security identities must match the requested ticker. Calculated ROE/ROA use TTM net income divided by the average of positive matched end and same-quarter prior-year equity/assets, with the balance dates and formula retained; this is a two-snapshot average, not a provider-equivalent quarterly average. ROIC and per-share provider formulas remain unavailable.
+
 ### Saved V2 generation timestamp (AAFA-5)
 
 `result_generated_at` records explicit V2 research or recovery completion in timezone-aware UTC, separately from the run start (`created_at`), stage updates (`updated_at`) and evidence dates. The result panel shows **Saved result generated**, UTC time and age in minutes, hours or days. Evidence-only and incomplete returned results also receive this operation timestamp; it does not mean that a report is complete. Optional decisions and finalization preserve it, as do history selection, cache reuse and ordinary reruns. Missing, malformed or timezone-naive legacy timestamps show unavailable; future timestamps disclose a clock mismatch. No date is backfilled and no provider/model call is triggered by the display.
+
+### Serper evidence coverage delivery (2026-10-04)
+
+V1 and V2 request up to five Serper news results per company when news is enabled; planner-requested web evidence uses the separate search endpoint. The key remains in the HTTP header. Successful evidence retains the transport retrieval timestamp separately from each article's provider-supplied publication date. Non-list news/search collections return structured missing evidence instead of stopping financial research; malformed rows are skipped. Saved coverage captions disclose requested lookback, usable result count, companies covered, and available UTC retrieval dates. Missing and partial news are explicit. Saved reuse and report recovery preserve the original evidence without recollection; fresh research is required to refresh news.
+
+Offline regression sources: `tests/test_serper_deep_research.py` exercises real V1/V2 factories and Serper transport with synthetic HTTP/model/financial boundaries, including disabled news, partial HTTP failure, invalid collections, source fields and saved report recovery. No live provider entitlement or publication-age verification is established by these tests.
+
+### Serper follow-up correction (2026-10-04)
+
+The user reported live AAPL and MSFT news evidence saying ?No matching search results returned,? alongside two separate missing investigation records. No live reproduction was authorized or performed. The earlier company-news query appended many topic words, which may restrict matching; that is a hypothesis, not an established live root cause. Company news now queries only company name plus ticker (ticker alone if the name is unavailable), preserving the same news endpoint, requested lookback, five-result cap, bounded timeouts and include-news gate. No additional requests or web fallback were introduced. The adapter now distinguishes a genuinely empty collection from a missing expected response collection and a nonempty collection whose rows lack usable safe links. Provider/model failures in investigation remain separate evidence gaps.
+
+Previously saved results are preserved, including their original news gaps. Select **Force fresh research** in V2, or start a new V1 research run, to apply the new query; reopening or reusing a saved result does not silently refresh news or incur calls. Offline tests verify exact company/ticker and ticker-only queries and the three response diagnostics. These checks cannot establish live news coverage, entitlement or the cause of the reported empty responses.

@@ -1,0 +1,52 @@
+[
+  {
+    "symbol": "PG",
+    "date": "2026-06-30",
+    "stockPrice": 146.64,
+    "numberOfShares": 2422500000,
+    "marketCapitalization": 355235399999,
+    "minusCashAndCashEquivalents": 9942000000,
+    "addTotalDebt": 35026000000,
+    "enterpriseValue": 380319399999
+  },
+  {
+    "symbol": "PG",
+    "date": "2026-03-31",
+    "stockPrice": 144.44,
+    "numberOfShares": 2416500000,
+    "marketCapitalization": 349039260000,
+    "minusCashAndCashEquivalents": 12306000000,
+    "addTotalDebt": 37026000000,
+    "enterpriseValue": 373759260000
+  },
+  {
+    "symbol": "PG",
+    "date": "2025-12-31",
+    "stockPrice": 143.31,
+    "numberOfShares": 2424000000,
+    "marketCapitalization": 347383440000,
+    "minusCashAndCashEquivalents": 10825000000,
+    "addTotalDebt": 36639000000,
+    "enterpriseValue": 373197440000
+  },
+  {
+    "symbol": "PG",
+    "date": "2025-09-30",
+    "stockPrice": 153.65,
+    "numberOfShares": 2436800000,
+    "marketCapitalization": 374414320000,
+    "minusCashAndCashEquivalents": 11171000000,
+    "addTotalDebt": 35946000000,
+    "enterpriseValue": 399189320000
+  },
+  {
+    "symbol": "PG",
+    "date": "2025-06-30",
+    "stockPrice": 159.32,
+    "numberOfShares": 2454400000,
+    "marketCapitalization": 391035008000,
+    "minusCashAndCashEquivalents": 9556000000,
+    "addTotalDebt": 35463000000,
+    "enterpriseValue": 416942008000
+  }
+]

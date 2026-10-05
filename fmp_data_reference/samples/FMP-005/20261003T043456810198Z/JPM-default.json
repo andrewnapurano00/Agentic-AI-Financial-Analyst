@@ -1,0 +1,42 @@
+[
+  {
+    "symbol": "AMJ",
+    "companyName": "JPMorgan Alerian MLP Index ETN",
+    "cik": "0000019617",
+    "exchangeFullName": "New York Stock Exchange Arca",
+    "exchange": "AMEX",
+    "currency": "USD"
+  },
+  {
+    "symbol": "AMJB",
+    "companyName": "Alerian MLP Index ETN",
+    "cik": "0000019617",
+    "exchangeFullName": "New York Stock Exchange Arca",
+    "exchange": "AMEX",
+    "currency": "USD"
+  },
+  {
+    "symbol": "JIVE",
+    "companyName": "JPMorgan International Value ETF",
+    "cik": "0000019617",
+    "exchangeFullName": "NASDAQ Global Market",
+    "exchange": "NASDAQ",
+    "currency": "USD"
+  },
+  {
+    "symbol": "JPM",
+    "companyName": "JPMorgan Chase & Co.",
+    "cik": "0000019617",
+    "exchangeFullName": "New York Stock Exchange",
+    "exchange": "NYSE",
+    "currency": "USD"
+  },
+  {
+    "symbol": "JPM-PC",
+    "companyName": "JPMorgan Chase & Co",
+    "cik": "0000019617",
+    "exchangeFullName": "New York Stock Exchange",
+    "exchange": "NYSE",
+    "currency": "USD"
+  }
+]

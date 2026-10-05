@@ -1,0 +1,14 @@
+[
+  {
+    "symbol": "LIN",
+    "lastMonthCount": 3,
+    "lastMonthAvgPriceTarget": 547.67,
+    "lastQuarterCount": 10,
+    "lastQuarterAvgPriceTarget": 558.2,
+    "lastYearCount": 27,
+    "lastYearAvgPriceTarget": 544.7,
+    "allTimeCount": 60,
+    "allTimeAvgPriceTarget": 477.21,
+    "publishers": "[\"StreetInsider\",\"Benzinga\",\"Investing\"]"
+  }
+]

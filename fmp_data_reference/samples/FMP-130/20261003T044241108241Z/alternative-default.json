@@ -1,0 +1,47 @@
+[
+  {
+    "symbol": "RWAYL",
+    "filingDate": "2026-10-02",
+    "acceptedDate": "2026-10-02",
+    "effectivenessDate": "2026-10-02",
+    "cik": "0001653384",
+    "form": "CERT",
+    "url": "https://www.sec.gov/Archives/edgar/data/1653384/000135445726000940/RWAY_8A_Cert.pdf"
+  },
+  {
+    "symbol": "RWAYZ",
+    "filingDate": "2026-10-02",
+    "acceptedDate": "2026-10-02",
+    "effectivenessDate": "2026-10-02",
+    "cik": "0001653384",
+    "form": "CERT",
+    "url": "https://www.sec.gov/Archives/edgar/data/1653384/000135445726000940/RWAY_8A_Cert.pdf"
+  },
+  {
+    "symbol": "RWAY",
+    "filingDate": "2026-10-02",
+    "acceptedDate": "2026-10-02",
+    "effectivenessDate": "2026-10-02",
+    "cik": "0001653384",
+    "form": "CERT",
+    "url": "https://www.sec.gov/Archives/edgar/data/1653384/000135445726000940/RWAY_8A_Cert.pdf"
+  },
+  {
+    "symbol": "NETL",
+    "filingDate": "2026-10-02",
+    "acceptedDate": "2026-10-02",
+    "effectivenessDate": "2026-10-02",
+    "cik": "0001540305",
+    "form": "CERT",
+    "url": "https://www.sec.gov/Archives/edgar/data/1540305/000114336226000375/UBIQ100226.pdf"
+  },
+  {
+    "symbol": "NFTZ",
+    "filingDate": "2026-10-02",
+    "acceptedDate": "2026-10-02",
+    "effectivenessDate": "2026-10-02",
+    "cik": "0001540305",
+    "form": "CERT",
+    "url": "https://www.sec.gov/Archives/edgar/data/1540305/000114336226000375/UBIQ100226.pdf"
+  }
+]

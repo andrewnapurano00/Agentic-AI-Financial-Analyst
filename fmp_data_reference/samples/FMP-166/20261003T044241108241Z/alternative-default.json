@@ -1,0 +1,32 @@
+[
+  {
+    "date": "2026-10-02",
+    "industry": "Advertising Agencies",
+    "exchange": "NASDAQ",
+    "pe": 15.187300676186366
+  },
+  {
+    "date": "2026-10-02",
+    "industry": "Aerospace & Defense",
+    "exchange": "NASDAQ",
+    "pe": 6.933916238096207
+  },
+  {
+    "date": "2026-10-02",
+    "industry": "Agricultural Farm Products",
+    "exchange": "NASDAQ",
+    "pe": 39.522300114896666
+  },
+  {
+    "date": "2026-10-02",
+    "industry": "Agricultural Inputs",
+    "exchange": "NASDAQ",
+    "pe": 0.0004948286331097497
+  },
+  {
+    "date": "2026-10-02",
+    "industry": "Agricultural - Machinery",
+    "exchange": "NASDAQ",
+    "pe": 33.26134755778457
+  }
+]

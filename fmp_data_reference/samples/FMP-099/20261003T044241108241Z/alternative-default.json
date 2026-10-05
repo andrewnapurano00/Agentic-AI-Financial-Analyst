@@ -1,0 +1,67 @@
+[
+  {
+    "symbol": "CAG",
+    "publishedDate": "2026-10-02T09:49:21.000Z",
+    "newsURL": "https://thefly.com/ajax/news_get.php?id=4434497",
+    "newsTitle": "Conagra Brands price target lowered to $16 from $17 at Barclays",
+    "newsBaseURL": "thefly.com",
+    "newsPublisher": "TheFly",
+    "newGrade": "Overweight",
+    "previousGrade": "Overweight",
+    "gradingCompany": "Barclays",
+    "action": "hold",
+    "priceWhenPosted": 13.2
+  },
+  {
+    "symbol": "UMGNF",
+    "publishedDate": "2026-10-02T08:35:57.000Z",
+    "newsURL": "https://thefly.com/ajax/news_get.php?id=4434450",
+    "newsTitle": "Universal Music Group upgraded to Overweight from Equal Weight at Barclays",
+    "newsBaseURL": "thefly.com",
+    "newsPublisher": "TheFly",
+    "newGrade": "Overweight",
+    "previousGrade": "Equal-Weight",
+    "gradingCompany": "Barclays",
+    "action": "upgrade",
+    "priceWhenPosted": 15.9
+  },
+  {
+    "symbol": "NA",
+    "publishedDate": "2026-10-02T06:39:00.000Z",
+    "newsURL": "https://www.streetinsider.com/Analyst+Comments/Barclays+Upgrades+Universal+Music+Group+NV+%28UMG%3ANA%29+%28UMGNF%29+to+Overweight/27137955.html",
+    "newsTitle": "Barclays Upgrades Universal Music Group NV (UMG:NA) (UMGNF) to Overweight",
+    "newsBaseURL": "streetinsider.com",
+    "newsPublisher": "StreetInsider",
+    "newGrade": "Overweight",
+    "previousGrade": "Overweight",
+    "gradingCompany": "Barclays",
+    "action": "upgrade",
+    "priceWhenPosted": 2.15
+  },
+  {
+    "symbol": "HPE",
+    "publishedDate": "2026-10-01T09:38:15.000Z",
+    "newsURL": "https://thefly.com/ajax/news_get.php?id=4433580",
+    "newsTitle": "HPE price target raised to $83 from $79 at Barclays",
+    "newsBaseURL": "thefly.com",
+    "newsPublisher": "TheFly",
+    "newGrade": "Overweight",
+    "previousGrade": "Overweight",
+    "gradingCompany": "Barclays",
+    "action": "hold",
+    "priceWhenPosted": 63.89
+  },
+  {
+    "symbol": "AQN",
+    "publishedDate": "2026-10-01T09:36:50.000Z",
+    "newsURL": "https://thefly.com/ajax/news_get.php?id=4433579",
+    "newsTitle": "Algonquin Power price target lowered to $6 from $7 at Barclays",
+    "newsBaseURL": "thefly.com",
+    "newsPublisher": "TheFly",
+    "newGrade": "Overweight",
+    "previousGrade": "Overweight",
+    "gradingCompany": "Barclays",
+    "action": "hold",
+    "priceWhenPosted": 5.03
+  }
+]

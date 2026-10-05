@@ -1,0 +1,15 @@
+{
+  "verified_at_utc": "2026-10-03T05:10:35.251831+00:00",
+  "credential_scan": "passed_no_configured_key_found",
+  "files_scanned": 5726,
+  "all_259_ids_covered": true,
+  "all_259_observed_schema_files": true,
+  "raw_sha256_verified": 1631,
+  "sample_array_limits": "passed",
+  "relative_output_paths": "passed",
+  "sector_profiles": "11 available",
+  "parameter_key_urls": "none",
+  "scope": "Reference artifacts only; no app testing/changes.",
+  "complete_zip_archives_credential_checked": 8,
+  "partial_zip_prefixes_not_fully_inspectable": 14
+}

@@ -1,0 +1,123 @@
+{
+  "api_id": "FMP-058",
+  "basis": "observed_response_shapes_not_json_schema_contract",
+  "generated_at_utc": "2026-10-03T05:06:34.693730+00:00",
+  "sample_files": [
+    "samples/FMP-058/20261003T043456810198Z/alternative-default.json",
+    "samples/FMP-058/20261003T044241108241Z/alternative-default.json"
+  ],
+  "required_fields_asserted": false,
+  "fields": {
+    "$": {
+      "observed_types": [
+        "array"
+      ],
+      "null_observations": 0,
+      "present_observations": 2,
+      "observed_missing_in_parent": 0
+    },
+    "$[]": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 10,
+      "observed_missing_in_parent": 0
+    },
+    "$[].bidSize": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 10,
+      "observed_missing_in_parent": 0
+    },
+    "$[].askPrice": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 10,
+      "observed_missing_in_parent": 0
+    },
+    "$[].volume": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 10,
+      "observed_missing_in_parent": 0
+    },
+    "$[].askSize": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 10,
+      "observed_missing_in_parent": 0
+    },
+    "$[].bidPrice": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 10,
+      "observed_missing_in_parent": 0
+    },
+    "$[].lastSalePrice": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 10,
+      "observed_missing_in_parent": 0
+    },
+    "$[].lastSaleSize": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 10,
+      "observed_missing_in_parent": 0
+    },
+    "$[].lastSaleTime": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 10,
+      "observed_missing_in_parent": 0
+    },
+    "$[].fmpLast": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 10,
+      "observed_missing_in_parent": 0
+    },
+    "$[].lastUpdated": {
+      "observed_types": [
+        "integer"
+      ],
+      "null_observations": 0,
+      "present_observations": 10,
+      "observed_missing_in_parent": 0
+    },
+    "$[].symbol": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 10,
+      "observed_missing_in_parent": 0
+    }
+  },
+  "limitation": "Observed path/type union, including nulls and missing observations. No assertion of universal requiredness, completeness or non-nullability. Workbook inferred schemas are separate.",
+  "observed_non_json_formats": [],
+  "binary_sample_files": []
+}

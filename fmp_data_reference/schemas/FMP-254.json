@@ -1,0 +1,11 @@
+{
+  "api_id": "FMP-254",
+  "basis": "observed_response_shapes_not_json_schema_contract",
+  "generated_at_utc": "2026-10-03T05:06:37.714824+00:00",
+  "sample_files": [],
+  "required_fields_asserted": false,
+  "fields": {},
+  "limitation": "Observed path/type union, including nulls and missing observations. No assertion of universal requiredness, completeness or non-nullability. Workbook inferred schemas are separate.",
+  "observed_non_json_formats": [],
+  "binary_sample_files": []
+}

@@ -1,0 +1,52 @@
+[
+  {
+    "title": "Chief Operating Officer",
+    "name": "Jennifer A. Piepszak",
+    "pay": 7855000,
+    "currencyPay": "USD",
+    "gender": "female",
+    "yearBorn": 1971,
+    "titleSince": null,
+    "active": true
+  },
+  {
+    "title": "Global Chief Information Officer",
+    "name": "Lori Ann Beer",
+    "pay": null,
+    "currencyPay": "USD",
+    "gender": "female",
+    "yearBorn": 1968,
+    "titleSince": null,
+    "active": true
+  },
+  {
+    "title": "Chief Executive Officer of Asset & Wealth Management and Executive Vice President",
+    "name": "Mary Callahan Erdoes",
+    "pay": 13000000,
+    "currencyPay": "USD",
+    "gender": "female",
+    "yearBorn": 1967,
+    "titleSince": null,
+    "active": true
+  },
+  {
+    "title": "CEO of the Commercial & Investment Bank and Co-President",
+    "name": "Douglas Petno",
+    "pay": 11631825,
+    "currencyPay": "USD",
+    "gender": "male",
+    "yearBorn": 1966,
+    "titleSince": null,
+    "active": true
+  },
+  {
+    "title": "Executive Vice President & Chief Financial Officer",
+    "name": "Jeremy Barnum",
+    "pay": 8400000,
+    "currencyPay": "USD",
+    "gender": "male",
+    "yearBorn": 1973,
+    "titleSince": null,
+    "active": true
+  }
+]

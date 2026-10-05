@@ -1,0 +1,34 @@
+[
+  {
+    "symbol": "XOM",
+    "companyName": "Exxon Mobil Corporation",
+    "cik": "0000034088",
+    "exchangeFullName": "New York Stock Exchange",
+    "exchange": "NYSE",
+    "currency": "USD"
+  },
+  {
+    "symbol": "XOM.MX",
+    "companyName": "Exxon Mobil Corporation",
+    "cik": "0000034088",
+    "exchangeFullName": "Mexican Stock Exchange",
+    "exchange": "MEX",
+    "currency": "MXN"
+  },
+  {
+    "symbol": "XOMX",
+    "companyName": "Direxion Daily XOM Bull 2X ETF",
+    "cik": "0000034088",
+    "exchangeFullName": "NASDAQ Global Select",
+    "exchange": "NASDAQ",
+    "currency": "USD"
+  },
+  {
+    "symbol": "XOMZ",
+    "companyName": "Direxion Daily XOM Bear 1X ETF",
+    "cik": "0000034088",
+    "exchangeFullName": "NASDAQ Global Select",
+    "exchange": "NASDAQ",
+    "currency": "USD"
+  }
+]

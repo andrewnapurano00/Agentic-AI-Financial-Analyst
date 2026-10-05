@@ -1,0 +1,47 @@
+[
+  {
+    "symbol": "CAT",
+    "date": "2026-10-01",
+    "analystRatingsbuy": 14,
+    "analystRatingsHold": 11,
+    "analystRatingsSell": 1,
+    "analystRatingsStrongSell": 1,
+    "analystRatingsStrongBuy": 1
+  },
+  {
+    "symbol": "CAT",
+    "date": "2026-09-01",
+    "analystRatingsbuy": 14,
+    "analystRatingsHold": 12,
+    "analystRatingsSell": 1,
+    "analystRatingsStrongSell": 1,
+    "analystRatingsStrongBuy": 1
+  },
+  {
+    "symbol": "CAT",
+    "date": "2026-08-01",
+    "analystRatingsbuy": 13,
+    "analystRatingsHold": 12,
+    "analystRatingsSell": 1,
+    "analystRatingsStrongSell": 1,
+    "analystRatingsStrongBuy": 1
+  },
+  {
+    "symbol": "CAT",
+    "date": "2026-07-01",
+    "analystRatingsbuy": 14,
+    "analystRatingsHold": 12,
+    "analystRatingsSell": 2,
+    "analystRatingsStrongSell": 1,
+    "analystRatingsStrongBuy": 1
+  },
+  {
+    "symbol": "CAT",
+    "date": "2026-06-01",
+    "analystRatingsbuy": 14,
+    "analystRatingsHold": 11,
+    "analystRatingsSell": 2,
+    "analystRatingsStrongSell": 1,
+    "analystRatingsStrongBuy": 1
+  }
+]

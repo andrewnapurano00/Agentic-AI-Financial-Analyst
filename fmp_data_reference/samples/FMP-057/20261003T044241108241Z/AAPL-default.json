@@ -1,0 +1,15 @@
+[
+  {
+    "bidSize": 4,
+    "askPrice": 333.54,
+    "volume": 33278548.15313,
+    "askSize": 5,
+    "bidPrice": 332.9,
+    "lastSalePrice": 333.54,
+    "lastSaleSize": 0,
+    "lastSaleTime": 1790985593000,
+    "fmpLast": 333.54,
+    "lastUpdated": 1790985556000,
+    "symbol": "AAPL"
+  }
+]

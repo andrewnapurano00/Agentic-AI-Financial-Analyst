@@ -1,0 +1,72 @@
+[
+  {
+    "symbol": "JNJ",
+    "cik": "0000200406",
+    "date": "2026-06-28",
+    "environmentalScore": 82.57,
+    "socialScore": 69.54,
+    "governanceScore": 72.76,
+    "ESGScore": 74.96,
+    "companyName": "Johnson & Johnson",
+    "industry": "Pharmaceutical Preparations",
+    "formType": "10-Q",
+    "acceptedDate": "2026-07-23 16:04:19",
+    "url": "https://www.sec.gov/Archives/edgar/data/200406/000020040626000153/0000200406-26-000153-index.htm"
+  },
+  {
+    "symbol": "JNJ",
+    "cik": "0000200406",
+    "date": "2026-03-29",
+    "environmentalScore": 82.03,
+    "socialScore": 69.82,
+    "governanceScore": 71.66,
+    "ESGScore": 74.5,
+    "companyName": "Johnson & Johnson",
+    "industry": "Pharmaceutical Preparations",
+    "formType": "10-Q",
+    "acceptedDate": "2026-04-22 16:02:41",
+    "url": "https://www.sec.gov/Archives/edgar/data/200406/000020040626000087/0000200406-26-000087-index.htm"
+  },
+  {
+    "symbol": "JNJ",
+    "cik": "0000200406",
+    "date": "2025-12-28",
+    "environmentalScore": 82.07,
+    "socialScore": 68.57,
+    "governanceScore": 70.06,
+    "ESGScore": 73.57,
+    "companyName": "Johnson & Johnson",
+    "industry": "Pharmaceutical Preparations",
+    "formType": "10-K",
+    "acceptedDate": "2026-02-11 16:06:11",
+    "url": "https://www.sec.gov/Archives/edgar/data/200406/000020040626000016/0000200406-26-000016-index.htm"
+  },
+  {
+    "symbol": "JNJ",
+    "cik": "0000200406",
+    "date": "2025-09-28",
+    "environmentalScore": 82.68,
+    "socialScore": 67.3,
+    "governanceScore": 71.1,
+    "ESGScore": 73.69,
+    "companyName": "Johnson & Johnson",
+    "industry": "Pharmaceutical Preparations",
+    "formType": "10-Q",
+    "acceptedDate": "2025-10-22 16:04:17",
+    "url": "https://www.sec.gov/Archives/edgar/data/200406/000020040625000209/0000200406-25-000209-index.htm"
+  },
+  {
+    "symbol": "JNJ",
+    "cik": "0000200406",
+    "date": "2025-06-29",
+    "environmentalScore": 82.8,
+    "socialScore": 67.21,
+    "governanceScore": 71.2,
+    "ESGScore": 73.73,
+    "companyName": "Johnson & Johnson",
+    "industry": "Pharmaceutical Preparations",
+    "formType": "10-Q",
+    "acceptedDate": "2025-07-24 16:04:24",
+    "url": "https://www.sec.gov/Archives/edgar/data/200406/000020040625000178/0000200406-25-000178-index.htm"
+  }
+]

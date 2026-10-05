@@ -1,0 +1,72 @@
+[
+  {
+    "symbol": "AAPL",
+    "cik": "0000320193",
+    "date": "2026-06-27",
+    "environmentalScore": 68.41,
+    "socialScore": 47.36,
+    "governanceScore": 61.32,
+    "ESGScore": 59.03,
+    "companyName": "Apple Inc.",
+    "industry": "Electronic Computers",
+    "formType": "10-Q",
+    "acceptedDate": "2026-07-31 06:01:02",
+    "url": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000020/0000320193-26-000020-index.htm"
+  },
+  {
+    "symbol": "AAPL",
+    "cik": "0000320193",
+    "date": "2026-03-28",
+    "environmentalScore": 61.24,
+    "socialScore": 47.64,
+    "governanceScore": 59.71,
+    "ESGScore": 56.2,
+    "companyName": "Apple Inc.",
+    "industry": "Electronic Computers",
+    "formType": "10-Q",
+    "acceptedDate": "2026-05-01 10:01:00",
+    "url": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000013/0000320193-26-000013-index.htm"
+  },
+  {
+    "symbol": "AAPL",
+    "cik": "0000320193",
+    "date": "2025-12-27",
+    "environmentalScore": 55.36,
+    "socialScore": 49.8,
+    "governanceScore": 62.18,
+    "ESGScore": 55.78,
+    "companyName": "Apple Inc.",
+    "industry": "Electronic Computers",
+    "formType": "10-Q",
+    "acceptedDate": "2026-01-30 06:01:32",
+    "url": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000006/0000320193-26-000006-index.htm"
+  },
+  {
+    "symbol": "AAPL",
+    "cik": "0000320193",
+    "date": "2025-09-27",
+    "environmentalScore": 68.82,
+    "socialScore": 47.27,
+    "governanceScore": 61.39,
+    "ESGScore": 59.16,
+    "companyName": "Apple Inc.",
+    "industry": "Electronic Computers",
+    "formType": "10-K",
+    "acceptedDate": "2025-10-31 06:01:26",
+    "url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/0000320193-25-000079-index.htm"
+  },
+  {
+    "symbol": "AAPL",
+    "cik": "0000320193",
+    "date": "2025-06-28",
+    "environmentalScore": 63.7,
+    "socialScore": 50.12,
+    "governanceScore": 62.89,
+    "ESGScore": 58.91,
+    "companyName": "Apple Inc.",
+    "industry": "Electronic Computers",
+    "formType": "10-Q",
+    "acceptedDate": "2025-08-01 06:00:42",
+    "url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000073/0000320193-25-000073-index.htm"
+  }
+]

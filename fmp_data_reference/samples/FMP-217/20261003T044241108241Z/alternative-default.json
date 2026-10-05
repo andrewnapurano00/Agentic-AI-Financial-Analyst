@@ -1,0 +1,37 @@
+[
+  {
+    "symbol": "ARSMXN",
+    "fromCurrency": "ARS",
+    "toCurrency": "MXN",
+    "fromName": "Argentine Peso",
+    "toName": "Mexican Peso"
+  },
+  {
+    "symbol": "TNDZAR",
+    "fromCurrency": "TND",
+    "toCurrency": "ZAR",
+    "fromName": "Tunisian Dinar",
+    "toName": "South African Rand"
+  },
+  {
+    "symbol": "XAGRUB",
+    "fromCurrency": "XAG",
+    "toCurrency": "RUB",
+    "fromName": "Silver (troy ounce)",
+    "toName": "Russian Ruble"
+  },
+  {
+    "symbol": "ILSNOK",
+    "fromCurrency": "ILS",
+    "toCurrency": "NOK",
+    "fromName": "Israeli New Shekel",
+    "toName": "Norwegian Krone"
+  },
+  {
+    "symbol": "COPCLP",
+    "fromCurrency": "COP",
+    "toCurrency": "CLP",
+    "fromName": "Colombian Peso",
+    "toName": "Chilean Peso"
+  }
+]

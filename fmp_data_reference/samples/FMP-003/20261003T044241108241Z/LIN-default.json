@@ -1,0 +1,23 @@
+[
+  {
+    "symbol": "LIN",
+    "name": "Linde plc",
+    "currency": "USD",
+    "exchangeFullName": "NASDAQ Global Select",
+    "exchange": "NASDAQ"
+  },
+  {
+    "symbol": "LIN.DE",
+    "name": "Linde plc",
+    "currency": "EUR",
+    "exchangeFullName": "Deutsche Börse",
+    "exchange": "XETRA"
+  },
+  {
+    "symbol": "LIN.SW",
+    "name": "Linde plc",
+    "currency": "CHF",
+    "exchangeFullName": "Swiss Exchange",
+    "exchange": "SIX"
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "symbol": "CAT1.DE",
+    "companyName": "Caterpillar Inc.",
+    "cusip": "149123101",
+    "marketCap": 347780935000
+  },
+  {
+    "symbol": "CAT",
+    "companyName": "Caterpillar Inc.",
+    "cusip": "149123101",
+    "marketCap": 394931738320
+  },
+  {
+    "symbol": "CAT.SW",
+    "companyName": "Caterpillar Inc.",
+    "cusip": "149123101",
+    "marketCap": 462559704516
+  },
+  {
+    "symbol": "CAT-B.ST",
+    "companyName": "Catella AB (publ)",
+    "cusip": "149123101",
+    "marketCap": 1724483056.5
+  }
+]

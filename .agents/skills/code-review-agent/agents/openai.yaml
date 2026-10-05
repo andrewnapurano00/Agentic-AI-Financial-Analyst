@@ -1,0 +1,6 @@
+interface:
+  display_name: "Code Review Agent"
+  short_description: "Spawn a reviewer and save a named report in docs/reviews"
+  default_prompt: "Use $code-review-agent to independently review my local changes and save a uniquely named task report in docs/reviews/."
+policy:
+  allow_implicit_invocation: false

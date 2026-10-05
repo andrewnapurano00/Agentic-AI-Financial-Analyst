@@ -1,0 +1,37 @@
+[
+  {
+    "etfSymbol": "ZWHC-T.TO",
+    "assetExposure": "JNJ",
+    "sharesNumber": 5948,
+    "weightPercentage": 5.27,
+    "marketValue": 2188453.09
+  },
+  {
+    "etfSymbol": "ZWHC.TO",
+    "assetExposure": "JNJ",
+    "sharesNumber": 5948,
+    "weightPercentage": 5.27,
+    "marketValue": 2188453.09
+  },
+  {
+    "etfSymbol": "ZWA-T.TO",
+    "assetExposure": "JNJ",
+    "sharesNumber": 17225,
+    "weightPercentage": 3.02,
+    "marketValue": 6337610.05
+  },
+  {
+    "etfSymbol": "ZWA.TO",
+    "assetExposure": "JNJ",
+    "sharesNumber": 17225,
+    "weightPercentage": 3.02,
+    "marketValue": 6337610.05
+  },
+  {
+    "etfSymbol": "ZUQ-U.TO",
+    "assetExposure": "JNJ",
+    "sharesNumber": 138085,
+    "weightPercentage": 3.34,
+    "marketValue": 50805740.69
+  }
+]

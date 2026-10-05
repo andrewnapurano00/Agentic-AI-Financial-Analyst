@@ -1,0 +1,142 @@
+{
+  "api_id": "FMP-155",
+  "basis": "observed_response_shapes_not_json_schema_contract",
+  "generated_at_utc": "2026-10-03T05:06:36.363669+00:00",
+  "sample_files": [
+    "samples/FMP-155/20261003T045554159287Z/alternative-legacy-default.json"
+  ],
+  "required_fields_asserted": false,
+  "fields": {
+    "$": {
+      "observed_types": [
+        "array"
+      ],
+      "null_observations": 0,
+      "present_observations": 1,
+      "observed_missing_in_parent": 0
+    },
+    "$[]": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].cik": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].symbol": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].classId": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].seriesId": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].entityName": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].entityOrgType": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].seriesName": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].className": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].reportingFileNumber": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].address1": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].city": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].zipCode": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].state": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    },
+    "$[].address2": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 5,
+      "observed_missing_in_parent": 0
+    }
+  },
+  "limitation": "Observed path/type union, including nulls and missing observations. No assertion of universal requiredness, completeness or non-nullability. Workbook inferred schemas are separate.",
+  "observed_non_json_formats": [],
+  "binary_sample_files": []
+}

@@ -1,0 +1,16 @@
+[
+  {
+    "symbol": "GOOGL",
+    "name": "Alphabet Inc.",
+    "currency": "USD",
+    "exchangeFullName": "NASDAQ Global Select",
+    "exchange": "NASDAQ"
+  },
+  {
+    "symbol": "GOOGL.SW",
+    "name": "Alphabet Inc.",
+    "currency": "CHF",
+    "exchangeFullName": "Swiss Exchange",
+    "exchange": "SIX"
+  }
+]

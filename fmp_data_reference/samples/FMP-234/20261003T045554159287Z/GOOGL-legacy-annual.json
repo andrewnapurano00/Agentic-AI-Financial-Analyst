@@ -1,0 +1,42 @@
+[
+  {
+    "2025-12-31": {
+      "Americas Excluding United States": 23902000000,
+      "Asia Pacific": 67680000000,
+      "EMEA": 117045000000,
+      "UNITED STATES": 194209000000
+    }
+  },
+  {
+    "2024-12-31": {
+      "Americas Excluding United States": 20418000000,
+      "Asia Pacific": 56815000000,
+      "EMEA": 102127000000,
+      "UNITED STATES": 170447000000
+    }
+  },
+  {
+    "2023-12-31": {
+      "Americas Excluding United States": 18320000000,
+      "Asia Pacific": 51514000000,
+      "EMEA": 91038000000,
+      "UNITED STATES": 146286000000
+    }
+  },
+  {
+    "2022-12-31": {
+      "Americas Excluding United States": 16976000000,
+      "Asia Pacific": 47024000000,
+      "EMEA": 82062000000,
+      "UNITED STATES": 134814000000
+    }
+  },
+  {
+    "2021-12-31": {
+      "Americas Excluding United States": 14404000000,
+      "Asia Pacific": 46123000000,
+      "EMEA": 79107000000,
+      "UNITED STATES": 117854000000
+    }
+  }
+]

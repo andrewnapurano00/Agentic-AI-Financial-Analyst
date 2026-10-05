@@ -1,0 +1,42 @@
+[
+  {
+    "symbol": "LIN",
+    "date": "2026-09-28",
+    "gradingCompany": "Argus Research",
+    "previousGrade": "Buy",
+    "newGrade": "Buy",
+    "action": "maintain"
+  },
+  {
+    "symbol": "LIN",
+    "date": "2026-08-10",
+    "gradingCompany": "BMO Capital",
+    "previousGrade": "Outperform",
+    "newGrade": "Outperform",
+    "action": "maintain"
+  },
+  {
+    "symbol": "LIN",
+    "date": "2026-08-03",
+    "gradingCompany": "Bernstein",
+    "previousGrade": "Outperform",
+    "newGrade": "Outperform",
+    "action": "maintain"
+  },
+  {
+    "symbol": "LIN",
+    "date": "2026-08-03",
+    "gradingCompany": "RBC Capital",
+    "previousGrade": "Outperform",
+    "newGrade": "Outperform",
+    "action": "maintain"
+  },
+  {
+    "symbol": "LIN",
+    "date": "2026-08-03",
+    "gradingCompany": "Citigroup",
+    "previousGrade": "Buy",
+    "newGrade": "Buy",
+    "action": "maintain"
+  }
+]

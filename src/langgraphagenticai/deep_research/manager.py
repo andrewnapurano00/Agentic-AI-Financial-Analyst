@@ -142,7 +142,7 @@ def _analysis_comparison(rows: list[dict], frameworks: list[dict]) -> list[dict]
     """Keep both accounting bases and sector priorities without sending every UI alias to the model."""
     fields = [
         "Ticker", "Company", "Sector", "Industry", "Sector framework", "Quote currency", "Statement currency",
-        "Price", "Market cap", "Statement date", "Statement period", "TTM through", "TTM currency", "Balance sheet date",
+        "Price", "Market cap", "Statement date", "Statement period", "TTM through", "TTM currency", "TTM methodology", "Balance sheet date",
         "Revenue (TTM)", "Operating income (TTM)", "EBITDA (TTM)", "Net income (TTM)",
         "Operating cash flow (TTM)", "Free cash flow (TTM)", "Gross margin (TTM)", "Operating margin (TTM)",
         "EBITDA margin (TTM)", "Net margin (TTM)", "FCF margin (TTM)", "Cash conversion (TTM)",
@@ -210,7 +210,8 @@ class ResearchManager:
                  tools=(), progress=None, on_text=None, checkpoint=None, utility_llm=None,
                  stage_llms=None, stage_limits=None, context_limits=None,
                  deterministic_validator=None, interpretive_review=True,
-                 max_estimated_cost_usd=None, stop_after_evidence=False):
+                 max_estimated_cost_usd=None, stop_after_evidence=False,
+                 report_instruction=None, stage_options=None, allow_clarification_retry=True):
         self.llm, self.financial_source, self.serper = llm, financial_source, serper
         self.utility_llm = utility_llm or llm
         self.tools = {tool.name: tool for tool in tools}
@@ -229,6 +230,10 @@ class ResearchManager:
         self.interpretive_review = interpretive_review
         self.max_estimated_cost_usd = max_estimated_cost_usd
         self.stop_after_evidence = stop_after_evidence
+        self.report_instruction = report_instruction
+        self.stage_options = dict(stage_options or {})
+        self.allow_clarification_retry = allow_clarification_retry
+        self.comparison_builder = comparison_rows
 
     def _invoke(self, instruction: str, payload: dict, *, stage="follow_up", max_tokens=None) -> str:
         limits = {"plan": (75, 1200), "draft": (150, 4500), "review": (120, 3000), "follow_up": (90, 2200)}
@@ -246,6 +251,7 @@ class ResearchManager:
         if stage in {"plan", "review"} and model_name in {"gpt-5", "gpt-5-mini", "gpt-5-nano"}:
             kwargs["reasoning_effort"] = "minimal"
             kwargs["response_format"] = {"type": "json_object"}
+        kwargs.update(self.stage_options.get(stage, {}))
         started = time.monotonic()
         diagnostic = {"stage": stage, "model": model_name or "unknown",
                       "input_characters": sum(len(m.content) for m in messages)}
@@ -255,6 +261,9 @@ class ResearchManager:
             projected = (math.ceil(diagnostic["input_characters"] / 4) * prices[0]
                          + (max_tokens or token_limit) * prices[2]) / 1_000_000
             if spent + projected > self.max_estimated_cost_usd:
+                self.diagnostics.append({**diagnostic, "status": "blocked", "seconds": 0.0,
+                    "reason": "The configured model-cost budget would be exceeded before this stage.",
+                    "projected_cost_usd": round(projected, 6), "estimated_cost_usd": 0.0})
                 raise RuntimeError("The configured model-cost budget would be exceeded before this stage.")
         try:
             if stage == "draft" and self.on_text is not None:
@@ -293,6 +302,9 @@ class ResearchManager:
             return text.strip()
         except Exception as exc:
             diagnostic.update(status="failed", reason=failure_reason(exc))
+            if self.max_estimated_cost_usd is not None and prices and "estimated_cost_usd" not in diagnostic:
+                diagnostic.update(estimated_cost_usd=round(projected, 6), token_counts_estimated=True,
+                    usage_note="Failed request usage unavailable; projected cost reserved for retry budgeting.")
             raise
         finally:
             diagnostic["seconds"] = round(time.monotonic() - started, 2)
@@ -313,7 +325,7 @@ class ResearchManager:
                     "arguments": t.args} for t in self.tools.values()
                    if t.name in TARGETED_TOOLS and t.name not in redundant]
         budget = 8 if request.depth == "Extended" else 4
-        comparison = comparison_rows(evidence, request.symbols)
+        comparison = self.comparison_builder(evidence, request.symbols)
         frameworks = sector_frameworks(evidence, request.symbols, comparison)
         sector_context = sector_prompt_context(frameworks)
         analysis_comparison = _analysis_comparison(comparison, frameworks)
@@ -388,13 +400,14 @@ class ResearchManager:
             return [Evidence("", symbol, category, query, "Serper", {}, status="missing", note=payload.get("error", "No results."))]
         rows = payload["results"][:5]
         return [Evidence("", symbol, category, query, "Serper", rows,
+                         retrieved_at=payload.get("retrieved_at") or utc_now(),
                          url=rows[0].get("url", "") if rows else "",
                          note="Up to five grouped search results. Snippets are discovery evidence; publication dates are provider-supplied.")]
 
     def write_report(self, request: ResearchRequest, evidence: list[Evidence], plan: dict, *, draft="") -> str:
         self.report_warnings = []
         self.review_status = "pending"
-        comparison = comparison_rows(evidence, request.symbols)
+        comparison = self.comparison_builder(evidence, request.symbols)
         frameworks = sector_frameworks(evidence, request.symbols, comparison)
         sector_context = sector_prompt_context(frameworks)
         analysis_comparison = _analysis_comparison(comparison, frameworks)
@@ -436,6 +449,8 @@ class ResearchManager:
             "References, or Evidence References line, table row, footnote, or section; the app manages evidence separately. "
             "Do not reproduce long passages from search snippets or transcripts. Clearly label missing data and freshness limits."
             )
+            if self.report_instruction:
+                draft_instruction = self.report_instruction(request)
             draft_payload = {"request": asdict(request), "research_questions": plan.get("questions", []),
              "sector_context": sector_context,
              "evidence": evidence_context(evidence, self.context_limits.get(
@@ -446,6 +461,8 @@ class ResearchManager:
             token_limit = self.stage_limits.get("draft", (150, 6000 if request.depth == "Extended" else 4500))[1]
             draft = self._invoke(draft_instruction, draft_payload, stage="draft", max_tokens=token_limit)
             if clarification_only_response(draft):
+                if not self.allow_clarification_retry:
+                    raise IncompleteGeneration("The model returned clarification instead of a report; retry explicitly.")
                 self.progress("Replacing a clarification response with the requested complete memo")
                 draft = self._invoke(
                     draft_instruction +
@@ -520,6 +537,8 @@ class ResearchManager:
             if not revised.strip():
                 raise ValueError("Review removed entire report")
             self.draft = revised
+            if self.deterministic_validator:
+                unresolved.extend(self.deterministic_validator(request, evidence, revised))
             self.review_status = "needs_review" if unresolved else "complete"
             if unresolved:
                 self.report_warnings.append("Review flagged issues: " + "; ".join(str(x)[:300] for x in unresolved[:5]))
@@ -547,7 +566,7 @@ class ResearchManager:
         self.checkpoint(result.copy())
 
         def save():
-            comparison = comparison_rows(evidence, request.symbols)
+            comparison = self.comparison_builder(evidence, request.symbols)
             result.update(evidence=[e.to_dict() for e in evidence], plan=json_safe(plan),
                           comparison=comparison,
                           sector_frameworks=sector_frameworks(evidence, request.symbols, comparison), warnings=warnings,
@@ -569,7 +588,7 @@ class ResearchManager:
             queries = []
             for symbol in request.symbols:
                 profile = next((e.data[0] for e in evidence if e.symbol == symbol and e.category == "profile" and e.status == "ok" and e.data), {})
-                queries.append((symbol, f'{profile.get("companyName", symbol)} {symbol} earnings guidance analyst upgrade downgrade product regulatory news'))
+                queries.append((symbol, f'{profile.get("companyName") or ""} {symbol}'.strip()))
             with ThreadPoolExecutor(max_workers=4) as pool:
                 for items in pool.map(lambda q: self._search(q[0], q[1], request, news=True), queries):
                     add(items)
@@ -621,7 +640,7 @@ class ResearchManager:
             self.diagnostics = list(result.get("diagnostics", []))
         request = ResearchRequest(**result["request"])
         evidence = [Evidence(**e) for e in result["evidence"]]
-        comparison = comparison_rows(evidence, request.symbols)
+        comparison = self.comparison_builder(evidence, request.symbols)
         result["comparison"] = comparison
         result["sector_frameworks"] = sector_frameworks(evidence, request.symbols, comparison)
         warnings = [w for w in result.get("warnings", []) if w not in result.get("report_warnings", [])

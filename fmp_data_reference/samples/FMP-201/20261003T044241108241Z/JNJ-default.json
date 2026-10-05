@@ -1,0 +1,42 @@
+[
+  {
+    "symbol": "JNJ",
+    "date": "2026-09-08",
+    "price": 275.23,
+    "quantity": 991,
+    "cusip": "478160104",
+    "name": "JOHNSON AND JOHNSON"
+  },
+  {
+    "symbol": "JNJ",
+    "date": "2026-09-04",
+    "price": 278.43,
+    "quantity": 87,
+    "cusip": "478160104",
+    "name": "JOHNSON AND JOHNSON"
+  },
+  {
+    "symbol": "JNJ",
+    "date": "2026-09-03",
+    "price": 275.21,
+    "quantity": 3068,
+    "cusip": "478160104",
+    "name": "JOHNSON AND JOHNSON"
+  },
+  {
+    "symbol": "JNJ",
+    "date": "2026-09-01",
+    "price": 265.85,
+    "quantity": 20,
+    "cusip": "478160104",
+    "name": "JOHNSON AND JOHNSON"
+  },
+  {
+    "symbol": "JNJ",
+    "date": "2026-08-25",
+    "price": 273.04,
+    "quantity": 500,
+    "cusip": "478160104",
+    "name": "JOHNSON AND JOHNSON"
+  }
+]

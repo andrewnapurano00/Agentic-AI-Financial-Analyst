@@ -1,0 +1,32 @@
+[
+  {
+    "holder": "BlackRock, Inc.",
+    "shares": 37991505,
+    "dateReported": "2026-06-30",
+    "change": 822072
+  },
+  {
+    "holder": "STATE STREET CORP",
+    "shares": 34392316,
+    "dateReported": "2026-06-30",
+    "change": -488288
+  },
+  {
+    "holder": "VANGUARD CAPITAL MANAGEMENT LLC",
+    "shares": 30077764,
+    "dateReported": "2026-06-30",
+    "change": -156689
+  },
+  {
+    "holder": "STATE FARM MUTUAL AUTOMOBILE INSURANCE CO",
+    "shares": 14509304,
+    "dateReported": "2026-06-30",
+    "change": -55422
+  },
+  {
+    "holder": "VANGUARD PORTFOLIO MANAGEMENT LLC",
+    "shares": 12026244,
+    "dateReported": "2026-06-30",
+    "change": 320354
+  }
+]

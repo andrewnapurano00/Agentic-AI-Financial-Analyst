@@ -1,0 +1,52 @@
+[
+  {
+    "symbol": "None",
+    "cik": "0001695963",
+    "filingDate": "2026-10-02 00:00:00",
+    "acceptedDate": "2026-10-02 17:30:00",
+    "formType": "10-Q",
+    "hasFinancials": true,
+    "link": "https://www.sec.gov/Archives/edgar/data/1695963/000121465926012510/0001214659-26-012510-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1695963/000121465926012510/kdm81126110q.htm"
+  },
+  {
+    "symbol": "NCRA",
+    "cik": "0001756180",
+    "filingDate": "2026-10-02 00:00:00",
+    "acceptedDate": "2026-10-02 17:00:45",
+    "formType": "10-Q/A",
+    "hasFinancials": true,
+    "link": "https://www.sec.gov/Archives/edgar/data/1756180/000168316826007582/0001683168-26-007582-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1756180/000168316826007582/nocera_i10qa1-063026.htm"
+  },
+  {
+    "symbol": "LEN-B",
+    "cik": "0000920760",
+    "filingDate": "2026-10-02 00:00:00",
+    "acceptedDate": "2026-10-02 16:32:40",
+    "formType": "10-Q",
+    "hasFinancials": true,
+    "link": "https://www.sec.gov/Archives/edgar/data/920760/000162828026064557/0001628280-26-064557-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/920760/000162828026064557/len-20260831.htm"
+  },
+  {
+    "symbol": "LEN",
+    "cik": "0000920760",
+    "filingDate": "2026-10-02 00:00:00",
+    "acceptedDate": "2026-10-02 16:32:40",
+    "formType": "10-Q",
+    "hasFinancials": true,
+    "link": "https://www.sec.gov/Archives/edgar/data/920760/000162828026064557/0001628280-26-064557-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/920760/000162828026064557/len-20260831.htm"
+  },
+  {
+    "symbol": "NOVT",
+    "cik": "0001076930",
+    "filingDate": "2026-10-02 00:00:00",
+    "acceptedDate": "2026-10-02 16:30:16",
+    "formType": "8-K/A",
+    "hasFinancials": true,
+    "link": "https://www.sec.gov/Archives/edgar/data/1076930/000119312526412444/0001193125-26-412444-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1076930/000119312526412444/novt-ex99_1.htm"
+  }
+]

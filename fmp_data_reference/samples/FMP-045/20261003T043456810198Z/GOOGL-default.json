@@ -1,0 +1,21 @@
+[
+  {
+    "symbol": "GOOGL",
+    "name": "Alphabet Inc.",
+    "price": 343.5,
+    "changePercentage": 1.55511,
+    "change": 5.26,
+    "volume": 22734069,
+    "dayLow": 341.16,
+    "dayHigh": 345.77,
+    "yearHigh": 408.61,
+    "yearLow": 235.84,
+    "marketCap": 4157075226740.9995,
+    "priceAvg50": 343.8502,
+    "priceAvg200": 338.74176,
+    "exchange": "NASDAQ",
+    "open": 341.315,
+    "previousClose": 338.24,
+    "timestamp": 1790971201
+  }
+]

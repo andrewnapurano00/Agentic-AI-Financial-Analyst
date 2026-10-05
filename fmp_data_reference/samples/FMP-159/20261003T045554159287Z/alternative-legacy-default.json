@@ -1,0 +1,42 @@
+[
+  {
+    "year": 2022,
+    "sector": "BANKS - DIVERSIFIED",
+    "environmentalScore": 66.2,
+    "socialScore": 68.29,
+    "governanceScore": 65.58,
+    "ESGScore": 66.69
+  },
+  {
+    "year": 2022,
+    "sector": "COMPUTER HARDWARE",
+    "environmentalScore": 62.99,
+    "socialScore": 63.45,
+    "governanceScore": 63.91,
+    "ESGScore": 63.45
+  },
+  {
+    "year": 2022,
+    "sector": "SOLAR",
+    "environmentalScore": 71.21,
+    "socialScore": 69.47,
+    "governanceScore": 68.62,
+    "ESGScore": 69.77
+  },
+  {
+    "year": 2022,
+    "sector": "APPAREL - FOOTWEAR & ACCESSORIES",
+    "environmentalScore": 59.32,
+    "socialScore": 63.6,
+    "governanceScore": 62.35,
+    "ESGScore": 61.76
+  },
+  {
+    "year": 2022,
+    "sector": "TECHNOLOGY DISTRIBUTORS",
+    "environmentalScore": 59.56,
+    "socialScore": 69.9,
+    "governanceScore": 69.98,
+    "ESGScore": 66.48
+  }
+]

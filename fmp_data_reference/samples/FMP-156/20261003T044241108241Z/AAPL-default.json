@@ -1,0 +1,37 @@
+[
+  {
+    "holder": "Thrivent Core Funds",
+    "shares": 1195,
+    "dateReported": "2026-07-31",
+    "change": 0,
+    "weightPercent": 1.91e-05
+  },
+  {
+    "holder": "AB EQUITY INCOME FUND INC",
+    "shares": 136563,
+    "dateReported": "2026-05-31",
+    "change": 2200,
+    "weightPercent": 1.42975547
+  },
+  {
+    "holder": "Clough Global Opportunities Fund",
+    "shares": 3520000,
+    "dateReported": "2026-07-31",
+    "change": 0,
+    "weightPercent": 6.83718619
+  },
+  {
+    "holder": "YCG Funds",
+    "shares": 20321,
+    "dateReported": "2026-05-31",
+    "change": 0,
+    "weightPercent": 0.0686986
+  },
+  {
+    "holder": "Virtus Artificial Intelligence & Technology Opportunities Fund",
+    "shares": 38820,
+    "dateReported": "2026-07-31",
+    "change": 0,
+    "weightPercent": 0.01087389
+  }
+]

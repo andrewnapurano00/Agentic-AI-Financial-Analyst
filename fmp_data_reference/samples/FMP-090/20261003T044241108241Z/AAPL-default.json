@@ -1,0 +1,67 @@
+[
+  {
+    "symbol": "AAPL",
+    "publishedDate": "2026-10-01T12:01:10.000Z",
+    "newsURL": "https://thefly.com/ajax/news_get.php?id=4433851",
+    "newsTitle": "Apple price target lowered to $355 from $360 at Morgan Stanley",
+    "analystName": "",
+    "priceTarget": 355,
+    "adjPriceTarget": 355,
+    "priceWhenPosted": 330.26,
+    "newsPublisher": "TheFly",
+    "newsBaseURL": "thefly.com",
+    "analystCompany": "Morgan Stanley"
+  },
+  {
+    "symbol": "AAPL",
+    "publishedDate": "2026-09-18T10:22:25.000Z",
+    "newsURL": "https://thefly.com/ajax/news_get.php?id=4427676",
+    "newsTitle": "Apple price target raised to $380 from $365 at Evercore ISI",
+    "analystName": "",
+    "priceTarget": 380,
+    "adjPriceTarget": 380,
+    "priceWhenPosted": 337,
+    "newsPublisher": "TheFly",
+    "newsBaseURL": "thefly.com",
+    "analystCompany": "Evercore ISI"
+  },
+  {
+    "symbol": "AAPL",
+    "publishedDate": "2026-09-18T10:02:00.000Z",
+    "newsURL": "https://www.streetinsider.com/Analyst+Comments/Apple+%28AAPL%29+PT+Raised+to+%24380+at+Evercore+ISI/27077772.html",
+    "newsTitle": "Apple (AAPL) PT Raised to $380 at Evercore ISI",
+    "analystName": "",
+    "priceTarget": 380,
+    "adjPriceTarget": 380,
+    "priceWhenPosted": 337,
+    "newsPublisher": "StreetInsider",
+    "newsBaseURL": "streetinsider.com",
+    "analystCompany": "Loop Capital Markets"
+  },
+  {
+    "symbol": "AAPL",
+    "publishedDate": "2026-09-08T10:35:19.000Z",
+    "newsURL": "https://thefly.com/ajax/news_get.php?id=4422000",
+    "newsTitle": "Apple price target raised to $304 from $270 at MoffettNathanson",
+    "analystName": "",
+    "priceTarget": 304,
+    "adjPriceTarget": 304,
+    "priceWhenPosted": 319.97,
+    "newsPublisher": "TheFly",
+    "newsBaseURL": "thefly.com",
+    "analystCompany": "MoffettNathanson"
+  },
+  {
+    "symbol": "AAPL",
+    "publishedDate": "2026-08-17T08:51:20.000Z",
+    "newsURL": "https://thefly.com/ajax/news_get.php?id=4412098",
+    "newsTitle": "Apple upgraded to Buy from Neutral at Rothschild & Co Redburn",
+    "analystName": "Timm Schulze-Melander",
+    "priceTarget": 400,
+    "adjPriceTarget": 400,
+    "priceWhenPosted": 305.93,
+    "newsPublisher": "TheFly",
+    "newsBaseURL": "thefly.com",
+    "analystCompany": "Redburn Partners"
+  }
+]

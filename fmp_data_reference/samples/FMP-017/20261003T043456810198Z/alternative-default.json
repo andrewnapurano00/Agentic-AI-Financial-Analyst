@@ -1,0 +1,32 @@
+[
+  {
+    "symbol": "^TTIN",
+    "name": "S&P/TSX Capped Industrials Index",
+    "exchange": "TSX",
+    "currency": "CAD"
+  },
+  {
+    "symbol": "^TSE50",
+    "name": "FTSE TWSE Taiwan 50 Index",
+    "exchange": "TAI",
+    "currency": "TWD"
+  },
+  {
+    "symbol": "DE000SLA30S3.SG",
+    "name": "Solactive Equal Weight Canada Oil & Gas Index",
+    "exchange": "STU",
+    "currency": "EUR"
+  },
+  {
+    "symbol": "XIN9.FGI",
+    "name": "FTSE China A50 Index",
+    "exchange": "FGI",
+    "currency": "CNY"
+  },
+  {
+    "symbol": "^NYA",
+    "name": "NYSE Composite",
+    "exchange": "NYSE",
+    "currency": "USD"
+  }
+]

@@ -1,0 +1,21 @@
+[
+  {
+    "symbol": "PLD",
+    "name": "Prologis, Inc.",
+    "price": 128.91,
+    "changePercentage": 0.56951,
+    "change": 0.73,
+    "volume": 3811300,
+    "dayLow": 128.125,
+    "dayHigh": 129.72,
+    "yearHigh": 153.35,
+    "yearLow": 111.03,
+    "marketCap": 120282827160,
+    "priceAvg50": 139.0142,
+    "priceAvg200": 137.9279,
+    "exchange": "NYSE",
+    "open": 128.555,
+    "previousClose": 128.18,
+    "timestamp": 1790971367
+  }
+]

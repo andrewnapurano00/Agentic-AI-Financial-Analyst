@@ -1,0 +1,15 @@
+[
+  {
+    "bidSize": 50,
+    "askPrice": 164.53,
+    "volume": 11291848,
+    "askSize": 1,
+    "bidPrice": 162,
+    "lastSalePrice": 164.29,
+    "lastSaleSize": 113,
+    "lastSaleTime": 1790984667000,
+    "fmpLast": 164.29,
+    "lastUpdated": 1790985602000,
+    "symbol": "XOM"
+  }
+]

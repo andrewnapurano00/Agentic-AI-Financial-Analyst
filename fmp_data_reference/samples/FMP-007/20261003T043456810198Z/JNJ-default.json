@@ -1,0 +1,20 @@
+[
+  {
+    "symbol": "JNJ.DE",
+    "name": "Johnson & Johnson",
+    "isin": "US4781601046",
+    "marketCap": 550661829415
+  },
+  {
+    "symbol": "JNJ",
+    "name": "Johnson & Johnson",
+    "isin": "US4781601046",
+    "marketCap": 617006291448
+  },
+  {
+    "symbol": "JNJ.SW",
+    "name": "Johnson & Johnson",
+    "isin": "US4781601046",
+    "marketCap": 535117983464
+  }
+]

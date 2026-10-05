@@ -1,0 +1,59 @@
+[
+  {
+    "symbol": "JNJ",
+    "fiscalYear": 2025,
+    "period": "FY",
+    "reportedCurrency": "USD",
+    "date": "2025-12-28",
+    "data": {
+      "Innovative Medicine": 60401000000,
+      "MedTech": 33792000000
+    }
+  },
+  {
+    "symbol": "JNJ",
+    "fiscalYear": 2024,
+    "period": "FY",
+    "reportedCurrency": "USD",
+    "date": "2024-12-29",
+    "data": {
+      "Innovative Medicine": 56964000000,
+      "MedTech": 31857000000
+    }
+  },
+  {
+    "symbol": "JNJ",
+    "fiscalYear": 2023,
+    "period": "FY",
+    "reportedCurrency": "USD",
+    "date": "2023-12-31",
+    "data": {
+      "Innovative Medicine": 54759000000,
+      "MedTech": 30400000000
+    }
+  },
+  {
+    "symbol": "JNJ",
+    "fiscalYear": 2022,
+    "period": "FY",
+    "reportedCurrency": "USD",
+    "date": "2022-12-31",
+    "data": {
+      "Innovative Medicine": 52563000000,
+      "MedTech": 27427000000,
+      "Consumer": 14953000000
+    }
+  },
+  {
+    "symbol": "JNJ",
+    "fiscalYear": 2021,
+    "period": "FY",
+    "reportedCurrency": "USD",
+    "date": "2022-01-02",
+    "data": {
+      "Consumer": 14635000000,
+      "Medical Devices": 27060000000,
+      "Pharmaceutical": 52080000000
+    }
+  }
+]

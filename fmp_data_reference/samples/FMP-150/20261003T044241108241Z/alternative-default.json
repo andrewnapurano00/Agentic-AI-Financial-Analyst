@@ -1,0 +1,27 @@
+[
+  {
+    "symbol": "SPY",
+    "sector": "Basic Materials",
+    "weightPercentage": 1.68
+  },
+  {
+    "symbol": "SPY",
+    "sector": "Cash & Others",
+    "weightPercentage": 0.009999999999990905
+  },
+  {
+    "symbol": "SPY",
+    "sector": "Communication Services",
+    "weightPercentage": 9.5
+  },
+  {
+    "symbol": "SPY",
+    "sector": "Consumer Cyclical",
+    "weightPercentage": 9.31
+  },
+  {
+    "symbol": "SPY",
+    "sector": "Consumer Defensive",
+    "weightPercentage": 4.46
+  }
+]

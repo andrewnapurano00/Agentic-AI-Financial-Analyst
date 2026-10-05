@@ -1,0 +1,57 @@
+[
+  {
+    "symbol": "PG",
+    "date": "2026-07-24",
+    "recordDate": "2026-07-24",
+    "paymentDate": "2026-08-17",
+    "declarationDate": "2026-07-14",
+    "adjDividend": 1.0885,
+    "dividend": 1.0885,
+    "yield": 2.9106573502476083,
+    "frequency": "Quarterly"
+  },
+  {
+    "symbol": "PG",
+    "date": "2026-04-24",
+    "recordDate": "2026-04-24",
+    "paymentDate": "2026-05-15",
+    "declarationDate": "2026-04-14",
+    "adjDividend": 1.0885,
+    "dividend": 1.0885,
+    "yield": 2.874139559994601,
+    "frequency": "Quarterly"
+  },
+  {
+    "symbol": "PG",
+    "date": "2026-01-23",
+    "recordDate": "2026-01-23",
+    "paymentDate": "2026-02-17",
+    "declarationDate": "2026-01-13",
+    "adjDividend": 1.0568,
+    "dividend": 1.0568,
+    "yield": 2.8153180153180153,
+    "frequency": "Quarterly"
+  },
+  {
+    "symbol": "PG",
+    "date": "2025-10-24",
+    "recordDate": "2025-10-24",
+    "paymentDate": "2025-11-17",
+    "declarationDate": "2025-10-14",
+    "adjDividend": 1.0568,
+    "dividend": 1.0568,
+    "yield": 2.7391304347826084,
+    "frequency": "Quarterly"
+  },
+  {
+    "symbol": "PG",
+    "date": "2025-07-18",
+    "recordDate": "2025-07-18",
+    "paymentDate": "2025-08-15",
+    "declarationDate": "2025-07-08",
+    "adjDividend": 1.0568,
+    "dividend": 1.0568,
+    "yield": 2.6606060606060606,
+    "frequency": "Quarterly"
+  }
+]

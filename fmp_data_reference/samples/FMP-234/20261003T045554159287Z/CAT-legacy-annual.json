@@ -1,0 +1,42 @@
+[
+  {
+    "2025-12-31": {
+      "Asia Pacific": 11199000000,
+      "EMEA": 12793000000,
+      "Latin America": 6988000000,
+      "North America": 36609000000
+    }
+  },
+  {
+    "2024-12-31": {
+      "Asia Pacific": 11388000000,
+      "EMEA": 12316000000,
+      "Latin America": 6708000000,
+      "North America": 34397000000
+    }
+  },
+  {
+    "2023-12-31": {
+      "Asia Pacific": 12116000000,
+      "EMEA": 13673000000,
+      "Latin America": 6665000000,
+      "North America": 34606000000
+    }
+  },
+  {
+    "2022-12-31": {
+      "Asia Pacific": 11894000000,
+      "EMEA": 12814000000,
+      "Latin America": 6738000000,
+      "North America": 27981000000
+    }
+  },
+  {
+    "2021-12-31": {
+      "Asia Pacific": 11725000000,
+      "EMEA": 12137000000,
+      "Latin America": 5086000000,
+      "North America": 22023000000
+    }
+  }
+]

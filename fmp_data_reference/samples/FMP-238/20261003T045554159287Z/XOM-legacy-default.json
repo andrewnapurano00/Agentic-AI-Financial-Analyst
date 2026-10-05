@@ -1,0 +1,26 @@
+[
+  {
+    "symbol": "XOM",
+    "name": "Exxon Mobil Corporation",
+    "price": 164.01,
+    "changesPercentage": 0.11598,
+    "change": 0.19,
+    "dayLow": 161.55,
+    "dayHigh": 164.61,
+    "yearHigh": 176.41,
+    "yearLow": 101.19,
+    "marketCap": 679732884600,
+    "priceAvg50": 160.3968,
+    "priceAvg200": 148.8646,
+    "exchange": "NYSE",
+    "volume": 11164224,
+    "avgVolume": 14267160,
+    "open": 161.55,
+    "previousClose": 163.82,
+    "eps": 8.27,
+    "pe": 19.83,
+    "earningsAnnouncement": "2026-10-30T04:00:00.000+0000",
+    "sharesOutstanding": 4144460000,
+    "timestamp": 1790971331
+  }
+]

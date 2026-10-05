@@ -1,0 +1,65 @@
+[
+  {
+    "symbol": "PLD",
+    "fiscalYear": 2025,
+    "period": "FY",
+    "reportedCurrency": "USD",
+    "date": "2025-12-31",
+    "data": {
+      "Real Estate Operations Segment": 7802692000,
+      "Strategic Capital Segment": 218818000
+    }
+  },
+  {
+    "symbol": "PLD",
+    "fiscalYear": 2024,
+    "period": "FY",
+    "reportedCurrency": "USD",
+    "date": "2024-12-31",
+    "data": {
+      "U.S.": 7513812000,
+      "Other Americas": 230200000,
+      "Europe": 309633000,
+      "Asia": 147965000
+    }
+  },
+  {
+    "symbol": "PLD",
+    "fiscalYear": 2023,
+    "period": "FY",
+    "reportedCurrency": "USD",
+    "date": "2023-12-31",
+    "data": {
+      "Asia": 157362000,
+      "U.S.": 7391453000,
+      "Other Americas": 185698000,
+      "Europe": 277566000
+    }
+  },
+  {
+    "symbol": "PLD",
+    "fiscalYear": 2017,
+    "period": "FY",
+    "reportedCurrency": "USD",
+    "date": "2017-12-31",
+    "data": {
+      "Asia": 61813000,
+      "Europe": 106862000,
+      "Other Americas": 28494000,
+      "UNITED STATES": 176720000
+    }
+  },
+  {
+    "symbol": "PLD",
+    "fiscalYear": 2016,
+    "period": "FY",
+    "reportedCurrency": "USD",
+    "date": "2016-12-31",
+    "data": {
+      "Asia": 46920000,
+      "Europe": 185495000,
+      "Other Americas": 58541000,
+      "UNITED STATES": 39360000
+    }
+  }
+]

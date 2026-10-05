@@ -1,0 +1,42 @@
+[
+  {
+    "symbol": "TWLVR",
+    "price": 0.0753,
+    "name": "Twelve Seas Investment Company III",
+    "change": -0.0546,
+    "changesPercentage": -42.03233,
+    "exchange": "NASDAQ"
+  },
+  {
+    "symbol": "DRCT",
+    "price": 0.91,
+    "name": "Direct Digital Holdings, Inc.",
+    "change": -0.6,
+    "changesPercentage": -39.7351,
+    "exchange": "NASDAQ"
+  },
+  {
+    "symbol": "SMX",
+    "price": 3.82,
+    "name": "SMX (Security Matters) Public Limited Company",
+    "change": -2.34,
+    "changesPercentage": -37.98701,
+    "exchange": "NASDAQ"
+  },
+  {
+    "symbol": "HAVAR",
+    "price": 0.0859,
+    "name": "Harvard Ave Acquisition Corporation",
+    "change": -0.0421,
+    "changesPercentage": -32.89062,
+    "exchange": "NASDAQ"
+  },
+  {
+    "symbol": "INACR",
+    "price": 0.0805,
+    "name": "Indigo Acquisition Corp.",
+    "change": -0.0372,
+    "changesPercentage": -31.60578,
+    "exchange": "NASDAQ"
+  }
+]

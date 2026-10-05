@@ -1,0 +1,37 @@
+[
+  {
+    "symbol": "NEE",
+    "name": "NextEra Energy, Inc.",
+    "currency": "USD",
+    "exchangeFullName": "New York Stock Exchange",
+    "exchange": "NYSE"
+  },
+  {
+    "symbol": "NEED",
+    "name": "Direxion Daily Cnsmr Staples Bull 3XShrs",
+    "currency": "USD",
+    "exchangeFullName": "New York Stock Exchange Arca",
+    "exchange": "AMEX"
+  },
+  {
+    "symbol": "NEEGX",
+    "name": "Needham Growth Fund Retail Class",
+    "currency": "USD",
+    "exchangeFullName": "NASDAQ",
+    "exchange": "NASDAQ"
+  },
+  {
+    "symbol": "NEE.TO",
+    "name": "NextEra Energy, Inc.",
+    "currency": "CAD",
+    "exchangeFullName": "Toronto Stock Exchange",
+    "exchange": "TSX"
+  },
+  {
+    "symbol": "NEE-PP",
+    "name": "NextEra Energy Inc",
+    "currency": "USD",
+    "exchangeFullName": "New York Stock Exchange",
+    "exchange": "NYSE"
+  }
+]

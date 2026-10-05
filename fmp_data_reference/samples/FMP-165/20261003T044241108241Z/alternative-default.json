@@ -1,0 +1,32 @@
+[
+  {
+    "date": "2026-10-02",
+    "sector": "Basic Materials",
+    "exchange": "NASDAQ",
+    "pe": 23.768904018427193
+  },
+  {
+    "date": "2026-10-02",
+    "sector": "Communication Services",
+    "exchange": "NASDAQ",
+    "pe": 20.770178576894605
+  },
+  {
+    "date": "2026-10-02",
+    "sector": "Consumer Cyclical",
+    "exchange": "NASDAQ",
+    "pe": 73.01889821544844
+  },
+  {
+    "date": "2026-10-02",
+    "sector": "Consumer Defensive",
+    "exchange": "NASDAQ",
+    "pe": 33.96218894856214
+  },
+  {
+    "date": "2026-10-02",
+    "sector": "Energy",
+    "exchange": "NASDAQ",
+    "pe": 14.373430621002688
+  }
+]

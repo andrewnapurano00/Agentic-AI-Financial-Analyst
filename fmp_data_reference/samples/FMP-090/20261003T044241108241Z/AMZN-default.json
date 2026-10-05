@@ -1,0 +1,67 @@
+[
+  {
+    "symbol": "AMZN",
+    "publishedDate": "2026-09-30T10:15:00.000Z",
+    "newsURL": "https://www.streetinsider.com/Analyst+Comments/Amazon.com+%28AMZN%29+PT+Raised+to+%24360+at+Rosenblatt/27124817.html",
+    "newsTitle": "Amazon.com (AMZN) PT Raised to $360 at Rosenblatt",
+    "analystName": "Scott Devitt",
+    "priceTarget": 360,
+    "adjPriceTarget": 360,
+    "priceWhenPosted": 246.67,
+    "newsPublisher": "StreetInsider",
+    "newsBaseURL": "streetinsider.com",
+    "analystCompany": "Rosenblatt Securities"
+  },
+  {
+    "symbol": "AMZN",
+    "publishedDate": "2026-09-17T17:21:17.000Z",
+    "newsURL": "https://thefly.com/ajax/news_get.php?id=4427470",
+    "newsTitle": "FTC announces additional payments to consumers from Amazon Prime settlement",
+    "analystName": "",
+    "priceTarget": 200,
+    "adjPriceTarget": 200,
+    "priceWhenPosted": 251.5499,
+    "newsPublisher": "TheFly",
+    "newsBaseURL": "thefly.com",
+    "analystCompany": "UBS"
+  },
+  {
+    "symbol": "AMZN",
+    "publishedDate": "2026-09-03T10:29:21.000Z",
+    "newsURL": "https://thefly.com/ajax/news_get.php?id=4420642",
+    "newsTitle": "Amazon.com price target raised to $338 from $328 at Wells Fargo",
+    "analystName": "Ken Gawrelski",
+    "priceTarget": 338,
+    "adjPriceTarget": 338,
+    "priceWhenPosted": 254.98,
+    "newsPublisher": "TheFly",
+    "newsBaseURL": "thefly.com",
+    "analystCompany": "Wells Fargo"
+  },
+  {
+    "symbol": "AMZN",
+    "publishedDate": "2026-08-28T07:36:00.000Z",
+    "newsURL": "https://www.streetinsider.com/Analyst+Comments/Amazon.com+%28AMZN%29+PT+Raised+to+%24355+at+Evercore+ISI/26992058.html",
+    "newsTitle": "Amazon.com (AMZN) PT Raised to $355 at Evercore ISIMember Login",
+    "analystName": "",
+    "priceTarget": 355,
+    "adjPriceTarget": 355,
+    "priceWhenPosted": 256.26,
+    "newsPublisher": "StreetInsider",
+    "newsBaseURL": "streetinsider.com",
+    "analystCompany": "Evercore ISI"
+  },
+  {
+    "symbol": "AMZN",
+    "publishedDate": "2026-08-03T02:00:20.000Z",
+    "newsURL": "https://thefly.com/ajax/news_get.php?id=4398806",
+    "newsTitle": "Amazon.com price target raised to $325 from $300 at Roth Capital",
+    "analystName": "",
+    "priceTarget": 325,
+    "adjPriceTarget": 325,
+    "priceWhenPosted": 271.58,
+    "newsPublisher": "TheFly",
+    "newsBaseURL": "thefly.com",
+    "analystCompany": "Roth Capital"
+  }
+]

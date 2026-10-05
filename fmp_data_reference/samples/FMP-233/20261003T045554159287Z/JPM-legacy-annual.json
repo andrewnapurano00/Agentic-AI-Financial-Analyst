@@ -1,0 +1,50 @@
+[
+  {
+    "2025-12-31": {
+      "Segment Reconciling Items": -3134000000,
+      "Asset and Wealth Management Segment": 24073000000,
+      "Commercial And Investment Bank": 78454000000,
+      "Consumer & Community Banking": 76029000000,
+      "Segment Reporting, Reconciling Item, Corporate Nonsegment": 7025000000
+    }
+  },
+  {
+    "2024-12-31": {
+      "Segment Reconciling Items": -3037000000,
+      "Asset and Wealth Management Segment": 21578000000,
+      "Commercial And Investment Bank": 70114000000,
+      "Consumer & Community Banking": 71507000000,
+      "Segment Reporting, Reconciling Item, Corporate Nonsegment": 17394000000
+    }
+  },
+  {
+    "2023-12-30": {
+      "Consumer & Community Banking": 70148000000,
+      "Corporate & Investment Bank": 48807000000,
+      "Asset & Wealth Management": 19827000000,
+      "Commercial Banking": 15546000000,
+      "Corporate Segment": 8038000000,
+      "Reconciling Items": -4262000000
+    }
+  },
+  {
+    "2022-12-30": {
+      "Consumer & Community Banking": 55017000000,
+      "Corporate & Investment Bank": 47899000000,
+      "Asset & Wealth Management": 17748000000,
+      "Commercial Banking": 11533000000,
+      "Corporate Segment": 80000000,
+      "Reconciling Items": -3582000000
+    }
+  },
+  {
+    "2021-12-30": {
+      "Corporate & Investment Bank": 51749000000,
+      "Consumer & Community Banking": 50073000000,
+      "Asset & Wealth Management": 16957000000,
+      "Commercial Banking": 10008000000,
+      "Corporate Segment": -3483000000,
+      "Reconciling Items": -3655000000
+    }
+  }
+]

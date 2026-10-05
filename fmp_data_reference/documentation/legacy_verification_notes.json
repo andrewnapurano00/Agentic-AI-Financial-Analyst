@@ -1,0 +1,15 @@
+{
+  "verified_date": "2026-10-03",
+  "official_legacy_index": "https://site.financialmodelingprep.com/developer/docs/legacy-endpoints",
+  "logo_correction": {
+    "api_id": "FMP-033",
+    "official_source": "https://site.financialmodelingprep.com/developer/docs/company-image-api",
+    "official_example": "https://financialmodelingprep.com/image-stock/EURUSD.png",
+    "correction": "Retain workbook reference and add the documented .png suffix for symbol-specific image requests."
+  },
+  "documentation_access_limits": [
+    "Direct official HTML download returned HTTP 403; official web catalogue was inspected via web access.",
+    "Legacy key-metrics, financial-ratio and transcript-date documentation links also returned HTTP 403 through web access.",
+    "Legacy earnings transcript documentation redirected to the current latest-transcripts page; no claim of exact legacy parameter equivalence."
+  ]
+}

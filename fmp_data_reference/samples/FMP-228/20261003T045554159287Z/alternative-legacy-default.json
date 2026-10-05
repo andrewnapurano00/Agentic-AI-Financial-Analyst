@@ -1,0 +1,47 @@
+[
+  {
+    "dateAdded": "October 01, 2026",
+    "addedSecurity": "Vylor Inc.",
+    "removedTicker": "",
+    "removedSecurity": "",
+    "date": "2026-10-01",
+    "symbol": "VYLR",
+    "reason": "Corteva Inc. spun off Vylor."
+  },
+  {
+    "dateAdded": "September 21, 2026",
+    "addedSecurity": "Everpure, Inc.",
+    "removedTicker": "TTD",
+    "removedSecurity": "The Trade Desk",
+    "date": "2026-09-21",
+    "symbol": "P",
+    "reason": "Quarterly Rebalance"
+  },
+  {
+    "dateAdded": "September 21, 2026",
+    "addedSecurity": "Illumina, Inc.",
+    "removedTicker": "BLDR",
+    "removedSecurity": "Builders FirstSource",
+    "date": "2026-09-21",
+    "symbol": "ILMN",
+    "reason": "Quarterly Rebalance"
+  },
+  {
+    "dateAdded": "September 21, 2026",
+    "addedSecurity": "Bloom Energy Corporation",
+    "removedTicker": "TAP",
+    "removedSecurity": "Molson Coors Beverage ",
+    "date": "2026-09-21",
+    "symbol": "BE",
+    "reason": "Quarterly Rebalance"
+  },
+  {
+    "dateAdded": "August 18, 2026",
+    "addedSecurity": "Reddit, Inc.",
+    "removedTicker": "AVB",
+    "removedSecurity": "AvalonBay Communities, Inc.",
+    "date": "2026-08-17",
+    "symbol": "RDDT",
+    "reason": "AvalonBay Communities was acquired by Equity Residential."
+  }
+]

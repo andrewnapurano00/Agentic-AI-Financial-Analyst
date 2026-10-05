@@ -1,0 +1,26 @@
+[
+  {
+    "symbol": "XOM",
+    "name": "Exxon Mobil Corporation",
+    "isin": "US30233Q1085",
+    "marketCap": 679732884600
+  },
+  {
+    "symbol": "7DZ.DE",
+    "name": "Exxonmobil Holdings Corporation",
+    "isin": "US30233Q1085",
+    "marketCap": 601431833206
+  },
+  {
+    "symbol": "XOM.MX",
+    "name": "Exxon Mobil Corporation",
+    "isin": "US30233Q1085",
+    "marketCap": 12410510646159
+  },
+  {
+    "symbol": "XOM.SW",
+    "name": "Exxon Mobil Corporation",
+    "isin": "US30233Q1085",
+    "marketCap": 588629973390
+  }
+]

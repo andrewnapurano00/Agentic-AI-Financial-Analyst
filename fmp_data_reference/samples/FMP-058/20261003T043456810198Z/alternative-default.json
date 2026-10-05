@@ -1,0 +1,67 @@
+[
+  {
+    "bidSize": 1,
+    "askPrice": 22.6,
+    "volume": 2875639,
+    "askSize": 25,
+    "bidPrice": 22.19,
+    "lastSalePrice": 22.32,
+    "lastSaleSize": 100,
+    "lastSaleTime": 1725916320396,
+    "fmpLast": 22.32,
+    "lastUpdated": 1725919710035,
+    "symbol": "LSXMA"
+  },
+  {
+    "bidSize": 0,
+    "askPrice": 0,
+    "volume": 0,
+    "askSize": 0,
+    "bidPrice": 0,
+    "lastSalePrice": 0,
+    "lastSaleSize": 0,
+    "lastSaleTime": 0,
+    "fmpLast": 0,
+    "lastUpdated": 0,
+    "symbol": "IBHC"
+  },
+  {
+    "bidSize": 7000,
+    "askPrice": 30.62,
+    "volume": 63058,
+    "askSize": 7000,
+    "bidPrice": 30.19,
+    "lastSalePrice": 30.45,
+    "lastSaleSize": 0,
+    "lastSaleTime": 1790979912000,
+    "fmpLast": 30.45,
+    "lastUpdated": 1790985601000,
+    "symbol": "SETH"
+  },
+  {
+    "bidSize": 5,
+    "askPrice": 12.03,
+    "volume": 4461315,
+    "askSize": 12,
+    "bidPrice": 11.6,
+    "lastSalePrice": 11.6997,
+    "lastSaleSize": 292,
+    "lastSaleTime": 1790975542000,
+    "fmpLast": 11.6997,
+    "lastUpdated": 1790985361000,
+    "symbol": "FLG"
+  },
+  {
+    "bidSize": 200,
+    "askPrice": 39.95,
+    "volume": 11,
+    "askSize": 200,
+    "bidPrice": 37.78,
+    "lastSalePrice": 39.6148,
+    "lastSaleSize": 0,
+    "lastSaleTime": 1790948763000,
+    "fmpLast": 39.6148,
+    "lastUpdated": 1790985363000,
+    "symbol": "ECML"
+  }
+]

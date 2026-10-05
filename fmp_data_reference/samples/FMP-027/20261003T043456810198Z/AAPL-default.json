@@ -1,0 +1,17 @@
+[
+  {
+    "cik": "0000320193",
+    "symbol": "AAPL",
+    "exchange": "NASDAQ",
+    "sicCode": "3571",
+    "sicGroup": "Consumer Electronics",
+    "sicDescription": "ELECTRONIC COMPUTERS",
+    "stateLocation": "CA",
+    "stateOfIncorporation": "CA",
+    "fiscalYearEnd": "09-30",
+    "businessAddress": "ONE APPLE PARK WAY,CUPERTINO CA 95014,(408) 996-1010",
+    "mailingAddress": "ONE APPLE PARK WAY,CUPERTINO CA 95014",
+    "taxIdentificationNumber": "94-2404110",
+    "registrantName": "Apple Inc."
+  }
+]

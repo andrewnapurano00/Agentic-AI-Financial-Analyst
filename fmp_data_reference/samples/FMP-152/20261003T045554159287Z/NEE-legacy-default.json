@@ -1,0 +1,37 @@
+[
+  {
+    "etfSymbol": "ZWU-T.TO",
+    "assetExposure": "NEE",
+    "sharesNumber": 733907,
+    "weightPercentage": 3.7900000000000005,
+    "marketValue": 79705278.05
+  },
+  {
+    "etfSymbol": "ZWU.TO",
+    "assetExposure": "NEE",
+    "sharesNumber": 733907,
+    "weightPercentage": 3.7900000000000005,
+    "marketValue": 79705278.05
+  },
+  {
+    "etfSymbol": "ZWH-U.TO",
+    "assetExposure": "NEE",
+    "sharesNumber": 280424,
+    "weightPercentage": 2.4,
+    "marketValue": 30455184.23
+  },
+  {
+    "etfSymbol": "ZWH-T.TO",
+    "assetExposure": "NEE",
+    "sharesNumber": 280424,
+    "weightPercentage": 2.4,
+    "marketValue": 30455184.23
+  },
+  {
+    "etfSymbol": "ZWH.TO",
+    "assetExposure": "NEE",
+    "sharesNumber": 280424,
+    "weightPercentage": 2.4,
+    "marketValue": 30455184.23
+  }
+]

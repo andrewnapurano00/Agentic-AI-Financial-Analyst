@@ -1,0 +1,37 @@
+[
+  {
+    "symbol": "SILUSD",
+    "name": "Micro Silver Futures",
+    "exchange": null,
+    "tradeMonth": "Dec",
+    "currency": "USD"
+  },
+  {
+    "symbol": "MGCUSD",
+    "name": "Micro Gold Futures",
+    "exchange": null,
+    "tradeMonth": "Dec",
+    "currency": "USD"
+  },
+  {
+    "symbol": "DXUSD",
+    "name": "US Dollar",
+    "exchange": null,
+    "tradeMonth": "Sep",
+    "currency": "USD"
+  },
+  {
+    "symbol": "ZMUSD",
+    "name": "Soybean Meal Futures",
+    "exchange": null,
+    "tradeMonth": "Dec",
+    "currency": "USD"
+  },
+  {
+    "symbol": "ESUSD",
+    "name": "E-Mini S&P 500",
+    "exchange": null,
+    "tradeMonth": "Dec",
+    "currency": "USD"
+  }
+]

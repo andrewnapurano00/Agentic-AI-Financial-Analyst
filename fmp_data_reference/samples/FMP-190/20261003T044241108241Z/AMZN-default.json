@@ -1,0 +1,32 @@
+[
+  {
+    "holder": "BlackRock, Inc.",
+    "shares": 748403539,
+    "dateReported": "2026-06-30",
+    "change": 12838547
+  },
+  {
+    "holder": "VANGUARD CAPITAL MANAGEMENT LLC",
+    "shares": 635764130,
+    "dateReported": "2026-06-30",
+    "change": 4587925
+  },
+  {
+    "holder": "STATE STREET CORP",
+    "shares": 397186958,
+    "dateReported": "2026-06-30",
+    "change": 6736637
+  },
+  {
+    "holder": "FMR LLC",
+    "shares": 365660364,
+    "dateReported": "2026-06-30",
+    "change": 6961673
+  },
+  {
+    "holder": "GEODE CAPITAL MANAGEMENT, LLC",
+    "shares": 233211684,
+    "dateReported": "2026-06-30",
+    "change": -16373
+  }
+]

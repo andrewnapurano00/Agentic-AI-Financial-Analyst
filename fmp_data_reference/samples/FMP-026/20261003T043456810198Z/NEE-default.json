@@ -1,0 +1,52 @@
+[
+  {
+    "title": "Executive Vice President and Chief Legal, Environmental & Federal Regulatory Affairs Officer",
+    "name": "Charles E. Sieving",
+    "pay": 3666743,
+    "currencyPay": "USD",
+    "gender": "male",
+    "yearBorn": 1973,
+    "titleSince": null,
+    "active": true
+  },
+  {
+    "title": "Executive Vice President of Nuclear Division & Chief Nuclear Officer",
+    "name": "Robert Coffey",
+    "pay": null,
+    "currencyPay": "USD",
+    "gender": "male",
+    "yearBorn": 1964,
+    "titleSince": null,
+    "active": true
+  },
+  {
+    "title": "President & Chief Executive Officer of NextEra Energy Resources",
+    "name": "Brian W. Bolster",
+    "pay": 2936842,
+    "currencyPay": "USD",
+    "gender": "male",
+    "yearBorn": 1973,
+    "titleSince": null,
+    "active": true
+  },
+  {
+    "title": "Vice President of Compliance & Corporate Secretary",
+    "name": "David Flechner",
+    "pay": null,
+    "currencyPay": "USD",
+    "gender": "male",
+    "yearBorn": null,
+    "titleSince": null,
+    "active": true
+  },
+  {
+    "title": "Head of Investor Relations",
+    "name": "Michael Dowling",
+    "pay": null,
+    "currencyPay": "USD",
+    "gender": "male",
+    "yearBorn": null,
+    "titleSince": null,
+    "active": true
+  }
+]

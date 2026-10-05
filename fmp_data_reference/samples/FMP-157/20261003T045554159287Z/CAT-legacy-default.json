@@ -1,0 +1,72 @@
+[
+  {
+    "symbol": "CAT",
+    "cik": "0000018230",
+    "date": "2026-06-30",
+    "environmentalScore": 60.54,
+    "socialScore": 51.98,
+    "governanceScore": 63.75,
+    "ESGScore": 58.76,
+    "companyName": "Caterpillar Inc.",
+    "industry": "Construction Machinery & Equip",
+    "formType": "10-Q",
+    "acceptedDate": "2026-08-05 08:43:40",
+    "url": "https://www.sec.gov/Archives/edgar/data/18230/000001823026000046/0000018230-26-000046-index.htm"
+  },
+  {
+    "symbol": "CAT",
+    "cik": "0000018230",
+    "date": "2026-03-31",
+    "environmentalScore": 60.69,
+    "socialScore": 52.52,
+    "governanceScore": 63.55,
+    "ESGScore": 58.92,
+    "companyName": "Caterpillar Inc.",
+    "industry": "Construction Machinery & Equip",
+    "formType": "10-Q",
+    "acceptedDate": "2026-05-06 11:08:09",
+    "url": "https://www.sec.gov/Archives/edgar/data/18230/000001823026000021/0000018230-26-000021-index.htm"
+  },
+  {
+    "symbol": "CAT",
+    "cik": "0000018230",
+    "date": "2025-12-31",
+    "environmentalScore": 59.81,
+    "socialScore": 51.64,
+    "governanceScore": 62.53,
+    "ESGScore": 57.99,
+    "companyName": "Caterpillar Inc.",
+    "industry": "Construction Machinery & Equip",
+    "formType": "10-K",
+    "acceptedDate": "2026-02-13 10:18:27",
+    "url": "https://www.sec.gov/Archives/edgar/data/18230/000001823026000008/0000018230-26-000008-index.htm"
+  },
+  {
+    "symbol": "CAT",
+    "cik": "0000018230",
+    "date": "2025-09-30",
+    "environmentalScore": 60.3,
+    "socialScore": 52.12,
+    "governanceScore": 64.06,
+    "ESGScore": 58.83,
+    "companyName": "Caterpillar Inc.",
+    "industry": "Construction Machinery & Equip",
+    "formType": "10-Q",
+    "acceptedDate": "2025-11-03 11:06:23",
+    "url": "https://www.sec.gov/Archives/edgar/data/18230/000001823025000048/0000018230-25-000048-index.htm"
+  },
+  {
+    "symbol": "CAT",
+    "cik": "0000018230",
+    "date": "2025-06-30",
+    "environmentalScore": 61.47,
+    "socialScore": 52.22,
+    "governanceScore": 63.67,
+    "ESGScore": 59.12,
+    "companyName": "Caterpillar Inc.",
+    "industry": "Construction Machinery & Equip",
+    "formType": "10-Q",
+    "acceptedDate": "2025-08-06 09:35:30",
+    "url": "https://www.sec.gov/Archives/edgar/data/18230/000001823025000040/0000018230-25-000040-index.htm"
+  }
+]

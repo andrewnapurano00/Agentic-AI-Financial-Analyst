@@ -1,0 +1,52 @@
+[
+  {
+    "symbol": "LIN",
+    "date": "2026-06-30",
+    "stockPrice": 518.94,
+    "numberOfShares": 462525000,
+    "marketCapitalization": 240022723500,
+    "minusCashAndCashEquivalents": 4898000000,
+    "addTotalDebt": 28013000000,
+    "enterpriseValue": 263137723500
+  },
+  {
+    "symbol": "LIN",
+    "date": "2026-03-31",
+    "stockPrice": 495.76,
+    "numberOfShares": 464051000,
+    "marketCapitalization": 230057923760,
+    "minusCashAndCashEquivalents": 3959000000,
+    "addTotalDebt": 26317000000,
+    "enterpriseValue": 252415923760
+  },
+  {
+    "symbol": "LIN",
+    "date": "2025-12-31",
+    "stockPrice": 426.39,
+    "numberOfShares": 466247000,
+    "marketCapitalization": 198803058330,
+    "minusCashAndCashEquivalents": 5056000000,
+    "addTotalDebt": 26989000000,
+    "enterpriseValue": 220736058330
+  },
+  {
+    "symbol": "LIN",
+    "date": "2025-09-30",
+    "stockPrice": 475,
+    "numberOfShares": 468802000,
+    "marketCapitalization": 222680950000,
+    "minusCashAndCashEquivalents": 4509000000,
+    "addTotalDebt": 25925000000,
+    "enterpriseValue": 244096950000
+  },
+  {
+    "symbol": "LIN",
+    "date": "2025-06-30",
+    "stockPrice": 469.18,
+    "numberOfShares": 470865000,
+    "marketCapitalization": 220920440700,
+    "minusCashAndCashEquivalents": 4786000000,
+    "addTotalDebt": 25920000000,
+    "enterpriseValue": 242054440700
+  }
+]

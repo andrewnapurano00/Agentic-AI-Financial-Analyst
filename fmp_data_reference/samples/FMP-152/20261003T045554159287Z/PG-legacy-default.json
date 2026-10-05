@@ -1,0 +1,37 @@
+[
+  {
+    "etfSymbol": "ZWA-T.TO",
+    "assetExposure": "PG",
+    "sharesNumber": 17225,
+    "weightPercentage": 1.68,
+    "marketValue": 3527019.9
+  },
+  {
+    "etfSymbol": "ZWA.TO",
+    "assetExposure": "PG",
+    "sharesNumber": 17225,
+    "weightPercentage": 1.68,
+    "marketValue": 3527019.9
+  },
+  {
+    "etfSymbol": "ZUQ-U.TO",
+    "assetExposure": "PG",
+    "sharesNumber": 133650,
+    "weightPercentage": 1.7999999999999998,
+    "marketValue": 27366398.2
+  },
+  {
+    "etfSymbol": "ZUQ.TO",
+    "assetExposure": "PG",
+    "sharesNumber": 133650,
+    "weightPercentage": 1.7999999999999998,
+    "marketValue": 27366398.2
+  },
+  {
+    "etfSymbol": "ZUQ-F.TO",
+    "assetExposure": "PG",
+    "sharesNumber": 133650,
+    "weightPercentage": 1.7999999999999998,
+    "marketValue": 27366398.2
+  }
+]

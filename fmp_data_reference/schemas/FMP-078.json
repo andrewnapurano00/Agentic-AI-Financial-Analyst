@@ -1,0 +1,414 @@
+{
+  "api_id": "FMP-078",
+  "basis": "observed_response_shapes_not_json_schema_contract",
+  "generated_at_utc": "2026-10-03T05:06:35.431966+00:00",
+  "sample_files": [
+    "samples/FMP-078/20261003T044241108241Z/AAPL-default.json",
+    "samples/FMP-078/20261003T044241108241Z/AMZN-default.json",
+    "samples/FMP-078/20261003T044241108241Z/CAT-default.json",
+    "samples/FMP-078/20261003T044241108241Z/GOOGL-default.json",
+    "samples/FMP-078/20261003T044241108241Z/JNJ-default.json",
+    "samples/FMP-078/20261003T044241108241Z/JPM-default.json",
+    "samples/FMP-078/20261003T044241108241Z/LIN-default.json",
+    "samples/FMP-078/20261003T044241108241Z/NEE-default.json",
+    "samples/FMP-078/20261003T044241108241Z/PG-default.json",
+    "samples/FMP-078/20261003T044241108241Z/PLD-default.json",
+    "samples/FMP-078/20261003T044241108241Z/XOM-default.json",
+    "samples/FMP-078/20261003T045328427231Z/AAPL-annual.json",
+    "samples/FMP-078/20261003T045328427231Z/AMZN-annual.json",
+    "samples/FMP-078/20261003T045328427231Z/CAT-annual.json",
+    "samples/FMP-078/20261003T045328427231Z/GOOGL-annual.json",
+    "samples/FMP-078/20261003T045328427231Z/JNJ-annual.json",
+    "samples/FMP-078/20261003T045328427231Z/JPM-annual.json",
+    "samples/FMP-078/20261003T045328427231Z/LIN-annual.json",
+    "samples/FMP-078/20261003T045328427231Z/NEE-annual.json",
+    "samples/FMP-078/20261003T045328427231Z/PG-annual.json",
+    "samples/FMP-078/20261003T045328427231Z/PLD-annual.json",
+    "samples/FMP-078/20261003T045328427231Z/XOM-annual.json"
+  ],
+  "required_fields_asserted": false,
+  "fields": {
+    "$": {
+      "observed_types": [
+        "array"
+      ],
+      "null_observations": 0,
+      "present_observations": 22,
+      "observed_missing_in_parent": 0
+    },
+    "$[]": {
+      "observed_types": [
+        "object"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].symbol": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].date": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].fiscalYear": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].period": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].reportedCurrency": {
+      "observed_types": [
+        "string"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].growthNetIncome": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].growthDepreciationAndAmortization": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].growthDeferredIncomeTax": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].growthStockBasedCompensation": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].growthChangeInWorkingCapital": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].growthAccountsReceivables": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].growthInventory": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].growthAccountsPayables": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].growthOtherWorkingCapital": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].growthOtherNonCashItems": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].growthNetCashProvidedByOperatingActivites": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].growthInvestmentsInPropertyPlantAndEquipment": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].growthAcquisitionsNet": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].growthPurchasesOfInvestments": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].growthSalesMaturitiesOfInvestments": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].growthOtherInvestingActivites": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].growthNetCashUsedForInvestingActivites": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].growthDebtRepayment": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].growthCommonStockIssued": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].growthCommonStockRepurchased": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].growthDividendsPaid": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].growthOtherFinancingActivites": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].growthNetCashUsedProvidedByFinancingActivities": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].growthEffectOfForexChangesOnCash": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].growthNetChangeInCash": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].growthCashAtEndOfPeriod": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].growthCashAtBeginningOfPeriod": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].growthOperatingCashFlow": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].growthCapitalExpenditure": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].growthFreeCashFlow": {
+      "observed_types": [
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].growthNetDebtIssuance": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].growthLongTermNetDebtIssuance": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].growthShortTermNetDebtIssuance": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].growthNetStockIssuance": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].growthPreferredDividendsPaid": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].growthIncomeTaxesPaid": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    },
+    "$[].growthInterestPaid": {
+      "observed_types": [
+        "integer",
+        "number"
+      ],
+      "null_observations": 0,
+      "present_observations": 110,
+      "observed_missing_in_parent": 0
+    }
+  },
+  "limitation": "Observed path/type union, including nulls and missing observations. No assertion of universal requiredness, completeness or non-nullability. Workbook inferred schemas are separate.",
+  "observed_non_json_formats": [],
+  "binary_sample_files": []
+}

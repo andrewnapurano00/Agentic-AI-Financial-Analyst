@@ -1,0 +1,62 @@
+[
+  {
+    "symbol": "EURUSD",
+    "date": "2026-10-02",
+    "open": 1.12415,
+    "high": 1.12855,
+    "low": 1.12209,
+    "close": 1.12524,
+    "volume": 184364,
+    "change": 0.00109,
+    "changePercent": 0.09696215,
+    "vwap": 1.12501
+  },
+  {
+    "symbol": "EURUSD",
+    "date": "2026-10-01",
+    "open": 1.13317,
+    "high": 1.13368,
+    "low": 1.12152,
+    "close": 1.12426,
+    "volume": 187205,
+    "change": -0.00891,
+    "changePercent": -0.78629,
+    "vwap": 1.12816
+  },
+  {
+    "symbol": "EURUSD",
+    "date": "2026-09-30",
+    "open": 1.13456,
+    "high": 1.13804,
+    "low": 1.13224,
+    "close": 1.13295,
+    "volume": 139957,
+    "change": -0.00161,
+    "changePercent": -0.14191,
+    "vwap": 1.13445
+  },
+  {
+    "symbol": "EURUSD",
+    "date": "2026-09-29",
+    "open": 1.13684,
+    "high": 1.13744,
+    "low": 1.13118,
+    "close": 1.13418,
+    "volume": 125875,
+    "change": -0.00266,
+    "changePercent": -0.23398,
+    "vwap": 1.13491
+  },
+  {
+    "symbol": "EURUSD",
+    "date": "2026-09-28",
+    "open": 1.13799,
+    "high": 1.13914,
+    "low": 1.13532,
+    "close": 1.13714,
+    "volume": 126985,
+    "change": -0.00085,
+    "changePercent": -0.0746931,
+    "vwap": 1.1374
+  }
+]

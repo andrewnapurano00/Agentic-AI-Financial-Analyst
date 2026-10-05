@@ -1,0 +1,32 @@
+[
+  {
+    "symbol": "AAPL",
+    "name": "Apple Inc.",
+    "isin": "US0378331005",
+    "marketCap": 4901023823640
+  },
+  {
+    "symbol": "AAPL.DE",
+    "name": "Apple Inc.",
+    "isin": "US0378331005",
+    "marketCap": 0
+  },
+  {
+    "symbol": "AAPL.MX",
+    "name": "Apple Inc.",
+    "isin": "US0378331005",
+    "marketCap": 88787416996960
+  },
+  {
+    "symbol": "APC.DE",
+    "name": "Apple Inc.",
+    "isin": "US0378331005",
+    "marketCap": 4332783000000
+  },
+  {
+    "symbol": "APC.F",
+    "name": "Apple Inc.",
+    "isin": "US0378331005",
+    "marketCap": 4348926111600
+  }
+]
