@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+from langgraphagenticai.ui.app_shell import render_company_header, render_evidence_row, render_executive_cards
+from langgraphagenticai.state.research_context import ResearchContext
+
 import json
 import re
 import uuid
@@ -69,13 +72,21 @@ def _bootstrap_session_state() -> None:
             st.session_state[key] = value
 
 
-def _maybe_reset_thread_for_config_change(model_name: str, usecase: str) -> None:
+def _maybe_reset_thread_for_config_change(model_name: str, usecase: str) -> bool:
     fingerprint = f"{model_name}::{usecase}"
-    if st.session_state.get("config_fingerprint") != fingerprint:
+    prior = st.session_state.get("config_fingerprint")
+    if prior is None:
+        st.session_state.config_fingerprint = fingerprint
+    mismatch = prior is not None and prior != fingerprint
+    if st.button("New thread", key="research_new_thread"):
         st.session_state.thread_id = str(uuid.uuid4())
         st.session_state.chat_history = []
         st.session_state.last_result_messages = []
         st.session_state.config_fingerprint = fingerprint
+        return False
+    if mismatch:
+        st.warning("The model or use case changed. Your conversation is preserved. Start a New thread to use this configuration, or restore the previous settings.")
+    return mismatch
 
 
 @st.cache_resource(show_spinner=False)
@@ -325,13 +336,7 @@ def load_langgraph_agenticai_app() -> None:
         selected_model=model_name,
     )
 
-    if health["errors"] and active_page not in {"Introduction", "Top Movers"}:
-        for err in health["errors"]:
-            st.error(err)
-        return
-
     _render_status_panel(health["warnings"])
-    _maybe_reset_thread_for_config_change(model_name, selected_usecase)
 
     if active_page == "Introduction":
         render_introduction_tab(
@@ -394,12 +399,46 @@ def load_langgraph_agenticai_app() -> None:
         )
 
     else:
-        if not st.session_state.chat_history:
-            render_research_launchpad()
-        _render_prior_chat()
+        mode = st.radio("Research mode", ("Chat", "Guided research"), key="research_mode", horizontal=True)
+        if mode == "Guided research":
+            from langgraphagenticai.ui.guided_research_tab import render_guided_research_tab
+            pending = st.session_state.pop("pending_research_query", "")
+            if command_query or pending:
+                st.session_state["research_request_draft"] = command_query or pending
+            render_guided_research_tab(openai_api_key=openai_api_key, model_name=model_name, fmp_api_key=fmp_api_key, marketaux_api_key=marketaux_api_key)
+            render_terminal_status(model_name, fmp_ready=bool(fmp_api_key), openai_ready=bool(openai_api_key))
+            return
+        config_mismatch = _maybe_reset_thread_for_config_change(model_name, selected_usecase)
+        context = st.session_state.get("research_context")
+        company = ", ".join(context.symbols) if isinstance(context, ResearchContext) else "Company not selected"
+        render_company_header(company, "Research conversation", "AI interpretation")
+        render_evidence_row([("Chat evidence source/date", "Unavailable; inspect citations in individual answers"), ("Model configuration", "Configured" if openai_api_key else "Missing")])
+        render_executive_cards([
+            ("Selected companies", company, "Navigation metadata; not financial evidence"),
+            ("Saved conversation", f"{len(st.session_state.chat_history)} messages", "Retained in this session"),
+            ("Next action", "Submit research request", "Model calls require an explicit submission"),
+        ])
 
         pending_query = st.session_state.pop("pending_research_query", "")
-        user_input = command_query or pending_query or st.chat_input(_finance_input_hint(selected_usecase))
+        if command_query or pending_query:
+            st.session_state["research_request_draft"] = command_query or pending_query
+        if not openai_api_key:
+            st.info("Add an OpenAI key to submit Research. Drafts and saved conversations remain available.")
+        if not str(model_name).strip():
+            st.info("Select a model to submit Research.")
+        st.text_area("Research request draft", key="research_request_draft", placeholder=_finance_input_hint(selected_usecase))
+        submitted = st.button("Submit research request", key="research_submit", type="primary", disabled=not openai_api_key or not str(model_name).strip() or config_mismatch)
+        chat_input = st.chat_input(_finance_input_hint(selected_usecase), disabled=not openai_api_key or not str(model_name).strip() or config_mismatch)
+        user_input = (st.session_state.get("research_request_draft", "").strip() if submitted else "") or chat_input
+        if st.session_state.chat_history:
+            st.markdown("**Saved AI findings**")
+            latest = next((item.get("content", "") for item in reversed(st.session_state.chat_history) if item.get("role") == "assistant"), "No saved assistant findings.")
+            st.write(str(latest)[:600])
+            with st.expander("Saved conversation and details"):
+                _render_prior_chat()
+        else:
+            with st.expander("Research examples and help"):
+                render_research_launchpad()
         if not user_input:
             render_terminal_status(model_name, fmp_ready=bool(fmp_api_key), openai_ready=bool(openai_api_key))
             return

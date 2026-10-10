@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+from langgraphagenticai.ui.app_shell import render_evidence_row
+from langgraphagenticai.ui.workspace_presentation import evidence_status, source_link
+
 import pandas as pd
 import re
 import time
@@ -16,6 +19,7 @@ from langgraphagenticai.deep_research.quarterly_ttm import METHODOLOGY
 from langgraphagenticai.deep_research.manager import ResearchManager, failure_reason, finalize_report
 from langgraphagenticai.deep_research.models import ResearchRequest, dumps, parse_symbols, safe_url
 from langgraphagenticai.deep_research.presentation import build_research_pdf, clean_report_markdown
+from langgraphagenticai.ui.investment_brief import render_investment_brief
 from langgraphagenticai.tools.finance_tool_registry import get_finance_tools
 from langgraphagenticai.tools.serper_tools import SerperClient
 from langgraphagenticai.ui.research_news import render_serper_news_coverage
@@ -194,8 +198,8 @@ def _render_sources(result):
     if item:
         with st.expander(f"[{item['id']}] {item['title']} · {item['status']}"):
             st.caption(f"{item['provider']} · Retrieved: {item['retrieved_at']}")
-            if safe_url(item.get("url")):
-                st.link_button("Open original source", item["url"])
+            if source_link(item.get("url")):
+                st.link_button("Open source: " + str(item.get("title") or item.get("provider") or "Evidence"), source_link(item["url"]))
             if item["note"]:
                 st.caption(item["note"])
             st.json(item["data"], expanded=False)
@@ -242,6 +246,8 @@ def _render_crew_decision(decision: dict) -> None:
 def render_deep_research_tab(*, openai_api_key: str, model_name: str, fmp_api_key: str,
                              serper_api_key: str = "", marketaux_api_key: str = "") -> None:
     st.subheader("Deep Research")
+    if not openai_api_key:
+        st.info("Add an OpenAI key to generate, retry writing or follow up on research. Saved reports and deterministic finalization remain available.")
     st.caption("From company evidence to an investment thesis. Investigate one business or compare up to four.")
     connections = available_context(st.session_state)
     c1, c2, c3 = st.columns(3)
@@ -280,7 +286,7 @@ def render_deep_research_tab(*, openai_api_key: str, model_name: str, fmp_api_ke
             help="After research, three agents debate fundamentals, valuation, and risk before issuing BUY/HOLD/SELL calls.",
         )
         st.caption("The draft appears as it is written. Evidence and completed drafts are saved during the run, so retries resume from the saved work. Results stay in this session.")
-        submitted = st.form_submit_button("Start deep research", type="primary", width="stretch")
+        submitted = st.form_submit_button("Start deep research", type="primary", width="stretch", disabled=not openai_api_key)
 
     factory_args = (openai_api_key, model_name, fmp_api_key, serper_api_key, marketaux_api_key)
 
@@ -357,6 +363,7 @@ def render_deep_research_tab(*, openai_api_key: str, model_name: str, fmp_api_ke
     chosen = st.selectbox("Research history", list(lookup), key="dr_active_run",
                           format_func=lambda key: f"{', '.join(lookup[key]['request']['symbols'])} · {lookup[key]['created_at']} · {lookup[key]['status']}")
     result = lookup[chosen]
+    render_evidence_row(evidence_status(result))
     symbols = ", ".join(result["request"]["symbols"])
     status_label = ("Complete · Caveats disclosed" if result.get("finalized_with_caveats") else
                     str(result.get("status", "unknown")).replace("_", " ").title())
@@ -388,7 +395,7 @@ def render_deep_research_tab(*, openai_api_key: str, model_name: str, fmp_api_ke
                 finalized = finalize_report(result)
                 st.session_state["dr_history"] = [finalized if item["id"] == chosen else item for item in history]
                 st.rerun()
-    if result["status"] not in {"complete", "needs_review"} and st.button("Retry review" if result.get("draft") else "Retry report writing", key=f"dr_retry_{chosen}"):
+    if result["status"] not in {"complete", "needs_review"} and st.button("Retry review" if result.get("draft") else "Retry report writing", key=f"dr_retry_{chosen}", disabled=not openai_api_key):
         active_run = chosen
         try:
             with st.status("Resuming saved research", expanded=True) as retry_status:
@@ -406,10 +413,13 @@ def render_deep_research_tab(*, openai_api_key: str, model_name: str, fmp_api_ke
         except Exception as exc:
             st.error("Retry stopped. " + failure_reason(exc) + " Your saved evidence is unchanged; retrying never recollects market data.")
 
-    memo, compare, committee, sources, notebook = st.tabs(
-        ["Investment thesis", "Company comparison", "CrewAI decision", "Sources & evidence", "Research notebook"],
+    memo, compare, committee, sources, notebook, brief_tab = st.tabs(
+        ["Investment thesis", "Company comparison", "CrewAI decision", "Sources & evidence", "Research notebook", "Investment brief & scenarios"],
         key=f"dr_result_tabs_{chosen}", on_change="rerun",
     )
+    with brief_tab:
+        if brief_tab.open:
+            render_investment_brief(result, "v1", (openai_api_key, fmp_api_key, serper_api_key, marketaux_api_key))
     with memo:
         if memo.open:
             if result.get("finalized_with_caveats"):
@@ -437,7 +447,7 @@ def render_deep_research_tab(*, openai_api_key: str, model_name: str, fmp_api_ke
                 st.caption("Run the committee over this saved report. It reuses existing evidence and does not fetch market data again."
                            if committee_ready else "Complete the research review before requesting a committee decision.")
                 if st.button("Run CrewAI investment committee", type="primary", key=f"dr_crew_{chosen}",
-                             disabled=not committee_ready):
+                             disabled=not committee_ready or not openai_api_key):
                     try:
                         with st.spinner("CrewAI agents are debating fundamentals, valuation, and risk..."):
                             result["crewai_decision"] = run_investment_committee(
@@ -462,7 +472,7 @@ def render_deep_research_tab(*, openai_api_key: str, model_name: str, fmp_api_ke
             st.caption("Ask about this saved research. Follow-ups use its evidence without fetching new market data.")
             with st.form(f"dr_followup_{chosen}", clear_on_submit=True):
                 question = st.text_input("Follow-up question", max_chars=4000)
-                ask = st.form_submit_button("Ask about this research")
+                ask = st.form_submit_button("Ask about this research", disabled=not openai_api_key)
             if ask and question.strip():
                 try:
                     with st.spinner("Reviewing the research..."):

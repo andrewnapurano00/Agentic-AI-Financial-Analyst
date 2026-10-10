@@ -1,0 +1,64 @@
+name: Offline release checks
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  offline:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ['3.11', '3.12']
+    env:
+      PYTHONPATH: src
+      STREAMLIT_BROWSER_GATHER_USAGE_STATS: 'false'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Clean constrained installation
+        run: |
+          python -m pip install -r requirements-dev.txt -c constraints.txt
+          python -m pip check
+          python scripts/release_inventory.py
+      - name: Offline suite
+        run: python -m pytest -q --junitxml=verification/pytest.xml
+      - name: Compile and import
+        run: |
+          python -m compileall -q app.py src
+          python -c 'import app; import langgraphagenticai.main'
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: offline-python-${{ matrix.python }}
+          path: verification/
+          retention-days: 14
+  container:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Runtime and derived offline verification
+        run: |
+          docker build -t axiom-runtime:local .
+          docker build -f Dockerfile.verify -t axiom-verify:local .
+          docker run --rm --network none axiom-verify:local
+          mkdir -p verification
+          docker image inspect --format '{{.Id}}' axiom-runtime:local > verification/runtime-image.txt
+          docker run -d --name axiom-health -p 7860:7860 axiom-runtime:local
+          for attempt in $(seq 1 60); do
+            if curl --fail --silent http://127.0.0.1:7860/_stcore/health; then break; fi
+            sleep 2
+          done
+          curl --fail http://127.0.0.1:7860/_stcore/health
+          test "$(docker exec axiom-health id -u)" = 1000
+          docker exec axiom-health test ! -d /app/tests
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: runtime-image-identity
+          path: verification/runtime-image.txt
+          retention-days: 14
+      - name: Cleanup
+        if: always()
+        run: docker rm -f axiom-health || true

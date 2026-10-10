@@ -51,6 +51,7 @@ reports/
 checkpoints/
 models/
 .cache/
+verification/
 
 # Local FMP collection responses and transport diagnostics
 /fmp_data_reference/raw/

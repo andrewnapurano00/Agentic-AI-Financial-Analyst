@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+from langgraphagenticai.ui.app_shell import render_company_header, render_evidence_row, render_executive_cards, render_progress_panel, render_workspace_state
+from langgraphagenticai.ui.workspace_presentation import evidence_status
+
 import re
 import time
 
@@ -12,6 +15,7 @@ from langgraphagenticai.deep_research.quarterly_ttm import METHODOLOGY
 from langgraphagenticai.deep_research.manager import failure_reason, finalize_report
 from langgraphagenticai.deep_research.models import Evidence, ResearchRequest, dumps, parse_symbols
 from langgraphagenticai.deep_research.presentation import build_research_pdf, clean_report_markdown
+from langgraphagenticai.ui.investment_brief import render_investment_brief
 from langgraphagenticai.deep_research.v2 import (
     MODES, V2ConfigurationError, prompt_diagnostics, research_cache_key, stage_configuration,
 )
@@ -74,54 +78,70 @@ def _render_quick_decision(decision: dict) -> None:
 @st.fragment
 def render_deep_research_v2_tab(*, openai_api_key: str, fmp_api_key: str, serper_api_key: str = "",
                                 marketaux_api_key: str = "", groq_api_key: str = "") -> None:
-    st.subheader("Deep Research V2 · Cost Pilot")
-    st.caption("A separate experimental workflow for comparing lighter models, smaller prompts, deterministic checks, caching, and bounded spend. Both versions share audited financial calculations; V2 retains separate model routing and cost controls.")
-    st.warning("Pilot output may differ from V1. Validate investment conclusions against the Sources tab before relying on them.")
+    st.caption("Experimental cost pilot. Validate AI conclusions against saved Sources; workflow completion does not certify accuracy.")
 
-    connections = available_context(st.session_state)
-    status = st.columns(4)
-    status[0].metric("FMP", "Ready" if fmp_api_key else "Missing")
-    status[1].metric("OpenAI", "Ready" if openai_api_key else "Missing")
-    status[2].metric("Groq", "Ready" if groq_api_key else "Optional")
-    status[3].metric("Saved datasets", len(connections))
+    saved_history = st.session_state.get("drv2_history", [])
+    active_saved = next((item for item in saved_history if item.get("id") == st.session_state.get("drv2_active_run")), saved_history[0] if saved_history else None)
+    if active_saved:
+        result = active_saved
+        request = ResearchRequest(**result["request"])
+        render_company_header(", ".join(request.symbols), "Saved V2 research", "Workflow " + result.get("status", "unknown").replace("_", " "))
+        render_evidence_row(evidence_status(result))
+        render_executive_cards([
+            ("Workflow status", result.get("status", "unknown").replace("_", " ").title(), "Workflow completion does not certify evidence quality"),
+            ("Usable saved evidence", sum(1 for item in result.get("evidence", []) if item.get("status") == "ok" and item.get("data")), "Successful, nonempty records only"),
+            ("Saved result generated", format_saved_time(result.get("result_generated_at")), "Operation time; evidence retrieval is separate"),
+        ])
+        st.markdown("**Saved AI findings**")
+        report_preview = clean_report_markdown(result.get("report") or result.get("draft") or "No report has been generated. Saved evidence remains available below.")
+        st.write(report_preview[:600])
+        st.caption("AI interpretation; use Sources to verify claims and warnings.")
+    else:
+        render_company_header(st.session_state.get("drv2_tickers", "Company not selected"), "V2 research pilot", "No saved evidence selected")
+        render_evidence_row(evidence_status({}))
 
-    st.caption("Serper news: " + ("Configured" if serper_api_key else "Missing SERPER_API_KEY"))
-    if not serper_api_key:
-        st.info("Add SERPER_API_KEY in the sidebar, .env, or Streamlit secrets to include news and web research.")
+    with st.expander("Pilot limitations and provider configuration"):
+        st.caption("V2 compares lighter models, smaller prompts, deterministic checks, caching and bounded spend. Both versions share audited financial calculations; routing and cost controls remain separate.")
+        st.warning("Pilot output may differ from V1. Verify investment conclusions against Sources.")
+        render_evidence_row([("FMP configuration", "Configured" if fmp_api_key else "Missing"), ("OpenAI configuration", "Configured" if openai_api_key else "Missing"), ("Groq configuration", "Configured" if groq_api_key else "Optional / missing"), ("Serper configuration", "Configured" if serper_api_key else "Missing")])
+        if not serper_api_key:
+            st.info("Add SERPER_API_KEY in the sidebar, .env, or Streamlit secrets for fresh news/web research. Saved evidence stays available.")
 
-    with st.form("deep_research_v2_form"):
-        left, right = st.columns([2, 1])
-        with left:
-            default = ", ".join(st.session_state.get("equity_report_tickers", [])[:4]) or "AAPL, MSFT"
-            tickers_text = st.text_input("Companies", value=st.session_state.get("drv2_tickers", default))
-            question = st.text_area(
-                "Research question",
-                value="Which company offers the strongest risk-adjusted long-term investment case?",
-                height=100, max_chars=4000,
-            )
-        with right:
-            mode = st.selectbox("Cost mode", list(MODES), index=0)
-            depth = st.selectbox("Research depth", ["Standard", "Extended"])
-            horizon = st.selectbox("Investment horizon", ["1–3 years", "3–12 months", "3–5 years"])
-            period_label = st.selectbox("Financial statements", ["Annual", "Quarterly"])
-        route_cols = st.columns(3)
-        light_provider = route_cols[0].selectbox("Light-stage provider", ["OpenAI", "Groq", "Ollama"])
-        default_light = "gpt-5-nano" if light_provider == "OpenAI" else "llama-3.3-70b-versatile" if light_provider == "Groq" else "llama3.1:8b"
-        light_model = route_cols[1].text_input("Light-stage model", value=default_light)
-        budget = route_cols[2].number_input("Maximum estimated model cost (USD)", min_value=0.01, max_value=25.0, value=0.35, step=0.05)
-        ollama_base_url = st.text_input("Ollama OpenAI-compatible URL", value="http://localhost:11434/v1",
-                                        disabled=light_provider != "Ollama")
-        option_cols = st.columns(4)
-        use_context = option_cols[0].checkbox("Use saved app data", value=False, disabled=True)
-        option_cols[0].caption("Quarterly-derived V2 excludes saved app packets because their financial basis and provider identity are unverified. Saved V2 runs remain available below.")
-        include_news = option_cols[1].checkbox("Include news", value=bool(serper_api_key),
-                                                   help="Use Serper company news within the requested lookback, plus planner-requested web research.")
-        stop_after_evidence = option_cols[2].checkbox("Stop after evidence", value=False)
-        st.caption("Stop after evidence includes planning/investigation; report writing and decisions wait for a later explicit action.")
-        decision_mode = option_cols[3].selectbox("Decision stage", ["None", "Quick decision", "Full committee"])
-        cache_policy = st.radio("Reuse policy", ["Use saved result", "Force fresh research"], horizontal=True)
-        news_days = st.select_slider("News lookback", options=[7, 30, 90], value=30)
-        submitted = st.form_submit_button("Run V2 pilot", type="primary", width="stretch")
+    with st.expander("Configure new research / Run V2 pilot", expanded=not bool(active_saved)):
+        with st.form("deep_research_v2_form"):
+            left, right = st.columns([2, 1])
+            with left:
+                default = ", ".join(st.session_state.get("equity_report_tickers", [])[:4]) or "AAPL, MSFT"
+                st.session_state.setdefault("drv2_tickers", default)
+                tickers_text = st.text_input("Companies", key="drv2_tickers")
+                question = st.text_area(
+                    "Research question",
+                    value="Which company offers the strongest risk-adjusted long-term investment case?",
+                    height=100, max_chars=4000,
+                )
+            with right:
+                mode = st.selectbox("Cost mode", list(MODES), index=0)
+                depth = st.selectbox("Research depth", ["Standard", "Extended"])
+                horizon = st.selectbox("Investment horizon", ["1–3 years", "3–12 months", "3–5 years"])
+                period_label = st.selectbox("Financial statements", ["Annual", "Quarterly"])
+            route_cols = st.columns(3)
+            light_provider = route_cols[0].selectbox("Light-stage provider", ["OpenAI", "Groq", "Ollama"])
+            default_light = "gpt-5-nano" if light_provider == "OpenAI" else "llama-3.3-70b-versatile" if light_provider == "Groq" else "llama3.1:8b"
+            light_model = route_cols[1].text_input("Light-stage model", value=default_light)
+            budget = route_cols[2].number_input("Maximum estimated model cost (USD)", min_value=0.01, max_value=25.0, value=0.35, step=0.05)
+            ollama_base_url = st.text_input("Ollama OpenAI-compatible URL", value="http://localhost:11434/v1",
+                                            disabled=light_provider != "Ollama")
+            option_cols = st.columns(4)
+            use_context = option_cols[0].checkbox("Use saved app data", value=False, disabled=True)
+            option_cols[0].caption("Quarterly-derived V2 excludes saved app packets because their financial basis and provider identity are unverified. Saved V2 runs remain available below.")
+            include_news = option_cols[1].checkbox("Include news", value=bool(serper_api_key),
+                                                       help="Use Serper company news within the requested lookback, plus planner-requested web research.")
+            stop_after_evidence = option_cols[2].checkbox("Stop after evidence", value=False)
+            st.caption("Stop after evidence includes planning/investigation; report writing and decisions wait for a later explicit action.")
+            decision_mode = option_cols[3].selectbox("Decision stage", ["None", "Quick decision", "Full committee"])
+            cache_policy = st.radio("Reuse policy", ["Use saved result", "Force fresh research"], horizontal=True)
+            news_days = st.select_slider("News lookback", options=[7, 30, 90], value=30)
+            submitted = st.form_submit_button("Run V2 pilot", type="primary", width="stretch")
 
     history = st.session_state.setdefault("drv2_history", [])
     if submitted:
@@ -131,7 +151,6 @@ def render_deep_research_v2_tab(*, openai_api_key: str, fmp_api_key: str, serper
                                           "annual" if period_label == "Annual" else "quarter", news_days, include_news)
             except ValueError as exc:
                 raise V2ConfigurationError(str(exc)) from exc
-            st.session_state["drv2_tickers"] = tickers_text
             config = stage_configuration(mode, light_provider=light_provider, light_model=light_model)
             runtime = {"budget": float(budget), "ollama_base_url": ollama_base_url if light_provider == "Ollama" else "http://localhost:11434/v1",
                        "decision_mode": decision_mode, "stop_after_evidence": stop_after_evidence,
@@ -156,7 +175,7 @@ def render_deep_research_v2_tab(*, openai_api_key: str, fmp_api_key: str, serper
                         return
                     _save_v2(update, run_id=active_run, metadata=metadata, select=True)
 
-                with st.status("Running Deep Research V2", expanded=True) as run_status:
+                with render_progress_panel("Running Deep Research V2") as run_status:
                     stage, preview = st.empty(), st.empty()
                     started = time.monotonic()
                     manager = _manager_v2(
@@ -186,7 +205,7 @@ def render_deep_research_v2_tab(*, openai_api_key: str, fmp_api_key: str, serper
 
     history = st.session_state.get("drv2_history", [])
     if not history:
-        st.info("Configure a pilot run above. Paid calls occur only after pressing Run V2 pilot.")
+        render_workspace_state("Configure a pilot run above. Paid calls occur only after pressing Run V2 pilot.")
         return
     lookup = {item["id"]: item for item in history}
     selected = st.selectbox("V2 run history", list(lookup), key="drv2_active_run",
@@ -195,16 +214,7 @@ def render_deep_research_v2_tab(*, openai_api_key: str, fmp_api_key: str, serper
     config = result.get("v2_config", {})
     request = ResearchRequest(**result["request"])
 
-    metrics = st.columns(5)
-    metrics[0].metric("Status", result.get("status", "unknown").replace("_", " ").title())
-    metrics[1].metric("Mode", result.get("cost_mode", "—"))
-    metrics[2].metric("Model calls", len([d for d in result.get("diagnostics", []) if d.get("model") != "python" and d.get("status") != "blocked"]))
-    metrics[3].metric("Est. model cost", f"${float(result.get('estimated_model_cost_usd') or 0):.4f}")
-    metrics[4].metric("Elapsed", f"{float(result.get('elapsed_seconds') or 0):.1f}s")
     st.caption(saved_result_caption(result))
-    session_cost = sum(float(item.get("estimated_model_cost_usd") or 0) for item in history)
-    st.caption(f"V2 session estimated model cost: ${session_cost:.4f}")
-    st.caption(f"Cache key: {result.get('cache_key', 'pending')} · Reopening, tabs, and downloads make no model calls.")
 
     render_serper_news_coverage(result)
     label, state = _run_status(result)
@@ -257,8 +267,10 @@ def render_deep_research_v2_tab(*, openai_api_key: str, fmp_api_key: str, serper
             _save_v2(run_decision(result, openai_api_key=openai_api_key, groq_api_key=groq_api_key))
             st.rerun()
 
-    report_tab, decision_tab, comparison_tab, sources_tab, diagnostics_tab = st.tabs(
-        ["Report", "Decision", "Comparison", "Sources", "Performance"])
+    report_tab, decision_tab, comparison_tab, sources_tab, diagnostics_tab, brief_tab = st.tabs(
+        ["Report", "Decision", "Comparison", "Sources", "Performance", "Investment brief & scenarios"])
+    with brief_tab:
+        render_investment_brief(result, "v2", (openai_api_key, fmp_api_key, serper_api_key, marketaux_api_key, groq_api_key))
     with report_tab:
         if result.get("report"):
             st.markdown(clean_report_markdown(result["report"]))
@@ -276,6 +288,15 @@ def render_deep_research_v2_tab(*, openai_api_key: str, fmp_api_key: str, serper
     with sources_tab:
         _render_sources(result)
     with diagnostics_tab:
+        metrics = st.columns(5)
+        metrics[0].metric("Status", result.get("status", "unknown").replace("_", " ").title())
+        metrics[1].metric("Mode", result.get("cost_mode", "—"))
+        metrics[2].metric("Model calls", len([d for d in result.get("diagnostics", []) if d.get("model") != "python" and d.get("status") != "blocked"]))
+        metrics[3].metric("Est. model cost", f"${float(result.get('estimated_model_cost_usd') or 0):.4f}")
+        metrics[4].metric("Elapsed", f"{float(result.get('elapsed_seconds') or 0):.1f}s")
+        session_cost = sum(float(item.get("estimated_model_cost_usd") or 0) for item in history)
+        st.caption(f"V2 session estimated model cost: ${session_cost:.4f}")
+        st.caption(f"Cache key: {result.get('cache_key', 'pending')} · Reopening, tabs, and downloads make no model calls.")
         diagnostics = result.get("diagnostics", [])
         if diagnostics:
             st.dataframe(pd.DataFrame(diagnostics), hide_index=True, width="stretch")

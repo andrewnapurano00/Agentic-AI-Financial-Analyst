@@ -599,6 +599,7 @@ def render_stock_screener_tab(fmp_api_key: str) -> None:
 
     if not FMP_API_KEY:
         st.error("Please enter your FMP API key in the sidebar first.")
+        _render_saved_screener()
         return
 
     with st.form("stock_screener_form"):
@@ -700,6 +701,7 @@ def render_stock_screener_tab(fmp_api_key: str) -> None:
 
     if not run_screener:
         st.info("Set the screener filters, then click Run Screener.")
+        _render_saved_screener()
         return
 
     with st.spinner("Running FMP screener..."):
@@ -808,10 +810,21 @@ def render_stock_screener_tab(fmp_api_key: str) -> None:
         "results": final_df.copy(),
     }
 
+    _render_saved_screener()
+
+
+def _render_saved_screener() -> None:
+    payload = st.session_state.get("stock_screener_payload")
+    if not isinstance(payload, dict) or not isinstance(payload.get("results"), pd.DataFrame):
+        return
+    final_df = payload["results"]
+    if final_df.empty:
+        return
+    st.caption(f"Saved run generated at {payload.get('generated_at', 'unknown')}; this is not a new retrieval time.")
     st.subheader("Final Screener Output")
     st.caption(
         f"Showing top {len(final_df):,} companies sorted by Market Cap descending "
-        f"from {len(metrics_df):,} enriched rows."
+        "from the saved screener run."
     )
 
     display_cols = [
@@ -833,3 +846,15 @@ def render_stock_screener_tab(fmp_api_key: str) -> None:
         file_name="stock_screener_results.csv",
         mime="text/csv",
     )
+
+    if "Ticker" in final_df.columns:
+        focus = st.selectbox("Open screener company", final_df["Ticker"].astype(str).tolist(), key="screener_focus")
+        if st.button("Open Introduction", key="screener_open_intro"):
+            from langgraphagenticai.ui.workspace_handoff import queue_handoff
+            from langgraphagenticai.state.research_context import ResearchContext
+            try:
+                queue_handoff(st.session_state, ResearchContext((focus,), "Introduction", "analyze", "Stock Screener"))
+            except ValueError as exc:
+                st.error(str(exc))
+            else:
+                st.rerun()

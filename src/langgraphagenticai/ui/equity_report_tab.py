@@ -4999,6 +4999,8 @@ def render_equity_report_tab(
     st.caption("Enter a company or peer set. Axiom will assemble fundamentals, valuation, momentum, risks, and a decision-ready research story.")
     inject_equity_research_report_css()
 
+    if not openai_api_key:
+        st.caption("Deterministic reports and saved outputs are available. Add an OpenAI key for AI recommendations.")
     default_tickers = st.session_state.get("equity_report_ticker_text", "AAPL, MSFT, NVDA, GOOGL")
     # Do not default to the prior run's sector. That caused new ticker sets to inherit
     # an old sector framework. The run below can auto-detect the correct framework
@@ -5008,9 +5010,10 @@ def render_equity_report_tab(
     with st.form("equity_report_form"):
         c1, c2 = st.columns([2, 1])
         with c1:
-            tickers_text = st.text_input("Tickers", value=default_tickers, help="Comma-separated, e.g. AAPL, MSFT, NVDA")
+            st.session_state.setdefault("equity_report_ticker_input", default_tickers)
+            tickers_text = st.text_input("Tickers", key="equity_report_ticker_input", help="Comma-separated, e.g. AAPL, MSFT, NVDA")
         with c2:
-            include_gpt = st.checkbox("Use OpenAI final recommendation", value=True)
+            include_gpt = st.checkbox("Use OpenAI final recommendation", value=bool(openai_api_key), disabled=not openai_api_key)
             auto_detect_sector = st.checkbox("Auto-detect sector framework", value=True)
 
         c3, c4, c5 = st.columns([1.2, 0.9, 0.9])
@@ -5203,6 +5206,7 @@ def render_equity_report_tab(
             "Run CrewAI best-buy debate" if not current_decision else "Run debate again",
             type="primary" if not current_decision else "secondary",
             key=f"equity_crew_{committee_packet['fingerprint']}",
+            disabled=not openai_api_key,
         ):
             if not openai_api_key:
                 st.error("Please enter your OpenAI API key in the sidebar before running the CrewAI debate.")

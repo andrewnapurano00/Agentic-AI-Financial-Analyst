@@ -6,23 +6,27 @@ This file defines how coding agents and contributors must work on Axiom Research
 
 The goal is not to add the most features. The goal is to make the existing capabilities trustworthy, connected, fast, explainable, and useful for real investment research.
 
-## Implementation orientation (updated 2026-10-04)
+## Implementation orientation (updated 2026-10-10)
 
 These engineering requirements are the target standard, not a claim that every requirement is already implemented. [PLAN.md](PLAN.md) is the dated source of truth for implementation status, delivery history, verification evidence, and remaining work. Do not infer completion from a module name or a passing test count.
 
 The sidebar currently exposes seven main workspaces plus the isolated **Deep Research V2 cost pilot**. The application entry points are `app.py`, `src/langgraphagenticai/main.py`, and `src/langgraphagenticai/ui/streamlitui/loadui.py`.
 
+Module paths abbreviated below are relative to `src/langgraphagenticai/`; repository-level release/test paths are explicit.
+
 | Area | Implementation boundary |
 | --- | --- |
-| Shared presentation | `src/langgraphagenticai/ui/app_shell.py`; page modules orchestrate Streamlit controls |
+| Shared presentation | `ui/app_shell.py`, `ui/workspace_presentation.py` and `ui/workspace_handoff.py`; shared terminal headers/evidence states and bounded navigation adapters, while page modules orchestrate controls |
 | Provider transport | `src/langgraphagenticai/providers/`; shared FMP REST transport, bounded OpenAI clients and symbol-aware Introduction history exist, but adapters and metadata are not uniform across every provider |
 | Financial/domain logic | Company snapshots, Equity Report scoring, `portfolio_manager/`, audited research calculations in `deep_research/{quarterly_ttm,research_metrics}.py`, and configurable chart calculations in `technical_analysis/`; preserve each metric basis |
-| Research chat | LangGraph graph, nodes, and tools; thread state is session-backed |
+| Research | LangGraph chat remains session-backed; `research/{guided_workflow,guided_schemas}.py`, `providers/guided_research.py` and `ui/guided_research_tab.py` implement the opt-in bounded one-company Guided plan/run workflow |
+| Saved investment brief | `analysis/{investment_brief,scenarios}.py` and `ui/investment_brief.py`; shared V1/V2 saved narrative excerpts, audited earnings-multiple sensitivities and bounded provenance exports |
+| Company navigation | `state/research_context.py` supplies metadata-only typed identity/intent; `ui/workspace_handoff.py` applies supported session handoffs without transferring financial packets |
 | Deep Research | `src/langgraphagenticai/deep_research/`; V1/V2 orchestration stays separate while fresh financial collection, sector applicability, audit contracts and bounded model packets are shared |
-| Verification | `tests/`; consult the dated inventory in PLAN rather than assuming full workspace or export coverage |
+| Verification/release | `tests/conftest.py` guards offline collection/tests; `.github/workflows/offline-release.yml`, `Dockerfile.verify` and `scripts/release_inventory.py` define release gates/artifacts. Consult PLAN and `docs/DEPLOYMENT.md` for executed checks and unverified gates |
 | Contributor skills | `.agents/skills/`; [project skill guide](docs/PROJECT_SKILLS.md) describes all thirteen skills and invocation, including GitHub commit/push |
 
-Existing ticker handoffs and saved page results use session-state conventions. A canonical typed `ResearchContext`, universal provenance records, and universal freshness UI remain roadmap work. V2 is a pilot; its helpers and fixtures do not establish end-to-end financial accuracy or measured cost savings.
+P01 delivers a bounded typed, metadata-only `ResearchContext` for supported company handoffs; saved page results remain session-backed. Universal financial provenance, complete Portfolio/Compare handoff adoption and universal freshness UI remain roadmap work. Navigation metadata is not financial evidence, and unverified financial-packet bridges remain disabled. V2 is a pilot; its helpers and fixtures do not establish end-to-end financial accuracy or measured cost savings.
 
 ## Product principles
 
@@ -42,14 +46,14 @@ Changes must account for the complete application, not only the active page:
 
 - **Introduction:** live market overview, company snapshot/news, eight price-chart horizons, configurable technical indicators, calculated technical summary, and explicit company/technical AI analysis.
 - **Top Movers:** five-trading-day leaders and laggards, sector breadth, Serper news, and company handoff.
-- **Research:** LangGraph finance chat with FMP and Marketaux tools, structured tables, and formatted analyst output.
+- **Research:** LangGraph finance chat with FMP and Marketaux tools, editable explicit-submit drafts and preserved threads; opt-in Guided research prepares a one-company plan and runs allowlisted evidence tools with exact cited-field validation, partial-result recovery and saved session reuse.
 - **Equity Report:** sector-aware company/peer analysis, scoring, charts, recommendations, and PDF/Excel/CSV exports.
 - **Stock Screener:** FMP universe filtering and metric enrichment.
 - **Portfolio Lab:** historical optimizer plus hybrid AI portfolio manager, constraints, evidence, and reporting.
-- **Deep Research:** evidence collection, shared quarterly financial audit and sector-aware comparisons, Serper news coverage, planning, reports, recovery, citations, downloads and optional CrewAI committee.
-- **Deep Research V2:** separate cost pilot with the shared financial audit, stage-specific routing, bounded sector-aware contexts, mechanical validation, saved generation time/age, session reuse and optional quick/full decisions. Keep workflow-specific V1 behavior separate when modifying the pilot.
+- **Deep Research:** evidence collection, shared quarterly financial audit and sector-aware comparisons, Serper news coverage, planning, reports, recovery, citations, downloads, saved investment brief/earnings-multiple scenarios and optional CrewAI committee.
+- **Deep Research V2:** separate cost pilot with the shared financial audit, stage-specific routing, bounded sector-aware contexts, mechanical validation, saved generation time/age, session reuse, shared saved investment brief/earnings-multiple scenarios and optional quick/full decisions. Keep workflow-specific V1 behavior separate when modifying the pilot.
 
-## Latest delivered boundaries (2026-10-04)
+## Latest delivered boundaries (2026-10-10)
 
 These are scoped deliveries, not completion of the broad R01-R10 roadmap. Preserve their contracts when extending the product; consult PLAN verification records and feature-team reports for exact evidence.
 
@@ -58,7 +62,15 @@ These are scoped deliveries, not completion of the broad R01-R10 roadmap. Preser
 - **AAFA-7, Introduction charts:** `providers/symbol_history.py` shares market/company retrieval; `market_history.py` remains a compatibility wrapper. Both charts offer 1D/5D/1M/3M/1Y/3Y/5Y/10Y. Short ranges select one/five observed trading dates; long ranges use daily bars. Fallback replaces a whole series, with no provider stitching. Report actual coverage, source, adjustment basis, timezone, currency/units, as-of and retrieval time; unknown FMP adjustment/timezone and complete-session coverage are not inferred. Future aware timestamps are rejected against the UTC instant; unknown-zone naive records use the documented UTC calendar-date policy, with same-day timing unverifiable.
 - **Technical analysis:** `technical_analysis/{indicators,evidence,agent}.py` separates local SMA/EMA/Wilder RSI/MACD/Bollinger arithmetic, evidence fingerprints and bounded structured AI. `ui/technical_chart.py` renders adjustable bar windows, warmup, separate oscillator panels and period-aware provider wall-clock axes with original timestamp tooltips. Window units are observed bars, not calendar days. Technical AI requires an explicit action and validates identity/evidence references; ordinary controls reuse data and do not call models. Preserve prior results with mismatch/failure notices and disable analysis for invalid settings. Schema/citation checks do not certify every numerical claim in model prose.
 
-Latest offline inventory: **322 passing tests** in the project Python3.12 environment (V-20261004-05). Fresh app health, actual Introduction browser interactions with synthetic services, and independent scoped review passed. Earlier V1/V2 financial browser/export evidence remains dated in V-20261004-04. No live entitlement/financial freshness/model-quality guarantee, clean-install certification or hosted deployment follows from these checks. GitHub synchronization publishes source; deployment requires its own explicitly scoped verification.
+- **P01 / AAFA-8, connected company context:** normalized metadata-only handoffs connect Introduction/Top Movers to Research, Equity Report and both Deep Research versions, and Screener to Introduction. Incoming Research requests are editable drafts requiring explicit submit. Configuration/navigation preserve chat and saved results; changed chat settings require a visible New thread action. Deterministic workspaces are not globally blocked by missing OpenAI; individual AI actions enforce dependencies. Portfolio/Compare handoffs remain open.
+- **P02 / AAFA-9, terminal presentation:** shared executive cards, workspace headers and evidence-status rows distinguish source/retrieval dates, partial evidence and unavailable metadata. Configuration readiness and page-render time do not establish evidence freshness; remaining pages still need universal data-quality adoption.
+- **P03 / AAFA-10, Guided research:** explicit Prepare/Run actions allow at most two model attempts and three tool dispatches, with no model retries and bounded packets. Quote/profile has independent requests; shared safe FMP retries can add HTTP attempts. Annual FY evidence stays distinct from audited TTM; zero remains valid and failed news retains successful facts. Exact field/currency/date/basis citations are validated, while AI prose semantics remain unverified. Unknown-price acknowledgement cannot guarantee a dollar ceiling. Reruns/downloads reuse session results without additional calls.
+- **P04 / AAFA-11, saved brief/scenarios:** V1/V2 share immutable saved narrative excerpts and deterministic Bull/Base/Bear total equity sensitivities. Eligibility requires resolvable audited four-quarter earnings, dated cap, explicit compatible quote currency, sector applicability and supported freshness; legacy/inferred-currency/unsupported cases stay readable with unavailable scenarios. Defaults are user assumptions, not forecasts. Preserve safe bounded JSON/CSV provenance and original reports without recollection or model calls.
+- **P05 / AAFA-12, local release automation:** Python3.11/3.12 CI definitions use constrained installs, pip check, guarded offline tests, compile/import and safe version/JUnit artifacts. Direct manifests agree, newspaper4k is the sole newspaper namespace owner, and NumPy constraints respect Python versions. Runtime copies app.py/src only; a separate derived image adds verification tests/samples. Keep TLS verification enabled and optional public CA bundles in BuildKit secrets. Local source is finished; AAFA-12 remains In Progress for unverified release gates.
+
+Latest measured offline inventory: **430 passing tests in597.19s**, independently run in the installed project Python3.12.0 environment (V-20261010-P05; pytest9.1.1 / Streamlit1.61.1). The P05 run also passed focused checks, compile/import, installed pip check, fresh app/harness health and a synthetic actual-main browser journey with two isolated sessions and zero external calls. Eight-route cases establish readiness/rendering, not exhaustive behavior. Earlier P01-P04 browser/export evidence retains its original dates. No new checks follow from documentation updates.
+
+**Open release gates:** local Docker builds failed during intercepted PyPI transport (initial certificate trust, then `InvalidChunkLength`); no runtime image was produced. Clean Python3.11/3.12 installs, runtime non-root startup/health, derived-image workflow and remote GitHub CI are unverified. Hosting target, protected preview/access, hosted smoke and rollback rehearsal remain pending. No live entitlement/financial freshness/model-quality guarantee, clean-install certification or deployment follows from offline checks. P01-P05 are local working-tree implementations, not a hosted release; commit/push and deployment require explicit authorization. See [deployment runbook](docs/DEPLOYMENT.md) and the current PLAN verification entry.
 
 ## Architecture requirements
 

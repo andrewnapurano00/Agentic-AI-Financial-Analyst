@@ -44,6 +44,8 @@ class LoadStreamlitUI:
         st.sidebar.markdown('<div class="ax-brand"><strong>Axiom</strong> <span>Research</span></div>', unsafe_allow_html=True)
         st.sidebar.markdown('<div class="ax-tagline">DISCOVER. ANALYZE. INVEST.</div>', unsafe_allow_html=True)
         st.sidebar.markdown('<div class="ax-sidebar-label">Workspace</div>', unsafe_allow_html=True)
+        from langgraphagenticai.ui.workspace_handoff import apply_pending_handoff
+        apply_pending_handoff(st.session_state)
         next_workspace = st.session_state.pop("next_workspace", None)
         if next_workspace:
             st.session_state["active_workspace"] = next_workspace
@@ -74,8 +76,8 @@ class LoadStreamlitUI:
         marketaux_api_key = _resolve_secret(marketaux_input, "MARKETAUX_API_KEY", "MARKETAUX_API_KEY")
         groq_api_key = _resolve_secret(groq_input, "GROQ_API_KEY", "GROQ_API_KEY")
 
-        st.sidebar.caption(f"OpenAI {'ready' if openai_api_key else 'not configured'} / FMP {'ready' if fmp_api_key else 'not configured'}")
-        st.sidebar.caption(f"Serper {'ready' if serper_api_key else 'not configured'} / MarketAux {'ready' if marketaux_api_key else 'not configured'}")
+        st.sidebar.caption(f"OpenAI {'configured' if openai_api_key else 'not configured'} / FMP {'configured' if fmp_api_key else 'not configured'}")
+        st.sidebar.caption(f"Serper {'configured' if serper_api_key else 'not configured'} / MarketAux {'configured' if marketaux_api_key else 'not configured'}")
 
         return {
             "active_page": active_page,

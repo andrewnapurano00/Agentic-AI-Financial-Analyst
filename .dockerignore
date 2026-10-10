@@ -25,7 +25,6 @@ outputs
 reports
 checkpoints
 models
-tests
 *.log
 .DS_Store
 Thumbs.db

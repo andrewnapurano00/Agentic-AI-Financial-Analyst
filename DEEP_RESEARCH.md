@@ -181,3 +181,14 @@ Independent-review corrections (isolated candidate, 2026-10-04): metric audit in
 
 
 2026-10-04 FID03 recheck correction: model-context compaction now preserves category-specific nested investigation/transcript/DCF/peer payloads, financial trend values and dates, technical observations and price basis, and news content. Statement excerpts retain duration exclusions rather than treating narrative/tool schemas as financial statements. Four-company synthetic category regressions cover 18,000 and 48,000 character budgets alongside recorded financial/decision budget tests. Focused audit tests and compile checks are offline; parent final integration/browser verification remains separate.
+
+
+## Saved investment brief and scenarios (P04)
+
+V1 and V2 share the **Investment brief & scenarios** result tab. It extracts business drivers, supporting/contrary evidence, dated catalysts, risks, missing inputs and invalidation conditions from the original saved narrative, retaining evidence IDs and explicitly identifying absent sections. This is saved AI interpretation, not a new synthesis or a certification of its claims.
+
+The optional sensitivity model uses audited positive four-quarter TTM net income, a compatible explicitly reported quote currency, a positive dated saved market capitalization and canonical P/E sector applicability. Quotes must be no more than seven UTC calendar days old at the displayed reference time; future instants are rejected. Existing Unix-seconds UTC timestamp interpretation and standalone-quarter/raw-scale assumptions remain disclosed. REITs, unknown sectors, malformed or legacy audits and inferred quote currency are unavailable without recollection. Banks may use earnings multiples; no FFO substitution or P/B model is added.
+
+Editable Bear/Base/Bull assumptions calculate `TTM net income * (1 + earnings change % / 100) * P/E`; the displayed difference is `(hypothetical total equity value / dated saved cap - 1) * 100`. Earnings change is bounded to -100% through +200%, and P/E to positive values through 100. Labels/defaults do not enforce scenario ordering or recommend assumptions. Values are total hypothetical equity sensitivities, not forecasts, price targets, returns or recommendations.
+
+Opening the tab, editing controls and downloading the bounded credential-filtered JSON/CSV reuse saved inputs and preserve the original result. Safe exports include formulas, assumptions, eligibility, saved source IDs, currency, periods and freshness reference. See [P04 team report](docs/features/2026-10-08-p04-investment-brief-team.md) and [dated verification](PLAN.md#v-20261008-p04---local-verification) for actual evidence and limits. No live financial/model verification or deployment is implied.

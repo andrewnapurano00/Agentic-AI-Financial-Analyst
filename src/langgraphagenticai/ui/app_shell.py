@@ -13,6 +13,7 @@ PAGE_LABELS = {
     "Equity Report": ("Equity Research", "REPORT WORKSPACE", "Decision-ready company and peer analysis."),
     "Stock Screener": ("Stock Screener", "DISCOVERY WORKSPACE", "Filter a universe by fundamental and market criteria."),
     "Portfolio Lab": ("Portfolio Lab", "ALLOCATION WORKSPACE", "Optimize allocations and review agent decisions."),
+    "Deep Research V2": ("Deep Research V2", "COST PILOT", "Saved evidence and explicit decisions."),
     "Deep Research": ("Deep Research", "INVESTIGATION WORKSPACE", "Run a sourced, multi-step company or thematic investigation."),
 }
 
@@ -86,7 +87,7 @@ def inject_app_shell_css() -> None:
         .ax-page-head h1 { margin: .13rem 0 0; color: var(--ax-text); font-family: "Arial Narrow", "Roboto Condensed", sans-serif; font-size: 1.55rem; line-height: 1; letter-spacing: -.015em; }
         .ax-page-head p { margin: 0; color: var(--ax-muted); font-size: .72rem; }
         .ax-live { display: inline-flex; align-items: center; gap: .4rem; color: var(--ax-muted); font: .62rem ui-monospace, Consolas, monospace; }
-        .ax-live:before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--ax-green); }
+        .ax-live:before { content: none; width: 6px; height: 6px; border-radius: 50%; background: var(--ax-green); }
 
         h1, h2, h3, h4 { color: var(--ax-text) !important; font-family: "Arial Narrow", "Roboto Condensed", Inter, sans-serif !important; letter-spacing: .005em; }
         h2 { font-size: 1.35rem !important; }
@@ -190,6 +191,15 @@ def inject_app_shell_css() -> None:
         .heat{grid-column:2}.heatmap{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;height:125px}.heatmap div{background:linear-gradient(145deg,#0e8a58,#07563d);padding:.65rem .5rem;font-size:.55rem}.heatmap b{font-size:.7rem}.heatmap div:nth-child(5){grid-column:span 2}.heatmap .neg{background:linear-gradient(145deg,#7b263b,#491e31)}.updates{grid-column:3}.updates ul{list-style:none;padding:0;margin:.2rem 0}.updates li{display:grid;grid-template-columns:38px 10px 1fr;align-items:center;gap:.25rem;border-bottom:1px solid #142d40;padding:.4rem 0;color:#b7c8d8;font-size:.58rem}.updates time{color:#4ba9ec}.updates i{width:6px;height:6px;border-radius:50%;background:#20e7ad}.updates i.pink{background:#ff4f78}.updates i.yellow{background:#ffc044}.ask-label{font-size:.58rem;color:#8299af;font-weight:800;letter-spacing:.12em;margin:.7rem 0 .25rem}
         @media(max-width:1050px){.intro-grid{grid-template-columns:1fr 1fr}.market-main{grid-column:1/3}.ai-brief{grid-column:1/3;grid-row:auto}.mini-grid{grid-column:1/3}.updates{grid-column:1/3}.world{grid-column:1}.heat{grid-column:2}.movers-head{grid-template-columns:2fr repeat(2,1fr)}.movers-head>div:first-child{grid-row:span 2}.movers-grid{grid-template-columns:1fr}.movers-table{grid-column:1}.mover-sector-grid{grid-template-columns:repeat(4,1fr)}}
         @media(max-width:700px){.ticker-row,.ticker-row.intro-five{grid-template-columns:1fr 1fr}.ticker-row.intro-five>div:last-child{grid-column:1/3}.intro-grid{display:block}.terminal-card{margin-bottom:.55rem}.mini-grid{display:block}.mini-grid>.terminal-card{margin-bottom:.55rem}.intro-topline>span:last-child{display:none}.card-head{display:block}.range-tabs{margin:.3rem 0;width:max-content}.heatmap{grid-template-columns:1fr 1fr}.ticker-row>div:nth-child(even){border-right:0}.company-head{grid-template-columns:1fr}.company-price{border-left:0;border-top:1px solid #234157;padding:.55rem 0 0}.company-subgrid,.company-news ul{grid-template-columns:1fr}.company-metrics{grid-template-columns:1fr}.company-metric:nth-child(odd){border-right:0}.company-news li{grid-template-columns:62px 8px 1fr}.company-news small{display:none}.movers-head{grid-template-columns:1fr 1fr}.movers-head>div:first-child{grid-column:1/3;grid-row:auto}.mover-sector-grid{grid-template-columns:1fr 1fr}}
+        :focus-visible { outline:2px solid var(--ax-amber)!important; outline-offset:3px; }
+        .ax-evidence { display:flex; flex-wrap:wrap; gap:.45rem 1rem; border:1px solid var(--ax-line); padding:.65rem; margin:.45rem 0; font-size:.7rem; overflow-wrap:anywhere; }
+        .ax-evidence b { color:var(--ax-muted); }
+        .ax-executive { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.6rem; margin:.6rem 0; }
+        .ax-executive strong { display:block; color:var(--ax-text); font-size:1.05rem; overflow-wrap:anywhere; }
+        .ax-executive small { color:var(--ax-muted); }
+        .terminal-card, .ax-page-head { min-width:0; overflow-wrap:anywhere; }
+        .ax-table-scroll { overflow-x:auto; }
+        @media(max-width:700px) { .ax-executive { grid-template-columns:1fr; } .ax-statusbar { position:static; flex-wrap:wrap; white-space:normal; overflow:visible; gap:.5rem; margin-top:1rem; } }
         </style>
         """,
         unsafe_allow_html=True,
@@ -227,7 +237,7 @@ def render_page_header(page: str) -> None:
     title, kicker, description = PAGE_LABELS.get(page, (page, "WORKSPACE", ""))
     st.markdown(
         f'''<div class="ax-page-head"><div><div class="ax-page-kicker">{escape(kicker)}</div><h1>{escape(title)}</h1></div>
-        <div><p>{escape(description)}</p><div class="ax-live">SYSTEM READY</div></div></div>''',
+        <div><p>{escape(description)}</p><div class="ax-live">EVIDENCE STATUS: SEE WORKSPACE</div></div></div>''',
         unsafe_allow_html=True,
     )
 
@@ -260,7 +270,30 @@ def render_terminal_status(model_name: str, *, fmp_ready: bool, openai_ready: bo
     now = datetime.now().astimezone().strftime("%b %d %Y  %H:%M %Z")
     st.markdown(
         f'''<div class="ax-statusbar"><span class="ax-status-dot"></span><b>AXIOM RESEARCH</b>
-        <span>FMP: {'READY' if fmp_ready else 'OFFLINE'}</span><span>LLM: {'READY' if openai_ready else 'OFFLINE'}</span>
-        <span>MODEL: {escape(model_name.upper())}</span><span>AS OF: {escape(now)}</span><span>/ SEARCH &nbsp; CTRL K COMMAND</span></div>''',
+        <span>FMP: {'CONFIGURED' if fmp_ready else 'MISSING CONFIGURATION'}</span><span>LLM: {'CONFIGURED' if openai_ready else 'MISSING CONFIGURATION'}</span>
+        <span>MODEL: {escape(model_name.upper())}</span><span>Page rendered at: {escape(now)}</span><span>/ SEARCH &nbsp; CTRL K COMMAND</span></div>''',
         unsafe_allow_html=True,
     )
+
+
+def render_evidence_row(items) -> None:
+    cells = "".join(f"<span><b>{escape(str(label))}:</b> {escape(str(value))}</span>" for label, value in items)
+    st.markdown(f'<div class="ax-evidence" aria-label="Evidence status">{cells}</div>', unsafe_allow_html=True)
+
+
+def render_company_header(symbols, company="", detail="") -> None:
+    st.markdown(f'<div class="ax-security-head"><div><div class="ax-security-symbol">{escape(str(symbols))}</div><div class="ax-security-meta">{escape(str(company))}</div></div><div class="ax-security-context">{escape(str(detail))}</div></div>', unsafe_allow_html=True)
+
+
+def render_executive_cards(cards) -> None:
+    cells = "".join(f'<div class="ax-terminal-panel"><small>{escape(str(label))}</small><strong>{escape(str(value))}</strong><p>{escape(str(note))}</p></div>' for label, value, note in list(cards)[:3])
+    st.markdown(f'<div class="ax-executive">{cells}</div>', unsafe_allow_html=True)
+
+
+def render_workspace_state(message, *, state="empty") -> None:
+    renderer = {"failure": st.error, "partial": st.warning, "stale": st.warning}.get(state, st.info)
+    renderer(f"{state.title()}: {message}")
+
+
+def render_progress_panel(label):
+    return st.status(label, expanded=True)

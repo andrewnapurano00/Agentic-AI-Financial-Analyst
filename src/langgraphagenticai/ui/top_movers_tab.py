@@ -121,7 +121,15 @@ def render_top_movers_tab(*, fmp_api_key: str, serper_api_key: str) -> None:
             focus = st.selectbox("Open a company snapshot", focus_options, key="movers_focus")
         with open_col:
             if st.button("OPEN SNAPSHOT", type="primary", use_container_width=True, key="movers_open_snapshot"):
-                st.session_state["intro_company_symbol"] = focus
-                st.session_state["intro_company_query"] = focus
-                st.session_state["next_workspace"] = "Introduction"
-                st.rerun()
+                from langgraphagenticai.ui.workspace_handoff import queue_handoff
+                from langgraphagenticai.state.research_context import ResearchContext
+                try:
+                    queue_handoff(st.session_state, ResearchContext((focus,), "Introduction", "analyze", "Top Movers"))
+                except ValueError as exc:
+                    from langgraphagenticai.utils.safety import sanitize_error
+                    st.error(sanitize_error(exc))
+                else:
+                    st.rerun()
+
+        from langgraphagenticai.ui.workspace_handoff import render_company_handoffs
+        render_company_handoffs(focus, "Top Movers", key="movers_handoff")

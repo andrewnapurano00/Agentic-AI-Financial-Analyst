@@ -1,0 +1,14 @@
+# syntax=docker/dockerfile:1
+ARG RUNTIME_IMAGE=axiom-runtime:local
+FROM ${RUNTIME_IMAGE}
+USER root
+RUN --mount=type=secret,id=build_ca \
+    if [ -f /run/secrets/build_ca ]; then export PIP_CERT=/run/secrets/build_ca; fi \
+    && python -m pip install 'pytest>=8,<10'
+COPY --chown=1000:1000 tests /app/tests
+COPY --chown=1000:1000 fmp_data_reference/samples/FMP-018/20261003T044241108241Z/AAPL-default.json /app/fmp_data_reference/samples/FMP-018/20261003T044241108241Z/AAPL-default.json
+COPY --chown=1000:1000 fmp_data_reference/samples/FMP-045/20261003T044241108241Z/AAPL-default.json /app/fmp_data_reference/samples/FMP-045/20261003T044241108241Z/AAPL-default.json
+COPY --chown=1000:1000 fmp_data_reference/samples/FMP-061/20261003T044241108241Z/AAPL-annual.json /app/fmp_data_reference/samples/FMP-061/20261003T044241108241Z/AAPL-annual.json
+USER 1000
+HEALTHCHECK NONE
+CMD ["python", "-m", "pytest", "-q", "tests/test_release_workflow.py", "tests/test_guided_research.py", "tests/test_investment_brief.py", "tests/test_workspace_handoffs.py"]

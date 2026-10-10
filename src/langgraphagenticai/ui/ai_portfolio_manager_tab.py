@@ -348,7 +348,7 @@ def _render_diagnostics(bundle: dict[str, Any]) -> None:
 def _render_ai_chat(bundle: dict[str, Any], openai_api_key: str, model_name: str) -> None:
     st.caption("Ask a question about this run. This uses a compact context from the latest recommendations; it does not pull news articles.")
     question = st.text_area("Question", value="Why did the committee recommend these target weights?", height=80)
-    if st.button("Ask Portfolio Manager", type="secondary"):
+    if st.button("Ask Portfolio Manager", type="secondary", disabled=not openai_api_key):
         if not openai_api_key:
             st.warning("OpenAI key is not loaded, so the chat answer is unavailable.")
             return
@@ -405,9 +405,11 @@ def render_ai_portfolio_manager_tab(
         max_sector_weight = st.slider("Maximum sector weight", 0.20, 0.60, 0.35, 0.01)
         cash_buffer = st.slider("Target cash buffer", 0.00, 0.20, 0.00, 0.01)
         min_trade_weight_change = st.slider("Ignore trades smaller than", 0.001, 0.02, 0.0025, 0.001)
-        run_button = st.button("Run hybrid AI committee", type="primary")
+        run_button = st.button("Run hybrid AI committee", type="primary", disabled=not openai_api_key)
         st.divider()
         st.caption(f'FMP key loaded: {"Yes" if bool(fmp_api_key) else "No"}')
+        if not openai_api_key:
+            st.info("Add an OpenAI key to run the AI committee. The optimizer and saved results remain available.")
         st.caption(f'OpenAI key loaded: {"Yes" if bool(openai_api_key) else "No"}')
         st.caption("MarketAux/news overlay: Disabled in Portfolio Manager")
         if marketaux_api_key:
