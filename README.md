@@ -23,8 +23,8 @@ The app contains eight connected workspaces:
 
 | Workspace | Primary use | AI calls |
 |---|---|---|
-| Introduction | Market overview, company snapshot, extended price charts, configurable indicators and technical summary | Explicit company/technical analysis |
-| Top Movers | Five-trading-day leaders and laggards, breadth, sectors, and related news | None by default |
+| Market Brief | Compact market briefing, sector ETF discovery, company terminal metrics/earnings/peers, eleven chart ranges and technical analysis | Explicit company interpretation/technical analysis |
+| Top Movers | Period-aware screened leaders/laggards, filtered breadth/median, selected quote/history/news and research drafts | None |
 | Research | LangGraph finance chat with FMP and Marketaux tools | Explicit chat action |
 | Equity Report | Sector-aware company comparison, scoring, charts, exports, and best-buy debate | Optional recommendation and CrewAI debate |
 | Stock Screener | FMP universe filtering and metric enrichment | None |
@@ -49,32 +49,40 @@ Selected tickers and completed work can be reused across several workspaces thro
 
 ## Workspace guide
 
-### 1. Introduction
+### 1. Market Brief (Introduction compatibility identity)
 
-Market and company price charts support **1D, 5D, 1M, 3M, 1Y, 3Y, 5Y and 10Y**. Intraday ranges use the latest one/five observed trading dates; longer ranges use daily bars. Company chart history is independent of the snapshot's shorter performance series. Coverage depends on the provider: partial/stale history is disclosed, and no bars are filled or stitched across sources. FMP close adjustment and naive timestamp timezones remain unverified; whole-series Yahoo fallback is explicitly auto-adjusted. Axes preserve provider wall-clock fields, with original timestamps in tooltips. Future aware timestamps are excluded by exact UTC instant; timezone-unknown naive timestamps are excluded only when their calendar date exceeds the current UTC date. Same-day intraday timing cannot be verified for naive timestamps, and no source timezone is invented.
+Market and company price charts support **1D, 5D, 1M, 3M, 6M, YTD, 1Y, 3Y, 5Y, 10Y and All**. Intraday ranges use the latest one/five observed trading dates; longer ranges use daily bars. Company chart history is independent of the snapshot's shorter performance series. Coverage depends on the provider: partial/stale history is disclosed, and no bars are filled or stitched across sources. FMP close adjustment and naive timestamp timezones remain unverified; whole-series Yahoo fallback is explicitly auto-adjusted. Axes preserve provider wall-clock fields, with original timestamps in tooltips. Future aware timestamps are excluded by exact UTC instant; timezone-unknown naive timestamps are excluded only when their calendar date exceeds the current UTC date. Same-day intraday timing cannot be verified for naive timestamps, and no source timezone is invented.
 
 Expand **Technical indicators & settings** to configure SMA, EMA, Wilder RSI, MACD and Bollinger windows (observed bars, up to 500) and the Bollinger deviation multiplier. Calculations use warmup before display trimming; RSI and MACD have separate panels. **Analyze technical evidence with AI** makes one explicit structured OpenAI request using the selected model and saved compact evidence. Settings/range changes make no model calls; previous interpretation remains visible with an input-mismatch notice, and failures preserve it. Identity and evidence references are validated, but model-written numerical claims are not individually certified. No new API key is required beyond optional `OPENAI_API_KEY` and the existing market data configuration. Intraday history caches for five minutes and daily history for one hour; the chart Retry controls refresh history.
 
-The landing workspace provides an executive market view and an FMP-backed company snapshot.
+The landing workspace displays **Market Brief** while retaining the internal Introduction identity for existing handoffs. Its terminal presentation is shared with Top Movers: near-black canvas, charcoal panels, red active controls, compact headings, monospaced figures, and thin red price traces with restrained area fills and muted chart grids. Other workspaces retain their existing terminal theme. The main benchmark chart is compact; expand **Technical analysis & full chart evidence** for adjustable indicators, oscillator panels, calculations and explicit technical AI.
 
-- Market pulse and index context.
+- Compact S&P 500, Nasdaq and VIX quotes, leading sector ETF and three labelled deterministic observations. Missing changes remain unavailable, including a Yahoo fallback with only one observed close.
 - Company lookup and canonical ticker handling.
 - Quote, company profile, period-validated fundamentals, valuation, and price performance.
-- Interactive S&P 500 charts with 1D, 5D, 1M, 3M, and 1Y controls, plus company closing-price charts with 1M, 3M, and 1Y controls.
+- Both market and company charts retain the existing ranges and add 6M (184 calendar days), YTD (current UTC year Jan1) and All (returned daily history bounded to ten years plus 800 warmup calendar days; lifetime coverage unverified). Ranked sector ETF bars route to filtered Top Movers; raw cross-asset levels are in expandable Macro context.
 - FMP commodity/crypto symbol translation and explicitly labelled Yahoo daily-close fallback for missing quotes. Each chart uses one provider series.
 - Normalized company news.
 - Provider and as-of metadata with missing/partial-data states.
-- Optional evidence-grounded OpenAI summary generated only by Analyze Company; range changes and navigation reuse the saved summary.
+- Up to three research candidates are selected by largest absolute available quote change in the fixed AAPL/MSFT/NVDA/AMZN/GOOGL/META/TSLA/JPM/LLY/AVGO list. They are discovery candidates, not recommendations or market breadth.
+- Company lookup collects a snapshot. **Generate / regenerate company interpretation** is a separate explicit paid action. Explicit regeneration receives dated financial basis/currency/coverage, per-field calculated TTM versus undated provider-ratio caveats, bounded filing-period metadata and sanitized missing-source errors; snapshot retrieval is not evidence freshness. Missing legacy basis remains unknown and saved values are not recalculated. Saved interpretations bind ticker, model and exact evidence fingerprint; mismatch and regeneration failure preserve prior text visibly.
+- **Refresh market evidence** requests new overview/history evidence. The five-minute overview cache is not an automatic refresh or exchange-session guarantee.
+
+Company Overview leads with a dated quote and 52-week rail, a 2:1 price-chart/metric layout, the full Key Statistics and Growth & Profitability grids, About, EPS announcement events and verified provider-listed peers. At widths below 1100px the company columns stack. Every requested metric position shows evidence or explicit Unavailable; unknown quote currency is never inferred from profile metadata. Deterministic quarterly TTM margins/growth and annual FY CAGR remain distinct. Unverified provider percentage scales, forwardEPS compatibility, analyst target dates/currency and extended-session last prices stay unavailable with raw-source reasons. Earnings dates label announcements because a fiscal join is unverified; missing estimates stay missing. Peer metrics require compatible fiscal dates/currency/basis; undated peer multiples remain unavailable. Neutral bars convey magnitude, not scoring.
+
+**Refresh company evidence** clears selected snapshot, extension and chart caches; extension annual/earnings/peer evidence caches for six hours. The extension makes at most 15 dispatches with four workers, separate from the existing snapshot budget; peers load no history/news/full snapshots. Valuation opens Equity Report, Ask AI opens an explicit-submit Research draft, and Deep Research retains typed ticker context. Technical analysis, news, saved interpretation and full evidence remain accessible in disclosures. Thesis & Notes and Set Alert are explicitly unavailable. See the [metric coverage dictionary](docs/OPENING_METRIC_DICTIONARY.md) for exact routes, field names, formulas, dates, units, caches and honest coverage gaps.
 
 ### 2. Top Movers
 
-Top Movers ranks a liquid U.S. equity universe using five trading days of price performance.
+Top Movers screens U.S. equities with provider-requested market cap above 2B, volume above 500K, active trading and no ETFs/funds, capped at 500 requested records. It is not whole-market coverage.
 
-- Leaders and laggards.
-- Market breadth and sector leadership.
-- Serper news context when configured.
-- Explicit partial-provider coverage warnings. Displayed leaders/laggards receive one bounded batch of quote enrichment; unavailable average volume is shown as Unavailable rather than zero.
-- Company handoff into downstream research workflows.
+- **1D, 5D, 1M and ytd** rankings preserve zero and exclude missing/nonfinite returns. Sector and direction filters update ranked rows, usable counts, advancing percentage and median together.
+- The ranked table includes rank, ticker/company, sector, last price,1D and selected-period changes, cap, volume and average volume;1D has one change column. Missing values stay unavailable and quote/cap currency is not guessed.
+- Select a native table row or use the keyboard-accessible company selector to synchronize the selected quote, actual history and related news. Valid selection persists; unavailable selection falls back deterministically.
+- Ranking, selected quote, history and Serper news caches are separate. Only the selected company requests enrichment; failed news/quotes/history preserve the ranking and successful evidence. Quote cache is five minutes, ranking/news up to fifteen minutes, and history follows its existing interval-specific cache. **Refresh movers** clears these caches.
+- Publication text and news retrieval time are distinct. Related coverage does not establish the cause of a move. Safe source links exclude credential-bearing URLs.
+- Screened sector context is an equal-weight mean of usable stocks, distinct from Market Brief's sector ETF quote changes. Benchmark/sector excess returns and completed-session volume ratios remain unavailable because compatible dated bases are not established. No unsupported dollar currency, market-session or total-return claim is inferred.
+- **Research this move** opens an editable metadata-only draft; explicit Research submission runs the model. Returning restores sector, period, direction and company in the same session. **Open snapshot** preserves the existing company flow. No model calls occur on selection, filters, refresh or navigation.
 
 ### 3. Research
 
@@ -507,4 +515,22 @@ The [offline release workflow](.github/workflows/offline-release.yml) installs c
 See the [deployment rehearsal runbook](docs/DEPLOYMENT.md) for protected preview, secret injection, bounded paid smoke checks, session isolation and rollback. The hosting target and hosted rehearsal remain pending. Adding CI does not mean it has run on GitHub; local evidence is recorded in PLAN.
 
 
+Latest opening-discovery inventory (October12): **452 guarded offline tests passed in226.66s** on installed Python3.12.0 / pytest9.1.1 / Streamlit1.61.1, plus focused97 market/discovery/handoff/technical cases and41 corrected hardening/release/routing cases. The final empty-view filter-persistence follow-up passed45 opening/handoff cases; compile/import and fresh actual-app/harness health passed. Synthetic desktop/mobile journeys and two-session isolation made zero external/model attempts. The final inventory includes keyboard/native snapshot-roundtrip and empty-recovery frontend-default regressions. A fresh synthetic browser confirmed Technology/1M/AMD survives empty evidence, Research navigation, recovery and Refresh with selector/panel identity aligned. See [PLAN opening evidence](PLAN.md#verification-v-20261012-opening-local-syntheticoffline) for scope, the initial fixture failures and separate health/browser checks. No live provider/model, clean-install or deployment certification is implied.
+
 Latest P05 local inventory (October10): **430 guarded offline tests passed**, independently run on Python3.12; focused11 release tests and2 final guard checks, compile/import, installed dependency check, fresh app health and a synthetic browser journey/two-session isolation also passed. See [PLAN evidence](PLAN.md#v-20261010-p05---final-local-verification-and-remaining-release-gates). CI3.11/3.12 is configured, not yet executed on GitHub. Local Docker builds failed during intercepted package-download transport; image startup/health/workflow and clean installs remain unverified. Local code is finished; P05 release acceptance remains open in [AAFA-12](https://bigmeatpete717.atlassian.net/browse/AAFA-12), with hosted target/rehearsal/rollback pending.
+
+Latest terminal styling inventory (October12): **453 guarded offline tests passed in224.35s** on Python3.12.0 / pytest9.1.1 / Streamlit1.61.1, superseding the452 inventory above. Dark opening charts/cards, technical overlays and desktop/mobile presentation were checked using synthetic actual-main fixtures with zero external/model attempts; fresh local health passed. See [PLAN](PLAN.md) and [feature-team review](docs/features/2026-10-11-opening-ui-team.md). This remains local working-tree work; live provider/model and hosted release gates remain open.
+
+
+Latest Bloomberg-opening builder inventory (October12): **478 guarded offline tests passed in125.59s** on installed Python3.12.0 / pytest9.1.1 / Streamlit1.61.1, with85 focused domain/provider/market/discovery/handoff checks, compile/import and diff validation. This supersedes the453 offline inventory above. Final builder checks used saved reference samples/synthetic providers, with external/model transports blocked; fresh health/browser and independent review remain separately recorded in the [team run](docs/features/2026-10-12-bloomberg-opening-team.md) and [PLAN](PLAN.md#v-20261012-bloomberg--builder-offline-checks). Exact comparison to the absent request screenshots, live entitlement/freshness/model-quality checks and hosted release remain unverified; no commit, push or deployment is implied.
+
+
+Post-review F01 inventory (October12): **479 guarded offline tests passed in 169.74s**, with 99 focused company/opening/market/presentation/handoff checks and compilation/import/diff validation. The explicit summary prompt now receives bounded dated financial/currency/basis/filing metadata and sanitized partial-source errors; ordinary controls and saved interpretations preserve zero automatic calls. This supersedes the 478 inventory above. Final active-control CSS/punctuation corrections followed that full run and receive separate focused/browser checks in the team report; no new live provider/model or deployment certification follows.
+
+
+After the final opening active-radio CSS/punctuation corrections,51 guarded focused company/market/opening cases passed in29.99s; affected compilation/diff checks passed. The 479-case full inventory above predates those presentation-only corrections. Exact browser color/interaction confirmation is separate coordinator evidence.
+
+
+Opening metric wiring (October13): company ROIC/ROE/ROA/dividend yield now display documented FMP fractional ratios; forward P/E, EPS contributor count, consensus rating/target and target upside use the existing Equity Report feed types. Peer P/E/ROIC remain visible as provider snapshots; margin TTM dates are shown per peer. Undated sources and EPS/target currency/adjustment assumptions are explicit, with incompatible/invalid inputs still unavailable. Selected extension is bounded to18 dispatches/four workers with six-hour caching; ordinary controls make no model calls. See the [metric dictionary](docs/OPENING_METRIC_DICTIONARY.md) and [wiring repair](docs/features/2026-10-13-opening-metric-wiring.md) for methods and verification.
+
+Latest opening wiring inventory (October13): **486 guarded offline tests passed in330.70s**, superseding479; focused105 passed102.87s, final compile/import/diff and fresh local app/harness health passed. Seven new wiring cases exercise recorded existing feeds and invalid/date/currency/zero/alias/escaping behavior. See [repair evidence](docs/features/2026-10-13-opening-metric-wiring.md) for separate mocked browser checks. No live provider/model accuracy or deployment certification follows.

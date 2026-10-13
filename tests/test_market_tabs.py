@@ -4,7 +4,8 @@ from streamlit.testing.v1 import AppTest
 
 from langgraphagenticai.providers import market_history
 from langgraphagenticai.providers import symbol_history
-from langgraphagenticai.ui import market_overview_data, top_movers_data
+from langgraphagenticai.ui import market_overview_data
+from langgraphagenticai.providers import discovery as top_movers_data
 from langgraphagenticai.ui.top_movers_tab import _rows
 
 
@@ -74,9 +75,9 @@ def test_movers_missing_average_volume_preserves_rankings(monkeypatch):
             return [{"symbol": "AAPL", "5D": 2, "1D": 0}]
         return [{"symbol": "AAPL", "price": 101}]
     monkeypatch.setattr(top_movers_data, "_get", get)
-    result = top_movers_data.load_top_movers.__wrapped__("test")
+    result = top_movers_data.collect_discovery.__wrapped__("test")
     frame = result["gainers"]
-    assert frame.iloc[0]["price"] == 101
+    assert frame.iloc[0]["price"] == 100
     assert pd.isna(frame.iloc[0]["liquidityRatio"])
     assert frame.iloc[0]["sector"] == "Unknown"
     html = _rows(frame)
@@ -145,12 +146,17 @@ def test_top_movers_direction_and_sector_interaction(monkeypatch):
             "sectors": sectors, "news": {}, "universe_size": 2,
             "fetched_at": datetime.now(timezone.utc), "providers": ["Synthetic"]}
     monkeypatch.setattr(top_movers_tab, "load_top_movers", lambda *args: data)
+    from langgraphagenticai.providers import discovery
+    monkeypatch.setattr(discovery, "load_selected_news", lambda *args: {"results": [], "error": "Not configured"})
+    monkeypatch.setattr(discovery, "load_selected_quote", lambda *args: {"error": "Not configured"})
+    monkeypatch.setattr(symbol_history, "load_symbol_history", lambda *args: {"points": []})
     app = AppTest.from_string("from langgraphagenticai.ui.top_movers_tab import render_top_movers_tab\nrender_top_movers_tab(fmp_api_key='test', serper_api_key='')")
     app.run(timeout=30)
     assert not app.exception
     app.get("button_group")[0].set_value("Laggards").run()
     assert not app.exception
-    assert app.selectbox(key="movers_focus").value == "BBB"
+    assert app.selectbox(key="movers_focus").value == "AAA"  # Valid selection is retained.
+    assert app.dataframe[0].value.iloc[0]["Ticker"] == "BBB"
     app.selectbox(key="movers_sector_filter").set_value("Technology").run()
     assert not app.exception
     assert app.selectbox(key="movers_focus").value == "AAA"

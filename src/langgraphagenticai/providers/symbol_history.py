@@ -10,7 +10,8 @@ import yfinance as yf
 from .fmp_http import get_fmp_json
 
 RANGES = {"1D": (1, "5m"), "5D": (5, "5m"), "1M": (31, "1d"), "3M": (93, "1d"),
-          "1Y": (366, "1d"), "3Y": (1096, "1d"), "5Y": (1827, "1d"), "10Y": (3653, "1d")}
+          "6M": (184, "1d"), "YTD": (None, "1d"), "1Y": (366, "1d"),
+          "3Y": (1096, "1d"), "5Y": (1827, "1d"), "10Y": (3653, "1d"), "All": (None, "1d")}
 MAX_WARMUP_BARS = 500
 
 
@@ -123,8 +124,10 @@ def select_history(history, period):
         allowed = set(sessions[-count:])
         visible = [point for point in history if point[0].date() in allowed]
         partial = len(sessions) < count
+    elif period == "All":
+        visible, partial = list(history), False
     else:
-        start = end - pd.Timedelta(days=RANGES[period][0])
+        start = pd.Timestamp(year=_utc_now().year, month=1, day=1, tz=end.tz) if period == "YTD" else end - pd.Timedelta(days=RANGES[period][0])
         visible = [point for point in history if point[0] >= start]
         partial = history[0][0] > start + pd.Timedelta(days=7)
     if not visible:
@@ -148,6 +151,8 @@ def load_symbol_history(symbol, api_key="", period="1Y", currency=""):
                   as_of=points[-1][0].isoformat() if points else "Unavailable", partial=partial,
                   history_start=points[0][0].isoformat() if points else "Unavailable", observations=len(points))
     result["warnings"] = list(result["warnings"])
+    if period == "All":
+        result["warnings"].append("All = available returned daily history, bounded to ten years plus up to 800 calendar days of warmup. Earlier/listing history may be truncated; full lifetime coverage is unverified.")
     if partial:
         result["warnings"].append("Partial coverage: returned history does not span this range; missing bars are not filled.")
     result["stale"] = bool(points and (datetime.now(timezone.utc).date() - points[-1][0].date()).days > 4)

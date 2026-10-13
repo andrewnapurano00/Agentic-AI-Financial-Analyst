@@ -62,7 +62,10 @@ def routing(monkeypatch):
     monkeypatch.setattr(introduction_tab, "generate_company_summary", forbidden)
     frame = pd.DataFrame([{"symbol": "AAPL", "companyName": "Apple", "sector": "Technology", "price": 180, "5D": 2., "1D": 1., "marketCap": 3e12, "liquidityRatio": 1.2}])
     monkeypatch.setattr(top_movers_tab, "load_top_movers", lambda *a: {"universe": frame, "gainers": frame, "losers": frame, "sectors": pd.DataFrame(), "news": {}, "providers": ["Synthetic"], "universe_size": 1, "fetched_at": datetime(2026, 10, 2, tzinfo=timezone.utc)})
-    monkeypatch.setattr(top_movers_tab, "_sector_heatmap", lambda frame: "")
+    from langgraphagenticai.providers import discovery, symbol_history
+    monkeypatch.setattr(discovery, "load_selected_quote", lambda *args: {"error": "Synthetic quote unavailable"})
+    monkeypatch.setattr(discovery, "load_selected_news", lambda *args: {"results": [], "error": "Synthetic news unavailable"})
+    monkeypatch.setattr(symbol_history, "load_symbol_history", lambda *args: {"points": []})
     def screen(**kwargs):
         calls["screen"] += 1
         return pd.DataFrame([{"ticker": "AAPL", "marketCap": 3e12}]), {"pages": 1}
@@ -80,6 +83,44 @@ def app_at(workspace):
     app.run()
     assert not app.exception
     return app
+
+
+@pytest.mark.parametrize("selection", ["keyboard", "native-row"])
+def test_selected_mover_snapshot_market_back_roundtrip(routing, monkeypatch, selection):
+    from langgraphagenticai.ui import top_movers_tab, introduction_tab
+    frame = pd.DataFrame([
+        {"symbol": "NVDA", "companyName": "NVIDIA", "sector": "Technology", "5D": 6.8, "1M": 10},
+        {"symbol": "AMD", "companyName": "AMD", "sector": "Technology", "5D": 5.4, "1M": 8},
+    ])
+    monkeypatch.setattr(top_movers_tab, "load_top_movers", lambda *args: {"universe": frame})
+    monkeypatch.setattr(introduction_tab, "load_market_overview", lambda *args: {"indexes": {"S&P 500": {"price": 100}}, "sectors": {}, "movers": [], "cross_assets": {}})
+    monkeypatch.setattr(introduction_tab, "_render_market_chart", lambda *args: None)
+    app = app_at("Top Movers")
+    app.selectbox(key="movers_sector_filter").set_value("Technology").run()
+    app.selectbox(key="movers_period").set_value("1M").run()
+    if selection == "native-row":
+        # Streamlit1.61 AppTest exposes grid protobufs but no public row selector.
+        # Send the same JSON selection state as the native dataframe client.
+        states = app._tree.get_widget_states()
+        selected = states.widgets.add()
+        selected.id = app.dataframe[0].proto.id
+        selected.string_value = '{"selection":{"rows":[1],"columns":[],"cells":[]}}'
+        app._run(states)
+    else:
+        app.selectbox(key="movers_focus").set_value("AMD").run()
+    assert app.session_state["discovery_state"].selected_ticker == "AMD"
+    app.button(key="movers_open_snapshot").click().run()
+    assert not app.exception
+    assert app.session_state["intro_company_symbol"] == "AMD"
+    app.button(key="intro_company_back").click().run()
+    assert not app.exception
+    assert app.session_state["discovery_state"].selected_ticker == "AMD"
+    app.radio(key="active_workspace").set_value("Top Movers").run()
+    assert not app.exception
+    assert app.selectbox(key="movers_focus").value == "AMD"
+    assert app.selectbox(key="movers_sector_filter").value == "Technology"
+    assert app.selectbox(key="movers_period").value == "1M"
+    assert routing["model"] == 0
 
 
 @pytest.mark.parametrize("origin,key", [("Introduction", "intro_handoff"), ("Top Movers", "movers_handoff")])
@@ -218,4 +259,35 @@ def test_v2_alternate_provider_explicit_stage_preflight(monkeypatch, routing):
     assert not app.exception
     assert seen == [["AAPL", "MSFT"]]
     assert any("Offline alternate-provider preflight reached" in e.value for e in app.error)
+    assert routing["model"] == 0
+
+
+def test_empty_ranking_recovery_remount_default_matches_selected_evidence(routing, monkeypatch):
+    from langgraphagenticai.ui import top_movers_tab
+    complete = pd.DataFrame([
+        {"symbol": "NVDA", "companyName": "NVIDIA", "sector": "Technology", "5D": 6.8, "1M": 10},
+        {"symbol": "AMD", "companyName": "AMD", "sector": "Technology", "5D": 5.4, "1M": 8},
+    ])
+    evidence = {"frame": complete}
+    monkeypatch.setattr(top_movers_tab, "load_top_movers", lambda *args: {"universe": evidence["frame"]})
+    app = app_at("Top Movers")
+    app.selectbox(key="movers_period").set_value("1M").run()
+    app.selectbox(key="movers_focus").set_value("AMD").run()
+    evidence["frame"] = complete.assign(**{"1M": float("nan")})
+    app.run()
+    assert not app.exception and not any(box.key == "movers_focus" for box in app.selectbox)
+    app.radio(key="active_workspace").set_value("Research").run()
+    app.radio(key="active_workspace").set_value("Top Movers").run()
+    assert app.session_state["discovery_state"].selected_ticker == "AMD"
+    evidence["frame"] = complete
+    app.run()
+    selector = app.selectbox(key="movers_focus")
+    assert not app.exception and selector.value == "AMD"
+    # AppTest's backend value alone missed the browser remount bug: the browser
+    # initializes the reappearing control using this serialized default index.
+    assert selector.options[selector.proto.default] == "AMD"
+    period_selector = app.selectbox(key="movers_period")
+    assert period_selector.options[period_selector.proto.default] == "1M"
+    assert app.session_state["discovery_state"].selected_ticker == "AMD"
+    assert any('<h2>AMD <span>AMD</span>' in item.value for item in app.markdown)
     assert routing["model"] == 0

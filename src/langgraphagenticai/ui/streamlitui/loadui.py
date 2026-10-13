@@ -45,6 +45,8 @@ class LoadStreamlitUI:
         st.sidebar.markdown('<div class="ax-tagline">DISCOVER. ANALYZE. INVEST.</div>', unsafe_allow_html=True)
         st.sidebar.markdown('<div class="ax-sidebar-label">Workspace</div>', unsafe_allow_html=True)
         from langgraphagenticai.ui.workspace_handoff import apply_pending_handoff
+        from langgraphagenticai.state.discovery import apply_discovery
+        apply_discovery(st.session_state)
         apply_pending_handoff(st.session_state)
         next_workspace = st.session_state.pop("next_workspace", None)
         if next_workspace:
@@ -54,6 +56,7 @@ class LoadStreamlitUI:
             ["Introduction", "Top Movers", "Research", "Equity Report", "Stock Screener", "Portfolio Lab", "Deep Research", "Deep Research V2"],
             label_visibility="collapsed",
             key="active_workspace",
+            format_func=lambda label: "Market Brief" if label == "Introduction" else label,
         )
 
         st.sidebar.markdown("---")

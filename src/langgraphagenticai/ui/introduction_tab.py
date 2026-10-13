@@ -1,6 +1,14 @@
 from __future__ import annotations
 
 from html import escape
+from langgraphagenticai.ui.opening_presentation import opening_styles, heading, cards, observations, number, terminal_chart
+from langgraphagenticai.providers.discovery import finite_number
+from langgraphagenticai.providers.company_terminal import load_company_terminal, load_terminal_evidence
+from langgraphagenticai.analysis.company_terminal import KEY_STATISTICS, GROWTH_STATISTICS, build_metrics
+from langgraphagenticai.ui.opening_presentation import quote_header, price_rail, metric_grid, opening_price_chart
+from langgraphagenticai.ui.company_terminal import render_earnings, render_peers, render_metric_evidence
+from langgraphagenticai.state.discovery import queue_discovery
+from langgraphagenticai.ui.market_overview_data import SECTORS, MOVER_UNIVERSE
 from langgraphagenticai.ui.app_shell import render_company_header, render_evidence_row, render_executive_cards, render_workspace_state
 from langgraphagenticai.ui.workspace_presentation import snapshot_status, source_link, saved_time, market_status
 
@@ -28,17 +36,17 @@ def _interactive_price_chart(frame: pd.DataFrame, value_column: str) -> None:
         tooltip=[alt.Tooltip(f"{frame.index.name}:T", title="Date"),
                  alt.Tooltip(f"{value_column}:Q", format=",.2f")],
     ).properties(height=280).interactive()
-    st.altair_chart(chart, use_container_width=True)
+    st.altair_chart(terminal_chart(chart), use_container_width=True, theme=None)
 
 
 def _fmt(value: float | None, decimals: int = 2) -> str:
-    return "N/A" if value is None else f"{value:,.{decimals}f}"
+    return number(value, decimals=decimals)
 
 
 def _move(snapshot: dict | None) -> tuple[str, str]:
     if not snapshot:
         return "N/A", "flat"
-    if snapshot.get("percent") is None:
+    if finite_number(snapshot.get("percent")) is None:
         return "N/A", "flat"
     pct = float(snapshot["percent"])
     return f"{pct:+.2f}%", "up" if pct >= 0 else "down"
@@ -64,12 +72,6 @@ def _line_chart(points: list[tuple[object, float]]) -> str:
     </svg>'''
 
 
-def _spark(percent: float) -> str:
-    color = "#20e7ad" if percent >= 0 else "#ff4f78"
-    points = "0,22 14,19 27,20 40,13 52,15 66,8 77,10 88,4" if percent >= 0 else "0,5 14,9 27,8 40,14 52,12 66,20 77,18 88,24"
-    return f'<svg viewBox="0 0 88 28" class="spark" aria-hidden="true"><polyline points="{points}" fill="none" stroke="{color}" stroke-width="2"/></svg>'
-
-
 def _money(value: float | None) -> str:
     if value is None:
         return "N/A"
@@ -89,94 +91,100 @@ def _company_chart(series: list[dict]) -> str:
 
 
 def _render_company_snapshot(snapshot: dict, summary: str, fmp_api_key="", openai_api_key="", model_name="gpt-5") -> None:
-    quote, fundamentals, performance = snapshot["quote"], snapshot["fundamentals"], snapshot["performance"]
-    pct = quote.get("change_pct")
-    state = "flat" if pct is None else "up" if pct >= 0 else "down"
-    profile = snapshot["profile"]
-    currency = profile.get("currency") or "Unknown currency"
-    basis_currency = snapshot.get("fundamental_basis", {}).get("currency") or "Unknown currency"
-    render_company_header(snapshot["symbol"], snapshot["company"], f"{profile.get('sector') or 'Sector unavailable'} / {profile.get('industry') or 'Industry unavailable'}")
-    render_evidence_row(snapshot_status(snapshot))
-    render_executive_cards([
-        ("Last price", f"{_fmt(quote.get('price'))} {currency}", "Quote change unavailable" if pct is None else f"{pct:+.2f}% price change"),
-        ("Market capitalization", f"{_fmt(quote.get('market_cap'))} {currency}", "Provider fact; quote currency"),
-        ("Financial coverage", snapshot.get("fundamental_basis", {}).get("status", "Unavailable"), "See financial basis and missing datasets above"),
-    ])
-    st.markdown("**AI interpretation**")
-    st.markdown(summary)
-    st.caption("Saved interpretation; verify material claims against the dated snapshot and sources. Ordinary chart controls do not regenerate it.")
-    if snapshot.get("source_errors"):
-        render_workspace_state("Unavailable datasets: " + ", ".join(snapshot["source_errors"]), state="partial")
-    def financial_money(value):
-        return "N/A" if value is None else f"{value:,.2f} {basis_currency}"
-    metric_rows = [
-        ("Revenue (TTM)", financial_money(fundamentals.get("revenue_ttm"))),
-        ("Revenue growth", _percent(fundamentals.get("revenue_growth"))),
-        ("Operating margin", _percent(fundamentals.get("operating_margin"))),
-        ("Net margin", _percent(fundamentals.get("net_margin"))),
-        ("Free cash flow", financial_money(fundamentals.get("free_cash_flow_ttm"))),
-        ("P / E (TTM)", _fmt(fundamentals.get("pe_ttm"), 1)),
-        ("Price / Sales", _fmt(fundamentals.get("price_to_sales"), 1)),
-        ("ROIC", _percent(fundamentals.get("roic"))),
-    ]
-    metrics_html = "".join(f'<div class="company-metric"><span>{escape(label)}</span><b>{escape(value)}</b></div>' for label, value in metric_rows)
-    perf_rows = [
-        ("1 month", _percent(performance.get("return_1m"))), ("3 months", _percent(performance.get("return_3m"))),
-        ("1 year", _percent(performance.get("return_1y"))), ("52W high", _fmt(performance.get("high_52w"))),
-        ("52W low", _fmt(performance.get("low_52w"))), ("Volatility", _percent(performance.get("volatility"))),
-    ]
-    performance_html = "".join(f'<div class="market-table-row"><b>{label}</b><span></span><em>{value}</em></div>' for label, value in perf_rows)
-    news_html = "".join(
-        f'<li><time>{escape(str(item.get("published_at", ""))[:10])}</time><i></i><a href="{escape(source_link(item.get("url")))}" target="_blank" rel="noopener noreferrer">{escape(str(item.get("title", "Untitled")))}</a><small>{escape(str(item.get("source", "")))}</small></li>'
-        for item in snapshot["news"] if source_link(item.get("url"))
-    ) or '<li><span>No safe linked MarketAux articles are available.</span></li>'
-    source_errors = snapshot.get("source_errors") or {}
-    error_note = f'<div class="source-warning">Unavailable datasets: {escape(", ".join(source_errors))}</div>' if source_errors else ""
-
-    with st.expander("Historical prices and technical analysis", expanded=True):
-        st.subheader(f"{snapshot['symbol']} historical prices")
-        period = st.segmented_control("Company historical range", list(RANGES), default="1Y", key=f"intro_company_range_{snapshot['symbol']}") or "1Y"
-        if st.button("Retry company chart", key=f"intro_company_chart_retry_{snapshot['symbol']}"):
+    symbol, profile, quote = snapshot["symbol"], snapshot.get("profile", {}), snapshot.get("quote", {})
+    try:
+        terminal = load_company_terminal(symbol, fmp_api_key, snapshot)
+    except Exception as exc:
+        terminal = {"metrics": build_metrics(snapshot), "earnings": {}, "peers": [], "warnings": ["Company extension unavailable: " + sanitize_error(exc)], "retrieved_at": None}
+    quote_header(symbol, snapshot["company"], profile.get("sector"), quote, analyst=terminal.get("analyst", True))
+    if terminal.get("analyst"):
+        st.caption(terminal["analyst"]["note"] + " Retrieved " + saved_time(terminal["analyst"].get("retrieved_at")))
+    st.caption(f"FMP quote as of {saved_time(quote.get('timestamp'))} | retrieved {saved_time(snapshot.get('fetched_at'))} | profile currency {profile.get('currency') or 'Unavailable'} is separate metadata. Extended-session prices unavailable.")
+    price_rail(quote)
+    chart_column, metrics_column = st.columns([2, 1], gap="medium")
+    with chart_column, st.container(border=True):
+        st.markdown('<span class="company-price-marker"></span>', unsafe_allow_html=True)
+        st.subheader("Price History")
+        period = st.segmented_control("Company historical range", list(RANGES), default="1Y", key=f"intro_company_range_{symbol}") or "1Y"
+        if st.button("Retry company chart", key=f"intro_company_chart_retry_{symbol}"):
             clear_history_cache()
         try:
-            chart = load_symbol_history(snapshot["symbol"], fmp_api_key, period, profile.get("currency", ""))
+            chart = load_symbol_history(symbol, fmp_api_key, period, quote.get("currency") or "")
         except Exception as exc:
-            chart = {"points": [], "warnings": ["Company chart unavailable: " + sanitize_error(exc)]}
-        render_technical_chart(chart, key=f"intro_company_technical_{snapshot['symbol']}", openai_api_key=openai_api_key, model_name=model_name)
-    with st.expander("Financial metrics, performance and news"):
-        for dataset, reason in source_errors.items():
+            chart = {"points": [], "period": period, "warnings": ["Company chart unavailable: " + sanitize_error(exc)]}
+        points = chart.get("points", [])
+        if points:
+            from langgraphagenticai.ui.technical_chart import price_chart_spec
+            frame = pd.DataFrame(points, columns=["Date", "Close"])
+            preview = opening_price_chart(frame, period, chart.get("unit", "Currency unknown"), height=385)
+            st.altair_chart(preview, use_container_width=True, theme=None)
+        else:
+            st.info("Company price history unavailable. Retry or choose another range; financial evidence remains readable.")
+        st.caption(f"{chart.get('provider', 'Unavailable')} | {chart.get('price_basis', 'Basis unavailable')} | {chart.get('unit', 'Currency unknown')} | timezone {chart.get('timezone', 'Unknown')} | as of {chart.get('as_of', 'Unavailable')} | retrieved {saved_time(chart.get('retrieved_at'))}")
+        for warning in chart.get("warnings", []):
+            st.caption(warning)
+    with chart_column:
+        description = profile.get("description") or "Company description unavailable."
+        website = source_link(profile.get("website"))
+        link = f'<p><a href="{escape(website, quote=True)}" target="_blank" rel="noopener noreferrer">Company website</a></p>' if website else ""
+        st.markdown(f'<section class="terminal-panel"><h3>About {escape(snapshot["company"])}</h3><p>{escape(str(description))}</p>{link}</section>', unsafe_allow_html=True)
+    with metrics_column:
+        metric_grid("Key Statistics", KEY_STATISTICS, terminal["metrics"])
+        metric_grid("Growth & Profitability", GROWTH_STATISTICS, terminal["metrics"])
+        st.caption("Ratios: latest provider TTM (period dates may be absent). Margins prefer calculated quarterly TTM; provider fallback is labelled in metric evidence. YoY: quarterly TTM; CAGR: annual FY; forward P/E: annual consensus forecast. Hover for basis; full evidence below.")
+    earnings_column, peers_column = st.columns([1, 1.25], gap="medium")
+    with earnings_column, st.container(border=True):
+        render_earnings(terminal.get("earnings", {}), terminal.get("retrieved_at"))
+    with peers_column, st.container(border=True):
+        render_peers(terminal.get("peers", []), symbol, terminal.get("retrieved_at"))
+    action_columns = st.columns(3)
+    from langgraphagenticai.ui.workspace_handoff import queue_handoff
+    from langgraphagenticai.state.research_context import ResearchContext
+    for column, (label, destination) in zip(action_columns, (("Valuation", "Equity Report"), (f"Ask AI about {symbol}", "Research"), ("Deep Research", "Deep Research"))):
+        if column.button(label, key=f"intro_drill_{destination}", use_container_width=True):
+            queue_handoff(st.session_state, ResearchContext((symbol,), destination, "deep_research" if destination == "Deep Research" else "analyze", "Introduction"))
+            st.rerun()
+    st.caption("Ask AI opens an editable Research draft for explicit submit. Thesis & Notes / Set Alert: unavailable; saved interpretation remains below.")
+    render_metric_evidence(terminal)
+    with st.expander("Historical prices and technical analysis"):
+        render_technical_chart(chart, key=f"intro_company_technical_{symbol}", openai_api_key=openai_api_key, model_name=model_name, chart_style=terminal_chart)
+    with st.expander("Financial metrics, performance and news", expanded=False):
+        render_evidence_row(snapshot_status(snapshot))
+        for dataset, reason in snapshot.get("source_errors", {}).items():
             st.caption(f"{dataset}: {sanitize_error(reason)}")
-        st.markdown(f'''
-      <div class="company-layout">
-        <div class="company-main">
-          <div class="company-subgrid"><section class="terminal-card"><h3>FINANCIAL QUALITY &amp; VALUATION</h3><div class="company-metrics">{metrics_html}</div></section><section class="terminal-card live-table"><h3>RECENT PERFORMANCE</h3>{performance_html}</section></div>
-          <section class="updates terminal-card company-news"><h3>RECENT NEWS &amp; EVIDENCE <small>MARKETAUX · 10 DAYS</small></h3><ul>{news_html}</ul></section>
-        </div>
-      </div>{error_note}
-        ''', unsafe_allow_html=True)
+        fundamentals, performance = snapshot.get("fundamentals", {}), snapshot.get("performance", {})
+        currency = snapshot.get("fundamental_basis", {}).get("currency") or "Currency unknown"
+        cards([("Revenue TTM", f"{number(fundamentals.get('revenue_ttm'))} {currency}", "Four consecutive standalone quarters"),
+               ("Free cash flow TTM", f"{number(fundamentals.get('free_cash_flow_ttm'))} {currency}", "Matching fiscal-quarter income/cash-flow windows"),
+               ("1Y price return", _percent(performance.get("return_1y")), "Legacy snapshot close; adjustment basis unverified"),
+               ("Annualized volatility", _percent(performance.get("volatility")), "Up to 252 daily changes; sqrt(252)")])
+        st.subheader("Recent News & Evidence")
+        st.caption("MarketAux | requested lookback 10 days | snapshot retrieval " + saved_time(snapshot.get("fetched_at")) + ". Publication dates are separate; news does not establish causality.")
+        linked = 0
+        for item in snapshot.get("news", []):
+            url = source_link(item.get("url"))
+            if url:
+                linked += 1
+                st.markdown(f'<a href="{escape(url, quote=True)}" target="_blank" rel="noopener noreferrer">{escape(str(item.get("title") or "Untitled"))}</a>', unsafe_allow_html=True)
+                st.caption(f"{item.get('source') or 'Publisher unavailable'} | published {item.get('published_at') or 'Unavailable'}")
+        if not linked:
+            st.info("No safe linked MarketAux articles are available.")
+        st.dataframe(pd.DataFrame([{"Period": label, "Price return": _percent(performance.get(key))} for label, key in (("1 month", "return_1m"), ("3 months", "return_3m"), ("1 year", "return_1y"))]), hide_index=True, use_container_width=True)
+    with st.expander("Saved AI interpretation", expanded=True):
+        st.markdown(summary)
+        st.caption("Saved AI interpretation; verify material claims against dated facts. Ordinary controls do not regenerate it.")
 
 
 
-def _brief(data: dict) -> tuple[str, list[tuple[str, str, str]]]:
-    indexes = data["indexes"]
+def _brief(data: dict):
+    indexes = data.get("indexes", {})
     sp, nasdaq, vix = (indexes.get(key) or {} for key in ("S&P 500", "NASDAQ", "VIX"))
-    if not all((sp, nasdaq, vix)):
-        return "Market coverage is partial. Available quotes remain visible; missing index data is excluded from interpretation.", []
-    sp_pct, ndx_pct, vix_pct = (float(x.get("percent", 0.0)) for x in (sp, nasdaq, vix))
-    direction = "higher" if sp_pct >= 0 else "lower"
-    leader = "technology-heavy growth" if ndx_pct > sp_pct else "the broader market"
-    text = (
-        f"U.S. equities are trading {direction}, with {leader} leading. The S&P 500 is "
-        f"{sp_pct:+.2f}% and the Nasdaq is {ndx_pct:+.2f}% versus the prior close; volatility "
-        f"is {vix_pct:+.2f}%. Sources and daily-close fallbacks are labelled on the quote cards."
-    )
-    valid_sectors = [item for item in data["sectors"].items() if item[1]]
-    strongest = max(valid_sectors, key=lambda x: x[1]["percent"], default=("N/A", {"percent": 0}))
-    weakest = min(valid_sectors, key=lambda x: x[1]["percent"], default=("N/A", {"percent": 0}))
-    return text, [
-        ("green", "Momentum", f"{strongest[0]} leads sectors at {strongest[1]['percent']:+.2f}%"),
-        ("red", "Risk", f"{weakest[0]} trails sectors at {weakest[1]['percent']:+.2f}%"),
-        ("amber", "Volatility", f"VIX is {_fmt(vix.get('price'), 2)} ({vix_pct:+.2f}%)"),
+    valid = [(name, snap) for name, snap in data.get("sectors", {}).items() if snap and finite_number(snap.get("percent")) is not None]
+    leader = max(valid, key=lambda item: item[1]["percent"], default=None)
+    return "Deterministic observations from available quote changes; dates and providers may differ.", [
+        ("Index direction", f"S&P 500 {number(sp.get('percent'), '%', True)}; Nasdaq {number(nasdaq.get('percent'), '%', True)}. Prior-close quote changes, not a live session claim."),
+        ("Sector ETF leadership", f"{leader[0]} ({SECTORS.get(leader[0], 'ETF')}) has the highest available ETF quote change: {number(leader[1]['percent'], '%', True)}." if leader else "Sector ETF changes are unavailable. No leader is inferred."),
+        ("Volatility context", f"VIX level {number(vix.get('price'))}; quote change {number(vix.get('percent'), '%', True)}. This is an observation, not a risk forecast."),
     ]
 
 
@@ -190,83 +198,114 @@ def _render_market_chart(fmp_api_key: str, openai_api_key="", model_name="gpt-5"
     except Exception as exc:
         chart = {"points": [], "warnings": [f"Historical chart unavailable: {sanitize_error(exc)}"], "provider": "Unavailable"}
     chart.setdefault("period", period)
-    render_technical_chart(chart, key="intro_market_technical", openai_api_key=openai_api_key, model_name=model_name)
+    if chart.get("points"):
+        from langgraphagenticai.ui.technical_chart import price_chart_spec
+        frame = pd.DataFrame(chart["points"], columns=["Date", "Close"])
+        preview = opening_price_chart(frame, period, chart.get("unit", "Index points"), height=250)
+        st.altair_chart(preview, theme=None, width="stretch")
+        st.caption(f"{chart.get('provider', 'Unavailable')} | {chart.get('price_basis', 'Basis unavailable')} | As of {chart.get('as_of', chart['points'][-1][0])} | retrieved {saved_time(chart.get('retrieved_at'))}")
+        st.caption(f"{len(chart['points'])} observed bars | {chart.get('unit', 'Index points')} | timezone {chart.get('timezone', 'Unknown')} | price performance; session coverage is unverified.")
+    else:
+        st.info("Market history is unavailable. Retry or choose another range.")
+    with st.expander("Technical analysis & full chart evidence"):
+        render_technical_chart(chart, key="intro_market_technical", openai_api_key=openai_api_key, model_name=model_name, chart_style=terminal_chart)
 
 
 def _dashboard(data: dict, mode: str, fmp_api_key: str = "", openai_api_key="", model_name="gpt-5") -> None:
-    indexes = data["indexes"]
-    sp = indexes.get("S&P 500") or {}
-    quote_dates = [saved_time(item.get("as_of")) for item in data.get("indexes", {}).values() if item and item.get("as_of")]
-    stamp = "; ".join(sorted(set(quote_dates))) or "Unavailable"
-    fetched = saved_time(data.get("fetched_at"))
-    coverage = market_status(data, INDEXES)
-    render_evidence_row([("Index quote dates", stamp), ("Market retrieved", fetched), ("Market coverage", coverage["status"])])
-    render_executive_cards([("Index coverage", coverage["usable_quotes"], "Available saved index quotes"), ("Market interpretation", "Calculated from quotes", "Missing quotes excluded"), ("Next action", "Analyze company", "Choose a ticker above")])
-    brief, insights = _brief(data)
-
-    ticker_cells = []
-    for label, snap in indexes.items():
-        pct, state = _move(snap)
-        ticker_cells.append(f'<div><small>{escape(label)}</small><strong>{_fmt(snap.get("price") if snap else None)}</strong><em class="{state}">{pct}</em><small>{escape(str((snap or {}).get("provider", "No coverage")))} | As of {escape(str((snap or {}).get("as_of", "unavailable")))}</small></div>')
-    mover_rows = []
-    for symbol, snap in data["movers"]:
-        pct, state = _move(snap)
-        mover_rows.append(f'<div class="row"><b>{symbol}</b><span>{_fmt(snap["price"])}</span><em class="{state}">{pct}</em>{_spark(snap["percent"])}</div>')
-    index_rows = []
-    for label, snap in indexes.items():
-        pct, state = _move(snap)
-        index_rows.append(f'<div class="market-table-row"><b>{escape(label)}</b><span>{_fmt(snap.get("price") if snap else None)}</span><em class="{state}">{pct}</em><small>{escape(str((snap or {}).get("provider", "No coverage")))} | As of {escape(str((snap or {}).get("as_of", "unavailable")))}</small></div>')
-    sector_cells = []
-    for label, snap in data["sectors"].items():
-        pct = float(snap.get("percent", 0.0)) if snap else 0.0
-        display_pct = f"{pct:+.2f}%" if snap else "Unavailable"
-        strength = min(1.0, abs(pct) / 2.5)
-        color = f"rgba(20,154,99,{0.28 + strength * .58:.2f})" if pct >= 0 else f"rgba(177,50,72,{0.28 + strength * .58:.2f})"
-        sector_cells.append(f'<div style="background:{color}">{escape(label)}<br><b>{display_pct}</b></div>')
-    asset_rows = []
-    for label, snap in data["cross_assets"].items():
-        pct, state = _move(snap)
-        asset_rows.append(f'<div class="market-table-row"><b>{escape(label)}</b><span>{_fmt(snap.get("price") if snap else None)}</span><em class="{state}">{pct}</em><small>{escape(str((snap or {}).get("provider", "No coverage")))} | As of {escape(str((snap or {}).get("as_of", "unavailable")))}</small></div>')
-    insight_html = "".join(f'<div class="insight {kind}"><b>{title}</b><span>{escape(text)}</span></div>' for kind, title, text in insights)
-    updates = "".join(
-        f'<li><time>{fetched.split()[0]}</time><i class="{"" if snap["percent"] >= 0 else "pink"}"></i>{symbol} moves {snap["percent"]:+.2f}% to {_fmt(snap["price"])}</li>'
-        for symbol, snap in data["movers"]
-    )
-
-    st.markdown(f'''
-      <div class="intro-topline"><div><span class="intro-title">MARKET OVERVIEW</span><b>5-MIN DATA CACHE</b></div><span>INDEX QUOTE DATES &nbsp; {escape(stamp)}</span></div>
-      <div class="ticker-row intro-five">{''.join(ticker_cells)}</div>''', unsafe_allow_html=True)
-    chart_col, brief_col = st.columns([2.1, 1])
-    with chart_col:
-        st.markdown(f"**S&P 500 (^GSPC)** &nbsp; {_fmt(sp.get('price'))} &nbsp; {_move(sp)[0]}")
+    indexes = data.get("indexes", {})
+    sectors = [(label, snap) for label, snap in data.get("sectors", {}).items() if snap and finite_number(snap.get("percent")) is not None]
+    sectors.sort(key=lambda item: item[1]["percent"], reverse=True)
+    items = []
+    for label in ("S&P 500", "NASDAQ", "VIX"):
+        snap = indexes.get(label) or {}
+        items.append((label, number(snap.get("price")), f"{number(snap.get('percent'), '%', True)} | {snap.get('provider') or 'Source unavailable'} | As of {snap.get('as_of') or 'Unavailable'}"))
+    leader = sectors[0] if sectors else None
+    items.append(("Leading sector ETF", leader[0] if leader else "Unavailable", f"{SECTORS.get(leader[0])} {number(leader[1]['percent'], '%', True)} | {leader[1].get('provider') or 'Source unavailable'} | As of {leader[1].get('as_of') or 'Unavailable'}" if leader else "No usable sector ETF changes"))
+    candidates = [(symbol, snap) for symbol, snap in data.get("movers", []) if finite_number(snap.get("percent")) is not None]
+    breadth = sum(snap["percent"] > 0 for _, snap in candidates) / len(candidates) * 100 if candidates else None
+    # The provider returns the largest absolute moves, not the full fixed universe;
+    # do not call those sampled candidates market breadth.
+    items.append(("Discovery coverage", f"{len(candidates)} candidates", "Observed largest moves in a fixed 10-company list; market breadth unavailable"))
+    cards(items)
+    st.caption(f"Overview retrieved: {saved_time(data.get('fetched_at'))}. Quote dates are evidence dates; cache TTL does not establish freshness or an exchange session.")
+    chart_col, sector_col = st.columns([1.85, 1], gap="medium")
+    with chart_col, st.container(border=True):
+        st.subheader("S&P 500")
         _render_market_chart(fmp_api_key, openai_api_key, model_name)
-    with brief_col:
-        st.markdown(f'''<aside class="ai-brief terminal-card"><div class="brief-head"><b>MARKET PULSE / RULE-BASED</b><small>{escape(fetched)}</small></div><p>{escape(brief)}</p>{insight_html}</aside>''', unsafe_allow_html=True)
-    st.markdown(f'''<div class="intro-grid">
-        <section class="mini-grid">
-          <div class="terminal-card table-card"><h3>TOP MOVERS <small>WATCHLIST</small></h3>{''.join(mover_rows) or '<p>No market data available.</p>'}</div>
-          <div class="terminal-card live-table"><h3>KEY INDICES</h3>{''.join(index_rows)}</div>
-          <div class="terminal-card live-table"><h3>CROSS ASSETS</h3>{''.join(asset_rows[:4])}</div>
-        </section>
-        <section class="heat terminal-card intro-sector"><h3>SECTOR PERFORMANCE</h3><div class="heatmap">{''.join(sector_cells)}</div></section>
-        <section class="world terminal-card live-table intro-assets"><h3>GLOBAL &amp; CROSS-ASSET MARKETS</h3>{''.join(asset_rows)}</section>
-        <aside class="updates terminal-card"><h3>LATEST MARKET MOVES <small>LIVE SNAPSHOT</small></h3><ul>{updates}</ul><div class="source-line">Derived from current quote changes; not editorial headlines.</div></aside>
-      </div>''', unsafe_allow_html=True)
+    with sector_col, st.container(border=True):
+        st.subheader("Explore sectors")
+        st.caption("Sector ETF quote changes; distinct from screened-stock averages in Top Movers.")
+        if sectors:
+            table = pd.DataFrame([{"Sector": label, "ETF": SECTORS.get(label), "Quote change (%)": snap["percent"]} for label, snap in sectors])
+            chart = alt.Chart(table).mark_bar().encode(
+                y=alt.Y("Sector:N", sort="-x", title=None), x=alt.X("Quote change (%):Q"),
+                color=alt.condition(alt.datum['Quote change (%)'] >= 0, alt.value('#35d07f'), alt.value('#ff5964')),
+                tooltip=["Sector", "ETF", alt.Tooltip("Quote change (%):Q", format="+.2f")],
+            ).properties(height=285)
+            st.altair_chart(terminal_chart(chart), use_container_width=True, theme=None)
+            selected = st.selectbox("Explore a sector", [label for label, _ in sectors], key="intro_discovery_sector")
+            if st.button("View sector movers", key="intro_sector_movers", use_container_width=True):
+                queue_discovery(st.session_state, selected)
+                st.rerun()
+            with st.expander("ETF evidence dates"):
+                for label, snap in sectors:
+                    st.caption(f"{label} / {SECTORS.get(label)}: {snap.get('provider') or 'Unavailable'}; as of {snap.get('as_of') or 'Unavailable'}")
+        else:
+            st.info("Sector ETF performance is unavailable. Refresh to retry.")
+    st.subheader("The market in 30 seconds")
+    brief, insight = _brief(data)
+    observations(insight)
+    st.caption(brief)
+    st.subheader("Research candidates")
+    st.caption("Up to three largest absolute available quote changes from AAPL, MSFT, NVDA, AMZN, GOOGL, META, TSLA, JPM, LLY and AVGO. Discovery candidates, not recommendations; mixed quote dates/bases may differ.")
+    if candidates:
+        for col, (symbol, snap) in zip(st.columns(min(3, len(candidates))), candidates[:3]):
+            with col, st.container(border=True):
+                st.subheader(symbol)
+                st.metric("Prior-close quote change", number(snap.get("percent"), "%", True))
+                st.caption(f"{snap.get('provider') or 'Unavailable'} | As of {snap.get('as_of') or 'Unavailable'}")
+                if st.button("Open company snapshot", key=f"intro_candidate_{symbol}", use_container_width=True):
+                    from langgraphagenticai.ui.workspace_handoff import queue_handoff
+                    from langgraphagenticai.state.research_context import ResearchContext
+                    queue_handoff(st.session_state, ResearchContext((symbol,), "Introduction", "analyze", "Introduction"))
+                    st.rerun()
+                if st.button("Research this company", key=f"intro_candidate_research_{symbol}", use_container_width=True):
+                    from langgraphagenticai.ui.workspace_handoff import queue_handoff
+                    from langgraphagenticai.state.research_context import ResearchContext
+                    queue_handoff(st.session_state, ResearchContext((symbol,), "Research", "analyze", "Introduction"))
+                    st.rerun()
+    else:
+        st.info("No finite company quote changes are available in the fixed discovery list.")
+    with st.expander("Macro context"):
+        rows = []
+        for label, snap in data.get("cross_assets", {}).items():
+            snap = snap or {}
+            rows.append({"Instrument": label, "Provider level (units unverified)": number(snap.get("price")), "Quote change": number(snap.get("percent"), "%", True), "Source": snap.get("provider") or "Unavailable", "As of": snap.get("as_of") or "Unavailable"})
+        st.dataframe(pd.DataFrame(rows), hide_index=True, use_container_width=True)
+        st.caption("Raw cross-asset quote levels are not normalized yields or comparable currency amounts.")
 
 
 def render_introduction_tab(
     fmp_api_key: str = "", openai_api_key: str = "", model_name: str = "gpt-5",
     marketaux_api_key: str = "",
 ) -> None:
-    st.markdown('<div class="intro-controls-anchor"></div>', unsafe_allow_html=True)
-    search_col, analyze_col, back_col = st.columns([5.2, 1.4, 1.4], vertical_alignment="bottom")
+    opening_styles()
+    heading("Company Overview" if st.session_state.get("intro_company_symbol") else "Market Brief", "Company evidence, in context." if st.session_state.get("intro_company_symbol") else "What matters. Where to look next.")
+    search_col, analyze_col, back_col, refresh_col = st.columns([5.2, 1.4, 1.2, 1.2], vertical_alignment="bottom")
     with search_col:
         st.session_state.setdefault("intro_company_search", st.session_state.get("intro_company_query", ""))
         company_query = st.text_input("Company search", placeholder="Search a company ticker — AAPL, MSFT, NVDA…", label_visibility="collapsed", key="intro_company_search")
     with analyze_col:
         analyze = st.button("ANALYZE COMPANY", type="primary", use_container_width=True, key="intro_company_analyze")
     with back_col:
-        back = st.button("MARKET OVERVIEW", use_container_width=True, key="intro_company_back")
+        back = st.button("Market Brief", use_container_width=True, key="intro_company_back")
+    with refresh_col:
+        if st.session_state.get("intro_company_symbol") and st.button("Refresh company evidence", key="intro_company_refresh", use_container_width=True):
+            if hasattr(load_company_snapshot, "clear"):
+                load_company_snapshot.clear()
+            load_terminal_evidence.clear()
+            clear_history_cache()
+            st.rerun()
     if back:
         st.session_state.pop("intro_company_symbol", None)
         st.rerun()
@@ -280,36 +319,51 @@ def render_introduction_tab(
     selected_symbol = st.session_state.get("intro_company_symbol")
     if selected_symbol:
         try:
-            with st.spinner(f"Building current research snapshot for {selected_symbol}…"):
+            with st.spinner(f"Building current research snapshot for {selected_symbol}..."):
                 snapshot = load_company_snapshot(selected_symbol, fmp_api_key, marketaux_api_key)
-                summary_key = f"intro_summary:{selected_symbol}:{model_name}"
-                if analyze and openai_api_key:
-                    try:
-                        st.session_state[summary_key] = generate_company_summary(snapshot_json(snapshot), openai_api_key, model_name)
-                    except Exception as exc:
-                        st.warning(f"AI summary unavailable; company data is preserved: {sanitize_error(exc)}")
-                summary = st.session_state.get(summary_key, "Select Analyze Company to generate an AI summary from the current evidence.")
-            if not openai_api_key:
-                st.caption("Company data is available. Add an OpenAI key to generate the AI summary.")
-            from langgraphagenticai.ui.workspace_handoff import render_company_handoffs
-            render_company_handoffs(selected_symbol, "Introduction", key="intro_handoff")
+            from langgraphagenticai.analysis.saved_interpretation import save_interpretation, interpretation_matches
+            summary_key = f"intro_interpretation:{selected_symbol}"
+            legacy = st.session_state.get(f"intro_summary:{selected_symbol}:{model_name}")
+            saved = st.session_state.get(summary_key)
+            if saved is None and legacy:
+                saved = {"text": legacy, "symbol": selected_symbol, "model": model_name}
+                st.session_state[summary_key] = saved
+            summary = saved.get("text") if saved else "Use Generate / regenerate company interpretation to request AI analysis of this snapshot."
             _render_company_snapshot(snapshot, summary, fmp_api_key, openai_api_key, model_name)
+            with st.expander("Company interpretation controls & saved status", expanded=True):
+                if saved and not interpretation_matches(saved, snapshot, model_name):
+                    st.warning("Saved interpretation belongs to different or unverified evidence/model settings. It remains readable; explicitly regenerate to use this snapshot.")
+                if saved:
+                    st.caption(f"Interpretation generated: {saved_time(saved.get('generated_at'))}; model: {saved.get('model', 'Unavailable')}")
+                if not openai_api_key:
+                    st.caption("Company data is available. Add an OpenAI key to generate the AI summary.")
+                regenerate = st.button("Generate / regenerate company interpretation", key="intro_summary_generate", disabled=not bool(openai_api_key), type="primary")
+                if regenerate:
+                    try:
+                        if hasattr(generate_company_summary, "clear"):
+                            generate_company_summary.clear()
+                        text = generate_company_summary(snapshot_json(snapshot), openai_api_key, model_name)
+                        st.session_state[summary_key] = save_interpretation(snapshot, model_name, text)
+                        st.rerun()
+                    except Exception as exc:
+                        st.warning(f"AI summary unavailable; previous interpretation and company evidence preserved: {sanitize_error(exc)}")
+            with st.expander("Other research workspaces"):
+                from langgraphagenticai.ui.workspace_handoff import render_company_handoffs
+                render_company_handoffs(selected_symbol, "Introduction", key="intro_handoff")
         except Exception as exc:
             render_workspace_state(f"Company analysis could not be completed: {sanitize_error(exc)}", state="failure")
             st.info("Check the ticker and provider configuration, then try again. No stale company data is shown.")
         return
 
-    mode_col, refresh_col, status_col = st.columns([2.1, 1.1, 4.8], vertical_alignment="center")
-    with mode_col:
-        mode = st.segmented_control("Dashboard view", ["Market Pulse", "AI Insights"], default="AI Insights", label_visibility="collapsed", key="intro_mode")
+    refresh_col, status_col = st.columns([1, 4], vertical_alignment="center")
     with refresh_col:
-        if st.button("REFRESH DATA", use_container_width=True, key="intro_refresh"):
+        if st.button("Refresh market evidence", use_container_width=True, key="intro_refresh"):
             load_market_overview.clear()
             load_market_chart.clear()
             clear_history_cache()
             st.rerun()
     with status_col:
-        st.caption("Quotes may be delayed by the provider. Cached for 5 minutes; use Refresh Data for a new request.")
+        st.caption("Quotes may be delayed. Overview cache: up to 5 minutes; Refresh requests new evidence. Exchange session status is unavailable.")
     try:
         with st.spinner("Loading current market data…"):
             data = load_market_overview(fmp_api_key)
@@ -318,17 +372,17 @@ def render_introduction_tab(
             raise RuntimeError("The market provider returned no usable index quotes.")
         for warning in data.get("warnings", []):
             st.warning(warning)
-        _dashboard(data, mode or "AI Insights", fmp_api_key, openai_api_key, model_name)
+        _dashboard(data, "Market Brief", fmp_api_key, openai_api_key, model_name)
     except Exception as exc:
         st.error(f"Live market data is temporarily unavailable: {sanitize_error(exc)}")
-        st.info("No stale fallback values are displayed. Use Refresh Data to retry the provider.")
+        st.info("No stale fallback values are displayed. Use Refresh market evidence to retry the provider.")
 
     st.markdown('<div class="ask-label">ASK THE AI ANALYST</div>', unsafe_allow_html=True)
     prompt_col, send_col = st.columns([8, 1])
     with prompt_col:
         prompt = st.text_input("Ask about the markets", placeholder="Ask about today’s markets…", label_visibility="collapsed", key="intro_question")
     with send_col:
-        submitted = st.button("ASK AI ↗", type="primary", use_container_width=True, key="intro_ask")
+        submitted = st.button("Open research draft", type="primary", use_container_width=True, key="intro_ask")
     if submitted and prompt.strip():
         st.session_state["pending_research_query"] = prompt.strip()
         st.session_state["next_workspace"] = "Research"

@@ -9,6 +9,7 @@ import yfinance as yf
 
 from langgraphagenticai.providers.fmp_http import get_fmp_json
 from langgraphagenticai.utils.safety import sanitize_error
+from langgraphagenticai.providers.discovery import finite_number
 
 try:
     # Use the Windows certificate store. This is important on managed machines
@@ -64,16 +65,16 @@ def _close_frame(raw: pd.DataFrame) -> pd.DataFrame:
 def _snapshots(prices: pd.DataFrame) -> dict[str, dict[str, float]]:
     result: dict[str, dict[str, float]] = {}
     for symbol in prices.columns:
-        values = pd.to_numeric(prices[symbol], errors="coerce").dropna()
+        values = prices[symbol].map(finite_number).dropna()
         if values.empty:
             continue
         last = float(values.iloc[-1])
-        previous = float(values.iloc[-2]) if len(values) > 1 else last
-        change = last - previous
+        previous = float(values.iloc[-2]) if len(values) > 1 else None
+        change = last - previous if previous is not None else None
         result[str(symbol)] = {
             "price": last,
             "change": change,
-            "percent": (change / previous * 100.0) if previous else 0.0,
+            "percent": (change / previous * 100.0) if previous else None,
         }
     return result
 
@@ -91,18 +92,21 @@ def _load_fmp_market_overview(api_key: str) -> dict[str, Any]:
         raise RuntimeError("FMP returned no quote rows.")
     snapshots = {}
     for row in rows:
+        if not isinstance(row, dict):
+            continue
         symbol = str(row.get("symbol") or "").upper()
         symbol = reverse_aliases.get(symbol, symbol)
-        price = row.get("price")
+        price = finite_number(row.get("price"))
         if not symbol or price is None:
             continue
-        change = float(row.get("change") or 0.0)
-        percent = row.get("changesPercentage")
+        change = finite_number(row.get("change"))
+        percent = finite_number(row.get("changesPercentage"))
         if percent is None:
-            previous = float(row.get("previousClose") or 0.0)
-            percent = change / previous * 100.0 if previous else 0.0
-        snapshots[symbol] = {"price": float(price), "change": change, "percent": float(percent),
-                             "as_of": str(pd.to_datetime(row.get("timestamp"), unit="s", utc=True, errors="coerce"))}
+            previous = finite_number(row.get("previousClose"))
+            percent = change / previous * 100.0 if change is not None and previous else None
+        stamp = pd.to_datetime(row.get("timestamp"), unit="s", utc=True, errors="coerce")
+        snapshots[symbol] = {"price": price, "change": change, "percent": percent,
+                             "as_of": stamp.isoformat() if pd.notna(stamp) else None}
 
     warnings: list[str] = []
     for snap in snapshots.values():
@@ -116,7 +120,7 @@ def _load_fmp_market_overview(api_key: str) -> dict[str, Any]:
                 fallback_prices.columns = missing
             for symbol, snap in _snapshots(fallback_prices).items():
                 snap["provider"] = "Yahoo Finance (daily close fallback)"
-                snap["as_of"] = str(fallback_prices[symbol].dropna().index[-1])
+                snap["as_of"] = str(fallback_prices[symbol].map(finite_number).dropna().index[-1])
                 snapshots[symbol] = snap
             warnings.append("Missing FMP quotes use labelled Yahoo Finance daily closes; these may differ from live quotes.")
         except Exception as exc:
@@ -124,12 +128,13 @@ def _load_fmp_market_overview(api_key: str) -> dict[str, Any]:
     unavailable = sorted(set(symbols) - snapshots.keys())
     if unavailable:
         warnings.append("No quote coverage for: " + ", ".join(unavailable))
-    market_stamp = pd.to_datetime(rows[0].get("timestamp"), unit="s", utc=True, errors="coerce")
+    first_quote = next((row for row in rows if isinstance(row, dict)), {})
+    market_stamp = pd.to_datetime(first_quote.get("timestamp"), unit="s", utc=True, errors="coerce")
     if pd.isna(market_stamp):
         market_stamp = datetime.now(timezone.utc)
     chart = []  # Historical chart is loaded separately for the selected range.
     movers = sorted(
-        ((symbol, snapshots[symbol]) for symbol in MOVER_UNIVERSE if symbol in snapshots),
+        ((symbol, snapshots[symbol]) for symbol in MOVER_UNIVERSE if symbol in snapshots and snapshots[symbol].get("percent") is not None),
         key=lambda row: abs(row[1]["percent"]), reverse=True,
     )[:5]
     return {
@@ -159,9 +164,9 @@ def load_market_overview(fmp_api_key: str = "") -> dict[str, Any]:
     snapshots = _snapshots(prices)
     for symbol, snap in snapshots.items():
         snap["provider"] = "Yahoo Finance (daily close)"
-        snap["as_of"] = str(prices[symbol].dropna().index[-1])
+        snap["as_of"] = str(prices[symbol].map(finite_number).dropna().index[-1])
 
-    fallback = pd.to_numeric(prices.get("^GSPC", pd.Series(dtype=float)), errors="coerce").dropna()
+    fallback = prices.get("^GSPC", pd.Series(dtype=float)).map(finite_number).dropna()
     chart = []
     market_stamp = fallback.index[-1] if not fallback.empty else datetime.now(timezone.utc)
     missing = sorted(set(symbols) - snapshots.keys())
@@ -169,7 +174,7 @@ def load_market_overview(fmp_api_key: str = "") -> dict[str, Any]:
         warnings.append("No quote coverage for: " + ", ".join(missing))
 
     movers = sorted(
-        ((symbol, snapshots[symbol]) for symbol in MOVER_UNIVERSE if symbol in snapshots),
+        ((symbol, snapshots[symbol]) for symbol in MOVER_UNIVERSE if symbol in snapshots and snapshots[symbol].get("percent") is not None),
         key=lambda row: abs(row[1]["percent"]), reverse=True,
     )[:5]
     return {

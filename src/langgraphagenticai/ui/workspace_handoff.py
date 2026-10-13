@@ -20,7 +20,9 @@ def apply_pending_handoff(state) -> ResearchContext | None:
     if context.destination == "Introduction":
         updates.update(intro_company_symbol=context.symbols[0], intro_company_query=text, intro_company_search=text)
     elif context.destination == "Research":
-        updates["research_request_draft"] = f"{'Compare' if context.intent == 'compare' else 'Analyze'} {text}: business, financials, valuation and risks."
+        discovery_request = state.pop("pending_discovery_request", None)
+        matching_draft = discovery_request[1] if isinstance(discovery_request, tuple) and len(discovery_request) == 2 and context.symbols == (discovery_request[0],) else None
+        updates["research_request_draft"] = matching_draft or f"{'Compare' if context.intent == 'compare' else 'Analyze'} {text}: business, financials, valuation and risks."
     elif context.destination == "Equity Report":
         updates.update(equity_report_ticker_text=text, equity_report_ticker_input=text)
     else:

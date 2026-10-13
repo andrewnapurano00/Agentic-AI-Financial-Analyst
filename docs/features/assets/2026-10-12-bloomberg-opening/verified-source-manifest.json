@@ -1,0 +1,74 @@
+﻿{
+    "src/langgraphagenticai/analysis/company_terminal.py":  {
+                                                                "initial":  null,
+                                                                "current":  "E22B139193350B26E7197D5275B1686E00E8374458C01AAF00DF44145D6E46EB"
+                                                            },
+    "src/langgraphagenticai/providers/company_terminal.py":  {
+                                                                 "initial":  null,
+                                                                 "current":  "F0EB07B2FE55760FC6C910C5305EA4B9AC6DC89F36458A6F252E45F61D87A6DE"
+                                                             },
+    "src/langgraphagenticai/providers/symbol_history.py":  {
+                                                               "initial":  null,
+                                                               "current":  "F1012E40D07A808BB96E29A19DE2D4B6314B191BB54492A7C413A2D117B2AD81"
+                                                           },
+    "src/langgraphagenticai/ui/company_snapshot.py":  {
+                                                          "initial":  null,
+                                                          "current":  "8A43DBB4C47F158D83858AEA470D9779DB434FFA33D43088A349D7FB7FE65284"
+                                                      },
+    "src/langgraphagenticai/ui/company_terminal.py":  {
+                                                          "initial":  null,
+                                                          "current":  "B0EED072489B0A72BA9F6EE4A41E55795EA95F1351651281407DF97D09BFA487"
+                                                      },
+    "src/langgraphagenticai/ui/introduction_tab.py":  {
+                                                          "initial":  "9C0704C5A9057689AF6175BE3003632373625FF2287F69C7719E7C1617B18553",
+                                                          "current":  "15FA96A2D5B0952FEFE7579DABABEC4DF041B7BB4316DB5BC2BD547878E7B978"
+                                                      },
+    "src/langgraphagenticai/ui/opening_presentation.py":  {
+                                                              "initial":  "0E6D3E2747ACC879B5C95ED34260807D62AAA3A932F7E4583BB913B2B923E244",
+                                                              "current":  "88045BBE5FF0EB7D58378FA8F9414628379CEB9FC2280BF85C36351B2BFC109A"
+                                                          },
+    "src/langgraphagenticai/ui/top_movers_tab.py":  {
+                                                        "initial":  "ECAC32BA15F419C5DFD2B5FBBA6AB53A5FA621CF4A1798C3B272B36D08AFB3EF",
+                                                        "current":  "2C49313267ED5389059CBE47C30A0F420C0B66DD409E53CD096CED3FE3A30F4C"
+                                                    },
+    "tests/test_company_terminal.py":  {
+                                           "initial":  null,
+                                           "current":  "F25C26BC56BDC6525D34D3EC3CAAB3CF0A57DDCC8D5AA9C83843AADFDF12C8D3"
+                                       },
+    "tests/test_market_tabs.py":  {
+                                      "initial":  "7705D1DFF7292104CF84812883FBEC16290F4F8C0F21691D58EC47229EAA298E",
+                                      "current":  "7705D1DFF7292104CF84812883FBEC16290F4F8C0F21691D58EC47229EAA298E"
+                                  },
+    "tests/test_introduction_technical.py":  {
+                                                 "initial":  null,
+                                                 "current":  "6D35F267E2B588959B5FF846B2DD1F5EE9441690615A5242B59DF308CA41ED53"
+                                             },
+    "tests/test_opening_discovery.py":  {
+                                            "initial":  "CA982ABFE1545DECB802511CB35CB05DFE63F196BB11052A1E1CA19DA6A2AC00",
+                                            "current":  "37C6EF041F52D30841EA38C760B3D3E3F75676E69CD0740F1256D25897D0CFAC"
+                                        },
+    "README.md":  {
+                      "initial":  "395EFB358F109F74E32FC7BA7905B2E0587CE838121A8FC2C80F3571CDFF666B",
+                      "current":  "9B933B8349560172E8A60686E10E6B26F3B22459FC8A250DC2AC77AF48748829"
+                  },
+    "PLAN.md":  {
+                    "initial":  "363191EF0EBC5266EF2F1B4626528D923543852620106970B73F715EB8881082",
+                    "current":  "3435B57479499751E60381C4A1F99C53F866868D20FDE820B66FC01E9A51F7C4"
+                },
+    "docs/OPENING_METRIC_DICTIONARY.md":  {
+                                              "initial":  null,
+                                              "current":  "5990170E391E206E799C3BDE11377ED8BE3EC791C78DB0A5365DEB184B3E2DA2"
+                                          },
+    "src/langgraphagenticai/providers/discovery.py":  {
+                                                          "initial":  null,
+                                                          "current":  "992FE941FB13C257C89C4CA4C7C939701F778DAB5DC87B14244931D1248AE857"
+                                                      },
+    "tests/test_workspace_handoffs.py":  {
+                                             "initial":  null,
+                                             "current":  "CA15EC893E62676D225A6A0220CBAA811D3A6728ADC053D28B6C664AE68AB42C"
+                                         },
+    "tests/test_workspace_presentation.py":  {
+                                                 "initial":  null,
+                                                 "current":  "B3C9E1A584C4084195BC92F5EFAC0B305E1B85348C79EC56DD0C6710DF694E93"
+                                             }
+}

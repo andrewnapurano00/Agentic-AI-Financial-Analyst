@@ -7,6 +7,21 @@ import pandas as pd
 import streamlit as st
 
 from langgraphagenticai.ui.top_movers_data import load_top_movers
+from langgraphagenticai.providers.discovery_numbers import finite_number
+
+
+def ranked_display(frame: pd.DataFrame, period: str) -> pd.DataFrame:
+    """D12: selected period, finite prices/volumes and no duplicate 1D column."""
+    columns = {"symbol": "Ticker", "companyName": "Company", "sector": "Sector", "price": "Last Price", "1D": "1D change (%)"}
+    if period != "1D":
+        columns[period] = f"{period} change (%)"
+    columns.update(marketCap="Market Cap", volume="Volume", avgVolume="Avg Volume")
+    result = pd.DataFrame(index=frame.index)
+    result["Rank"] = range(1, len(frame) + 1)
+    for raw, label in columns.items():
+        values = frame[raw] if raw in frame else pd.Series(None, index=frame.index, dtype=object)
+        result[label] = values if raw in {"symbol", "companyName", "sector"} else pd.to_numeric(values.map(finite_number), errors="coerce")
+    return result.reset_index(drop=True)
 
 
 def _money(value) -> str:
@@ -32,104 +47,194 @@ def _numeric(value, suffix="", decimals=2, signed=False):
     return "Unavailable"
 
 
-def _rows(frame: pd.DataFrame) -> str:
+def _rows(frame: pd.DataFrame, period="5D") -> str:
     html = []
     for rank, row in frame.iterrows():
-        weekly = float(row.get("5D", 0.0))
-        daily = float(row.get("1D", 0.0))
-        state = "up" if weekly >= 0 else "down"
+        weekly = finite_number(row.get(period))
+        daily = finite_number(row.get("1D"))
+        state = "up" if weekly is not None and weekly > 0 else "down" if weekly is not None and weekly < 0 else "flat"
         html.append(f'''<div class="mover-row">
           <span class="mover-rank">{rank + 1:02d}</span><div><b>{escape(str(row.get('symbol', '')))}</b><small>{escape(str(row.get('companyName')) if pd.notna(row.get('companyName')) else str(row.get('symbol', '')))}</small></div>
-          <span>{escape(str(row.get('sector') or 'N/A'))}</span><span>${float(row.get('price', 0)):,.2f}</span>
-          <em class="{'up' if daily >= 0 else 'down'}">{_numeric(daily, '%', signed=True)}</em><em class="{state}">{weekly:+.2f}%</em>
+          <span>{escape(str(row.get('sector') or 'Unavailable'))}</span><span>{_numeric(row.get('price'))}</span>
+          <em class="{'up' if daily is not None and daily > 0 else 'down' if daily is not None and daily < 0 else 'flat'}">{_numeric(daily, '%', signed=True)}</em><em class="{state}">{_numeric(weekly, '%', signed=True)}</em>
           <span>{_money(row.get('marketCap'))}</span><span>{_numeric(row.get('liquidityRatio'), 'x', decimals=1)}</span></div>''')
     return "".join(html)
 
 
-def _sector_heatmap(frame: pd.DataFrame) -> str:
-    cells = []
-    for _, row in frame.iterrows():
-        value = float(row["weekly_return"])
-        strength = min(abs(value) / 4.0, 1.0)
-        color = f"rgba(20,154,99,{.30 + strength * .60:.2f})" if value >= 0 else f"rgba(177,50,72,{.30 + strength * .60:.2f})"
-        cells.append(f'<div style="background:{color}"><b>{escape(str(row["sector"] or "Unknown"))}</b><strong>{value:+.2f}%</strong><small>{int(row["advancers"])} up / {int(row["decliners"])} down</small></div>')
-    return "".join(cells)
-
-
-def _news_panel(news: dict[str, list[dict]], symbols: list[str]) -> str:
-    groups = []
-    for symbol in symbols:
-        articles = news.get(symbol, [])
-        links = "".join(
-            f'<a href="{escape(str(item.get("url", "")))}" target="_blank" rel="noopener noreferrer"><b>{escape(str(item.get("title", "Untitled")))}</b><span>{escape(str(item.get("publisher") or "Source not supplied"))} &middot; {escape(str(item.get("published") or "Date not supplied"))}</span></a>'
-            for item in articles
-        ) or '<span class="mover-no-news">No current Serper headlines returned.</span>'
-        groups.append(f'<div class="mover-news-group"><h4>{escape(symbol)}</h4>{links}</div>')
-    return "".join(groups)
-
-
 def render_top_movers_tab(*, fmp_api_key: str, serper_api_key: str) -> None:
-    control_a, control_b, control_c = st.columns([2.2, 2.2, 1.2], vertical_alignment="bottom")
-    with control_a:
-        direction = st.segmented_control("Direction", ["Leaders", "Laggards"], default="Leaders", label_visibility="collapsed", key="movers_direction")
-    with control_b:
-        st.caption("Ranks refresh every 15 minutes from live providers.")
-    with control_c:
-        if st.button("REFRESH", use_container_width=True, key="movers_refresh"):
+    from langgraphagenticai.ui.opening_presentation import opening_styles, heading, cards, number, terminal_chart, quote_header, opening_price_chart
+    from langgraphagenticai.providers.discovery import rank_discovery, sector_summary, PERIODS, load_selected_news, load_selected_quote
+    from langgraphagenticai.providers.symbol_history import load_symbol_history, clear_history_cache
+    from langgraphagenticai.state.discovery import DiscoveryState, apply_discovery, queue_discovery_research
+    from langgraphagenticai.ui.workspace_presentation import saved_time, source_link
+    from langgraphagenticai.utils.safety import sanitize_error
+    import altair as alt
+
+    apply_discovery(st.session_state)
+    restored = st.session_state.get("discovery_state")
+    if isinstance(restored, DiscoveryState):
+        st.session_state.setdefault("movers_sector_filter", restored.sector)
+        st.session_state.setdefault("movers_period", restored.period)
+        st.session_state.setdefault("movers_direction", restored.direction)
+    opening_styles()
+    heading("Top Movers", "Discover the move. Understand the evidence.")
+    refresh_col, info_col = st.columns([1, 4], vertical_alignment="center")
+    with refresh_col:
+        if st.button("Refresh movers", key="movers_refresh", use_container_width=True):
             load_top_movers.clear()
+            load_selected_news.clear()
+            load_selected_quote.clear()
+            clear_history_cache()
             st.rerun()
-
+    with info_col:
+        st.caption("FMP screened U.S. equities | market cap > 2B and volume > 500K provider units | up to 500 requested stocks. Ranking cache: up to 15 minutes; Refresh makes a new request.")
     try:
-        with st.spinner("Ranking the liquid U.S. equity universe and collecting current news..."):
-            data = load_top_movers(fmp_api_key, serper_api_key)
+        with st.spinner("Loading screened price-change evidence..."):
+            data = load_top_movers(fmp_api_key, "")
     except Exception as exc:
-        from langgraphagenticai.utils.safety import sanitize_error
-        st.error(f"Top movers data is temporarily unavailable: {sanitize_error(exc)}")
-        st.info("No demo rankings are shown. Check FMP connectivity and retry.")
+        st.error("Movers evidence is unavailable: " + sanitize_error(exc))
+        st.info("Check FMP configuration and refresh. No illustrative rankings are displayed.")
         return
-
-    all_sectors = sorted(str(value) for value in data["universe"]["sector"].dropna().unique())
+    universe = data["universe"]
+    sectors = sorted(universe["sector"].dropna().astype(str).unique())
+    options = ["All sectors", *sectors]
+    if st.session_state.get("movers_sector_filter", "All sectors") not in options:
+        # Keep incoming sector explicit even when this capped universe has no matches.
+        options.append(st.session_state["movers_sector_filter"])
+    direction_col, sector_col, period_col = st.columns([1.4, 1.6, 1])
+    with direction_col:
+        direction = st.segmented_control("Direction", ["Leaders", "Laggards"], default=st.session_state.get("movers_direction", "Leaders"), key="movers_direction") or "Leaders"
+    with sector_col:
+        sector = st.selectbox("Sector", options, index=options.index(st.session_state.get("movers_sector_filter", "All sectors")), key="movers_sector_filter")
+    with period_col:
+        period = st.selectbox("Performance period", PERIODS, index=PERIODS.index(st.session_state.get("movers_period", "5D")), key="movers_period")
+    prior_discovery = st.session_state.get("discovery_state")
+    retained_ticker = prior_discovery.selected_ticker if isinstance(prior_discovery, DiscoveryState) else ""
+    st.session_state["discovery_state"] = DiscoveryState(sector, period, direction, retained_ticker, "Top Movers")
+    frame, stats = rank_discovery(universe, period, sector, direction)
+    requested = data.get("requested_universe_size", len(universe))
+    _, full_stats = rank_discovery(universe, period, limit=len(universe))
+    cards([("Usable filtered universe", stats["usable"], sector),
+           (f"Advancing ({period})", number(stats["advancing"], "%", decimals=1), "Positive returns / finite filtered observations; unchanged included in denominator"),
+           (f"Median {period} price change", number(stats["median"], "%", True), "Filtered screened stocks; provider price-change basis")])
+    st.caption(f"FMP ranking evidence retrieved {saved_time(data.get('fetched_at'))} | {full_stats['usable']} / {requested} requested symbols usable for {period} ({number(full_stats['usable'] / requested * 100 if requested else None, '%', decimals=1)}). Performance observation dates and adjustment basis unavailable; no total-return or session-completeness claim.")
     for warning in data.get("provider_warnings", []):
         st.warning(warning)
-    # Replace the initial lightweight selector after data arrives without another provider call.
-    selected_sector = st.selectbox("Filter ranked table by sector", ["All sectors", *all_sectors], key="movers_sector_filter")
-    frame = data["gainers"] if direction == "Leaders" else data["losers"]
-    if selected_sector != "All sectors":
-        pool = data["universe"]
-        pool = pool[pool["sector"].astype(str) == selected_sector]
-        frame = pool.nlargest(12, "5D") if direction == "Leaders" else pool.nsmallest(12, "5D")
-        frame = frame.reset_index(drop=True)
-
-    breadth = float((data["universe"]["5D"] > 0).mean() * 100)
-    top = data["gainers"].iloc[0]
-    bottom = data["losers"].iloc[0]
-    fetched = data["fetched_at"].astimezone().strftime("%b %d, %Y %I:%M %p %Z")
-    st.markdown(f'''
-      <div class="movers-head terminal-card"><div><small>WEEKLY MARKET LEADERSHIP</small><h2>Top Movers</h2><p>Liquid U.S. equities &middot; $2B+ market cap &middot; 500K+ daily volume</p></div>
-      <div><span>UNIVERSE</span><b>{data['universe_size']}</b></div><div><span>ADVANCING</span><b>{breadth:.1f}%</b></div><div><span>TOP GAINER</span><b class="up">{escape(str(top['symbol']))} {float(top['5D']):+.1f}%</b></div><div><span>TOP LAGGARD</span><b class="down">{escape(str(bottom['symbol']))} {float(bottom['5D']):+.1f}%</b></div></div>
-      <div class="movers-grid"><section class="terminal-card movers-table"><h3>{'TOP WEEKLY GAINERS' if direction == 'Leaders' else 'TOP WEEKLY LAGGARDS'} <small>5 TRADING DAYS</small></h3>
-      <div class="mover-row mover-header"><span>#</span><span>COMPANY</span><span>SECTOR</span><span>PRICE</span><span>1D</span><span>5D</span><span>MARKET CAP</span><span>VOL / AVG</span></div>{_rows(frame)}</section>
-      <section class="terminal-card movers-sector"><h3>SECTOR LEADERSHIP <small>UNIVERSE AVERAGE</small></h3><div class="mover-sector-grid">{_sector_heatmap(data['sectors'])}</div></section>
-      <aside class="terminal-card movers-news"><h3>NEWS DRIVING THE MOVERS <small>SERPER &middot; 7 DAYS</small></h3>{_news_panel(data['news'], data['gainers'].head(4)['symbol'].tolist() + data['losers'].head(4)['symbol'].tolist())}</aside></div>
-      <div class="source-line">Sources: {' &middot; '.join(data['providers'])} &middot; Refreshed {escape(fetched)} &middot; Rankings use FMP 5D price performance and exclude ETFs/funds. Unavailable means provider coverage is missing; VOL / AVG compares current volume with provider average volume.</div>
-    ''', unsafe_allow_html=True)
-
-    focus_options = frame["symbol"].astype(str).tolist()
-    if focus_options:
-        focus_col, open_col, spacer = st.columns([2, 1.25, 4.75], vertical_alignment="bottom")
-        with focus_col:
-            focus = st.selectbox("Open a company snapshot", focus_options, key="movers_focus")
-        with open_col:
-            if st.button("OPEN SNAPSHOT", type="primary", use_container_width=True, key="movers_open_snapshot"):
+    left, right = st.columns([1.85, 1], gap="medium")
+    with left, st.container(border=True):
+        st.subheader(f"{sector if sector != 'All sectors' else 'Screened equity'} {direction.lower()}")
+        if frame.empty:
+            st.info(f"No finite {period} performance observations in this sector. Choose another period or sector; other saved work is preserved.")
+        else:
+            display = ranked_display(frame, period)
+            return_columns = [col for col in display if col.endswith("change (%)")]
+            styled = display.style.format({**{col: "{:+.2f}" for col in return_columns}, "Last Price": "{:,.2f}", "Market Cap": "{:,.0f}", "Volume": "{:,.0f}", "Avg Volume": "{:,.0f}"}, na_rep="Unavailable")
+            styled = styled.map(lambda value: "color:#35d07f" if pd.notna(value) and value > 0 else "color:#ff5964" if pd.notna(value) and value < 0 else "", subset=return_columns)
+            retained = st.session_state.get("discovery_state")
+            selected = st.session_state.get("movers_focus", retained.selected_ticker if isinstance(retained, DiscoveryState) else "")
+            options_for_style = frame["symbol"].tolist()
+            if selected not in options_for_style:
+                selected = options_for_style[0]
+            table_key = f"movers_table_{sector}_{period}_{direction}"
+            pending_rows = st.session_state.get(table_key, {}).get("selection", {}).get("rows", [])
+            pending_marker = (sector, period, direction, tuple(pending_rows))
+            if pending_rows and st.session_state.get("movers_last_selection") != pending_marker and 0 <= pending_rows[0] < len(frame):
+                selected = options_for_style[pending_rows[0]]
+            styled = styled.apply(lambda row: ["background-color:#303030;font-weight:bold" if row["Ticker"] == selected else "" for _ in row], axis=1)
+            event = st.dataframe(styled, hide_index=True, use_container_width=True, height=430,
+                                 on_select="rerun", selection_mode="single-row", key=table_key,
+                                 column_config={"Rank": st.column_config.NumberColumn(width="small"), "Ticker": st.column_config.TextColumn(width="small"), "Company": st.column_config.TextColumn(width="medium"),
+                                                **{col: st.column_config.NumberColumn(format="%+.2f", width="small") for col in return_columns}})
+            st.caption("Signed percentage-point price changes; last price / cap currency unavailable in the screener. Volume units and average window are provider-defined. Scroll table horizontally for size and activity columns.")
+            focus_options = frame["symbol"].tolist()
+            saved = st.session_state.get("discovery_state")
+            previous = st.session_state.get("movers_focus", saved.selected_ticker if isinstance(saved, DiscoveryState) else "")
+            focus_default = previous if previous in focus_options else focus_options[0]
+            if "movers_focus" in st.session_state and previous not in focus_options:
+                st.session_state["movers_focus"] = focus_default
+            row_applied = False
+            selected_rows = event.selection.rows
+            # A table event is applied once, so the accessible selector can override it.
+            marker = (sector, period, direction, tuple(selected_rows))
+            if selected_rows and st.session_state.get("movers_last_selection") != marker:
+                index = selected_rows[0]
+                if 0 <= index < len(frame):
+                    st.session_state["movers_focus"] = focus_options[index]
+                    focus_default = focus_options[index]
+                    row_applied = True
+                st.session_state["movers_last_selection"] = marker
+            # The frontend remounts this widget after an empty result. Its protobuf
+            # default must agree with the retained identity, not the first ranked row.
+            # Existing row events send an explicit widget value; a remounted widget
+            # instead receives its retained identity solely through its default.
+            focus_index = 0 if row_applied else focus_options.index(focus_default)
+            focus = st.selectbox("Selected company (keyboard alternative to table rows)", focus_options,
+                                 index=focus_index, key="movers_focus")
+            discovery = DiscoveryState(sector, period, direction, focus, "Top Movers")
+            st.session_state["discovery_state"] = discovery
+    if not frame.empty:
+        with right, st.container(border=True):
+            row = frame[frame["symbol"] == focus].iloc[0]
+            st.caption("Selected company")
+            quote = load_selected_quote(focus, fmp_api_key)
+            quote_header(focus, row.get('companyName') or focus, row.get("sector"), quote, analyst=False)
+            if quote.get("error"):
+                st.info("Selected quote unavailable: " + sanitize_error(quote["error"]))
+            st.caption(f"FMP quote as of {saved_time(quote.get('as_of'))} | retrieved {saved_time(quote.get('retrieved_at'))}. Currency is unavailable unless supplied by this quote.")
+            st.metric(f"Provider {period} price change", number(row.get(period), "%", True))
+            st.caption("Ranking dates unavailable. Chart observations below have separate dated evidence and must not be subtracted from this undated ranking.")
+            history_period = "YTD" if period == "ytd" else period
+            try:
+                history = load_symbol_history(focus, fmp_api_key, history_period)
+                points = history.get("points", [])
+                if points:
+                    prices = pd.DataFrame(points, columns=["Date", "Close"])
+                    from langgraphagenticai.ui.technical_chart import price_chart_spec
+                    chart = opening_price_chart(prices, history_period, history.get("unit", "Currency unknown"), height=190)
+                    st.altair_chart(chart, use_container_width=True, theme=None)
+                else:
+                    st.info("Selected price history unavailable; rankings remain usable.")
+                st.caption(f"Chart {history_period} | {history.get('provider', 'Unavailable')} | {history.get('price_basis', 'Basis unavailable')} | {history.get('unit', 'Currency unknown')} | {len(points)} observed bars")
+                st.caption(f"As of {history.get('as_of', 'Unavailable')} | retrieved {saved_time(history.get('retrieved_at'))} | timezone {history.get('timezone', 'Unknown')}")
+                for warning in history.get("warnings", []):
+                    st.warning(warning)
+            except Exception as exc:
+                st.warning("Selected history unavailable; rankings preserved: " + sanitize_error(exc))
+            st.caption("Benchmark / sector excess return: unavailable. Compatible dated return bases have not been established. Completed-session volume ratio: unavailable.")
+            st.markdown("**Related news & potential catalysts**")
+            news = load_selected_news(focus, serper_api_key)
+            st.caption(f"Serper | requested lookback 7 days | retrieved {saved_time(news.get('retrieved_at'))}. Publication text is supplied by the source; related coverage does not establish a cause.")
+            if news.get("error"):
+                st.info("Selected news unavailable: " + sanitize_error(news["error"]))
+            safe_count = 0
+            for item in news.get("results", [])[:3]:
+                url = source_link(item.get("url"))
+                if url:
+                    safe_count += 1
+                    st.markdown(f'<a href="{escape(url)}" target="_blank" rel="noopener noreferrer">{escape(str(item.get("title") or "Untitled"))}</a>', unsafe_allow_html=True)
+                    st.caption(f"{item.get('publisher') or 'Publisher unavailable'} | publication: {item.get('published') or 'Unavailable'}")
+            if not safe_count and not news.get("error"):
+                st.info("No safe related news links returned for this company.")
+            if st.button("Research this move", key="movers_research", type="primary", use_container_width=True):
+                queue_discovery_research(st.session_state, discovery)
+                st.rerun()
+            if st.button("Open snapshot", key="movers_open_snapshot", use_container_width=True):
                 from langgraphagenticai.ui.workspace_handoff import queue_handoff
                 from langgraphagenticai.state.research_context import ResearchContext
-                try:
-                    queue_handoff(st.session_state, ResearchContext((focus,), "Introduction", "analyze", "Top Movers"))
-                except ValueError as exc:
-                    from langgraphagenticai.utils.safety import sanitize_error
-                    st.error(sanitize_error(exc))
-                else:
-                    st.rerun()
-
-        from langgraphagenticai.ui.workspace_handoff import render_company_handoffs
-        render_company_handoffs(focus, "Top Movers", key="movers_handoff")
+                queue_handoff(st.session_state, ResearchContext((focus,), "Introduction", "analyze", "Top Movers"))
+                st.rerun()
+            with st.expander("More research workspaces"):
+                from langgraphagenticai.ui.workspace_handoff import render_company_handoffs
+                render_company_handoffs(focus, "Top Movers", key="movers_handoff")
+    st.subheader("Screened sector context")
+    summary = sector_summary(universe, period)
+    if sector != "All sectors":
+        summary = summary[summary["sector"] == sector]
+    if summary.empty:
+        st.info("No usable sector aggregates for this period and filter.")
+    else:
+        st.dataframe(summary.rename(columns={"sector": "Sector", "mean_return": f"Equal-weight mean {period} (%)", "median_return": f"Median {period} (%)", "stocks": "Usable stocks"}), hide_index=True, use_container_width=True)
+    with st.expander("Coverage & methodology"):
+        st.write("Screened U.S. equities; provider-requested cap > 2B, volume > 500K, active trading, no ETFs/funds, maximum 500 records. This capped screen is not the whole market. Counts and statistics include only finite observations for the selected period and sector. Leaders/laggards rank relative performance; zero is valid and missing is excluded.")
+        st.write("FMP legacy stock-price-change supplies percent price changes (1D, 5D, 1M, ytd) without observation dates or confirmed adjustment basis. No benchmark or ETF excess-return subtraction is performed. Sector means weight usable screened stocks equally; they are not sector ETF returns. Current volume / provider average is not a verified completed-session measure and is withheld.")
+        st.write("Ranking, history and selected news caches are independent. Filters reuse ranking evidence; only the selected company requests history/news. No models run when selecting, filtering, navigating or refreshing. Research opens an editable draft requiring explicit submission.")

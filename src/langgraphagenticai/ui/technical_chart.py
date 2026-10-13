@@ -61,8 +61,13 @@ def price_chart_spec(frame, period, unit):
     ).properties(height=280).interactive()
 
 
-def render_indicator_charts(frame, period, unit):
-    st.altair_chart(price_chart_spec(frame, period, unit), width="stretch")
+def render_indicator_charts(frame, period, unit, *, chart_style=None):
+    def draw(spec):
+        if chart_style is None:
+            st.altair_chart(spec, width="stretch")
+        else:
+            st.altair_chart(chart_style(spec), width="stretch", theme=None)
+    draw(price_chart_spec(frame, period, unit))
     frame = _plot_frame(frame)
     if "RSI" in frame:
         rsi = alt.Chart(frame).mark_line(color="#f5c75d").encode(
@@ -70,7 +75,7 @@ def render_indicator_charts(frame, period, unit):
             y=alt.Y("RSI:Q", scale=alt.Scale(domain=[0, 100]), title="Wilder RSI"),
             tooltip=["Observed timestamp:N", alt.Tooltip("RSI:Q", format=".1f")])
         rules = alt.Chart(pd.DataFrame({"Threshold": [30, 70]})).mark_rule(strokeDash=[4, 4], color="#83909e").encode(y="Threshold:Q")
-        st.altair_chart((rsi + rules).properties(height=140).interactive(), width="stretch")
+        draw((rsi + rules).properties(height=140).interactive())
     if "MACD" in frame:
         long = frame.melt(id_vars=["Date", "Observed timestamp"], value_vars=["MACD", "MACD signal"], var_name="Series", value_name="Value")
         chart = alt.Chart(long).mark_line().encode(
@@ -78,10 +83,13 @@ def render_indicator_charts(frame, period, unit):
             y=alt.Y("Value:Q", title=f"MACD ({unit})"), color="Series:N",
             tooltip=["Observed timestamp:N", "Series:N", alt.Tooltip("Value:Q", format=".3f")])
         histogram = alt.Chart(frame).mark_bar(opacity=.35).encode(x=alt.X("Date:T", scale=alt.Scale(type="utc")), y="MACD histogram:Q")
-        st.altair_chart((histogram + chart).properties(height=150).interactive(), width="stretch")
+        if chart_style is not None:
+            histogram = histogram.encode(color=alt.condition(alt.datum["MACD histogram"] >= 0,
+                                                              alt.value("#26c6da"), alt.value("#ff5964")))
+        draw((histogram + chart).properties(height=150).interactive())
 
 
-def render_technical_chart(chart, *, key, openai_api_key="", model_name="gpt-5"):
+def render_technical_chart(chart, *, key, openai_api_key="", model_name="gpt-5", chart_style=None):
     period = chart.get("period", "1D")
     for warning in chart.get("warnings", []):
         st.warning(warning)
@@ -98,7 +106,10 @@ def render_technical_chart(chart, *, key, openai_api_key="", model_name="gpt-5")
     frame = calculate_indicators(chart.get("calculation_points", chart["points"]), settings)
     frame = frame[frame.Date >= chart["points"][0][0]].copy()
     unit = chart.get("unit", "Index points" if chart.get("symbol", "^GSPC") == "^GSPC" else "Currency unknown")
-    render_indicator_charts(frame, period, unit)
+    if chart_style is None:
+        render_indicator_charts(frame, period, unit)
+    else:
+        render_indicator_charts(frame, period, unit, chart_style=chart_style)
     st.caption(f"{chart.get('symbol', '^GSPC')} · {period} · {chart.get('provider', 'Unknown')} · {chart.get('price_basis', 'Basis unknown')} · {unit}")
     st.caption(f"As of {chart.get('as_of', str(frame.iloc[-1].Date))} · retrieved {chart.get('retrieved_at', 'Unknown')} · timezone {chart.get('timezone', 'Unknown')} · {chart.get('interval', 'Unknown interval')} · {len(frame)} displayed bars. Axes preserve provider wall-clock fields; tooltips retain source timestamps. Price performance, not total return.")
     st.caption("Intraday history cache: 5 minutes; daily history cache: 1 hour. Retry refreshes chart history. Data gaps and session completeness are not independently verified.")

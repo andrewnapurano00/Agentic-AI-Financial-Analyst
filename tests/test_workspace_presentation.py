@@ -76,7 +76,7 @@ _render_company_snapshot(snapshot,'Saved AI findings')
 """).run()
     assert not app.exception
     text = " ".join(item.value for item in app.markdown)
-    assert "Unknown currency" in text and "Quote change unavailable" in text
+    assert "Unknown quote currency" in text and "Daily change unavailable" in text
     assert "$180" not in text and "+0.00%" not in text
     app.segmented_control[0].set_value("5Y").run()
     assert not app.exception and calls == []

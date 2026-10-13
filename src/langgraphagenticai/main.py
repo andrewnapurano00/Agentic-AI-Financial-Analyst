@@ -348,6 +348,11 @@ def load_langgraph_agenticai_app() -> None:
         render_terminal_status(model_name, fmp_ready=bool(fmp_api_key), openai_ready=bool(openai_api_key))
         return
 
+    if active_page == "Top Movers":
+        render_top_movers_tab(fmp_api_key=fmp_api_key, serper_api_key=user_controls.get("SERPER_API_KEY", ""))
+        render_terminal_status(model_name, fmp_ready=bool(fmp_api_key), openai_ready=bool(openai_api_key))
+        return
+
     command_query = render_command_bar()
     if command_query and active_page != "Research":
         st.session_state["pending_research_query"] = command_query

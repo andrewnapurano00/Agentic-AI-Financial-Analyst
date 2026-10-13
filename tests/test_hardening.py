@@ -88,7 +88,7 @@ def test_optimizer_rejects_invalid_symbols_and_negative_weights():
 
 
 def test_top_movers_reports_partial_batch_coverage(monkeypatch):
-    from langgraphagenticai.ui import top_movers_data
+    from langgraphagenticai.providers import discovery as top_movers_data
 
     symbols = [f"S{index:03d}" for index in range(81)]
     universe = [
@@ -109,8 +109,8 @@ def test_top_movers_reports_partial_batch_coverage(monkeypatch):
         return [{"symbol": symbol, "1D": 0.5, "5D": float(index)} for index, symbol in enumerate(requested)]
 
     monkeypatch.setattr(top_movers_data, "_get", fake_get)
-    top_movers_data.load_top_movers.clear()
-    result = top_movers_data.load_top_movers("test-key")
+    top_movers_data.collect_discovery.clear()
+    result = top_movers_data.collect_discovery("test-key")
     assert result["partial"] is True
     assert result["universe_size"] == 80
     assert result["requested_universe_size"] == 81
