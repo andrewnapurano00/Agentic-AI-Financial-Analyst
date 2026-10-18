@@ -6,11 +6,11 @@ This file defines how coding agents and contributors must work on Axiom Research
 
 The goal is not to add the most features. The goal is to make the existing capabilities trustworthy, connected, fast, explainable, and useful for real investment research.
 
-## Implementation orientation (updated 2026-10-10)
+## Implementation orientation (updated 2026-10-18)
 
 These engineering requirements are the target standard, not a claim that every requirement is already implemented. [PLAN.md](PLAN.md) is the dated source of truth for implementation status, delivery history, verification evidence, and remaining work. Do not infer completion from a module name or a passing test count.
 
-The sidebar currently exposes seven main workspaces plus the isolated **Deep Research V2 cost pilot**. The application entry points are `app.py`, `src/langgraphagenticai/main.py`, and `src/langgraphagenticai/ui/streamlitui/loadui.py`.
+The sidebar exposes eight workspaces: Market Brief (internal Introduction identity), Top Movers, Stock Screener, Research, Equity Report, AI Valuation, Deep Research and Portfolio Lab. Deep Research contains **Standard format** and experimental **Low cost format**; V2 is not a separate current sidebar destination. The application entry points are `app.py`, `src/langgraphagenticai/main.py`, and `src/langgraphagenticai/ui/streamlitui/loadui.py`.
 
 Module paths abbreviated below are relative to `src/langgraphagenticai/`; repository-level release/test paths are explicit.
 
@@ -19,6 +19,8 @@ Module paths abbreviated below are relative to `src/langgraphagenticai/`; reposi
 | Shared presentation | `ui/app_shell.py`, `ui/workspace_presentation.py` and `ui/workspace_handoff.py`; shared terminal headers/evidence states and bounded navigation adapters, while page modules orchestrate controls |
 | Provider transport | `src/langgraphagenticai/providers/`; shared FMP REST transport, bounded OpenAI clients and symbol-aware Introduction history exist, but adapters and metadata are not uniform across every provider |
 | Financial/domain logic | Company snapshots, Equity Report scoring, `portfolio_manager/`, audited research calculations in `deep_research/{quarterly_ttm,research_metrics}.py`, and configurable chart calculations in `technical_analysis/`; preserve each metric basis |
+| AI Valuation | `valuation/{framework,model,projection,book_value,ai,metrics,citations}.py` separates conditional sector routing, dated annual/consensus anchors, deterministic pricing and explicit structured AI; `providers/{valuation,company_evidence}.py` supplies bounded source-aware collection/reuse |
+| Market ribbon/dashboard | `providers/market_strip.py` and `ui/market_strip.py` populate the shared five-index shell ribbon independently of the explicit-refresh Market Brief dashboard and constituent ticker |
 | Research | LangGraph chat remains session-backed; `research/{guided_workflow,guided_schemas}.py`, `providers/guided_research.py` and `ui/guided_research_tab.py` implement the opt-in bounded one-company Guided plan/run workflow |
 | Saved investment brief | `analysis/{investment_brief,scenarios}.py` and `ui/investment_brief.py`; shared V1/V2 saved narrative excerpts, audited earnings-multiple sensitivities and bounded provenance exports |
 | Company navigation | `state/research_context.py` supplies metadata-only typed identity/intent; `ui/workspace_handoff.py` applies supported session handoffs without transferring financial packets |
@@ -26,7 +28,7 @@ Module paths abbreviated below are relative to `src/langgraphagenticai/`; reposi
 | Verification/release | `tests/conftest.py` guards offline collection/tests; `.github/workflows/offline-release.yml`, `Dockerfile.verify` and `scripts/release_inventory.py` define release gates/artifacts. Consult PLAN and `docs/DEPLOYMENT.md` for executed checks and unverified gates |
 | Contributor skills | `.agents/skills/`; [project skill guide](docs/PROJECT_SKILLS.md) describes all thirteen skills and invocation, including GitHub commit/push |
 
-P01 delivers a bounded typed, metadata-only `ResearchContext` for supported company handoffs; saved page results remain session-backed. Universal financial provenance, complete Portfolio/Compare handoff adoption and universal freshness UI remain roadmap work. Navigation metadata is not financial evidence, and unverified financial-packet bridges remain disabled. V2 is a pilot; its helpers and fixtures do not establish end-to-end financial accuracy or measured cost savings.
+P01 delivers a bounded typed, metadata-only `ResearchContext` for supported company handoffs; saved page results remain session-backed. Universal financial provenance, complete Portfolio/Compare handoff adoption and universal freshness UI remain roadmap work. The bounded credential/ticker/session-scoped raw FMP reuse bridge from new Equity Report runs to AI Valuation is explicitly supported; it preserves original retrieval times and annual/quarterly/TTM/forecast meanings. It is separate from metadata-only navigation and does not validate legacy scorecards as financial inputs. Navigation metadata is not financial evidence, and unverified financial-packet bridges remain disabled. V2 is a pilot; its helpers and fixtures do not establish end-to-end financial accuracy or measured cost savings.
 
 ## Product principles
 
@@ -44,16 +46,17 @@ Every change must improve at least one of these outcomes without materially degr
 
 Changes must account for the complete application, not only the active page:
 
-- **Introduction:** live market overview, company snapshot/news, eight price-chart horizons, configurable technical indicators, calculated technical summary, and explicit company/technical AI analysis.
-- **Top Movers:** five-trading-day leaders and laggards, sector breadth, Serper news, and company handoff.
+- **Market Brief (Introduction identity):** explicit-refresh dashboard, macro/sector ETF heatmap and metrics, constituent ticker, news and separate market/news AI briefings, dashboard follow-ups, daily ticker/index/ETF chart and technical indicators/AI. Active daily-chart ranges are 1M/3M/1Y/3Y/5Y/10Y. Legacy snapshot helpers and shared eight-horizon history support do not prove that every old screen remains reachable; document active routing.
+- **Top Movers:** explicit-refresh capped-screen leaders/laggards over 1D/5D/1M/ytd, Top50/filtered Top10%, sector concentration/participation, selected company quote/history/news, explicit news AI, analyst consensus/targets, social activity and supported company handoffs. Screen breadth is not whole-market breadth.
 - **Research:** LangGraph finance chat with FMP and Marketaux tools, editable explicit-submit drafts and preserved threads; opt-in Guided research prepares a one-company plan and runs allowlisted evidence tools with exact cited-field validation, partial-result recovery and saved session reuse.
 - **Equity Report:** sector-aware company/peer analysis, scoring, charts, recommendations, and PDF/Excel/CSV exports.
-- **Stock Screener:** FMP universe filtering and metric enrichment.
+- **AI Valuation:** one explicit Generate creates three conditional AI growth/multiple cases; prices are calculated locally. All sectors and unknown classifications have an earnings framework where usable positive annual inputs exist, with financial P/B preference and earnings fallback, explicit proxy/specialist limitations, saved-case reuse, local edits and horizon recalculation.
+- **Stock Screener:** FMP universe filtering, metric enrichment, optional post-filters, CSV and company chart handoff.
 - **Portfolio Lab:** historical optimizer plus hybrid AI portfolio manager, constraints, evidence, and reporting.
-- **Deep Research:** evidence collection, shared quarterly financial audit and sector-aware comparisons, Serper news coverage, planning, reports, recovery, citations, downloads, saved investment brief/earnings-multiple scenarios and optional CrewAI committee.
-- **Deep Research V2:** separate cost pilot with the shared financial audit, stage-specific routing, bounded sector-aware contexts, mechanical validation, saved generation time/age, session reuse, shared saved investment brief/earnings-multiple scenarios and optional quick/full decisions. Keep workflow-specific V1 behavior separate when modifying the pilot.
+- **Deep Research Standard format:** one-shot evidence collection/planning/report generation, shared quarterly financial audit and sector comparisons, news, recovery, separate evidence/notebook views, question-aware executive sections, clean reader prose, optional committee, saved follow-ups, PDF/memo/evidence/comparison downloads and saved brief/sensitivities. A saved committee decision belongs in the PDF.
+- **Deep Research Low cost format (V2):** separate cost pilot with the shared financial audit, stage-specific routing, bounded sector-aware contexts, mechanical validation, saved generation time/age, session reuse, shared saved investment brief/earnings-multiple scenarios and optional quick/full decisions. Keep workflow-specific V1 behavior separate when modifying the pilot.
 
-## Latest delivered boundaries (2026-10-10)
+## Delivered foundations through 2026-10-10
 
 These are scoped deliveries, not completion of the broad R01-R10 roadmap. Preserve their contracts when extending the product; consult PLAN verification records and feature-team reports for exact evidence.
 
@@ -68,9 +71,18 @@ These are scoped deliveries, not completion of the broad R01-R10 roadmap. Preser
 - **P04 / AAFA-11, saved brief/scenarios:** V1/V2 share immutable saved narrative excerpts and deterministic Bull/Base/Bear total equity sensitivities. Eligibility requires resolvable audited four-quarter earnings, dated cap, explicit compatible quote currency, sector applicability and supported freshness; legacy/inferred-currency/unsupported cases stay readable with unavailable scenarios. Defaults are user assumptions, not forecasts. Preserve safe bounded JSON/CSV provenance and original reports without recollection or model calls.
 - **P05 / AAFA-12, local release automation:** Python3.11/3.12 CI definitions use constrained installs, pip check, guarded offline tests, compile/import and safe version/JUnit artifacts. Direct manifests agree, newspaper4k is the sole newspaper namespace owner, and NumPy constraints respect Python versions. Runtime copies app.py/src only; a separate derived image adds verification tests/samples. Keep TLS verification enabled and optional public CA bundles in BuildKit secrets. Local source is finished; AAFA-12 remains In Progress for unverified release gates.
 
-Latest measured offline inventory: **430 passing tests in597.19s**, independently run in the installed project Python3.12.0 environment (V-20261010-P05; pytest9.1.1 / Streamlit1.61.1). The P05 run also passed focused checks, compile/import, installed pip check, fresh app/harness health and a synthetic actual-main browser journey with two isolated sessions and zero external calls. Eight-route cases establish readiness/rendering, not exhaustive behavior. Earlier P01-P04 browser/export evidence retains its original dates. No new checks follow from documentation updates.
+## Current delivered boundaries (2026-10-18)
 
-**Open release gates:** local Docker builds failed during intercepted PyPI transport (initial certificate trust, then `InvalidChunkLength`); no runtime image was produced. Clean Python3.11/3.12 installs, runtime non-root startup/health, derived-image workflow and remote GitHub CI are unverified. Hosting target, protected preview/access, hosted smoke and rollback rehearsal remain pending. No live entitlement/financial freshness/model-quality guarantee, clean-install certification or deployment follows from offline checks. P01-P05 are local working-tree implementations, not a hosted release; commit/push and deployment require explicit authorization. See [deployment runbook](docs/DEPLOYMENT.md) and the current PLAN verification entry.
+- **Executive research delivery:** production Standard/Low cost workflows use a single-pass report path without mandatory interpretive review/rewrite or user approval. Optional committees remain explicit decisions. Preserve full retained reports and evidence on failure/recovery; never silently replace a substantial saved draft with a generic overview. Keep supporting references/audits accessible outside reader-facing prose, and do not present missing evidence as verified recommendations.
+- **Executive exports:** question-aware sections and safe presentation cleanup apply to reader reports; saved committee/quick decisions are included in the research PDF when available. Export/download must not recollect evidence or call models. A committee added later requires a new PDF download.
+- **Conditional valuation:** use the disclosed sector framework, source IDs, formula and exact dated projection anchor. REIT/Materials/unknown sectors can use provisional P/E; financials prefer usable common-book P/B and independently fall back to earnings when book evidence fails. Missing reported diluted EPS can use a labeled same-FY net-income/diluted-share proxy; never replace explicit zero/negative/invalid EPS with a positive proxy or mix proxy/reported-EPS growth histories. Consensus EPS is context only for that proxy. Do not fabricate FFO/AFFO, normalized mid-cycle earnings, regulatory capital, peer medians or NAV. The saved brief's audited-TTM total-equity sensitivities have a separate stricter contract and are not future per-share AI Valuation targets.
+- **Market ribbon:** existing ribbon routes share five-minute credential-scoped actual-index quotes; at most a primary index batch and one legacy fallback, plus shared bounded transport retries. Preserve original timestamps and visibly mark retained/stale/undated quotes. Percentage-point aliases and explicit previous-close arithmetic preserve zero/missing distinctions. All five indices remain visible on mobile. This small quote refresh is independent of paid AI and the explicit-refresh full Market Brief dashboard.
+- **Repository boundaries:** current app source is under `src/` with `app.py`; obsolete AI_Valuation_Tab/partial_redesign uploads and unused crew_ai tutorial were archived outside the Git tree. The active CrewAI committee remains in the app. Preserve canonical docs/redesign specifications/images/QA records, contract fixtures and user outputs; do not reintroduce obsolete shells as active code.
+
+Latest full offline inventory: **870 tests passed in204.99s**, installed project Python3.12.0 / pytest9.1.1 / Streamlit1.61.1 (V-20261018-MARKET-RIBBON). Cleanup then passed14 focused release/provider tests and retained870 collected tests; app/test source was unchanged and the full suite was not rerun for cleanup. Source was pushed to main at `953cd32` on October18. These are dated checks/publication records, not exhaustive coverage, live financial correctness or hosted deployment. Earlier P05's430-test inventory and historical browser/export checks retain their original scope; docs-only updates do not create new runtime verification.
+
+
+**Open release gates:** local Docker builds failed during intercepted PyPI transport (initial certificate trust, then `InvalidChunkLength`); no runtime image was produced. Clean Python3.11/3.12 installs, runtime non-root startup/health, derived-image workflow and remote GitHub CI are unverified. Hosting target, protected preview/access, hosted smoke and rollback rehearsal remain pending. No live entitlement/financial freshness/model-quality guarantee, clean-install certification or deployment follows from offline checks. Current source publication does not establish a hosted release; future commit/push and deployment require explicit authorization. Consult current Git history for revisions after the dated publication above. See [deployment runbook](docs/DEPLOYMENT.md) and the current PLAN verification entry.
 
 ## Architecture requirements
 
@@ -188,7 +200,7 @@ For code changes, agents must:
 
 ## Documentation requirements
 
-- Update `README.md` whenever navigation, setup, providers, required keys, or workflows change.
+- Keep `README.md` as a nontechnical executive how-to: numbered steps using active UI labels, examples, interpretation, exports and recovery for every reachable workspace. Update it when navigation, access requirements or workflows change. Do not add architecture, build history, test inventories, code implementation details or release-engineering instructions to the user guide. Keep contributor instructions here and engineering evidence in PLAN/docs.
 - Update `PLAN.md` when a milestone is completed, materially rescoped, or reordered.
 - Keep `DEEP_RESEARCH.md` focused on that subsystem; avoid duplicating global architecture guidance.
 - Record architectural decisions that affect multiple workspaces in a short ADR or clearly labeled design note.
@@ -201,7 +213,7 @@ For each meaningful delivery, update PLAN.md in the same change:
 1. Update the affected workspace and roadmap entry using stable IDs R01-R10. Mark only delivered subitems complete; retain unmet acceptance criteria.
 2. Append a delivery entry with date, user outcome, implementation approach, source/test paths, commit or working-tree status, and remaining work.
 3. Record verification separately: command, interpreter/dependency versions, result, test scope, mocks versus live services, and checks not performed. Never present earlier browser evidence as a newly run check.
-4. Keep test totals in PLAN's dated inventory; update README's verification summary when that inventory changes. A passing suite does not establish coverage of untested workflows.
+4. Keep test totals and verification scope in PLAN's dated inventory. Keep README focused on product use rather than engineering verification totals. A passing suite does not establish coverage of untested workflows.
 5. Retain historical review and optimization notes as dated records; link the current status instead of treating old proposals or unchecked lists as implementation truth.
 6. Do not mark a roadmap milestone complete until its acceptance criteria and the definition of done below are satisfied.
 
