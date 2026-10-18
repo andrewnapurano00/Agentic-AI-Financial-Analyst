@@ -46,7 +46,7 @@ HARNESS = "from langgraphagenticai.main import load_langgraph_agenticai_app; loa
 
 
 @pytest.fixture
-def routing(monkeypatch):
+def routing(monkeypatch, market_dashboard_stub):
     from langgraphagenticai import main
     from langgraphagenticai.ui.streamlitui import loadui
     from langgraphagenticai.ui import introduction_tab, top_movers_tab, stock_screener_tab
@@ -112,7 +112,8 @@ def test_selected_mover_snapshot_market_back_roundtrip(routing, monkeypatch, sel
     app.button(key="movers_open_snapshot").click().run()
     assert not app.exception
     assert app.session_state["intro_company_symbol"] == "AMD"
-    app.button(key="intro_company_back").click().run()
+    app.button(key="intro_refresh").click().run()
+    assert app.text_input[1].value == "AMD"
     assert not app.exception
     assert app.session_state["discovery_state"].selected_ticker == "AMD"
     app.radio(key="active_workspace").set_value("Top Movers").run()
@@ -123,8 +124,8 @@ def test_selected_mover_snapshot_market_back_roundtrip(routing, monkeypatch, sel
     assert routing["model"] == 0
 
 
-@pytest.mark.parametrize("origin,key", [("Introduction", "intro_handoff"), ("Top Movers", "movers_handoff")])
-@pytest.mark.parametrize("destination,input_key", [("Research", "research_request_draft"), ("Equity Report", "equity_report_ticker_input"), ("Deep Research", "dr_tickers"), ("Deep Research V2", "drv2_tickers")])
+@pytest.mark.parametrize("origin,key", [("Top Movers", "movers_handoff")])
+@pytest.mark.parametrize("destination,input_key", [("Research", "research_request_draft"), ("Equity Report", "equity_report_ticker_input"), ("Deep Research", "dr_tickers")])
 def test_discovery_actual_routes_prefill_without_execution(routing, origin, key, destination, input_key):
     app = app_at(origin)
     app.button(key=f"{key}_{destination}").click().run()
@@ -147,7 +148,8 @@ def test_screener_saved_return_without_recollection(routing):
     next(b for b in app.button if b.label == "Run Screener").click().run()
     assert not app.exception and routing["screen"] == 1
     app.button(key="screener_open_intro").click().run()
-    assert app.text_input(key="intro_company_search").value == "AAPL"
+    app.button(key="intro_refresh").click().run()
+    assert app.text_input[1].value == "AAPL"
     assert not any("default value" in warning.value and "Session State" in warning.value for warning in app.warning)
     app.sidebar.radio[0].set_value("Stock Screener").run()
     assert not app.exception
@@ -179,6 +181,22 @@ def test_research_drafts_command_and_explicit_submit(monkeypatch, routing):
     other = app_at("Research")
     assert other.session_state["thread_id"] == "saved-thread"
     assert len(other.session_state["chat_history"]) == 1
+
+
+def test_research_saved_findings_precede_editable_draft_without_model_call(routing):
+    app = app_at("Research")
+
+    def rendered_nodes(node):
+        yield node
+        for child in getattr(node, "children", {}).values():
+            yield from rendered_nodes(child)
+
+    nodes = list(rendered_nodes(app._tree))
+    findings_at = next(i for i, node in enumerate(nodes) if "Saved AI findings" in str(getattr(node, "value", "")))
+    draft_at = next(i for i, node in enumerate(nodes) if getattr(node, "label", "") == "Research request draft")
+    assert findings_at < draft_at
+    assert app.session_state["chat_history"][-1]["content"] == "Saved conversation"
+    assert routing["model"] == 0
 
 
 def test_chat_configuration_changes_preserve_until_new_thread(routing):
@@ -229,12 +247,13 @@ def test_saved_v1_report_roundtrip_does_not_collect(monkeypatch, routing):
     app.sidebar.radio[0].set_value("Deep Research").run()
     assert not app.exception
     assert app.download_button
-    assert not next(b for b in app.button if b.label == "Finalize report").disabled
+    assert not any(b.label.startswith(("Finalize","Retry")) for b in app.button)
     assert next(b for b in app.button if b.label == "Start deep research").disabled
     app.sidebar.radio[0].set_value("Research").run()
     app.sidebar.radio[0].set_value("Deep Research").run()
     assert not app.exception
-    assert app.session_state["dr_history"][0]["report"] == sample_result()["report"]
+    assert app.session_state["dr_history"][0]["delivery_audit"]["report"] == sample_result()["report"]
+    assert app.session_state["dr_history"][0]["status"]=="complete"
     assert routing["model"] == 0
 
 
@@ -254,7 +273,6 @@ def test_v2_alternate_provider_explicit_stage_preflight(monkeypatch, routing):
     monkeypatch.setattr(deep_research_v2_tab, "_manager_v2", stub_factory)
     app = app_at("Deep Research V2")
     next(s for s in app.selectbox if s.label == "Light-stage provider").set_value("Ollama")
-    next(c for c in app.checkbox if c.label == "Stop after evidence").set_value(True)
     next(b for b in app.button if b.label == "Run V2 pilot").click().run()
     assert not app.exception
     assert seen == [["AAPL", "MSFT"]]

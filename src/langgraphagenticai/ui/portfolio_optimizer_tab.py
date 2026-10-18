@@ -10,6 +10,8 @@ import streamlit as st
 import yfinance as yf
 from sklearn.cluster import KMeans
 
+from langgraphagenticai.utils.safety import sanitize_error
+
 
 # =========================================================
 # CONFIG
@@ -26,6 +28,7 @@ CRISIS_WINDOWS = [
 ]
 
 DEFAULT_TICKERS = "VTI, VTV, MGK, JPM, MSFT, CVX, LMT"
+MAX_SAVED_FRONTIER_POINTS = 100_000  # Existing simulation slider ceiling.
 
 
 # =========================================================
@@ -682,51 +685,146 @@ def plot_crisis_roles(cluster_df: pd.DataFrame):
 # =========================================================
 # TAB RENDERER
 # =========================================================
+def _render_saved_optimizer(view: dict) -> None:
+    """Render every result section from one bounded, completed session snapshot."""
+    saved_at = view["generated_at"]
+    tickers = view["asset_tickers"]
+    failed = st.session_state.get("portfolio_optimizer_last_attempt", {})
+    if failed.get("status") == "failed":
+        st.warning(
+            f"The latest Run did not complete ({failed['reason']}). Showing the earlier saved analysis "
+            f"for {', '.join(tickers)} generated at {saved_at}."
+        )
+    st.caption(
+        f"Saved analysis generated at {saved_at} for {', '.join(tickers)}. "
+        "This is not a new price retrieval; change settings and press Run Portfolio Analysis to recalculate."
+    )
+    if view.get("test_portfolio_notice"):
+        st.error(
+            f"{view['test_portfolio_notice']} The core analysis was saved, but the User Test Portfolio was omitted."
+        )
+
+    st.subheader("1. Price Data")
+    if view["missing_tickers"]:
+        st.warning("Dropped due to missing data: " + ", ".join(view["missing_tickers"]))
+    st.write(
+        f"Using {len(tickers)} tickers with data from {view['price_start']} to {view['price_end']}."
+    )
+    st.caption(f"Regime: {view['regime']}")
+    st.dataframe(view["price_tail"], use_container_width=True, height=180)
+
+    st.subheader("2. Efficient Frontier")
+    fig_frontier = plot_efficient_frontier(
+        view["frontier"], view["max_sharpe_port"], view["min_vol_port"],
+        view["test_metrics"], view["test_label"],
+    )
+    st.pyplot(fig_frontier, use_container_width=True)
+    plt.close(fig_frontier)
+
+    st.subheader("3. Risk / Return Table")
+    display = view["risk_table"].copy()
+    for column in ["AnnReturn", "AnnVol", "MaxDrawdown", "DownsideVol"]:
+        if column in display.columns:
+            display[column] = display[column].map(format_pct)
+    for column in ["Sharpe", "Beta"]:
+        if column in display.columns:
+            display[column] = display[column].map(lambda value: format_num(value, 2))
+    st.dataframe(display, use_container_width=True, height=280)
+
+    st.subheader("4. Crisis Fingerprint Roles")
+    cluster_df = view["crisis_table"]
+    c1, c2 = st.columns(2)
+    with c1:
+        fig_buckets = plot_risk_buckets(cluster_df)
+        if fig_buckets is not None:
+            st.pyplot(fig_buckets, use_container_width=True)
+            plt.close(fig_buckets)
+    with c2:
+        fig_roles = plot_crisis_roles(cluster_df)
+        if fig_roles is not None:
+            st.pyplot(fig_roles, use_container_width=True)
+            plt.close(fig_roles)
+    st.dataframe(pretty_crisis_table(cluster_df), use_container_width=True, height=260)
+
+    st.subheader("5. Key Portfolio Weights")
+    col1, col2 = st.columns(2)
+    with col1:
+        st.markdown("**Max Sharpe Portfolio**")
+        st.dataframe(format_portfolio_row(view["max_sharpe_port"], tickers), use_container_width=True, height=220)
+    with col2:
+        st.markdown("**Minimum Volatility Portfolio**")
+        st.dataframe(format_portfolio_row(view["min_vol_port"], tickers), use_container_width=True, height=220)
+    if view["test_row"] is not None:
+        st.markdown("**User Test Portfolio**")
+        st.dataframe(format_portfolio_row(view["test_row"], tickers), use_container_width=True, height=220)
+
+
+def _optimizer_failed_run(message: str) -> None:
+    st.session_state["portfolio_optimizer_last_attempt"] = {
+        "status": "failed",
+        "attempted_at": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
+        "reason": message,
+    }
+    st.error(message)
+    saved = st.session_state.get("portfolio_optimizer_view_v1")
+    if isinstance(saved, dict):
+        _render_saved_optimizer(saved)
+
+
 def render_portfolio_optimizer_tab() -> None:
     st.subheader("Portfolio Optimizer & Backtests")
     st.caption("Offline-first optimizer page with efficient frontier, risk buckets, and crisis-role diagnostics.")
 
-    with st.form("portfolio_optimizer_form"):
-        c1, c2 = st.columns([2, 1])
-        with c1:
-            tickers_text = st.text_area(
-                "Tickers (comma / space / newline separated)",
-                value=st.session_state.get("portfolio_optimizer_tickers", DEFAULT_TICKERS),
-                height=110,
-            )
-        with c2:
-            regime = st.selectbox(
-                "Analysis period",
-                ["Custom period", "2008-2009 Financial Crisis", "2020 COVID Crash"],
-                index=0,
-            )
+    with st.container(border=True):
+        st.markdown("**Configure portfolio analysis**")
+        with st.form("portfolio_optimizer_form"):
+            c1, c2 = st.columns([2, 1])
+            with c1:
+                tickers_text = st.text_area(
+                    "Tickers (comma / space / newline separated)",
+                    value=st.session_state.get("portfolio_optimizer_tickers", DEFAULT_TICKERS),
+                    height=110,
+                )
+            with c2:
+                regime = st.selectbox(
+                    "Analysis period",
+                    ["Custom period", "2008-2009 Financial Crisis", "2020 COVID Crash"],
+                    index=0,
+                )
 
-        d1, d2, d3 = st.columns(3)
-        today = dt.date.today()
-        with d1:
-            start_date = st.date_input("Start date", value=dt.date(2017, 1, 1), disabled=(regime != "Custom period"))
-        with d2:
-            end_date = st.date_input("End date", value=min(today, dt.date(2025, 12, 31)), disabled=(regime != "Custom period"))
-        with d3:
-            num_portfolios = st.slider("Number of random portfolios", 1000, 100000, 20000, 1000)
+            d1, d2, d3 = st.columns(3)
+            today = dt.date.today()
+            with d1:
+                start_date = st.date_input("Start date", value=dt.date(2017, 1, 1), disabled=(regime != "Custom period"))
+            with d2:
+                end_date = st.date_input("End date", value=min(today, dt.date(2025, 12, 31)), disabled=(regime != "Custom period"))
+            with d3:
+                num_portfolios = st.slider("Number of random portfolios", 1000, 100000, 20000, 1000)
 
-        s1, s2, s3 = st.columns(3)
-        with s1:
-            rf = st.number_input("Risk-free rate (annual, %)", min_value=-2.0, max_value=10.0, value=0.0, step=0.25) / 100.0
-        with s2:
-            test_mode = st.selectbox("Test portfolio", ["None", "Equal-weight (1/N)", "Custom weights"], index=0)
-        with s3:
-            custom_weights_str = st.text_input(
-                "Custom weights",
-                value="",
-                help="Same order as the active ticker list. Use decimals or percents.",
-                disabled=(test_mode != "Custom weights"),
-            )
+            s1, s2, s3 = st.columns(3)
+            with s1:
+                rf = st.number_input("Risk-free rate (annual, %)", min_value=-2.0, max_value=10.0, value=0.0, step=0.25) / 100.0
+            with s2:
+                test_mode = st.selectbox("Test portfolio", ["None", "Equal-weight (1/N)", "Custom weights"], index=0)
+            with s3:
+                custom_weights_str = st.text_input(
+                    "Custom weights",
+                    value="",
+                    help="Same order as the active ticker list. Use decimals or percents.",
+                    disabled=(test_mode != "Custom weights"),
+                )
 
-        run_btn = st.form_submit_button("Run Portfolio Analysis", type="primary")
+            run_btn = st.form_submit_button("Run Portfolio Analysis", type="primary")
 
     if not run_btn:
-        st.info("Enter tickers and settings, then build the portfolio analysis.")
+        saved = st.session_state.get("portfolio_optimizer_view_v1")
+        if isinstance(saved, dict):
+            _render_saved_optimizer(saved)
+        else:
+            failed = st.session_state.get("portfolio_optimizer_last_attempt", {})
+            if failed.get("status") == "failed":
+                st.warning(f"The latest Run did not complete: {failed['reason']}")
+            st.info("Enter tickers and settings, then build the portfolio analysis.")
         return
 
     if regime == "2008-2009 Financial Crisis":
@@ -738,73 +836,88 @@ def render_portfolio_optimizer_tab() -> None:
 
     tickers = parse_tickers(tickers_text)
     st.session_state["portfolio_optimizer_tickers"] = tickers_text
-
     if not tickers:
-        st.error("Please enter at least one valid ticker.")
+        _optimizer_failed_run("Please enter at least one valid ticker.")
         return
     if start_date >= end_date:
-        st.error("Start date must be before end date.")
+        _optimizer_failed_run("Start date must be before end date.")
         return
 
-    st.subheader("1. Price Data")
-    with st.spinner("Downloading price history..."):
-        prices = fetch_prices_yahoo(tickers, start=start_date, end=end_date)
+    try:
+        with st.spinner("Downloading price history..."):
+            prices = fetch_prices_yahoo(tickers, start=start_date, end=end_date)
+        if prices.empty or prices.shape[1] < 2:
+            _optimizer_failed_run("Need at least 2 tickers with usable price data.")
+            return
 
-    if prices.empty or prices.shape[1] < 2:
-        st.error("Need at least 2 tickers with usable price data.")
-        return
+        missing = sorted(set(tickers) - set(prices.columns))
+        returns = build_returns(prices)
+        if returns.empty:
+            _optimizer_failed_run("Not enough return history after cleaning.")
+            return
+        with st.spinner("Simulating portfolios..."):
+            results_frame = simulate_random_portfolios(
+                num_portfolios=num_portfolios,
+                returns_df=returns,
+                risk_free_annual=rf,
+                ticker_list=list(prices.columns),
+            )
+        max_sharpe_port = results_frame.iloc[results_frame["sharpe"].idxmax()].copy()
+        min_vol_port = results_frame.iloc[results_frame["stdev"].idxmin()].copy()
 
-    requested = set(tickers)
-    available = set(prices.columns)
-    missing = sorted(requested - available)
-    if missing:
-        st.warning("Dropped due to missing data: " + ", ".join(missing))
-
-    st.write(
-        f"Using {prices.shape[1]} tickers with data from {prices.index.min().date()} to {prices.index.max().date()}."
-    )
-    st.caption(f"Regime: {regime}")
-    st.dataframe(prices.tail().round(2), use_container_width=True, height=180)
-
-    returns = build_returns(prices)
-    if returns.empty:
-        st.error("Not enough return history after cleaning.")
-        return
-
-    st.subheader("2. Efficient Frontier")
-    with st.spinner("Simulating portfolios..."):
-        results_frame = simulate_random_portfolios(
-            num_portfolios=num_portfolios,
-            returns_df=returns,
-            risk_free_annual=rf,
-            ticker_list=list(prices.columns),
-        )
-
-    max_sharpe_port = results_frame.iloc[results_frame["sharpe"].idxmax()]
-    min_vol_port = results_frame.iloc[results_frame["stdev"].idxmin()]
-
-    test_weights = None
-    test_metrics = None
-    test_label = None
-    if test_mode == "Equal-weight (1/N)":
-        test_weights = np.ones(len(prices.columns)) / len(prices.columns)
-        test_metrics = calc_portfolio_perf(test_weights, returns, rf)
-        test_label = "Equal-weight (1/N)"
-    elif test_mode == "Custom weights":
-        test_weights, err = parse_custom_weights(custom_weights_str, len(prices.columns))
-        if err:
-            st.error(err)
-        else:
+        test_weights = None
+        test_metrics = None
+        test_label = None
+        test_portfolio_notice = None
+        if test_mode == "Equal-weight (1/N)":
+            test_weights = np.ones(len(prices.columns)) / len(prices.columns)
             test_metrics = calc_portfolio_perf(test_weights, returns, rf)
-            test_label = "Custom Portfolio"
+            test_label = "Equal-weight (1/N)"
+        elif test_mode == "Custom weights":
+            test_weights, err = parse_custom_weights(custom_weights_str, len(prices.columns))
+            if err:
+                test_portfolio_notice = err
+            else:
+                test_metrics = calc_portfolio_perf(test_weights, returns, rf)
+                test_label = "Custom Portfolio"
 
-    fig_frontier = plot_efficient_frontier(results_frame, max_sharpe_port, min_vol_port, test_metrics, test_label)
-    st.pyplot(fig_frontier, use_container_width=True)
+        risk_table = make_asset_summary_table(prices)
+        crisis_table = build_crisis_role_table(prices)
+        test_row = None
+        if test_weights is not None and test_metrics is not None:
+            test_row = pd.Series(
+                [test_metrics.ann_return, test_metrics.ann_vol, test_metrics.sharpe] + list(test_weights),
+                index=["ret", "stdev", "sharpe"] + list(prices.columns),
+                name=test_label,
+            )
+        generated_at = dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")
+        # Retain only chart coordinates, five displayed prices and derived tables.
+        # The simulation slider bounds the frontier at 100,000 points; raw history
+        # and the per-asset weight matrix never enter session state.
+        view = {
+            "generated_at": generated_at,
+            "asset_tickers": list(prices.columns),
+            "missing_tickers": missing,
+            "regime": regime,
+            "price_start": str(prices.index.min().date()),
+            "price_end": str(prices.index.max().date()),
+            "price_tail": prices.tail(5).round(2).copy(),
+            "frontier": results_frame[["ret", "stdev", "sharpe"]].head(MAX_SAVED_FRONTIER_POINTS).astype("float32").copy(),
+            "max_sharpe_port": max_sharpe_port,
+            "min_vol_port": min_vol_port,
+            "test_metrics": test_metrics,
+            "test_label": test_label,
+            "test_portfolio_notice": test_portfolio_notice,
+            "test_row": test_row,
+            "risk_table": risk_table.copy(),
+            "crisis_table": crisis_table.copy(),
+        }
+    except Exception as exc:
+        _optimizer_failed_run("Portfolio analysis could not complete. " + sanitize_error(exc))
+        return
 
-    st.subheader("3. Risk / Return Table")
-    risk_table = make_asset_summary_table(prices)
     st.session_state["portfolio_optimizer_payload"] = {
-        "generated_at": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
+        "generated_at": generated_at,
         "risk_table": risk_table.copy(),
         "regime": regime,
         "weights": {
@@ -812,44 +925,6 @@ def render_portfolio_optimizer_tab() -> None:
             "minimum_volatility": {ticker: float(min_vol_port[ticker]) for ticker in prices.columns},
         },
     }
-    display = risk_table.copy()
-    for c in ["AnnReturn", "AnnVol", "MaxDrawdown", "DownsideVol"]:
-        if c in display.columns:
-            display[c] = display[c].map(format_pct)
-    for c in ["Sharpe", "Beta"]:
-        if c in display.columns:
-            display[c] = display[c].map(lambda x: format_num(x, 2))
-    st.dataframe(display, use_container_width=True, height=280)
-
-    st.subheader("4. Crisis Fingerprint Roles")
-    cluster_df = build_crisis_role_table(prices)
-    c1, c2 = st.columns(2)
-    with c1:
-        fig_buckets = plot_risk_buckets(cluster_df)
-        if fig_buckets is not None:
-            st.pyplot(fig_buckets, use_container_width=True)
-    with c2:
-        fig_roles = plot_crisis_roles(cluster_df)
-        if fig_roles is not None:
-            st.pyplot(fig_roles, use_container_width=True)
-
-    display_cluster = pretty_crisis_table(cluster_df)
-    st.dataframe(display_cluster, use_container_width=True, height=260)
-
-    st.subheader("5. Key Portfolio Weights")
-    col1, col2 = st.columns(2)
-    with col1:
-        st.markdown("**Max Sharpe Portfolio**")
-        st.dataframe(format_portfolio_row(max_sharpe_port, list(prices.columns)), use_container_width=True, height=220)
-    with col2:
-        st.markdown("**Minimum Volatility Portfolio**")
-        st.dataframe(format_portfolio_row(min_vol_port, list(prices.columns)), use_container_width=True, height=220)
-
-    if test_weights is not None and test_metrics is not None:
-        st.markdown("**User Test Portfolio**")
-        row = pd.Series(
-            [test_metrics.ann_return, test_metrics.ann_vol, test_metrics.sharpe] + list(test_weights),
-            index=["ret", "stdev", "sharpe"] + list(prices.columns),
-            name=test_label,
-        )
-        st.dataframe(format_portfolio_row(row, list(prices.columns)), use_container_width=True, height=220)
+    st.session_state["portfolio_optimizer_view_v1"] = view
+    st.session_state["portfolio_optimizer_last_attempt"] = {"status": "complete", "attempted_at": generated_at}
+    _render_saved_optimizer(view)

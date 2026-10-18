@@ -34,6 +34,22 @@ def sample_result():
 
 
 class ResearchUITests(unittest.TestCase):
+    @patch("langgraphagenticai.ui.deep_research_tab._manager")
+    def test_saved_thesis_keeps_configuration_and_evidence_rail_without_new_call(self, factory):
+        app = AppTest.from_string(HARNESS, default_timeout=20)
+        app.session_state["dr_history"] = [sample_result()]
+        app.run()
+        self.assertEqual(len(app.exception), 0)
+        self.assertTrue(any(item.label == "Configure new research" for item in app.expander))
+        self.assertEqual([tab.label for tab in app.tabs[:6]], [
+            "Investment thesis", "Company comparison", "CrewAI decision",
+            "Sources & evidence", "Research notebook", "Investment brief & scenarios",
+        ])
+        self.assertTrue(any("Saved-run evidence" in item.value for item in app.markdown))
+        self.assertTrue(any("Run started: 2026-01-02T00:00:00Z" in item.value for item in app.caption))
+        app.run()
+        factory.assert_not_called()
+
     def test_saved_research_offers_crewai_committee(self):
         app = AppTest.from_string(HARNESS, default_timeout=20)
         app.session_state["dr_history"] = [sample_result()]
@@ -61,7 +77,7 @@ class ResearchUITests(unittest.TestCase):
         app.session_state["dr_result_tabs_test-run"] = "CrewAI decision"
         app.run()
         self.assertEqual(len(app.exception), 0)
-        self.assertTrue(any("MSFT · BUY" in item.value for item in app.markdown))
+        self.assertTrue(any("MSFT: BUY" in item.value and "78%" in item.value for item in app.markdown))
 
     def test_professional_comparison_workspace_renders_ttm_and_statement_sections(self):
         result = sample_result()
@@ -91,24 +107,26 @@ class ResearchUITests(unittest.TestCase):
         self.assertIn("Forward & valuation", labels)
         self.assertTrue(any("Company snapshot" in item.value for item in app.markdown))
 
-    def test_completed_review_issues_can_be_finalized_with_caveats(self):
-        result = sample_result()
-        result.update(status="needs_review", review_status="needs_review", draft=result["report"])
-        result["warnings"] = ["Review flagged issues: missing primary source."]
-        app = AppTest.from_string(HARNESS, default_timeout=20)
-        app.session_state["dr_history"] = [result]
+    def test_review_issues_finish_without_reader_approval(self):
+        result=sample_result()
+        result.update(status="needs_review",review_status="needs_review",draft=result["report"])
+        result["warnings"]=["Review flagged issues: missing primary source."]
+        app=AppTest.from_string(HARNESS,default_timeout=20)
+        app.session_state["dr_history"]=[result]
         app.run()
-        self.assertEqual(len(app.exception), 0)
-        self.assertTrue(any("Review completed and flagged evidence issues" in item.value for item in app.info))
-        self.assertFalse(any(b.label.startswith("Retry") for b in app.button))
-        next(b for b in app.button if b.label == "Finalize report").click().run()
-        finalized = app.session_state["dr_history"][0]
-        self.assertEqual(finalized["status"], "complete")
-        self.assertEqual(finalized["review_status"], "finalized_with_caveats")
-        self.assertTrue(finalized["finalized_with_caveats"])
-        self.assertTrue(finalized["finalized_at"])
-        self.assertEqual(finalized["warnings"], ["Review flagged issues: missing primary source."])
-        self.assertTrue(any("Complete · Caveats disclosed" in item.value for item in app.metric))
+        self.assertFalse(app.exception)
+        self.assertFalse(any(b.label.startswith(("Retry","Finalize")) for b in app.button))
+        final=app.session_state["dr_history"][0]
+        self.assertEqual(final["status"],"complete")
+        self.assertEqual(final["review_status"],"not_performed")
+        self.assertEqual(final["delivery_audit"]["report"],result["report"])
+        self.assertEqual(final["warnings"],result["warnings"])
+        self.assertEqual(final["report"],result["report"])
+        self.assertFalse(any("unverified draft" in item.value for item in app.warning))
+        self.assertFalse(any("missing primary source" in item.value for item in app.caption))
+        self.assertFalse(any("Saved research draft" in item.label for item in app.expander))
+        self.assertFalse(any("E001" in item.value for item in app.markdown))
+        self.assertTrue(any("$111.5" in item.value or r"\$111.5" in item.value for item in app.markdown))
 
     @patch("langgraphagenticai.ui.deep_research_tab._manager")
     def test_run_followup_and_history_survive_reruns(self, factory):
@@ -140,48 +158,21 @@ class ResearchUITests(unittest.TestCase):
         factory.assert_not_called()
 
     @patch("langgraphagenticai.ui.deep_research_tab._manager")
-    def test_retry_does_not_recollect_evidence(self, factory):
-        result = sample_result()
-        result["status"] = "incomplete"
-        factory.return_value.resume.return_value = {**result, "status": "complete", "report": "Recovered thesis [E001]."}
-        app = AppTest.from_string(HARNESS, default_timeout=20)
-        app.session_state["dr_history"] = [result]
-        app.run()
-        next(b for b in app.button if b.label == "Retry report writing").click().run()
-        self.assertEqual(len(app.exception), 0)
-        self.assertEqual(app.session_state["dr_history"][0]["status"], "complete")
-        factory.return_value.run.assert_not_called()
-
-    @patch("langgraphagenticai.ui.deep_research_tab._manager")
-    def test_retry_failure_is_actionable_and_preserves_saved_evidence(self, factory):
-        result = sample_result()
-        result.update(status="incomplete", report="## Research collected", draft="")
-        factory.return_value.resume.side_effect = TimeoutError()
-        app = AppTest.from_string(HARNESS, default_timeout=20)
-        app.session_state["dr_history"] = [result]
-        app.run()
-        next(b for b in app.button if b.label == "Retry report writing").click().run()
-        self.assertEqual(app.session_state["dr_history"][0]["evidence"], result["evidence"])
-        self.assertTrue(any("timed out" in item.value and "saved evidence is unchanged" in item.value
-                            for item in app.error))
-        factory.return_value.run.assert_not_called()
-
-    @patch("langgraphagenticai.ui.deep_research_tab._manager")
-    def test_pending_review_displays_draft_and_retries_review(self, factory):
-        result = sample_result()
-        result.update(status="review_pending", draft=result["report"], review_status="pending",
-                      warnings=["Draft saved; review is pending."], report_warnings=["Draft saved; review is pending."])
-        factory.return_value.resume.return_value = {**result, "status": "complete", "warnings": []}
-        app = AppTest.from_string(HARNESS, default_timeout=20)
-        app.session_state["dr_history"] = [result]
-        app.run()
-        self.assertTrue(any(r"\$111.5" in item.value for item in app.markdown))
-        next(b for b in app.button if b.label == "Retry review").click().run()
-        self.assertEqual(len(app.exception), 0)
-        self.assertEqual(app.session_state["dr_history"][0]["status"], "complete")
-        self.assertEqual([item.value for item in app.warning],
-                         ["Serper news coverage is partial. Some requested companies have no usable saved news; check Sources and evidence gaps."])
-        factory.return_value.run.assert_not_called()
+    def test_old_incomplete_saved_runs_finish_without_paid_recovery(self,factory):
+        for status in ("incomplete","review_pending","needs_review"):
+            result=sample_result()
+            result.update(status=status,draft=result["report"],review_status="pending")
+            app=AppTest.from_string(HARNESS,default_timeout=20)
+            app.session_state["dr_history"]=[result]
+            app.run()
+            self.assertFalse(app.exception)
+            final=app.session_state["dr_history"][0]
+            self.assertEqual(final["status"],"incomplete" if status == "incomplete" else "complete")
+            self.assertEqual(final["evidence"],result["evidence"])
+            self.assertEqual(final["delivery_audit"]["draft"],result["draft"])
+            self.assertFalse(any(b.label.startswith(("Retry","Finalize")) for b in app.button))
+            app.run()
+        factory.assert_not_called()
 
 
 if __name__ == "__main__":

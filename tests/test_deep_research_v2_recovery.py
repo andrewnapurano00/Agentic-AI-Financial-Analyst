@@ -42,6 +42,22 @@ def widget(app, group, label):
     return next(w for w in getattr(app, group) if w.label == label)
 
 
+def test_saved_report_keeps_six_tabs_and_evidence_rail_without_new_call(app, monkeypatch):
+    result = saved()
+    app.session_state["drv2_history"] = [result]
+    factory = Mock()
+    monkeypatch.setattr(ui, "_manager_v2", factory)
+    app.run()
+    assert not app.exception
+    assert [tab.label for tab in app.tabs[:6]] == [
+        "Report", "Decision", "Comparison", "Sources", "Performance", "Investment brief & scenarios",
+    ]
+    assert any("Saved-run evidence" in item.value for item in app.markdown)
+    assert any("Operation time; evidence retrieval is separate" in item.value for item in app.caption)
+    app.run()
+    factory.assert_not_called()
+
+
 @pytest.mark.parametrize("status,label", [("incomplete", "Retry report writing"), ("review_pending", "Retry review"), ("evidence_ready", "Generate report from saved evidence")])
 def test_recovery_uses_saved_runtime_and_preserves_history(app, monkeypatch, status, label):
     first = saved(status); first["warnings"] = ["Saved failure reason"]
@@ -52,17 +68,18 @@ def test_recovery_uses_saved_runtime_and_preserves_history(app, monkeypatch, sta
     factory = Mock(return_value=manager); monkeypatch.setattr(ui, "_manager_v2", factory)
     app.run()
     assert not app.exception
-    assert any("Saved failure reason" in w.value for w in app.warning)
-    if status != "evidence_ready": assert not any("research ready" in w.value for w in app.success)
-    widget(app, "button", label).click().run()
-    assert not app.exception
-    assert factory.call_args.kwargs["saved"]["id"] == first["id"]
-    assert factory.call_args.kwargs["budget"] == .35
-    manager.resume.assert_called_once(); manager.run.assert_not_called()
-    assert len(app.session_state["drv2_history"]) == 2
-    assert app.session_state["drv2_history"][0]["v2_runtime"] == first["v2_runtime"]
+    final=app.session_state["drv2_history"][0]
+    assert final["status"] == ("complete" if status == "review_pending" else status)
+    assert final["warnings"]==["Saved failure reason"]
+    assert final["v2_runtime"]==first["v2_runtime"]
+    assert len(app.session_state["drv2_history"])==2
+    if first["draft"]:
+        assert not any("unverified draft" in item.value for item in app.warning)
+        assert not any("Saved research draft" in item.label for item in app.expander)
+        assert any("Cash flow weakens" in item.value for item in app.markdown)
+    assert not any(b.label.startswith(("Retry","Finalize","Generate report")) for b in app.button)
     app.run()
-    assert manager.resume.call_count == 1
+    factory.assert_not_called()
 
 
 def test_missing_evidence_has_actionable_message_without_useless_retry(app):
@@ -70,7 +87,9 @@ def test_missing_evidence_has_actionable_message_without_useless_retry(app):
     app.session_state["drv2_history"] = [result]
     app.run()
     assert not app.exception
-    assert any("No usable company evidence" in i.value for i in app.info)
+    assert any("generation did not finish" in i.value for i in app.info)
+    assert app.session_state["drv2_history"][0]["status"]=="incomplete"
+    assert not app.session_state["drv2_history"][0]["report"]
     assert not any("Retry" in b.label for b in app.button)
 
 
@@ -172,7 +191,7 @@ def factory_args():
                 marketaux_api_key="", ollama_base_url="http://localhost:11434/v1", budget=.35, stop_after_evidence=False)
 
 
-def test_lazy_factory_and_review_resume_only_construct_required_model(monkeypatch):
+def test_lazy_factory_saved_draft_needs_no_model_or_review(monkeypatch):
     args = factory_args(); args["saved"] = saved("review_pending")
     args["saved"]["request"] = asdict(args["request"])
     fake = Mock(); fake.invoke.return_value = SimpleNamespace(content='{"corrections": [], "unresolved": []}')
@@ -182,8 +201,25 @@ def test_lazy_factory_and_review_resume_only_construct_required_model(monkeypatc
     build.assert_not_called(); tools.assert_not_called()
     result = manager.resume(args["saved"])
     assert result["status"] == "complete"
-    assert build.call_count == 1 and build.call_args.args[1] == "gpt-5-nano"
-    assert fake.invoke.call_count == 1
+    build.assert_not_called()
+    fake.invoke.assert_not_called()
+    assert result["report"] == args["saved"]["draft"]
+    assert result["review_status"] == "not_performed"
+
+
+@pytest.mark.parametrize("mode", ["Economy", "Balanced", "Maximum quality"])
+def test_all_cost_modes_ignore_review_routes_and_reuse_full_saved_memo(monkeypatch, mode):
+    args = factory_args()
+    args["config"] = stage_configuration(mode, light_provider="OpenAI")
+    assert args["config"]["interpretive_review"] is False
+    args["config"]["routes"]["review"] = {"provider": "unsupported", "model": ""}
+    args["saved"] = saved("review_pending")
+    build = Mock(); monkeypatch.setattr(workflow, "build_stage_llm", build)
+    m = workflow.build_manager(**args)
+    result = m.resume(args["saved"])
+    assert m.single_pass and not m.interpretive_review
+    assert result["report"] == REPORT and result["status"] == "complete"
+    build.assert_not_called()
 
 
 @pytest.mark.parametrize("kind", ["empty", "length", "timeout", "malformed_review", "budget"])
@@ -279,14 +315,18 @@ def test_submission_decision_failure_selects_new_report_before_error(app, monkey
 def test_hot_reload_tracks_v2_workflow_without_running_app(monkeypatch):
     import app as entry
     calls = []
-    module = SimpleNamespace(render_deep_research_tab=lambda: None, render_deep_research_v2_tab=lambda: None)
+    module = SimpleNamespace(render_deep_research_tab=lambda: None, render_deep_research_v2_tab=lambda: None, render_equity_report_tab=lambda: None)
     monkeypatch.setattr(entry.app_main, "_deep_research_source_stamp", (), raising=False)
     monkeypatch.setattr(entry.app_main, "render_deep_research_tab", entry.app_main.render_deep_research_tab)
     monkeypatch.setattr(entry.app_main, "render_deep_research_v2_tab", entry.app_main.render_deep_research_v2_tab)
+    monkeypatch.setattr(entry.app_main, "render_equity_report_tab", entry.app_main.render_equity_report_tab)
     monkeypatch.setattr(entry.importlib, "import_module", lambda name: calls.append(name) or module)
     monkeypatch.setattr(entry.importlib, "reload", lambda value: value)
     entry._load_current_deep_research()
     assert "langgraphagenticai.deep_research.v2_workflow" in calls
+    assert "langgraphagenticai.deep_research.delivery" in calls
+    assert "langgraphagenticai.deep_research.summary_text" in calls
+    assert calls.index("langgraphagenticai.deep_research.delivery") < calls.index("langgraphagenticai.ui.deep_research_tab")
     assert calls.index("langgraphagenticai.deep_research.v2") < calls.index("langgraphagenticai.deep_research.v2_workflow")
 
 

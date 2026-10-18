@@ -10,13 +10,15 @@ import streamlit as st
 
 from langgraphagenticai.LLMS.openaillm import OpenAILLM
 from langgraphagenticai.utils.safety import sanitize_error
+from langgraphagenticai.utils.export_csv import safe_csv_bytes
 from langgraphagenticai.deep_research.context import available_context, collect_app_context
 from langgraphagenticai.deep_research.crew_committee import clean_committee_text, run_investment_committee
 from langgraphagenticai.deep_research.quarterly_data import QuarterlyFinancialDataSource as FinancialDataSource
 from langgraphagenticai.deep_research.research_workflow import AuditedResearchManager, audited_finance_tools
 from langgraphagenticai.deep_research.research_metrics import format_metric, project_sector_row, DISPLAY_LABELS
 from langgraphagenticai.deep_research.quarterly_ttm import METHODOLOGY
-from langgraphagenticai.deep_research.manager import ResearchManager, failure_reason, finalize_report
+from langgraphagenticai.deep_research.manager import ResearchManager, failure_reason
+from langgraphagenticai.deep_research.delivery import executive_saved_result
 from langgraphagenticai.deep_research.models import ResearchRequest, dumps, parse_symbols, safe_url
 from langgraphagenticai.deep_research.presentation import build_research_pdf, clean_report_markdown
 from langgraphagenticai.ui.investment_brief import render_investment_brief
@@ -39,7 +41,8 @@ def _manager(openai_api_key, model_name, fmp_api_key, serper_api_key, marketaux_
     return AuditedResearchManager(
         llm, FinancialDataSource(fmp_api_key), SerperClient(serper_api_key),
         audited_finance_tools(get_finance_tools(fmp_api_key, openai_api_key, marketaux_api_key)), progress,
-        on_text=on_text, checkpoint=checkpoint, utility_llm=utility_llm,
+        on_text=on_text, checkpoint=checkpoint, utility_llm=utility_llm, auto_finish=True,
+        single_pass=True, interpretive_review=False, allow_clarification_retry=False,
     )
 
 
@@ -77,6 +80,23 @@ def _show_metric_matrix(frame: pd.DataFrame, fields: list[str], caption: str) ->
 
 
 def _render_comparison(result):
+    from langgraphagenticai.deep_research.executive import executive_metric_groups
+    frame = pd.DataFrame([project_sector_row(row) for row in result.get("comparison", [])])
+    if frame.empty:
+        st.info("No normalized company comparison is available.")
+        return
+    st.caption("Equity Report sector priorities, using saved Deep Research evidence. Financial periods and source dates are retained below.")
+    groups = executive_metric_groups(result["comparison"])
+    for tab, (title, fields) in zip(st.tabs(list(groups)), groups.items()):
+        with tab:
+            caption = ("Observed-session price returns, not total returns. Price date/basis are shown when available; missing metadata is unverified."
+                       if title == "Momentum & technicals" else title + " - available metrics only; sector-inapplicable values remain blank.")
+            _show_metric_matrix(frame, fields, caption)
+    with st.expander("Detailed metrics, dates & calculation audit"):
+        _render_comparison_details(result)
+
+
+def _render_comparison_details(result):
     frame = pd.DataFrame([project_sector_row(row) for row in result["comparison"]])
     if frame.empty:
         st.info("No normalized company comparison is available.")
@@ -91,7 +111,7 @@ def _render_comparison(result):
             audit_frame = pd.DataFrame([{key: dumps(value) if isinstance(value,(dict,list)) else str(value) if value is not None else ""
                                          for key,value in item.items()} for item in audit])
             st.dataframe(audit_frame, width="stretch", hide_index=True)
-            st.download_button("Download metric audit CSV", audit_frame.map(lambda value: "'"+value if isinstance(value,str) and value.lstrip().startswith(("=","+","-","@")) else value).to_csv(index=False),
+            st.download_button("Download metric audit CSV", safe_csv_bytes(audit_frame),
                 "research_metric_audit.csv", "text/csv", key="metric_audit_"+str(result.get("id", "saved")), on_click="ignore")
         st.caption("Forward growth is FY+2 versus FY+1; registry aliases are retained in the audit. EPS/revenue forward amounts use the nearest genuinely future annual estimate. Latest balance snapshots and matched return-denominator snapshots have separate dates.")
 
@@ -183,6 +203,14 @@ def _render_comparison(result):
 
 
 def _render_sources(result):
+    with st.expander("Research diagnostics and methodology"):
+        from langgraphagenticai.deep_research.report_basis import report_basis_notes
+        st.json({"delivery":result.get("delivery_outcome","reviewed_analysis"),
+                 "report_mode":result.get("report_mode"),"review_status":result.get("review_status"),
+                 "warnings":result.get("warnings",[]),"gaps":result.get("gaps",[]),
+                 "recovery":result.get("automatic_recovery",[]),"original_review":result.get("delivery_audit",{}),
+                 "saved_drafts":result.get("delivery_drafts",[]),
+                 "methodology":report_basis_notes(result)},expanded=False)
     evidence = result["evidence"]
     categories = sorted({e["category"] for e in evidence})
     selected = st.multiselect("Filter evidence", categories, key=f"dr_filter_{result['id']}")
@@ -206,87 +234,55 @@ def _render_sources(result):
 
 
 def _render_crew_decision(decision: dict) -> None:
-    def executive_text(value) -> str:
-        text = clean_committee_text(str(value or ""))
-        return re.sub(r"(?<!\\)\$", r"\\$", text)
-
-    preferred = decision.get("preferred_ticker")
-    if preferred:
-        st.success(f"Committee preference: **{preferred}**")
-    st.markdown(executive_text(decision.get("summary", "")))
-    calls = decision.get("decisions", [])
-    if not calls:
-        st.info("No structured committee calls are available.")
-        return
-    columns = st.columns(min(len(calls), 3))
-    for index, call in enumerate(calls):
-        with columns[index % len(columns)]:
-            with st.container(border=True):
-                st.markdown(f"### {call.get('ticker', 'Ticker')} · {call.get('recommendation', '—')}")
-                st.metric("Confidence", f"{call.get('confidence', 0)}%")
-                st.markdown(executive_text(call.get("rationale", "")))
-                for label, key in (("Catalysts", "catalysts"), ("Risks", "risks"),
-                                   ("Thesis invalidation", "invalidation_signals")):
-                    values = call.get(key, [])
-                    if values:
-                        st.markdown(f"**{label}**")
-                        for value in values:
-                            st.markdown(f"- {executive_text(value)}")
-    if decision.get("dissent"):
-        st.markdown("#### Committee dissent")
-        st.markdown(executive_text(decision["dissent"]))
-    if decision.get("evidence_limitations"):
-        with st.expander("Evidence limitations"):
-            for limitation in decision["evidence_limitations"]:
-                st.markdown(f"- {executive_text(limitation)}")
-    st.caption(decision.get("disclaimer", "AI-generated research opinion, not personalized investment advice."))
+    from langgraphagenticai.ui.research_decision import render_executive_decision
+    render_executive_decision(decision)
 
 
 @st.fragment
 def render_deep_research_tab(*, openai_api_key: str, model_name: str, fmp_api_key: str,
                              serper_api_key: str = "", marketaux_api_key: str = "") -> None:
-    st.subheader("Deep Research")
-    if not openai_api_key:
-        st.info("Add an OpenAI key to generate, retry writing or follow up on research. Saved reports and deterministic finalization remain available.")
     st.caption("From company evidence to an investment thesis. Investigate one business or compare up to four.")
-    connections = available_context(st.session_state)
-    c1, c2, c3 = st.columns(3)
-    c1.metric("Financial data", "Configured" if fmp_api_key else "Not configured")
-    c2.metric("Serper news", "Configured" if serper_api_key else "Not configured")
-    c3.metric("Saved app datasets", str(len(connections)))
-    if connections:
-        st.caption("Available context: " + " · ".join(connections))
-    if not serper_api_key:
-        st.info("Add SERPER_API_KEY in the sidebar, .env, or Streamlit secrets to include news and web research.")
-
-    import_cols = st.columns(2)
-    import_cols[0].button("Use equity report tickers", key="dr_import_equity", on_click=_import_tickers,
-                          args=("equity",), disabled=not st.session_state.get("equity_report_tickers"))
-    import_cols[1].button("Use top screener results", key="dr_import_screener", on_click=_import_tickers,
-                          args=("screener",), disabled=not isinstance(st.session_state.get("stock_screener_payload"), dict))
-    if "dr_tickers" not in st.session_state:
-        st.session_state["dr_tickers"] = ", ".join(st.session_state.get("equity_report_tickers", [])[:4]) or "AAPL, MSFT"
-    with st.form("deep_research_form"):
-        left, right = st.columns([2, 1])
-        with left:
-            ticker_text = st.text_input("Companies", key="dr_tickers", help="One to four ticker symbols, separated by commas.")
-            question = st.text_area("Research question", value="Which company offers the stronger long-term investment case? Examine business quality, fundamentals, valuation, technicals, recent news sentiment, catalysts, and downside risks.", height=125, max_chars=4000)
-        with right:
-            horizon = st.selectbox("Investment horizon", ["1–3 years", "3–12 months", "3–5 years"])
-            depth = st.selectbox("Research depth", ["Standard", "Extended"], help="Both collect the core datasets. Standard adds up to 4 targeted tool investigations; Extended adds up to 8.")
-            period_label = st.selectbox("Financial statements", ["Annual", "Quarterly"])
-            news_days = st.selectbox("News lookback (days)", [7, 30, 90], index=1)
-        options = st.columns(3)
-        use_context = options[0].checkbox("Include saved data from other tabs", value=False, disabled=True)
-        options[0].caption("Fresh research uses audited quarterly statements. Other saved pages have unverified financial bases; saved research remains available below.")
-        include_news = options[1].checkbox("Include Serper news and web research", value=bool(serper_api_key))
-        use_crewai = options[2].checkbox(
-            "Enable CrewAI investment committee",
-            value=False,
-            help="After research, three agents debate fundamentals, valuation, and risk before issuing BUY/HOLD/SELL calls.",
-        )
-        st.caption("The draft appears as it is written. Evidence and completed drafts are saved during the run, so retries resume from the saved work. Results stay in this session.")
-        submitted = st.form_submit_button("Start deep research", type="primary", width="stretch", disabled=not openai_api_key)
+    saved_run_slot = st.container()
+    with st.expander("Configure new research", expanded=not bool(st.session_state.get("dr_history"))):
+        if not openai_api_key:
+            st.info("Add an OpenAI key to generate or follow up on research. Saved reports remain available.")
+        connections = available_context(st.session_state)
+        c1, c2, c3 = st.columns(3)
+        c1.metric("Financial data", "Configured" if fmp_api_key else "Not configured")
+        c2.metric("Serper news", "Configured" if serper_api_key else "Not configured")
+        c3.metric("Saved app datasets", str(len(connections)))
+        if connections:
+            st.caption("Available context: " + " · ".join(connections))
+        if not serper_api_key:
+            st.info("Add SERPER_API_KEY in the sidebar, .env, or Streamlit secrets to include news and web research.")
+        import_cols = st.columns(2)
+        import_cols[0].button("Use equity report tickers", key="dr_import_equity", on_click=_import_tickers,
+                              args=("equity",), disabled=not st.session_state.get("equity_report_tickers"))
+        import_cols[1].button("Use top screener results", key="dr_import_screener", on_click=_import_tickers,
+                              args=("screener",), disabled=not isinstance(st.session_state.get("stock_screener_payload"), dict))
+        if "dr_tickers" not in st.session_state:
+            st.session_state["dr_tickers"] = ", ".join(st.session_state.get("equity_report_tickers", [])[:4]) or "AAPL, MSFT"
+        with st.form("deep_research_form"):
+            left, right = st.columns([2, 1])
+            with left:
+                ticker_text = st.text_input("Companies", key="dr_tickers", help="One to four ticker symbols, separated by commas.")
+                question = st.text_area("Research question", value="Which company offers the stronger long-term investment case? Examine business quality, fundamentals, valuation, technicals, recent news sentiment, catalysts, and downside risks.", height=125, max_chars=4000)
+            with right:
+                horizon = st.selectbox("Investment horizon", ["1–3 years", "3–12 months", "3–5 years"])
+                depth = st.selectbox("Research depth", ["Standard", "Extended"], help="Both collect the core datasets. Standard adds up to 4 targeted tool investigations; Extended adds up to 8.")
+                period_label = st.selectbox("Financial statements", ["Annual", "Quarterly"])
+                news_days = st.selectbox("News lookback (days)", [7, 30, 90], index=1)
+            options = st.columns(3)
+            use_context = options[0].checkbox("Include saved data from other tabs", value=False, disabled=True)
+            options[0].caption("Fresh research uses audited quarterly statements. Other saved pages have unverified financial bases; saved research remains available below.")
+            include_news = options[1].checkbox("Include Serper news and web research", value=bool(serper_api_key))
+            use_crewai = options[2].checkbox(
+                "Enable CrewAI investment committee",
+                value=False,
+                help="After research, three agents debate fundamentals, valuation, and risk before issuing BUY/HOLD/SELL calls.",
+            )
+            st.caption("Research completes automatically using the available information. Saved results stay in this session.")
+            submitted = st.form_submit_button("Start deep research", type="primary", width="stretch", disabled=not openai_api_key)
 
     factory_args = (openai_api_key, model_name, fmp_api_key, serper_api_key, marketaux_api_key)
 
@@ -321,7 +317,7 @@ def render_deep_research_tab(*, openai_api_key: str, model_name: str, fmp_api_ke
                 result = _manager(*factory_args, progress=progress, on_text=on_text, checkpoint=checkpoint).run(request, context)
                 result["model"] = model_name
                 result["crewai_enabled"] = use_crewai
-                if use_crewai and result.get("report") and result.get("status") in {"complete", "needs_review"}:
+                if use_crewai and result.get("report") and result.get("status") == "complete" and result.get("delivery_outcome")!="limited_evidence":
                     stage.write("CrewAI committee is debating the investment decision")
                     try:
                         result["crewai_decision"] = run_investment_committee(
@@ -333,8 +329,8 @@ def render_deep_research_tab(*, openai_api_key: str, model_name: str, fmp_api_ke
                 history = st.session_state.get("dr_history", [])
                 st.session_state["dr_history"] = [result] + [r for r in history if r["id"] != result["id"]][:4]
                 st.session_state["dr_active_run"] = result["id"]
-                ready = result["status"] in {"complete", "needs_review"}
-                status.update(label="Review complete; evidence issues remain" if result["status"] == "needs_review" else "Research ready" if ready else "Draft ready; review pending" if result["status"] == "review_pending" else "Evidence saved; report incomplete",
+                ready = result["status"] == "complete"
+                status.update(label="Research ready" if ready else "Evidence saved; report incomplete",
                               state="complete" if ready else "error", expanded=False)
         except ValueError as exc:
             st.error(sanitize_error(exc))
@@ -355,63 +351,34 @@ def render_deep_research_tab(*, openai_api_key: str, model_name: str, fmp_api_ke
                     st.write(body)
         return
 
-    for saved in history:
-        if saved.get("status") == "review_pending" and saved.get("review_status") == "needs_review":
-            saved["status"] = "needs_review"
-    st.divider()
-    lookup = {r["id"]: r for r in history}
-    chosen = st.selectbox("Research history", list(lookup), key="dr_active_run",
-                          format_func=lambda key: f"{', '.join(lookup[key]['request']['symbols'])} · {lookup[key]['created_at']} · {lookup[key]['status']}")
-    result = lookup[chosen]
-    render_evidence_row(evidence_status(result))
-    symbols = ", ".join(result["request"]["symbols"])
-    status_label = ("Complete · Caveats disclosed" if result.get("finalized_with_caveats") else
-                    str(result.get("status", "unknown")).replace("_", " ").title())
-    st.markdown(f"### {symbols} Research Brief")
-    summary = st.columns(4)
-    summary[0].metric("Review status", status_label)
-    summary[1].metric("Investment horizon", result["request"].get("horizon", "—"))
-    summary[2].metric("Evidence records", len(result.get("evidence", [])))
-    cost = result.get("estimated_model_cost_usd")
-    summary[3].metric("Model cost", f"${cost:.4f}" if cost is not None else "—")
-    details = [result.get("created_at", ""), result.get("model", model_name)]
-    if result.get("elapsed_seconds"):
-        details.append(f"{result['elapsed_seconds']:.0f}s run time")
-    if cost is not None and result.get("token_counts_estimated"):
-        details.append("cost estimated from text size")
-    st.caption(" · ".join(str(value) for value in details if value))
-    render_serper_news_coverage(result)
-    for warning in result["warnings"]:
-        st.warning(re.sub(r"(?<!\\)\$", r"\\$", warning))
-    if result["gaps"]:
-        with st.expander(f"Data coverage: {len(result['gaps'])} unavailable datasets or searches"):
-            for gap in result["gaps"]:
-                st.write(gap)
-    if result["status"] == "needs_review":
-        with st.container(border=True):
-            st.markdown("**Review is complete, with unresolved evidence limitations.**")
-            st.caption("Finalize when you accept the disclosed limitations. Warnings remain attached to the report and its exports.")
-            if st.button("Finalize report", type="primary", key=f"dr_finalize_{chosen}"):
-                finalized = finalize_report(result)
-                st.session_state["dr_history"] = [finalized if item["id"] == chosen else item for item in history]
-                st.rerun()
-    if result["status"] not in {"complete", "needs_review"} and st.button("Retry review" if result.get("draft") else "Retry report writing", key=f"dr_retry_{chosen}", disabled=not openai_api_key):
-        active_run = chosen
-        try:
-            with st.status("Resuming saved research", expanded=True) as retry_status:
-                stage, preview = st.empty(), st.empty()
-                resumed = _manager(*factory_args, progress=stage.write,
-                                   on_text=lambda text: preview.markdown(
-                                       re.sub(r"(?<!\\)\$", r"\\$", clean_report_markdown(text))),
-                                   checkpoint=checkpoint).resume(result)
-                result.update(resumed)
-                checkpoint(result)
-                reviewed = result["status"] in {"complete", "needs_review"}
-                retry_status.update(label="Research ready" if result["status"] == "complete" else "Review complete; evidence issues remain" if reviewed else "Saved work retained; another retry may be needed",
-                                    state="complete" if reviewed else "error", expanded=False)
-                st.rerun()
-        except Exception as exc:
-            st.error("Retry stopped. " + failure_reason(exc) + " Your saved evidence is unchanged; retrying never recollects market data.")
+    with saved_run_slot:
+        history = [executive_saved_result(saved) for saved in history]
+        st.session_state["dr_history"] = history
+        st.divider()
+        lookup = {r["id"]: r for r in history}
+        chosen = st.selectbox("Research history", list(lookup), key="dr_active_run",
+                              format_func=lambda key: f"{', '.join(lookup[key]['request']['symbols'])} · {lookup[key]['created_at']} · {lookup[key]['status']}")
+        result = lookup[chosen]
+        render_evidence_row(evidence_status(result))
+        symbols = ", ".join(result["request"]["symbols"])
+        status_label = ("Complete · Caveats disclosed" if result.get("finalized_with_caveats") else
+                        str(result.get("status", "unknown")).replace("_", " ").title())
+        st.markdown(f"### {symbols} Research Brief")
+        summary = st.columns(4)
+        summary[0].metric("Report status", "Overview only" if result.get("delivery_outcome") == "limited_evidence" else "Ready" if result["status"]=="complete" else status_label)
+        summary[1].metric("Investment horizon", result["request"].get("horizon", "—"))
+        summary[2].metric("Evidence records", len(result.get("evidence", [])))
+        cost = result.get("estimated_model_cost_usd")
+        summary[3].metric("Model cost", f"${cost:.4f}" if cost is not None else "—")
+        details = [result.get("created_at", ""), result.get("model", model_name)]
+        if result.get("elapsed_seconds"):
+            details.append(f"{result['elapsed_seconds']:.0f}s run time")
+        if cost is not None and result.get("token_counts_estimated"):
+            details.append("cost estimated from text size")
+        st.caption(" · ".join(str(value) for value in details if value))
+        render_serper_news_coverage(result)
+        if result.get("status") == "incomplete":
+            st.info("Report generation did not finish. Collected research remains available in Sources & evidence.")
 
     memo, compare, committee, sources, notebook, brief_tab = st.tabs(
         ["Investment thesis", "Company comparison", "CrewAI decision", "Sources & evidence", "Research notebook", "Investment brief & scenarios"],
@@ -422,16 +389,20 @@ def render_deep_research_tab(*, openai_api_key: str, model_name: str, fmp_api_ke
             render_investment_brief(result, "v1", (openai_api_key, fmp_api_key, serper_api_key, marketaux_api_key))
     with memo:
         if memo.open:
-            if result.get("finalized_with_caveats"):
-                st.info("Finalized with disclosed review limitations. The original warnings remain attached above.")
-            elif result["status"] == "needs_review":
-                st.info("Review completed and flagged evidence issues. Check the warnings and sources before relying on the thesis. Start a new run when fresh source data is available.")
-            elif result["status"] != "complete":
-                st.info("This is saved draft text. Review has not completed." if result.get("draft") else "Report generation has not completed. You can retry using the saved evidence.")
-            with st.container(border=True):
-                st.caption(f"EXECUTIVE EQUITY RESEARCH · {symbols}")
-                st.divider()
-                st.markdown(re.sub(r"(?<!\\)\$", r"\\$", clean_report_markdown(result["report"])))
+            thesis, evidence_rail = st.columns([3, 1], gap="large")
+            with thesis:
+                with st.container(border=True):
+                    st.caption(f"EXECUTIVE EQUITY RESEARCH · {symbols}")
+                    st.divider()
+                    st.markdown(re.sub(r"(?<!\\)\$", r"\\$", clean_report_markdown(result["report"])))
+            with evidence_rail:
+                with st.container(border=True):
+                    st.markdown("**Saved-run evidence**")
+                    st.caption("Supporting detail is available in Sources & evidence.")
+                    st.metric("Report status", "Overview only" if result.get("delivery_outcome") == "limited_evidence" else "Ready" if result["status"]=="complete" else status_label)
+                    st.metric("Evidence records", len(result.get("evidence", [])))
+                    st.caption("Run started: " + str(result.get("created_at") or "Unavailable"))
+                    render_evidence_row(evidence_status(result))
     with compare:
         if compare.open:
             _render_comparison(result)
@@ -441,11 +412,11 @@ def render_deep_research_tab(*, openai_api_key: str, model_name: str, fmp_api_ke
             if decision:
                 _render_crew_decision(decision)
             else:
-                committee_ready = bool(result.get("report")) and result.get("status") in {"complete", "needs_review"}
+                committee_ready = bool(result.get("report")) and result.get("status") == "complete" and result.get("delivery_outcome")!="limited_evidence"
                 if result.get("crewai_error"):
                     st.warning("The prior CrewAI attempt did not complete: " + result["crewai_error"])
                 st.caption("Run the committee over this saved report. It reuses existing evidence and does not fetch market data again."
-                           if committee_ready else "Complete the research review before requesting a committee decision.")
+                           if committee_ready else "Generate a complete report before requesting a committee decision.")
                 if st.button("Run CrewAI investment committee", type="primary", key=f"dr_crew_{chosen}",
                              disabled=not committee_ready or not openai_api_key):
                     try:
@@ -488,8 +459,10 @@ def render_deep_research_tab(*, openai_api_key: str, model_name: str, fmp_api_ke
     downloads = st.columns(4)
     filename = "research_" + "_".join(result["request"]["symbols"]) + "_" + result["id"]
     clean_markdown = clean_report_markdown(result.get("report", ""))
+    if result.get("crewai_decision"):
+        st.caption("The PDF includes the saved CrewAI committee decision.")
     downloads[0].download_button("Download executive PDF", build_research_pdf(result), filename + ".pdf",
                                  "application/pdf", key=f"dr_pdf_{chosen}")
     downloads[1].download_button("Download research memo", clean_markdown, filename + ".md", "text/markdown", key=f"dr_md_{chosen}")
     downloads[2].download_button("Download evidence & report", dumps(result), filename + ".json", "application/json", key=f"dr_json_{chosen}")
-    downloads[3].download_button("Download comparison CSV", pd.DataFrame(result["comparison"]).to_csv(index=False), filename + ".csv", "text/csv", key=f"dr_csv_{chosen}")
+    downloads[3].download_button("Download comparison CSV", safe_csv_bytes(pd.DataFrame(result["comparison"])), filename + ".csv", "text/csv", key=f"dr_csv_{chosen}")

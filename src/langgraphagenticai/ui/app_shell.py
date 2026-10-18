@@ -7,10 +7,11 @@ import streamlit as st
 
 
 PAGE_LABELS = {
-    "Introduction": ("Introduction", "MARKET OVERVIEW", "Live markets and AI-assisted intelligence."),
+    "Introduction": ("Market Brief", "MARKET OVERVIEW", "Market evidence and company research."),
     "Top Movers": ("Top Movers", "MARKET LEADERSHIP", "Weekly price leadership, sector breadth, and current news catalysts."),
     "Research": ("Research", "LLM WORKSPACE", "Ask, compare, and synthesize market evidence."),
     "Equity Report": ("Equity Research", "REPORT WORKSPACE", "Decision-ready company and peer analysis."),
+    "AI Valuation": ("AI Valuation", "VALUATION WORKSPACE", "An AI investment view, reviewed drivers and clear price scenarios."),
     "Stock Screener": ("Stock Screener", "DISCOVERY WORKSPACE", "Filter a universe by fundamental and market criteria."),
     "Portfolio Lab": ("Portfolio Lab", "ALLOCATION WORKSPACE", "Optimize allocations and review agent decisions."),
     "Deep Research V2": ("Deep Research V2", "COST PILOT", "Saved evidence and explicit decisions."),
@@ -24,24 +25,24 @@ def inject_app_shell_css() -> None:
         """
         <style>
         :root {
-          --ax-bg: #071018;
-          --ax-panel: #0b1620;
-          --ax-panel-2: #0f1d29;
-          --ax-panel-3: #132432;
-          --ax-line: #263847;
-          --ax-line-soft: #1b2b38;
-          --ax-text: #e8edf2;
-          --ax-muted: #8fa2b3;
-          --ax-dim: #5f7486;
-          --ax-amber: #f0a51a;
-          --ax-amber-2: #ffc24a;
+          --ax-bg: #0B1220;
+          --ax-panel: #121D2B;
+          --ax-panel-2: #172334;
+          --ax-panel-3: #172334;
+          --ax-line: #283649;
+          --ax-line-soft: #283649;
+          --ax-text: #E6EBF2;
+          --ax-muted: #9AA9BC;
+          --ax-dim: #9AA9BC;
+          --ax-amber: #C8AA73;
+          --ax-amber-2: #C8AA73;
           --ax-cyan: #26c6da;
-          --ax-green: #35d07f;
-          --ax-red: #ff5964;
+          --ax-green: #37B68C;
+          --ax-red: #E2747E;
         }
 
         html, body, [class*="css"] {
-          font-family: "Arial Narrow", "Roboto Condensed", Inter, "Segoe UI", sans-serif;
+          font-family: Inter, "Segoe UI", sans-serif;
           color: var(--ax-text);
         }
         .stApp, [data-testid="stAppViewContainer"] { background: var(--ax-bg); color: var(--ax-text); }
@@ -49,14 +50,14 @@ def inject_app_shell_css() -> None:
         [data-testid="stToolbar"] { right: .25rem; }
         [data-testid="stMainBlockContainer"] { max-width: 1680px; padding: 1rem 1.1rem 3.25rem; }
 
-        [data-testid="stSidebar"] { width: 218px !important; background: #06111b; border-right: 1px solid var(--ax-line); }
+        [data-testid="stSidebar"] { width: 218px !important; background: #0B1220; border-right: 1px solid var(--ax-line); }
         [data-testid="stSidebar"] > div:first-child { padding-top: .7rem; }
         [data-testid="stSidebar"] * { color: var(--ax-text); }
         [data-testid="stSidebar"] .stCaption { color: var(--ax-muted) !important; }
         [data-testid="stSidebar"] hr { margin: .8rem 0; border-color: var(--ax-line); }
-        [data-testid="stSidebar"] [data-testid="stExpander"] { border: 1px solid var(--ax-line); background: #091722; border-radius: 3px; }
+        [data-testid="stSidebar"] [data-testid="stExpander"] { border: 1px solid var(--ax-line); background: #121D2B; border-radius: 3px; }
         [data-testid="stSidebar"] [data-baseweb="select"] > div,
-        [data-testid="stSidebar"] input { background: #0b1a26 !important; border-color: var(--ax-line) !important; color: #fff !important; }
+        [data-testid="stSidebar"] input { background: #172334 !important; border-color: var(--ax-line) !important; color: #fff !important; }
 
         .ax-brand { padding: .18rem .15rem .1rem; font-size: 1.05rem; letter-spacing: .01em; color: #fff; }
         .ax-brand strong { font-weight: 780; color: #fff; }
@@ -69,27 +70,40 @@ def inject_app_shell_css() -> None:
           min-height: 2.8rem; margin: 0 -.75rem; padding: .65rem 1rem; border-radius: 0;
           border-left: 3px solid transparent; transition: background-color .12s ease, border-color .12s ease;
         }
-        [data-testid="stSidebar"] div[role="radiogroup"] label:hover { background: #0d1d29; }
-        [data-testid="stSidebar"] div[role="radiogroup"] label:has(input:checked) { background: #10202c; border-left-color: var(--ax-amber); }
+        [data-testid="stSidebar"] div[role="radiogroup"] label:hover { background: #172334; }
+        [data-testid="stSidebar"] div[role="radiogroup"] label:has(input:checked) { background: #172334; border-left-color: var(--ax-amber); }
         [data-testid="stSidebar"] div[role="radiogroup"] label:has(input:checked) p { color: var(--ax-amber-2); }
         [data-testid="stSidebar"] div[role="radiogroup"] label > div:first-child { display: none; }
         [data-testid="stSidebar"] div[role="radiogroup"] label p { font-size: .78rem; font-weight: 680; letter-spacing: .015em; }
+        [data-testid="stSidebar"] div[role="radiogroup"] > label:nth-child(1)::before,
+        [data-testid="stSidebar"] div[role="radiogroup"] > label:nth-child(4)::before,
+        [data-testid="stSidebar"] div[role="radiogroup"] > label:nth-child(8)::before {
+          display: block; width: 100%; padding: .45rem 0 .25rem; color: var(--ax-muted);
+          font-size: .61rem; font-weight: 750; letter-spacing: .12em; text-transform: uppercase;
+        }
+        [data-testid="stSidebar"] div[role="radiogroup"] > label:nth-child(1)::before { content: "Discover"; }
+        [data-testid="stSidebar"] div[role="radiogroup"] > label:nth-child(4)::before { content: "Analyze"; }
+        [data-testid="stSidebar"] div[role="radiogroup"] > label:nth-child(8)::before { content: "Allocate"; }
 
-        .ax-command-shell { border: 1px solid var(--ax-line); background: #08141e; padding: .45rem .55rem; margin: 0 0 .55rem; }
-        .ax-market-strip { display: grid; grid-template-columns: repeat(5, 1fr); border: 1px solid var(--ax-line); border-left: 3px solid var(--ax-amber); margin-bottom: .7rem; background: #091722; }
+        .ax-command-shell { border: 1px solid var(--ax-line); background: #121D2B; padding: .45rem .55rem; margin: 0 0 .55rem; }
+        .ax-market-strip { display: grid; grid-template-columns: repeat(5, 1fr); border: 1px solid var(--ax-line); border-left: 3px solid var(--ax-amber); margin-bottom: .7rem; background: #121D2B; }
         .ax-market-item { display: flex; justify-content: space-between; gap: .55rem; padding: .42rem .7rem; border-right: 1px solid var(--ax-line); font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .68rem; }
         .ax-market-item:last-child { border-right: 0; }
         .ax-market-name { color: var(--ax-muted); }
+        .ax-market-item { flex-direction: column; min-width: 0; }
+        .ax-market-values { display: flex; gap: .6rem; flex-wrap: wrap; color: var(--ax-text); font-size: .8rem; }
+        .ax-market-values strong { white-space: nowrap; }
+        .ax-market-meta { color: var(--ax-dim); font: .6rem ui-monospace,Consolas,monospace; margin: -.4rem 0 .65rem; }
         .ax-market-state { color: var(--ax-dim); }
 
         .ax-page-head { display: flex; justify-content: space-between; align-items: end; border: 1px solid var(--ax-line); border-left: 3px solid var(--ax-amber); background: var(--ax-panel); margin: 0 0 .75rem; padding: .72rem .85rem; }
         .ax-page-kicker { color: var(--ax-amber); font-size: .61rem; font-weight: 800; letter-spacing: .14em; }
-        .ax-page-head h1 { margin: .13rem 0 0; color: var(--ax-text); font-family: "Arial Narrow", "Roboto Condensed", sans-serif; font-size: 1.55rem; line-height: 1; letter-spacing: -.015em; }
+        .ax-page-head h1 { margin: .13rem 0 0; color: var(--ax-text); font-family: Inter, "Segoe UI", sans-serif; font-size: 1.5rem; line-height: 1.15; letter-spacing: -.015em; }
         .ax-page-head p { margin: 0; color: var(--ax-muted); font-size: .72rem; }
         .ax-live { display: inline-flex; align-items: center; gap: .4rem; color: var(--ax-muted); font: .62rem ui-monospace, Consolas, monospace; }
         .ax-live:before { content: none; width: 6px; height: 6px; border-radius: 50%; background: var(--ax-green); }
 
-        h1, h2, h3, h4 { color: var(--ax-text) !important; font-family: "Arial Narrow", "Roboto Condensed", Inter, sans-serif !important; letter-spacing: .005em; }
+        h1, h2, h3, h4 { color: var(--ax-text) !important; font-family: Inter, "Segoe UI", sans-serif !important; letter-spacing: .005em; }
         h2 { font-size: 1.35rem !important; }
         h3 { font-size: .98rem !important; font-weight: 750 !important; border-left: 3px solid var(--ax-amber); padding-left: .55rem !important; }
         h4 { font-size: .82rem !important; }
@@ -97,36 +111,36 @@ def inject_app_shell_css() -> None:
         [data-testid="stCaptionContainer"] { color: var(--ax-muted); font-size: .7rem; }
 
         .stButton > button, .stDownloadButton > button, [data-testid="stFormSubmitButton"] > button {
-          min-height: 2.25rem; border-radius: 3px; border: 1px solid #3a5061; background: #10202c;
+          min-height: 2.25rem; border-radius: 3px; border: 1px solid #283649; background: #172334;
           color: var(--ax-text); font-size: .72rem; font-weight: 780; letter-spacing: .035em; box-shadow: none;
         }
         .stButton > button:hover, .stDownloadButton > button:hover { border-color: var(--ax-amber); color: var(--ax-amber-2); }
         .stButton > button[kind="primary"], [data-testid="stFormSubmitButton"] > button[kind="primary"] {
           background: var(--ax-amber); border-color: var(--ax-amber); color: #111820;
         }
-        .stButton > button[kind="primary"]:hover, [data-testid="stFormSubmitButton"] > button[kind="primary"]:hover { background: var(--ax-amber-2); color: #071018; }
+        .stButton > button[kind="primary"]:hover, [data-testid="stFormSubmitButton"] > button[kind="primary"]:hover { background: var(--ax-amber-2); color: #0B1220; }
 
         [data-baseweb="input"] > div, [data-baseweb="select"] > div, textarea {
-          border-color: var(--ax-line) !important; border-radius: 3px !important; background: #091722 !important; color: var(--ax-text) !important;
+          border-color: var(--ax-line) !important; border-radius: 3px !important; background: #121D2B !important; color: var(--ax-text) !important;
         }
         input, textarea { color: var(--ax-text) !important; caret-color: var(--ax-amber) !important; }
         input::placeholder, textarea::placeholder { color: #688093 !important; }
         [data-baseweb="input"] > div:focus-within, [data-baseweb="select"] > div:focus-within { border-color: var(--ax-amber) !important; box-shadow: 0 0 0 1px var(--ax-amber) !important; }
         [data-testid="stForm"] { border: 1px solid var(--ax-line); border-radius: 3px; background: var(--ax-panel); padding: .85rem .9rem .2rem; }
 
-        [data-baseweb="tab-list"] { gap: 0; border: 1px solid var(--ax-line); background: #091722; }
+        [data-baseweb="tab-list"] { gap: 0; border: 1px solid var(--ax-line); background: #121D2B; }
         [data-baseweb="tab"] { height: 2.55rem; padding: 0 1rem; border-right: 1px solid var(--ax-line); color: var(--ax-muted); font-size: .68rem; font-weight: 750; letter-spacing: .045em; }
-        [aria-selected="true"][data-baseweb="tab"] { color: var(--ax-amber); background: #0f1e2a; }
+        [aria-selected="true"][data-baseweb="tab"] { color: var(--ax-amber); background: #172334; }
         [data-baseweb="tab-highlight"] { background: var(--ax-amber); height: 2px; }
 
-        [data-testid="stMetric"] { padding: .42rem .7rem; border: 1px solid var(--ax-line); background: #0a1823; }
+        [data-testid="stMetric"] { padding: .42rem .7rem; border: 1px solid var(--ax-line); background: #121D2B; }
         [data-testid="stMetricLabel"] { color: var(--ax-muted); font-size: .65rem; letter-spacing: .04em; text-transform: uppercase; }
         [data-testid="stMetricValue"] { color: var(--ax-text); font: 700 1.2rem ui-monospace, SFMono-Regular, Consolas, monospace; }
         [data-testid="stMetricDelta"] { font-family: ui-monospace, Consolas, monospace; }
         [data-testid="stDataFrame"] { border: 1px solid var(--ax-line); border-radius: 2px; overflow: hidden; }
-        [data-testid="stAlert"] { border-radius: 2px; border: 1px solid var(--ax-line); background: #0d1d29; color: var(--ax-text); }
-        [data-testid="stExpander"] { border: 1px solid var(--ax-line); border-radius: 2px; background: #091722; }
-        [data-testid="stChatMessage"] { background: #0b1823; border: 1px solid var(--ax-line); border-radius: 2px; padding: .75rem .85rem; }
+        [data-testid="stAlert"] { border-radius: 2px; border: 1px solid var(--ax-line); background: #172334; color: var(--ax-text); }
+        [data-testid="stExpander"] { border: 1px solid var(--ax-line); border-radius: 2px; background: #121D2B; }
+        [data-testid="stChatMessage"] { background: #121D2B; border: 1px solid var(--ax-line); border-radius: 2px; padding: .75rem .85rem; }
         [data-testid="stChatMessage"] [data-testid="stMarkdownContainer"] { max-width: 1100px; color: #cbd9e4; font-size: .76rem; line-height: 1.58; }
         [data-testid="stChatMessage"] [data-testid="stMarkdownContainer"] h3 { margin: 1rem 0 .4rem!important; padding: .32rem 0 .32rem .6rem!important; border-left: 3px solid var(--ax-amber)!important; border-bottom: 1px solid #19354a; color: #eef6fc!important; font-size: .82rem!important; text-transform: uppercase; letter-spacing: .055em; }
         [data-testid="stChatMessage"] [data-testid="stMarkdownContainer"] h3:first-child { margin-top: .1rem!important; }
@@ -136,8 +150,8 @@ def inject_app_shell_css() -> None:
         [data-testid="stChatMessage"] [data-testid="stMarkdownContainer"] li { margin: .24rem 0; padding-left: .18rem; }
         [data-testid="stChatMessage"] [data-testid="stMarkdownContainer"] li::marker { color: var(--ax-cyan); font-weight: 800; }
         [data-testid="stChatMessage"] [data-testid="stMarkdownContainer"] strong { color: #f2f7fb; }
-        [data-testid="stChatInput"] { background: #071018; }
-        [data-testid="stChatInput"] textarea { border-color: #3a5061 !important; }
+        [data-testid="stChatInput"] { background: #0B1220; }
+        [data-testid="stChatInput"] textarea { border-color: #283649 !important; }
         [data-testid="stPlotlyChart"], [data-testid="stArrowVegaLiteChart"] { border: 1px solid var(--ax-line); background: var(--ax-panel); }
         [data-testid="stCheckbox"] label span { font-size: .72rem; }
         [role="radiogroup"] label p { font-size: .72rem; }
@@ -146,22 +160,22 @@ def inject_app_shell_css() -> None:
         .ax-terminal-panel { border: 1px solid var(--ax-line); background: var(--ax-panel); padding: .85rem; }
         .ax-terminal-panel h3 { margin: 0 0 .55rem !important; }
         .ax-terminal-panel p { color: var(--ax-muted); font-size: .75rem; margin: .25rem 0; }
-        .ax-security-head { display: flex; justify-content: space-between; align-items: center; gap: 1rem; border: 1px solid var(--ax-line); background: #091722; padding: .7rem .8rem; margin: 0 0 .55rem; }
+        .ax-security-head { display: flex; justify-content: space-between; align-items: center; gap: 1rem; border: 1px solid var(--ax-line); background: #121D2B; padding: .7rem .8rem; margin: 0 0 .55rem; }
         .ax-security-symbol { color: var(--ax-text); font: 800 1.45rem "Arial Narrow", sans-serif; }
         .ax-security-meta { color: var(--ax-muted); font: .66rem ui-monospace, Consolas, monospace; margin-top: .15rem; }
         .ax-security-context { color: var(--ax-amber); font: 700 .68rem ui-monospace, Consolas, monospace; text-align: right; }
         .ax-shortcuts { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--ax-line); border: 1px solid var(--ax-line); }
-        .ax-shortcut { background: #0b1823; padding: .55rem .65rem; color: #b8c6d1; font-size: .68rem; }
+        .ax-shortcut { background: #121D2B; padding: .55rem .65rem; color: #b8c6d1; font-size: .68rem; }
         .ax-shortcut b { color: var(--ax-cyan); display: block; margin-bottom: .16rem; }
 
-        .ax-statusbar { position: fixed; z-index: 990; left: 218px; right: 0; bottom: 0; display: flex; gap: 1rem; align-items: center; min-height: 1.8rem; padding: .3rem .8rem; border-top: 1px solid var(--ax-line); background: #06111b; color: var(--ax-muted); font: .61rem ui-monospace, Consolas, monospace; }
+        .ax-statusbar { position: fixed; z-index: 990; left: 218px; right: 0; bottom: 0; display: flex; gap: 1rem; align-items: center; min-height: 1.8rem; padding: .3rem .8rem; border-top: 1px solid var(--ax-line); background: #0B1220; color: var(--ax-muted); font: .61rem ui-monospace, Consolas, monospace; }
         .ax-statusbar b { color: var(--ax-text); }
         .ax-status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--ax-green); }
 
         @media (max-width: 900px) {
           [data-testid="stMainBlockContainer"] { padding: .75rem .65rem 3rem; }
           .ax-market-strip { grid-template-columns: 1fr 1fr; }
-          .ax-market-item:nth-child(n+4) { display: none; }
+          .ax-market-item:nth-child(n+4) { display: flex; }
           .ax-page-head { align-items: start; flex-direction: column; gap: .45rem; }
           .ax-page-head h1 { font-size: 1.3rem; }
           .ax-research-intro { grid-template-columns: 1fr; }
@@ -220,17 +234,24 @@ def render_command_bar() -> str:
         with action:
             submitted = st.button("RUN ANALYSIS", type="primary", use_container_width=True, key="terminal_run")
         with hint:
-            st.markdown('<div style="padding:.62rem .35rem;color:#8fa2b3;font:11px ui-monospace,Consolas,monospace">CTRL K</div>', unsafe_allow_html=True)
+            st.markdown('<div style="padding:.62rem .35rem;color:#9AA9BC;font:11px ui-monospace,Consolas,monospace">CTRL K</div>', unsafe_allow_html=True)
     return query.strip() if submitted and query.strip() else ""
 
 
-def render_market_strip() -> None:
-    items = ["S&P 500", "NASDAQ", "DOW", "RUSSELL 2000", "VIX"]
-    cells = "".join(
-        f'<div class="ax-market-item"><span class="ax-market-name">{name}</span><span class="ax-market-state">MARKET CONTEXT</span></div>'
-        for name in items
-    )
-    st.markdown(f'<div class="ax-market-strip">{cells}</div>', unsafe_allow_html=True)
+def render_market_strip(fmp_api_key: str = "") -> None:
+    from hashlib import sha256
+    from langgraphagenticai.providers.market_strip import load_market_strip
+    from langgraphagenticai.ui.market_strip import market_strip_html
+    packet = load_market_strip(fmp_api_key)
+    scope = sha256(fmp_api_key.encode()).hexdigest()[:16]
+    saved = st.session_state.setdefault("market_strip_quotes", {})
+    prior = saved.get(scope, {})
+    rows = {symbol: {**row, "retained": True} for symbol, row in prior.items()}
+    rows.update(packet["rows"])
+    saved[scope] = rows
+    while len(saved) > 4:
+        del saved[next(iter(saved))]
+    st.markdown(market_strip_html(rows, packet), unsafe_allow_html=True)
 
 
 def render_page_header(page: str) -> None:

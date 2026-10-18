@@ -29,7 +29,7 @@ REPORT = "## Executive Investment Thesis\nSaved evidence in USD as of 2026-06-30
 
 def recorded_fetch(url, *, params, **kwargs):
     symbol=params['symbol']; data=RECORD['companies'][symbol]
-    route=url.rsplit('/',1)[-1]
+    route='analyst-estimates' if '/api/v3/analyst-estimates/' in url else url.rsplit('/',1)[-1]
     category={'income-statement':'income','balance-sheet-statement':'balance','cash-flow-statement':'cash_flow',
               'profile':'profile','quote':'quote','analyst-estimates':'estimates'}.get(route)
     if category in {'income','balance','cash_flow'}:
@@ -98,7 +98,10 @@ def test_bank_tech_reit_alias_projection_prompt_ui_and_pdf():
     from langgraphagenticai.deep_research.presentation import build_research_pdf
     from pdfminer.high_level import extract_text
     text=extract_text(io.BytesIO(build_research_pdf(result)))
-    assert 'Metric audit' in text and 'unsupported' in text and 'FY+2' in text
+    assert 'Financial basis & coverage' not in text and 'FY+2' in text
+    assert 'Sources: Calculated' not in text
+    assert 'Metric contracts' in result['comparison'][0]
+    assert 'Input dates: unavailable' not in text
     assert result==original
 
 
@@ -238,7 +241,7 @@ def test_fresh_factories_share_source_and_preserve_news_gate(monkeypatch,mode):
     assert result['comparison'][0]['Revenue (TTM)']==466823000000
     routes=[c.args[0] for c in fetch.call_args_list]
     assert len(routes)==11 and not any('ttm' in url.lower() for url in routes)
-    estimates=next(c for c in fetch.call_args_list if c.args[0].endswith('analyst-estimates'))
+    estimates=next(c for c in fetch.call_args_list if '/analyst-estimates/' in c.args[0])
     assert estimates.kwargs['params']['period']=='annual'
     assert any(e['category']=='income_annual' for e in result['evidence'])
 

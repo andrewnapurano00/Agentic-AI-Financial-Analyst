@@ -32,7 +32,7 @@ def test_chart_fallback_keeps_one_source(monkeypatch):
     monkeypatch.setattr(symbol_history, "get_fmp_json", lambda *a, **k: [])
     monkeypatch.setattr(symbol_history.yf, "download", lambda *a, **k: pd.DataFrame(
         {"Close": [1, 2]}, index=pd.date_range("2026-09-29", periods=2)))
-    result = market_history.load_market_chart.__wrapped__("test", "1M")
+    result = market_history.load_market_chart.__wrapped__("", "1M")
     assert result["provider"] == "Yahoo Finance"
     assert result["warnings"]
     assert len(result["points"]) == 2
@@ -85,54 +85,22 @@ def test_movers_missing_average_volume_preserves_rankings(monkeypatch):
     assert "+0.00%" in html
 
 
-def test_market_range_interaction_does_not_call_ai(monkeypatch):
-    from datetime import datetime, timezone
-    from langgraphagenticai.ui import introduction_tab
-    monkeypatch.setattr(introduction_tab, "load_market_overview", lambda key: {
-        "indexes": {"S&P 500": {"price": 100, "percent": 0}}, "sectors": {},
-        "cross_assets": {}, "movers": [], "chart": [], "as_of": datetime.now(timezone.utc),
-        "fetched_at": datetime.now(timezone.utc), "provider": "Synthetic", "warnings": []})
-    requested = []
-    def chart(key, period):
-        requested.append(period)
-        return {"points": [(pd.Timestamp("2026-09-29"), 100), (pd.Timestamp("2026-09-30"), 101)], "provider": "Synthetic", "warnings": []}
-    monkeypatch.setattr(introduction_tab, "load_market_chart", chart)
-    def paid(*a, **k):
-        raise AssertionError("Range selection must never generate an AI summary")
-    monkeypatch.setattr(introduction_tab, "generate_company_summary", paid)
-    app = AppTest.from_string("from langgraphagenticai.ui.introduction_tab import render_introduction_tab\nrender_introduction_tab()")
-    app.run(timeout=30)
+def test_market_range_interaction_does_not_call_ai(market_dashboard_stub):
+    ui, packet, calls = market_dashboard_stub
+    app = AppTest.from_string("from langgraphagenticai.ui.introduction_tab import render_introduction_tab\nrender_introduction_tab()").run(timeout=30)
+    app.button(key="intro_refresh").click().run()
     assert not app.exception
-    # Segmented controls are represented as button groups by Streamlit AppTest.
-    app.get("button_group")[-1].set_value("1Y").run()
-    assert not app.exception
-    assert requested[-1] == "1Y"
+    app.get("button_group")[0].set_value("3M").run(); assert calls[-1] == ("^GSPC", "3M") and not app.exception
 
 
-def test_company_range_reuses_summary(monkeypatch):
-    from langgraphagenticai.ui import introduction_tab
-    snapshot = {
-        "symbol": "AAPL", "company": "Apple", "quote": {"price": 100},
-        "fundamentals": {}, "profile": {}, "news": [], "providers": ["Synthetic"],
-        "fetched_at": "2026-09-30", "performance": {
-            "as_of": "2026-09-30", "series": [
-                {"date": "2026-01-01", "close": 90},
-                {"date": "2026-09-01", "close": 99}, {"date": "2026-09-30", "close": 100}]}}
-    monkeypatch.setattr(introduction_tab, "load_company_snapshot", lambda *args: snapshot)
-    monkeypatch.setattr(introduction_tab, "load_symbol_history", lambda symbol, key, period, currency: {
-        "symbol": symbol, "period": period, "points": [(pd.Timestamp("2026-09-29"), 99), (pd.Timestamp("2026-09-30"), 100)],
-        "provider": "Synthetic", "warnings": [], "currency": currency})
-    def paid(*args):
-        raise AssertionError("Company chart reruns must not generate summaries")
-    monkeypatch.setattr(introduction_tab, "generate_company_summary", paid)
-    app = AppTest.from_string("from langgraphagenticai.ui.introduction_tab import render_introduction_tab\nrender_introduction_tab()")
-    app.session_state["intro_company_symbol"] = "AAPL"
-    app.session_state["intro_summary:AAPL:gpt-5"] = "Saved evidence summary"
-    app.run(timeout=30)
+
+def test_company_range_reuses_summary(market_dashboard_stub):
+    ui, packet, calls = market_dashboard_stub
+    app = AppTest.from_string("from langgraphagenticai.ui.introduction_tab import render_introduction_tab\nrender_introduction_tab()").run(timeout=30)
+    app.button(key="intro_refresh").click().run()
     assert not app.exception
-    app.get("button_group")[-1].set_value("1M").run()
-    assert not app.exception
-    assert any("Saved evidence summary" in item.value for item in app.markdown)
+    assert not any("ANALYZE COMPANY" in b.label for b in app.button); assert app.text_input[1].value == "^GSPC"
+
 
 
 def test_top_movers_direction_and_sector_interaction(monkeypatch):
@@ -160,3 +128,37 @@ def test_top_movers_direction_and_sector_interaction(monkeypatch):
     app.selectbox(key="movers_sector_filter").set_value("Technology").run()
     assert not app.exception
     assert app.selectbox(key="movers_focus").value == "AAA"
+
+
+def test_market_brief_primary_row_keeps_chart_observations_sector_and_no_ai(market_dashboard_stub):
+    ui, packet, calls = market_dashboard_stub
+    app = AppTest.from_string("from langgraphagenticai.ui.introduction_tab import render_introduction_tab\nrender_introduction_tab()").run(timeout=30)
+    app.button(key="intro_refresh").click().run()
+    assert not app.exception
+    assert {"Sector heatmap", "Macro context & sector ETFs", "Daily price chart"}.issubset({s.value for s in app.subheader})
+
+
+
+def test_populated_market_brief_keeps_sector_and_candidate_actions(market_dashboard_stub):
+    ui, packet, calls = market_dashboard_stub
+    app = AppTest.from_string("from langgraphagenticai.ui.introduction_tab import render_introduction_tab\nrender_introduction_tab()").run(timeout=30)
+    app.button(key="intro_refresh").click().run()
+    assert not app.exception
+    assert not app.radio; assert not any("Research candidates" in s.value or "Explore sectors" in s.value for s in app.subheader)
+
+
+
+def test_movers_selected_quote_keeps_unknown_currency_and_zero_change(monkeypatch):
+    from langgraphagenticai.ui import top_movers_tab
+    from langgraphagenticai.providers import discovery, symbol_history
+
+    frame = pd.DataFrame([{"symbol": "AAA", "companyName": "Alpha", "sector": "Technology", "price": 210, "1D": 0, "5D": 0}])
+    monkeypatch.setattr(top_movers_tab, "load_top_movers", lambda *_: {"universe": frame, "requested_universe_size": 1})
+    monkeypatch.setattr(discovery, "load_selected_quote", lambda *_: {"price": 210, "change": 0, "change_pct": 0})
+    monkeypatch.setattr(discovery, "load_selected_news", lambda *_: {"results": []})
+    monkeypatch.setattr(symbol_history, "load_symbol_history", lambda *_: {"points": []})
+    app = AppTest.from_string("from langgraphagenticai.ui.top_movers_tab import render_top_movers_tab\nrender_top_movers_tab(fmp_api_key='fixture',serper_api_key='')").run(timeout=30)
+    assert not app.exception
+    quote = next(item.value for item in app.markdown if 'class="terminal-quote"' in item.value)
+    assert "210.00" in quote and "Unknown quote currency" in quote
+    assert "+0.00 (+0.00%)" in quote

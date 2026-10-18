@@ -1,0 +1,9 @@
+# RDS-03 Gate 1 integration review — 2026-10-13
+
+**PASS for page-only Market Brief and Top Movers layout edits.** Independent verifier rechecked F07–F09 and accepted the corrected 214-row map: 211 active proposed destinations and three stale emissions with current equivalents. The active saved AI interpretation, company metric/earnings/peer/audit material and separate market/company technical controls have explicit destinations and state checks. This is permission to implement the reviewed layout scope, not a claim of 211-row parity.
+
+As integration owner I checked the active `render_introduction_tab` and `render_top_movers_tab` routes, their early returns from `main.py`, native Streamlit controls and protected keys against the readback. Existing `st.columns`, `st.container`, `heading`, `cards`, `observations` and other shared helpers suffice for the 50/25/25 market row and roughly 65/35 movers row. Edit boundary is `ui/introduction_tab.py` and `ui/top_movers_tab.py` only. Shared shell/opening helper signatures, routing, providers, financial logic, model triggers and exports stay unchanged; any need to edit those boundaries requires another review.
+
+Reviewed SHA-256: `market-movers-gate1-readback.md` `5793BB4B7358CBD783B6FE8E5617BB231F32BD914AC3AC3478656EF8F3DA3C3B`; `market-movers-preservation.csv` `3CC6BA416EE5167D51FC1B0E977984FEF6D348077DB2478635E185F9A2BD0B8F`. Pre-edit page hashes: `introduction_tab.py` `45EF8E40AF02698440BAF8EBFD607D21AA7A4F9798F7DE954612CFE705501C88`; `top_movers_tab.py` `2C49313267ED5389059CBE47C30A0F420C0B66DD409E53CD096CED3FE3A30F4C`.
+
+Before calling RDS-03 complete, verify all 211 active rows with fixtures/browser evidence, compare the reference at 1440/1920/1024/390px, test no paid calls on ordinary controls, compile/import, guarded health and relevant tests. The heatmap data contract remains separate.

@@ -90,7 +90,10 @@ def test_factory_news_transport_and_saved_sources(monkeypatch, http, mode):
                                   "published": "1 day ago", "publisher": "Example"}]
     assert len([item for item in result["evidence"] if item["category"] == "income"]) == 2
     # Real resume executes orchestration using the saved evidence; only synthesis is mocked.
-    monkeypatch.setattr(manager, "write_report", lambda *args, **kwargs: REPORT)
+    def reviewed_report(*args,**kwargs):
+        manager.review_status="complete"
+        return REPORT
+    monkeypatch.setattr(manager,"write_report",reviewed_report)
     resumed = manager.resume(result)
     assert resumed["report"] == REPORT
     assert post.call_count == 2 and source.collect.call_count == 1

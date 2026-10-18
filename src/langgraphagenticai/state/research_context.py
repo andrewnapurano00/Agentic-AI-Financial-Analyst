@@ -3,8 +3,8 @@ from dataclasses import dataclass
 from typing import Literal
 import re
 
-Workspace = Literal["Introduction", "Top Movers", "Research", "Equity Report", "Stock Screener", "Portfolio Lab", "Deep Research", "Deep Research V2"]
-WORKSPACES = ("Introduction", "Top Movers", "Research", "Equity Report", "Stock Screener", "Portfolio Lab", "Deep Research", "Deep Research V2")
+Workspace = Literal["Introduction", "Top Movers", "Research", "Equity Report", "Stock Screener", "Portfolio Lab", "Deep Research", "Deep Research V2", "AI Valuation"]
+WORKSPACES = ("Introduction", "Top Movers", "Research", "Equity Report", "Stock Screener", "Portfolio Lab", "Deep Research", "Deep Research V2", "AI Valuation")
 
 
 def normalize_company_symbol(value: str) -> str:
@@ -46,14 +46,14 @@ class ResearchContext:
     def __post_init__(self):
         if self.origin not in WORKSPACES or self.destination not in WORKSPACES:
             raise ValueError("Unknown workspace.")
-        if self.destination not in ("Introduction", "Research", "Equity Report", "Deep Research", "Deep Research V2"):
+        if self.destination not in ("Introduction", "Research", "Equity Report", "Deep Research", "Deep Research V2", "AI Valuation"):
             raise ValueError("Unsupported company destination.")
         if self.intent not in ("analyze", "compare", "deep_research"):
             raise ValueError("Unknown handoff intent.")
         if not isinstance(self.symbols, (tuple, list)) or not self.symbols:
             raise ValueError("Select at least one company.")
         normalized = tuple(dict.fromkeys(normalize_company_symbol(x) for x in self.symbols))
-        maximum = 1 if self.destination == "Introduction" else 4
+        maximum = 1 if self.destination in ("Introduction", "AI Valuation") else 4
         if len(normalized) > maximum:
             raise ValueError(f"This destination accepts at most {maximum} companies.")
         if self.intent == "compare" and len(normalized) < 2:

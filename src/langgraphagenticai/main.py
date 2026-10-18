@@ -344,12 +344,13 @@ def load_langgraph_agenticai_app() -> None:
             openai_api_key=openai_api_key,
             model_name=model_name,
             marketaux_api_key=marketaux_api_key,
+            serper_api_key=user_controls.get("SERPER_API_KEY", ""),
         )
         render_terminal_status(model_name, fmp_ready=bool(fmp_api_key), openai_ready=bool(openai_api_key))
         return
 
     if active_page == "Top Movers":
-        render_top_movers_tab(fmp_api_key=fmp_api_key, serper_api_key=user_controls.get("SERPER_API_KEY", ""))
+        render_top_movers_tab(fmp_api_key=fmp_api_key, serper_api_key=user_controls.get("SERPER_API_KEY", ""), openai_api_key=openai_api_key, model_name=model_name, marketaux_api_key=marketaux_api_key)
         render_terminal_status(model_name, fmp_ready=bool(fmp_api_key), openai_ready=bool(openai_api_key))
         return
 
@@ -358,7 +359,7 @@ def load_langgraph_agenticai_app() -> None:
         st.session_state["pending_research_query"] = command_query
         st.session_state["next_workspace"] = "Research"
         st.rerun()
-    render_market_strip()
+    render_market_strip(fmp_api_key=fmp_api_key)
     render_page_header(active_page)
 
     if active_page == "Equity Report":
@@ -368,10 +369,15 @@ def load_langgraph_agenticai_app() -> None:
             model_name=model_name,
         )
 
+    elif active_page == "AI Valuation":
+        from langgraphagenticai.ui.ai_valuation_tab import render_ai_valuation_tab
+        render_ai_valuation_tab(fmp_api_key=fmp_api_key, openai_api_key=openai_api_key, model_name=model_name)
+
     elif active_page == "Top Movers":
         render_top_movers_tab(
             fmp_api_key=fmp_api_key,
             serper_api_key=user_controls.get("SERPER_API_KEY", ""),
+            openai_api_key=openai_api_key,model_name=model_name,marketaux_api_key=marketaux_api_key,
         )
     elif active_page == "Stock Screener":
         render_stock_screener_tab(fmp_api_key=fmp_api_key)
@@ -386,20 +392,11 @@ def load_langgraph_agenticai_app() -> None:
                 marketaux_api_key=marketaux_api_key,
                 fmp_api_key=fmp_api_key,
             )
-    elif active_page == "Deep Research":
-        render_deep_research_tab(
-            openai_api_key=openai_api_key,
-            model_name=model_name,
-            fmp_api_key=fmp_api_key,
-            serper_api_key=user_controls.get("SERPER_API_KEY", ""),
-            marketaux_api_key=marketaux_api_key,
-        )
-    elif active_page == "Deep Research V2":
-        render_deep_research_v2_tab(
-            openai_api_key=openai_api_key,
-            fmp_api_key=fmp_api_key,
-            serper_api_key=user_controls.get("SERPER_API_KEY", ""),
-            marketaux_api_key=marketaux_api_key,
+    elif active_page in {"Deep Research", "Deep Research V2"}:
+        from langgraphagenticai.ui.deep_research_workspace import render_deep_research_workspace
+        render_deep_research_workspace(
+            openai_api_key=openai_api_key, model_name=model_name, fmp_api_key=fmp_api_key,
+            serper_api_key=user_controls.get("SERPER_API_KEY", ""), marketaux_api_key=marketaux_api_key,
             groq_api_key=user_controls.get("GROQ_API_KEY", ""),
         )
 
@@ -427,6 +424,16 @@ def load_langgraph_agenticai_app() -> None:
         pending_query = st.session_state.pop("pending_research_query", "")
         if command_query or pending_query:
             st.session_state["research_request_draft"] = command_query or pending_query
+        if st.session_state.chat_history:
+            with st.container(border=True):
+                st.markdown("**Saved AI findings**")
+                latest = next((item.get("content", "") for item in reversed(st.session_state.chat_history) if item.get("role") == "assistant"), "No saved assistant findings.")
+                st.write(str(latest)[:600])
+                with st.expander("Saved conversation and details"):
+                    _render_prior_chat()
+        else:
+            with st.expander("Research examples and help"):
+                render_research_launchpad()
         if not openai_api_key:
             st.info("Add an OpenAI key to submit Research. Drafts and saved conversations remain available.")
         if not str(model_name).strip():
@@ -435,15 +442,6 @@ def load_langgraph_agenticai_app() -> None:
         submitted = st.button("Submit research request", key="research_submit", type="primary", disabled=not openai_api_key or not str(model_name).strip() or config_mismatch)
         chat_input = st.chat_input(_finance_input_hint(selected_usecase), disabled=not openai_api_key or not str(model_name).strip() or config_mismatch)
         user_input = (st.session_state.get("research_request_draft", "").strip() if submitted else "") or chat_input
-        if st.session_state.chat_history:
-            st.markdown("**Saved AI findings**")
-            latest = next((item.get("content", "") for item in reversed(st.session_state.chat_history) if item.get("role") == "assistant"), "No saved assistant findings.")
-            st.write(str(latest)[:600])
-            with st.expander("Saved conversation and details"):
-                _render_prior_chat()
-        else:
-            with st.expander("Research examples and help"):
-                render_research_launchpad()
         if not user_input:
             render_terminal_status(model_name, fmp_ready=bool(fmp_api_key), openai_ready=bool(openai_api_key))
             return

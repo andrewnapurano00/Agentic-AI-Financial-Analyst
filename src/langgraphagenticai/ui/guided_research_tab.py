@@ -1,10 +1,19 @@
 ﻿"""Explicit two-stage Guided research UI with session-only saved results."""
-import json
 import streamlit as st
+from langgraphagenticai.deep_research.models import dumps
+from langgraphagenticai.utils.safety import redact_value
 from langgraphagenticai.research.guided_workflow import config, prepare, run, fingerprint
 from langgraphagenticai.state.research_context import ResearchContext
 from langgraphagenticai.ui.workspace_handoff import queue_handoff
 from langgraphagenticai.ui.app_shell import render_company_header, render_evidence_row
+
+
+def guided_result_json(result: dict) -> str:
+    """Serialize only the saved Guided packet with credential and nonfinite filtering."""
+    encoded = dumps(redact_value(result))
+    if len(encoded.encode("utf-8")) > 500_000:
+        raise ValueError("Saved Guided export exceeds its 500 KB limit.")
+    return encoded
 
 def render_guided_research_tab(*, openai_api_key='',model_name='',fmp_api_key='',marketaux_api_key=''):
     for name,value in st.session_state.get('guided_widget_values',{}).items():
@@ -22,18 +31,20 @@ def render_guided_research_tab(*, openai_api_key='',model_name='',fmp_api_key=''
             st.session_state['guided_symbol']=initial
         if draft:
             st.session_state['guided_question']=draft
-    symbol=st.text_input('One company ticker',value=initial,key='guided_symbol')
-    question=st.text_area('Focused research question',value=st.session_state.get('research_request_draft','What do the business, latest annual financials and recent news establish?'),key='guided_question')
-    render_company_header(symbol,'Guided research','Provider facts and AI interpretation')
-    st.caption('Prepare plan: one model attempt, zero provider calls. Run plan: at most three tools and one further model attempt. Maximum 12 graph steps; no model retries. Session storage only.')
-    st.caption('Quote/profile uses two independent HTTP requests; annual and news use one each. Shared FMP transient retries may add attempts. Network timeouts bound inactivity, not total elapsed time; news is one page of up to five records.')
-    with st.expander('Spend limits and pricing'):
-        ceiling=st.number_input('Estimated spend ceiling (USD)',min_value=0.,value=1.,step=.1,key='guided_ceiling')
-        known=st.checkbox('I have configured current model prices',key='guided_known')
-        input_price=st.number_input('Input USD per million tokens',min_value=0.,value=0.,key='guided_input_price') if known else None
-        output_price=st.number_input('Output USD per million tokens',min_value=0.,value=0.,key='guided_output_price') if known else None
-        ack=st.checkbox('Allow unknown cost: the dollar ceiling cannot be guaranteed',key='guided_unknown_ack') if not known else False
-        st.caption('Each attempt reserves 16,000 input tokens and 1,800 completion tokens, including reasoning. Configured prices are user supplied; actual usage is separate from reservations.')
+    render_company_header(st.session_state.get('guided_symbol',initial),'Guided research','Provider facts and AI interpretation')
+    saved_result_slot=st.container()
+    with st.expander('Configure guided research',expanded=not bool(st.session_state.get('guided_result'))):
+        symbol=st.text_input('One company ticker',value=initial,key='guided_symbol')
+        question=st.text_area('Focused research question',value=st.session_state.get('research_request_draft','What do the business, latest annual financials and recent news establish?'),key='guided_question')
+        st.caption('Prepare plan: one model attempt, zero provider calls. Run plan: at most three tools and one further model attempt. Maximum 12 graph steps; no model retries. Session storage only.')
+        st.caption('Quote/profile uses two independent HTTP requests; annual and news use one each. Shared FMP transient retries may add attempts. Network timeouts bound inactivity, not total elapsed time; news is one page of up to five records.')
+        with st.expander('Spend limits and pricing'):
+            ceiling=st.number_input('Estimated spend ceiling (USD)',min_value=0.,value=1.,step=.1,key='guided_ceiling')
+            known=st.checkbox('I have configured current model prices',key='guided_known')
+            input_price=st.number_input('Input USD per million tokens',min_value=0.,value=0.,key='guided_input_price') if known else None
+            output_price=st.number_input('Output USD per million tokens',min_value=0.,value=0.,key='guided_output_price') if known else None
+            ack=st.checkbox('Allow unknown cost: the dollar ceiling cannot be guaranteed',key='guided_unknown_ack') if not known else False
+            st.caption('Each attempt reserves 16,000 input tokens and 1,800 completion tokens, including reasoning. Configured prices are user supplied; actual usage is separate from reservations.')
     owned=('guided_symbol','guided_question','guided_ceiling','guided_known','guided_input_price','guided_output_price','guided_unknown_ack')
     st.session_state['guided_widget_values']={name:st.session_state[name] for name in owned if name in st.session_state}
     cfg=None
@@ -73,29 +84,35 @@ def render_guided_research_tab(*, openai_api_key='',model_name='',fmp_api_key=''
                         status.update(label='Plan finished; inspect partial-data notices',state='complete')
                 except Exception:
                     st.error('Execution failed. Prior work retained; no automatic retry.')
-    result=st.session_state.get('guided_result')
-    if result:
-        if result['evidence_fingerprint']!=fingerprint(result['evidence']):
-            st.error('Saved evidence fingerprint mismatch. Result withheld; prepare a new plan.')
-            return
-        if not cfg or result['config_fingerprint']!=fingerprint(cfg) or not saved or result['plan_fingerprint']!=saved['plan_fingerprint'] or result['run_id']!=saved['run_id']:
-            st.warning('Saved result mismatches current question, company, model, limits or plan.')
-        st.markdown('**Saved AI interpretation**')
-        st.write(result['answer']['interpretation'])
-        st.caption('Missing or withheld structured facts indicate incomplete validation. Saved evidence is not refreshed automatically; inspect original dates. Structured facts are checked against exact provider fields. AI interpretation is not semantically certified. Annual evidence is not TTM; this slice does not provide investment recommendations.')
-        for warning in result['warnings']:
-            st.warning(warning)
-        st.write('Missing inputs:',result['answer']['missing_inputs'])
-        st.write('Risks:',result['answer']['risks'])
-        st.dataframe(result['steps'],use_container_width=True)
-        if result['answer']['facts']:
-            st.dataframe(result['answer']['facts'],use_container_width=True)
-        with st.expander('Provider evidence, dates and usage'):
-            for e in result['evidence']:
-                render_evidence_row([('Evidence',e['id']),('Provider',e['provider']),('As of',e['as_of'] or 'Unavailable'),('Retrieved',e['retrieved_at']),('Basis',e['basis']),('Currency',e['currency'] or 'Unknown'),('Status',e['status']),('Units',str(e['unit']))])
-                st.write(e['fields']);st.write(e['limitations']);st.write('Missing fields:',e['missing'])
-            st.write(result['usage'])
-        st.download_button('Download saved evidence and answer',json.dumps(result,ensure_ascii=False,indent=2),file_name='guided-research.json',mime='application/json',key='guided_download')
+    with saved_result_slot:
+        result=st.session_state.get('guided_result')
+        if result:
+            if result['evidence_fingerprint']!=fingerprint(result['evidence']):
+                st.error('Saved evidence fingerprint mismatch. Result withheld; prepare a new plan.')
+                return
+            if not cfg or result['config_fingerprint']!=fingerprint(cfg) or not saved or result['plan_fingerprint']!=saved['plan_fingerprint'] or result['run_id']!=saved['run_id']:
+                st.warning('Saved result mismatches current question, company, model, limits or plan.')
+            st.markdown('**Saved AI interpretation**')
+            st.write(result['answer']['interpretation'])
+            st.caption('Missing or withheld structured facts indicate incomplete validation. Saved evidence is not refreshed automatically; inspect original dates. Structured facts are checked against exact provider fields. AI interpretation is not semantically certified. Annual evidence is not TTM; this slice does not provide investment recommendations.')
+            for warning in result['warnings']:
+                st.warning(warning)
+            st.write('Missing inputs:',result['answer']['missing_inputs'])
+            st.write('Risks:',result['answer']['risks'])
+            st.dataframe(result['steps'],use_container_width=True)
+            if result['answer']['facts']:
+                st.dataframe(result['answer']['facts'],use_container_width=True)
+            with st.expander('Provider evidence, dates and usage'):
+                for e in result['evidence']:
+                    render_evidence_row([('Evidence',e['id']),('Provider',e['provider']),('As of',e['as_of'] or 'Unavailable'),('Retrieved',e['retrieved_at']),('Basis',e['basis']),('Currency',e['currency'] or 'Unknown'),('Status',e['status']),('Units',str(e['unit']))])
+                    st.write(e['fields']);st.write(e['limitations']);st.write('Missing fields:',e['missing'])
+                st.write(result['usage'])
+            try:
+                export_json = guided_result_json(result)
+            except ValueError as exc:
+                st.warning(str(exc))
+            else:
+                st.download_button('Download saved evidence and answer',export_json,file_name='guided-research.json',mime='application/json',key='guided_download')
     if cfg and st.button('Open Deep Research',key='guided_deep'):
         queue_handoff(st.session_state,ResearchContext((cfg['symbol'],),'Deep Research','deep_research','Research'))
         st.rerun()

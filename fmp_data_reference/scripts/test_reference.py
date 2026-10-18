@@ -1,7 +1,7 @@
 """Offline checks; synthetic fixtures are tests, never collected market samples."""
 import unittest, tempfile, json
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import patch, Mock
 from argparse import Namespace
 import reference as ref
 
@@ -15,6 +15,15 @@ class Response:
     def iter_content(self,size):yield self.payload
 
 class CollectionTests(unittest.TestCase):
+    def test_native_trust_context_keeps_certificate_verification(self):
+        context = Mock()
+        context.get_ca_certs.side_effect = NotImplementedError
+        with tempfile.TemporaryDirectory(dir=ref.ROOT,prefix='offline-test-') as td, patch.object(ref,'ROOT',Path(td)), patch.object(ref,'key',return_value='synthetic-test-key'), patch.object(ref.ssl,'create_default_context',return_value=context):
+            args=Namespace(max_bytes=2048,refresh=False,retries=0,interval=.75,timeout=10)
+            collector=ref.Collector(args)
+            self.assertEqual(collector.bundle,Path(ref.requests.certs.where()))
+            self.assertTrue(collector.bundle.is_file())
+
     def test_sampling_preserves_zero_null_identifiers_nesting(self):
         value=[{'cik':'0000320193','price':0,'optional':None,'nested':[{'a':1},{'a':2}]}]*8
         result=ref.bounded_sample(value,5)

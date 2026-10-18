@@ -1,3 +1,4 @@
+import hashlib
 import os
 import time
 import numpy as np
@@ -7,12 +8,11 @@ from datetime import datetime, timezone
 
 from langgraphagenticai.providers.fmp_http import get_fmp_json
 from langgraphagenticai.utils.safety import sanitize_error
+from langgraphagenticai.utils.export_csv import safe_csv_bytes
 
 # ==============================================================================
 # CONFIG
 # ==============================================================================
-FMP_API_KEY = ""
-
 FMP_BATCH_SIZE = 50
 FMP_BATCH_SLEEP = float(os.getenv("FMP_BATCH_SLEEP", "1.0"))
 
@@ -61,13 +61,18 @@ def _render_screener_styles():
 # ==============================================================================
 # HTTP HELPERS
 # ==============================================================================
-def _get_json(url, params=None, timeout=25):
+def _get_json(url, params=None, timeout=25, *, api_key: str):
     request_params = dict(params or {})
-    api_key = str(request_params.pop("apikey", FMP_API_KEY))
+    request_params.pop("apikey", None)
     try:
         return get_fmp_json(url, api_key=api_key, params=request_params, timeout=(5, timeout))
     except Exception:
         return None
+
+
+def _credential_scope(api_key: str) -> str:
+    """Cache identity without retaining the raw credential in a cache key."""
+    return hashlib.sha256(api_key.encode("utf-8")).hexdigest()
 
 
 def _today_utc_date():
@@ -112,7 +117,7 @@ def _sanitize_params(filters):
 
 
 @st.cache_data(ttl=3600, show_spinner=False)
-def fmp_company_screener_safe(filters, timeout=20, max_pages=10):
+def _cached_company_screener(filters, timeout, max_pages, credential_scope, _api_key):
     url = "https://financialmodelingprep.com/stable/company-screener"
     params_base = _sanitize_params(filters)
 
@@ -122,7 +127,7 @@ def fmp_company_screener_safe(filters, timeout=20, max_pages=10):
     for page in range(max_pages):
         try:
             data = get_fmp_json(
-                url, api_key=FMP_API_KEY, params={**params_base, "page": page},
+                url, api_key=_api_key, params={**params_base, "page": page},
                 timeout=(5, timeout),
             ) or []
             if not data:
@@ -139,7 +144,10 @@ def fmp_company_screener_safe(filters, timeout=20, max_pages=10):
                 break
 
         except Exception as e:
-            meta["warnings"].append({"page": page, "msg": sanitize_error(e)})
+            # A provider exception can repeat the active credential as bare text.
+            # Remove it before the generic sanitizer truncates the message.
+            safe_message = str(e).replace(_api_key, "[REDACTED]")
+            meta["warnings"].append({"page": page, "msg": sanitize_error(safe_message)})
             break
 
     out = pd.concat(all_rows, ignore_index=True) if all_rows else pd.DataFrame()
@@ -161,6 +169,17 @@ def fmp_company_screener_safe(filters, timeout=20, max_pages=10):
         out = out.sort_values("marketCap", ascending=False, na_position="last").reset_index(drop=True)
 
     return out, meta
+
+
+def fmp_company_screener_safe(filters, timeout=20, max_pages=10, *, api_key: str):
+    """Return one credential-scoped cached universe without sharing raw keys."""
+    key = str(api_key or "").strip()
+    if not key:
+        raise ValueError("FMP API key is required.")
+    return _cached_company_screener(filters, timeout, max_pages, _credential_scope(key), _api_key=key)
+
+
+fmp_company_screener_safe.clear = _cached_company_screener.clear
 
 
 # ==============================================================================
@@ -204,12 +223,12 @@ def _coalesce_columns(df, mapping):
     return df
 
 
-def _fetch_profile(sym):
+def _fetch_profile(sym, *, api_key: str):
     payload = None
     for v in _try_variants(sym):
         data = _get_json(
             f"https://financialmodelingprep.com/api/v3/profile/{v}",
-            params={"apikey": FMP_API_KEY},
+            api_key=api_key,
         )
         if isinstance(data, list) and data:
             payload = data[0]
@@ -237,12 +256,12 @@ def _fetch_profile(sym):
     return df
 
 
-def _fetch_quote(sym):
+def _fetch_quote(sym, *, api_key: str):
     payload = None
     for v in _try_variants(sym):
         data = _get_json(
             f"https://financialmodelingprep.com/api/v3/quote/{v}",
-            params={"apikey": FMP_API_KEY},
+            api_key=api_key,
         )
         if isinstance(data, list) and data:
             payload = data[0]
@@ -264,12 +283,12 @@ def _fetch_quote(sym):
     return df[[c for c in keep if c in df.columns]]
 
 
-def _fetch_ratios_ttm(sym):
+def _fetch_ratios_ttm(sym, *, api_key: str):
     payload = None
     for v in _try_variants(sym):
         data = _get_json(
             f"https://financialmodelingprep.com/api/v3/ratios-ttm/{v}",
-            params={"apikey": FMP_API_KEY},
+            api_key=api_key,
         )
         if isinstance(data, list) and data:
             payload = data
@@ -302,12 +321,12 @@ def _fetch_ratios_ttm(sym):
     return df[[c for c in keep if c in df.columns]]
 
 
-def _fetch_key_metrics_ttm(sym):
+def _fetch_key_metrics_ttm(sym, *, api_key: str):
     payload = None
     for v in _try_variants(sym):
         data = _get_json(
             f"https://financialmodelingprep.com/api/v3/key-metrics-ttm/{v}",
-            params={"apikey": FMP_API_KEY},
+            api_key=api_key,
         )
         if isinstance(data, list) and data:
             payload = data
@@ -325,7 +344,7 @@ def _fetch_key_metrics_ttm(sym):
     return df[[c for c in keep if c in df.columns]]
 
 
-def _fetch_rsi_latest_multi(symbols, period=21, interval="1day"):
+def _fetch_rsi_latest_multi(symbols, period=21, interval="1day", *, api_key: str):
     frames = []
 
     for i, s in enumerate(symbols, start=1):
@@ -333,7 +352,7 @@ def _fetch_rsi_latest_multi(symbols, period=21, interval="1day"):
         for v in _try_variants(s):
             data = _get_json(
                 f"https://financialmodelingprep.com/api/v3/technical_indicator/{interval}/{v}",
-                params={"type": "rsi", "period": period, "apikey": FMP_API_KEY},
+                params={"type": "rsi", "period": period}, api_key=api_key,
             )
             if isinstance(data, list) and data:
                 payload = data
@@ -453,7 +472,7 @@ def _pretty_rename(df):
 
 
 @st.cache_data(ttl=1800, show_spinner=False)
-def fetch_all_metrics(symbols, screener_df, rsi_period=21):
+def _cached_all_metrics(symbols, screener_df, rsi_period, credential_scope, _api_key):
     if not symbols:
         return pd.DataFrame(columns=["Ticker"])
 
@@ -472,15 +491,15 @@ def fetch_all_metrics(symbols, screener_df, rsi_period=21):
             screener_marketcap_map = dict(zip(tmp["ticker"], tmp["marketCap"]))
 
     for i, s in enumerate(symbols, start=1):
-        profile_blocks[s] = _fetch_profile(s)
-        quote_blocks[s] = _fetch_quote(s)
-        ratios_blocks[s] = _fetch_ratios_ttm(s)
-        km_blocks[s] = _fetch_key_metrics_ttm(s)
+        profile_blocks[s] = _fetch_profile(s, api_key=_api_key)
+        quote_blocks[s] = _fetch_quote(s, api_key=_api_key)
+        ratios_blocks[s] = _fetch_ratios_ttm(s, api_key=_api_key)
+        km_blocks[s] = _fetch_key_metrics_ttm(s, api_key=_api_key)
 
         time.sleep(0.02)
         _batch_pause(i, batch_size=50)
 
-    rsi_block = _fetch_rsi_latest_multi(symbols, period=rsi_period)
+    rsi_block = _fetch_rsi_latest_multi(symbols, period=rsi_period, api_key=_api_key)
     blocks = {
         "profile": profile_blocks,
         "quote": quote_blocks,
@@ -514,6 +533,17 @@ def fetch_all_metrics(symbols, screener_df, rsi_period=21):
         df["Market Cap"] = pd.to_numeric(df["Market Cap"], errors="coerce")
 
     return df
+
+
+def fetch_all_metrics(symbols, screener_df, rsi_period=21, *, api_key: str):
+    """Enrich under the caller's credential with an isolated 30-minute cache."""
+    key = str(api_key or "").strip()
+    if not key:
+        raise ValueError("FMP API key is required.")
+    return _cached_all_metrics(symbols, screener_df, rsi_period, _credential_scope(key), _api_key=key)
+
+
+fetch_all_metrics.clear = _cached_all_metrics.clear
 
 
 # ==============================================================================
@@ -590,19 +620,24 @@ def format_output_df(df):
 # TAB RENDERER
 # ==============================================================================
 def render_stock_screener_tab(fmp_api_key: str) -> None:
-    global FMP_API_KEY
-    FMP_API_KEY = (fmp_api_key or "").strip()
+    api_key = (fmp_api_key or "").strip()
 
-    st.subheader("Stock Screener")
     st.caption("Rule-based FMP screener with optional post-screen metric enrichment. No LLM workflow is used on this page.")
     _render_screener_styles()
 
-    if not FMP_API_KEY:
+    if not api_key:
         st.error("Please enter your FMP API key in the sidebar first.")
         _render_saved_screener()
         return
 
+    saved_payload = st.session_state.get("stock_screener_payload")
+    saved_results_available = (
+        isinstance(saved_payload, dict)
+        and isinstance(saved_payload.get("results"), pd.DataFrame)
+        and not saved_payload["results"].empty
+    )
     with st.form("stock_screener_form"):
+        st.markdown("**Company universe**")
         r1c1, r1c2, r1c3, r1c4 = st.columns(4)
         with r1c1:
             country = st.selectbox("Country", ["US"], index=0)
@@ -621,7 +656,7 @@ def render_stock_screener_tab(fmp_api_key: str) -> None:
         with r1c4:
             industry_text = st.text_input("Industry contains", value="")
 
-        with st.expander("Server-side range filters", expanded=True):
+        with st.expander("Server-side range filters", expanded=not saved_results_available):
             wide_open = st.checkbox("Wide open server-side defaults", value=True)
 
             a1, a2, a3 = st.columns(3)
@@ -647,7 +682,7 @@ def render_stock_screener_tab(fmp_api_key: str) -> None:
                 max_pages_default = 10 if wide_open else 3
                 max_pages = st.slider("Max pages to request", 1, MAX_SERVER_PAGES, max_pages_default, 1)
 
-        with st.expander("Enrichment + final output controls", expanded=True):
+        with st.expander("Enrichment + final output controls", expanded=not saved_results_available):
             c1, c2, c3 = st.columns(3)
             with c1:
                 metrics_max_default = 1000 if wide_open else 200
@@ -728,10 +763,11 @@ def render_stock_screener_tab(fmp_api_key: str) -> None:
         if sector != "Any":
             filters["sector"] = sector
 
-        screen_df, meta = fmp_company_screener_safe(filters=filters, max_pages=max_pages)
+        screen_df, meta = fmp_company_screener_safe(filters=filters, max_pages=max_pages, api_key=api_key)
 
     if screen_df.empty:
         st.warning("No companies returned. Try widening the filters.")
+        _preserve_screener_after_failure("No companies returned")
         return
 
     if industry_text.strip() and "industry" in screen_df.columns:
@@ -741,6 +777,7 @@ def render_stock_screener_tab(fmp_api_key: str) -> None:
 
     if screen_df.empty:
         st.warning("No companies remain after the industry text filter.")
+        _preserve_screener_after_failure("Industry filter returned no companies")
         return
 
     if "marketCap" in screen_df.columns:
@@ -770,10 +807,11 @@ def render_stock_screener_tab(fmp_api_key: str) -> None:
         st.caption(f"API warnings encountered: {meta['warnings']}")
 
     with st.spinner("Fetching company profiles and advanced metrics..."):
-        metrics_df = fetch_all_metrics(tickers, screener_df=screen_df, rsi_period=rsi_period)
+        metrics_df = fetch_all_metrics(tickers, screener_df=screen_df, rsi_period=rsi_period, api_key=api_key)
 
     if metrics_df.empty:
         st.warning("No enriched metric rows were returned.")
+        _preserve_screener_after_failure("No enriched metric rows returned")
         return
 
     if enable_metric_filters:
@@ -798,6 +836,7 @@ def render_stock_screener_tab(fmp_api_key: str) -> None:
 
     if metrics_df.empty:
         st.warning("No companies remain after applying the advanced metric filters.")
+        _preserve_screener_after_failure("Advanced metric filters returned no companies")
         return
 
     if "Market Cap" in metrics_df.columns:
@@ -809,7 +848,17 @@ def render_stock_screener_tab(fmp_api_key: str) -> None:
         "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "results": final_df.copy(),
     }
+    st.session_state["stock_screener_last_attempt"] = {"status": "complete"}
 
+    _render_saved_screener()
+
+
+def _preserve_screener_after_failure(reason: str) -> None:
+    st.session_state["stock_screener_last_attempt"] = {
+        "status": "failed",
+        "attempted_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "reason": reason,
+    }
     _render_saved_screener()
 
 
@@ -820,6 +869,12 @@ def _render_saved_screener() -> None:
     final_df = payload["results"]
     if final_df.empty:
         return
+    last_attempt = st.session_state.get("stock_screener_last_attempt", {})
+    if last_attempt.get("status") == "failed":
+        st.warning(
+            f"The latest Run did not produce a new screen ({last_attempt['reason']}). "
+            f"Showing the earlier saved screen generated at {payload.get('generated_at', 'unknown')}."
+        )
     st.caption(f"Saved run generated at {payload.get('generated_at', 'unknown')}; this is not a new retrieval time.")
     st.subheader("Final Screener Output")
     st.caption(
@@ -842,14 +897,14 @@ def _render_saved_screener() -> None:
 
     st.download_button(
         "Download Results CSV",
-        data=final_df.to_csv(index=False).encode("utf-8"),
+        data=safe_csv_bytes(final_df),
         file_name="stock_screener_results.csv",
         mime="text/csv",
     )
 
     if "Ticker" in final_df.columns:
         focus = st.selectbox("Open screener company", final_df["Ticker"].astype(str).tolist(), key="screener_focus")
-        if st.button("Open Introduction", key="screener_open_intro"):
+        if st.button("Open Market Brief chart", key="screener_open_intro"):
             from langgraphagenticai.ui.workspace_handoff import queue_handoff
             from langgraphagenticai.state.research_context import ResearchContext
             try:

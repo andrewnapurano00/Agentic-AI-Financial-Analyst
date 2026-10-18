@@ -22,8 +22,8 @@ def test_discovery_guided_saved_brief(monkeypatch, routing):
     monkeypatch.setattr(guided, 'run', lambda plan, cfg, **kw: run(plan, cfg, model_call=model, tool_call=provider))
     original = shared.saved_inputs
     monkeypatch.setattr(shared, 'saved_inputs', lambda result, ticker, ref: original(result, ticker, REFERENCE))
-    app = app_at('Introduction')
-    app.button(key='intro_handoff_Research').click().run()
+    app = app_at('Top Movers')
+    app.button(key='movers_handoff_Research').click().run()
     app.radio(key='research_mode').set_value('Guided research').run()
     assert app.text_input(key='guided_symbol').value == 'AAPL'
     app.checkbox(key='guided_unknown_ack').check().run()

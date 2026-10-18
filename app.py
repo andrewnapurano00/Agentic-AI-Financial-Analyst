@@ -37,6 +37,23 @@ def _load_current_deep_research() -> None:
         SRC / "langgraphagenticai" / "deep_research" / "model_packets.py",
         SRC / "langgraphagenticai" / "deep_research" / "research_workflow.py",
         SRC / "langgraphagenticai" / "deep_research" / "presentation.py",
+        SRC / "langgraphagenticai" / "deep_research" / "summary_text.py",
+        SRC / "langgraphagenticai" / "deep_research" / "executive.py",
+        SRC / "langgraphagenticai" / "deep_research" / "delivery.py",
+        SRC / "langgraphagenticai" / "deep_research" / "report_structure.py",
+        SRC / "langgraphagenticai" / "deep_research" / "committee_export.py",
+        SRC / "langgraphagenticai" / "providers" / "company_evidence.py",
+        SRC / "langgraphagenticai" / "providers" / "valuation.py",
+        SRC / "langgraphagenticai" / "valuation" / "framework.py",
+        SRC / "langgraphagenticai" / "valuation" / "book_value.py",
+        SRC / "langgraphagenticai" / "valuation" / "model.py",
+        SRC / "langgraphagenticai" / "valuation" / "projection.py",
+        SRC / "langgraphagenticai" / "valuation" / "metrics.py",
+        SRC / "langgraphagenticai" / "valuation" / "citations.py",
+        SRC / "langgraphagenticai" / "valuation" / "coverage.py",
+        SRC / "langgraphagenticai" / "valuation" / "ai.py",
+        SRC / "langgraphagenticai" / "ui" / "equity_report_tab.py",
+        SRC / "langgraphagenticai" / "ui" / "ai_valuation_tab.py",
         SRC / "langgraphagenticai" / "ui" / "deep_research_tab.py",
         SRC / "langgraphagenticai" / "ui" / "deep_research_v2_tab.py",
     )
@@ -62,7 +79,12 @@ def _load_current_deep_research() -> None:
             "langgraphagenticai.deep_research.data",
             "langgraphagenticai.deep_research.crew_committee",
             "langgraphagenticai.deep_research.manager",
+            "langgraphagenticai.deep_research.summary_text",
+            "langgraphagenticai.deep_research.report_structure",
+            "langgraphagenticai.deep_research.committee_export",
             "langgraphagenticai.deep_research.presentation",
+            "langgraphagenticai.deep_research.executive",
+            "langgraphagenticai.deep_research.delivery",
             "langgraphagenticai.deep_research.quarterly_ttm",
             "langgraphagenticai.deep_research.research_metrics",
             "langgraphagenticai.deep_research.model_packets",
@@ -71,6 +93,18 @@ def _load_current_deep_research() -> None:
             "langgraphagenticai.deep_research.v2_data",
             "langgraphagenticai.deep_research.v2",
             "langgraphagenticai.deep_research.v2_workflow",
+            "langgraphagenticai.providers.company_evidence",
+            "langgraphagenticai.providers.valuation",
+            "langgraphagenticai.valuation.framework",
+            "langgraphagenticai.valuation.book_value",
+            "langgraphagenticai.valuation.model",
+            "langgraphagenticai.valuation.projection",
+            "langgraphagenticai.valuation.metrics",
+            "langgraphagenticai.valuation.citations",
+            "langgraphagenticai.valuation.coverage",
+            "langgraphagenticai.valuation.ai",
+            "langgraphagenticai.ui.equity_report_tab",
+            "langgraphagenticai.ui.ai_valuation_tab",
             "langgraphagenticai.ui.deep_research_tab",
             "langgraphagenticai.ui.deep_research_v2_tab",
         ):
@@ -79,6 +113,7 @@ def _load_current_deep_research() -> None:
         app_main.render_deep_research_tab = deep_research_ui.render_deep_research_tab
         deep_research_v2_ui = importlib.import_module("langgraphagenticai.ui.deep_research_v2_tab")
         app_main.render_deep_research_v2_tab = deep_research_v2_ui.render_deep_research_v2_tab
+        app_main.render_equity_report_tab = importlib.import_module("langgraphagenticai.ui.equity_report_tab").render_equity_report_tab
         app_main._deep_research_source_stamp = stamp
 
 

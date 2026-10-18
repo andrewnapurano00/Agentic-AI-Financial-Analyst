@@ -15,6 +15,7 @@ FIELDS = {
     "balance_ttm": {"cashAndCashEquivalents", "cashAndShortTermInvestments", "totalDebt", "netDebt", "totalAssets", "totalLiabilities", "totalStockholdersEquity", "totalCurrentAssets", "totalCurrentLiabilities"},
     "cash_flow_ttm": {"netCashProvidedByOperatingActivities", "capitalExpenditure", "freeCashFlow", "stockBasedCompensation", "commonStockRepurchased", "commonDividendsPaid", "netIncome"},
     # URLs remain in saved evidence; omit them from model context to spend tokens on dates and substance.
+    "estimates": {"epsAvg", "epsLow", "epsHigh", "revenueAvg", "revenueLow", "revenueHigh", "ebitdaAvg", "netIncomeAvg", "numAnalystsEps", "numAnalystsRevenue", "estimatedEpsAvg", "estimatedEps", "estimatedRevenueAvg", "estimatedRevenue", "estimatedEbitdaAvg", "estimatedEbitda", "numberAnalystEstimatedEps", "numberAnalystsEstimatedEps", "numberAnalystsEstimatedRevenue"},
     "news": {"title", "snippet", "published", "publisher"},
     "web": {"title", "snippet", "published", "publisher"},
 }
@@ -35,6 +36,22 @@ FOCUS_TERMS = {
     "web": ("news", "catalyst", "recent", "event", "risk"),
     "investigation": ("transcript", "guidance", "management", "earnings", "peer", "valuation", "risk"),
 }
+
+
+def forward_consensus_context(comparison):
+    """Expose canonical forecast values explicitly, with their existing contracts."""
+    output = []
+    for row in comparison[:4]:
+        forecasts = {}
+        for key in ("Forward revenue", "Forward revenue next period", "Forward EPS", "Forward EBITDA", "Forward net income", "Forward revenue growth (%)"):
+            if row.get(key) is None:
+                continue
+            contract = row.get("Metric contracts", {}).get(key, {})
+            forecasts[key] = {"value":row[key], "unit":contract.get("unit","unverified"),
+                              "currency":contract.get("currency"), "period":contract.get("basis") or row.get("Estimate period"),
+                              "source_ids":list(dict.fromkeys(i["source_id"] for i in contract.get("inputs",[]) if i.get("source_id")))}
+        output.append({"symbol":row.get("Ticker"), "forecasts":forecasts})
+    return output
 
 
 def compact(value, *, list_limit=6, string_limit=2400):
@@ -111,10 +128,10 @@ def bounded_evidence_records(records,max_chars):
         # retain their actual payload rather than applying the statement whitelist.
         if category in {"income", "cash_flow", "income_ttm", "cash_flow_ttm",
                         "balance", "balance_ttm", "balance_latest", "quote", "profile", "estimates"}:
-            keep=core | {"fiscalYear", "period", "duration", "periodType", "reportingBasis", "startDate", "excluded"}
+            keep=core | (FIELDS["estimates"] if category=="estimates" else set()) | {"fiscalYear", "period", "duration", "periodType", "reportingBasis", "startDate", "excluded"}
             if isinstance(data,list):
                 return [{k:v for k,v in row.items() if k in keep}
-                        for row in data[:1] if isinstance(row,dict)]
+                        for row in data[:3 if category=="estimates" else 1] if isinstance(row,dict)]
             if isinstance(data,dict):
                 return {k:v for k,v in data.items() if k in keep}
         return compact(data,list_limit=2,string_limit=700)

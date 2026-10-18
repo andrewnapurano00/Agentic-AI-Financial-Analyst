@@ -129,9 +129,8 @@ def test_stock_screener_uses_shared_provider_and_preserves_metadata(monkeypatch)
         return []
 
     monkeypatch.setattr(stock_screener_tab, "get_fmp_json", fake_get)
-    monkeypatch.setattr(stock_screener_tab, "FMP_API_KEY", "test-key")
     stock_screener_tab.fmp_company_screener_safe.clear()
-    frame, metadata = stock_screener_tab.fmp_company_screener_safe({"limit": 2}, max_pages=2)
+    frame, metadata = stock_screener_tab.fmp_company_screener_safe({"limit": 2}, max_pages=2, api_key="test-key")
     assert frame["ticker"].tolist() == ["AAPL"]
     assert metadata["pages"] == 1
     assert calls[0][1] == "test-key"

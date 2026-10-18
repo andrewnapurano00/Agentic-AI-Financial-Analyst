@@ -116,14 +116,12 @@ def test_saved_evidence_recovery_advances_only_on_action(app, monkeypatch):
     factory = Mock(return_value=manager); monkeypatch.setattr(ui, "_manager_v2", factory)
     app.run()
     factory.assert_not_called()
-    recover = next(w for w in app.button if w.label.startswith("Generate report"))
-    recover.click().run()
-    assert not app.exception
-    timestamp = app.session_state["drv2_history"][0]["result_generated_at"]
-    assert timestamp != original["result_generated_at"]
+    assert not any(w.label.startswith(("Generate report","Retry","Finalize")) for w in app.button)
+    final=app.session_state["drv2_history"][0]
+    assert final["status"]=="evidence_ready" and not final.get("finalized_at")
+    assert final["result_generated_at"]==original["result_generated_at"]
     app.run()
-    assert app.session_state["drv2_history"][0]["result_generated_at"] == timestamp
-    manager.resume.assert_called_once(); manager.run.assert_not_called()
+    factory.assert_not_called()
 
 
 def test_optional_decision_failure_preserves_returned_timestamp(app, monkeypatch):

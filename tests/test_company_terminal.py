@@ -256,24 +256,18 @@ def test_ranked_table_no_duplicate_daily_and_missing_never_zero():
     assert daily["Rank"].tolist() == [1, 2]
 
 
-def test_terminal_ranges_preserve_saved_ai_and_drill_in_ticker(monkeypatch):
-    data = snapshot()
-    calls = []
-    monkeypatch.setattr(introduction_tab, "load_company_snapshot", lambda *a: data)
-    monkeypatch.setattr(introduction_tab, "load_company_terminal", lambda *a: {"metrics": build_metrics(data), "earnings": {}, "peers": [], "warnings": []})
-    monkeypatch.setattr(introduction_tab, "load_symbol_history", lambda symbol, key, period, currency: calls.append(period) or {"points": [], "period": period})
-    monkeypatch.setattr(introduction_tab, "generate_company_summary", lambda *a: pytest.fail("Control must not call model"))
+def test_market_chart_preserves_legacy_company_result_without_rendering_analysis(market_dashboard_stub):
+    ui, packet, calls = market_dashboard_stub
     app = AppTest.from_string("from langgraphagenticai.ui.introduction_tab import render_introduction_tab\nrender_introduction_tab()")
-    app.session_state["intro_company_symbol"] = "AAPL"
     app.session_state["intro_summary:AAPL:gpt-5"] = "Saved interpretation"
+    app.session_state["market_chart_symbol"] = "AAPL"
     app.run(timeout=30)
-    for period in ("6M", "YTD", "All"):
+    app.button(key="intro_refresh").click().run()
+    for period in ("1M", "3M", "1Y"):
         app.get("button_group")[0].set_value(period).run()
-        assert not app.exception and calls[-1] == period
-    assert any("Saved interpretation" in item.value for item in app.markdown)
-    app.button(key="intro_drill_Equity Report").click().run()
-    assert app.session_state["pending_company_context"].symbols == ("AAPL",)
-    assert app.session_state["pending_company_context"].destination == "Equity Report"
+        assert not app.exception and calls[-1] == ("AAPL", period)
+    assert app.session_state["intro_summary:AAPL:gpt-5"] == "Saved interpretation"
+    assert not any("company" in b.label.lower() for b in app.button)
 
 
 def test_explicit_summary_receives_dated_currency_basis_caveats_and_no_raw_packets(monkeypatch):

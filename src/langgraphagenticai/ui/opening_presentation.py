@@ -6,100 +6,100 @@ from langgraphagenticai.providers.discovery import finite_number
 
 def opening_styles():
     st.markdown('''<div class="opening-workspace"></div><style>
-    .stApp:has(.opening-workspace), [data-testid="stAppViewContainer"]:has(.opening-workspace) {background:#111111;color:#e8edf2;}
-    body:has(.opening-workspace) [data-testid="stHeader"] {background:#111111;border-color:#303030;}
+    .stApp:has(.opening-workspace), [data-testid="stAppViewContainer"]:has(.opening-workspace) {background:#0B1220;color:#E6EBF2;}
+    body:has(.opening-workspace) [data-testid="stHeader"] {background:#0B1220;border-color:#283649;}
     body:has(.opening-workspace) [data-testid="stMain"] {
-      --ax-bg:#111111;--ax-panel:#1C1C1C;--ax-panel-2:#232323;--ax-panel-3:#282828;
-      --ax-line:#303030;--ax-line-soft:#292929;--ax-text:#e8edf2;--ax-muted:#a7a7a7;
-      --ax-dim:#989898;--ax-amber:#e34444;--ax-amber-2:#f1f1f1;--ax-green:#35d07f;--ax-red:#ff5964;
-      color:#e8edf2;font-family:"Arial Narrow","Roboto Condensed",Inter,"Segoe UI",sans-serif;
+      --ax-bg:#0B1220;--ax-panel:#121D2B;--ax-panel-2:#172334;--ax-panel-3:#172334;
+      --ax-line:#283649;--ax-line-soft:#283649;--ax-text:#E6EBF2;--ax-muted:#9AA9BC;
+      --ax-dim:#989898;--ax-amber:#C8AA73;--ax-amber-2:#E6EBF2;--ax-green:#37B68C;--ax-red:#E2747E;
+      color:#E6EBF2;font-family:Inter,"Segoe UI",sans-serif;
     }
     body:has(.opening-workspace) [data-testid="stMain"] h1,
     body:has(.opening-workspace) [data-testid="stMain"] h2,
-    body:has(.opening-workspace) [data-testid="stMain"] h3 {font-family:"Arial Narrow","Roboto Condensed",Inter,"Segoe UI",sans-serif!important;border-left:0;padding-left:0!important;letter-spacing:-.02em;}
+    body:has(.opening-workspace) [data-testid="stMain"] h3 {font-family:Inter,"Segoe UI",sans-serif!important;border-left:0;padding-left:0!important;letter-spacing:-.02em;}
     body:has(.opening-workspace) [data-testid="stMain"] [data-baseweb="input"] > div,
     body:has(.opening-workspace) [data-testid="stMain"] [data-baseweb="select"] > div,
-    body:has(.opening-workspace) [data-testid="stMain"] textarea {background:#1C1C1C!important;border-radius:5px!important;}
-    body:has(.opening-workspace) [data-testid="stMain"] .stButton > button {background:#1C1C1C;border-color:#303030;border-radius:5px;color:#e8edf2;letter-spacing:0;font-size:.82rem;}
-    body:has(.opening-workspace) [data-testid="stMain"] .stButton > button[kind="primary"] {background:#e34444;color:#ffffff;border-color:#e34444;}
-    body:has(.opening-workspace) [data-testid="stMain"] [data-testid="stExpander"] {background:#1C1C1C;border-color:#303030;border-radius:5px;}
-    body:has(.opening-workspace) [data-testid="stMain"] [data-testid="stVerticalBlockBorderWrapper"] > div {border-color:#303030!important;border-radius:5px!important;}
-    body:has(.opening-workspace) [data-testid="stMain"] [data-testid="stButtonGroup"] button {background:#1C1C1C;color:#e8edf2;border-color:#303030;}
-    body:has(.opening-workspace) [data-testid="stMain"] [data-testid="stButtonGroup"] button[aria-pressed="true"] {background:#e34444;color:#ffffff;}
-    body:has(.opening-workspace) [data-testid="stMain"] button[data-variant="segmented_control"][aria-checked="true"] {background:#e34444!important;border-color:#e34444!important;color:#ffffff!important;}
+    body:has(.opening-workspace) [data-testid="stMain"] textarea {background:#121D2B!important;border-radius:5px!important;}
+    body:has(.opening-workspace) [data-testid="stMain"] .stButton > button {background:#121D2B;border-color:#283649;border-radius:5px;color:#E6EBF2;letter-spacing:0;font-size:.82rem;}
+    body:has(.opening-workspace) [data-testid="stMain"] .stButton > button[kind="primary"] {background:#C8AA73;color:#ffffff;border-color:#C8AA73;}
+    body:has(.opening-workspace) [data-testid="stMain"] [data-testid="stExpander"] {background:#121D2B;border-color:#283649;border-radius:5px;}
+    body:has(.opening-workspace) [data-testid="stMain"] [data-testid="stVerticalBlockBorderWrapper"] > div {border-color:#283649!important;border-radius:5px!important;}
+    body:has(.opening-workspace) [data-testid="stMain"] [data-testid="stButtonGroup"] button {background:#121D2B;color:#E6EBF2;border-color:#283649;}
+    body:has(.opening-workspace) [data-testid="stMain"] [data-testid="stButtonGroup"] button[aria-pressed="true"] {background:#C8AA73;color:#ffffff;}
+    body:has(.opening-workspace) [data-testid="stMain"] button[data-variant="segmented_control"][aria-checked="true"] {background:#C8AA73!important;border-color:#C8AA73!important;color:#ffffff!important;}
     body:has(.opening-workspace) [data-testid="stMain"] button[data-variant="segmented_control"][aria-checked="true"] p {color:#ffffff!important;}
-    body:has(.opening-workspace) [data-testid="stMain"] button[data-variant="segmented_control"]:focus-visible {outline-color:#e34444!important;}
-    .opening-title {font-size:1.75rem!important;font-weight:780;letter-spacing:-.035em;line-height:1.15;margin:0;color:#f1f1f1;}
-    .opening-subtitle {font-size:.9rem;color:#a7a7a7;margin:.3rem 0 .6rem;}
+    body:has(.opening-workspace) [data-testid="stMain"] button[data-variant="segmented_control"]:focus-visible {outline-color:#C8AA73!important;}
+    .opening-title {font-size:1.75rem!important;font-weight:780;letter-spacing:-.035em;line-height:1.15;margin:0;color:#E6EBF2;}
+    .opening-subtitle {font-size:.9rem;color:#9AA9BC;margin:.3rem 0 .6rem;}
     .opening-cards {display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:8px;margin:.5rem 0 .8rem;}
-    .opening-card {background:#1C1C1C;border:1px solid #303030;border-radius:5px;padding:10px 12px;min-width:0;}
-    .opening-card small {display:block;color:#a7a7a7;font-size:.73rem;margin:4px 0;overflow-wrap:anywhere;}
-    .opening-card strong {display:block;font-size:1.3rem;font-family:"Consolas","SFMono-Regular",monospace;font-variant-numeric:tabular-nums;color:#e8edf2;line-height:1.3;}
-    .opening-card b {display:block;color:#f1f1f1;font-size:.76rem;letter-spacing:.035em;text-transform:uppercase;}
-    .opening-card .positive {color:#35d07f;}.opening-card .negative {color:#ff5964;}
+    .opening-card {background:#121D2B;border:1px solid #283649;border-radius:5px;padding:10px 12px;min-width:0;}
+    .opening-card small {display:block;color:#9AA9BC;font-size:.73rem;margin:4px 0;overflow-wrap:anywhere;}
+    .opening-card strong {display:block;font-size:1.3rem;font-family:"Consolas","SFMono-Regular",monospace;font-variant-numeric:tabular-nums;color:#E6EBF2;line-height:1.3;}
+    .opening-card b {display:block;color:#E6EBF2;font-size:.76rem;letter-spacing:.035em;text-transform:uppercase;}
+    .opening-card .positive {color:#37B68C;}.opening-card .negative {color:#E2747E;}
     .opening-notes {display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:.4rem 0 1rem;}
-    .opening-notes p {font-size:.85rem;color:#a7a7a7;margin:.45rem 0 0;}
+    .opening-notes p {font-size:.85rem;color:#9AA9BC;margin:.45rem 0 0;}
     body:has(.opening-workspace) [data-testid="stMain"] [data-testid="stWidgetLabel"] p,
     body:has(.opening-workspace) [data-testid="stMain"] [data-testid="stMetricLabel"] p,
     body:has(.opening-workspace) [data-testid="stMain"] [data-testid="stMetricValue"],
     body:has(.opening-workspace) [data-testid="stMain"] [data-testid="stTextInput"] input,
-    body:has(.opening-workspace) [data-testid="stMain"] [data-baseweb="select"] {color:#e8edf2!important;}
+    body:has(.opening-workspace) [data-testid="stMain"] [data-baseweb="select"] {color:#E6EBF2!important;}
     body:has(.opening-workspace) [data-testid="stMain"] [data-baseweb="input"],
     body:has(.opening-workspace) [data-testid="stMain"] [data-baseweb="input"] input,
-    body:has(.opening-workspace) [data-testid="stMain"] [data-baseweb="select"] > div {background:#1C1C1C!important;color:#e8edf2!important;}
-    body:has(.opening-workspace) [data-testid="stMain"] [data-baseweb="select"] svg {fill:#a7a7a7;}
-    body:has(.opening-workspace) [data-testid="stMain"] [data-testid="stExpander"] details > summary {color:#e8edf2!important;}
-    body:has(.opening-workspace) [data-testid="stMain"] [data-testid="stMetric"] {background:#1C1C1C;border-color:#303030;border-radius:5px;}
-    body:has(.opening-workspace) [data-testid="stMain"] label {color:#e8edf2!important;}
-    body:has(.opening-workspace) [data-testid="stMain"] [data-testid="stMarkdownContainer"] p {color:#e8edf2;}
-    body:has(.opening-workspace) [data-testid="stMain"] [data-testid="stAlert"] {background:#1f1b13;color:#e8edf2;border-color:#765a27;border-radius:5px;}
-    body:has(.opening-workspace) [data-testid="stMain"] [data-testid="stAlert"] p {color:#e8edf2!important;}
+    body:has(.opening-workspace) [data-testid="stMain"] [data-baseweb="select"] > div {background:#121D2B!important;color:#E6EBF2!important;}
+    body:has(.opening-workspace) [data-testid="stMain"] [data-baseweb="select"] svg {fill:#9AA9BC;}
+    body:has(.opening-workspace) [data-testid="stMain"] [data-testid="stExpander"] details > summary {color:#E6EBF2!important;}
+    body:has(.opening-workspace) [data-testid="stMain"] [data-testid="stMetric"] {background:#121D2B;border-color:#283649;border-radius:5px;}
+    body:has(.opening-workspace) [data-testid="stMain"] label {color:#E6EBF2!important;}
+    body:has(.opening-workspace) [data-testid="stMain"] [data-testid="stMarkdownContainer"] p {color:#E6EBF2;}
+    body:has(.opening-workspace) [data-testid="stMain"] [data-testid="stAlert"] {background:#1f1b13;color:#E6EBF2;border-color:#765a27;border-radius:5px;}
+    body:has(.opening-workspace) [data-testid="stMain"] [data-testid="stAlert"] p {color:#E6EBF2!important;}
     body:has(.opening-workspace) [data-testid="stMain"] [data-testid="stTextInputRootElement"],
     body:has(.opening-workspace) [data-testid="stMain"] [data-testid="stSelectbox"] [role="group"],
     body:has(.opening-workspace) [data-testid="stMain"] [data-testid="stNumberInputContainer"],
-    body:has(.opening-workspace) [data-testid="stMain"] [data-testid="stMultiSelect"] [role="group"] {background:#1C1C1C!important;color:#e8edf2!important;border-color:#303030!important;border-radius:5px!important;}
+    body:has(.opening-workspace) [data-testid="stMain"] [data-testid="stMultiSelect"] [role="group"] {background:#121D2B!important;color:#E6EBF2!important;border-color:#283649!important;border-radius:5px!important;}
     body:has(.opening-workspace) [data-testid="stMain"] [data-testid="stSelectbox"] input,
     body:has(.opening-workspace) [data-testid="stMain"] [data-testid="stSelectbox"] [role="group"] *,
-    body:has(.opening-workspace) [data-testid="stMain"] [data-testid="stNumberInputContainer"] input {color:#e8edf2!important;}
+    body:has(.opening-workspace) [data-testid="stMain"] [data-testid="stNumberInputContainer"] input {color:#E6EBF2!important;}
     body:has(.opening-workspace) [data-testid="stMain"] .stButton > button[kind="primary"] p,
     body:has(.opening-workspace) [data-testid="stMain"] .stButton > button[kind="primary"] span {color:#ffffff!important;}
-    body:has(.opening-workspace) [data-testid="stMain"] .ax-statusbar {background:#1C1C1C;color:#a7a7a7;border-color:#303030;}
-    body:has(.opening-workspace) [data-testid="stMain"] .ax-statusbar b {color:#e8edf2;}
+    body:has(.opening-workspace) [data-testid="stMain"] .ax-statusbar {background:#121D2B;color:#9AA9BC;border-color:#283649;}
+    body:has(.opening-workspace) [data-testid="stMain"] .ax-statusbar b {color:#E6EBF2;}
     body:has(.opening-workspace) [data-testid="stMain"] [data-testid="stCaptionContainer"] {opacity:1!important;}
     body:has(.opening-workspace) [data-testid="stMain"] [data-testid="stCaptionContainer"],
-    body:has(.opening-workspace) [data-testid="stMain"] [data-testid="stCaptionContainer"] p {color:#a7a7a7!important;}
+    body:has(.opening-workspace) [data-testid="stMain"] [data-testid="stCaptionContainer"] p {color:#9AA9BC!important;}
     body:has(.opening-workspace) [data-testid="stMain"] h2,
-    body:has(.opening-workspace) [data-testid="stMain"] h3 {color:#f1f1f1!important;text-transform:uppercase;letter-spacing:.055em;font-size:1rem!important;}
+    body:has(.opening-workspace) [data-testid="stMain"] h3 {color:#E6EBF2!important;text-transform:uppercase;letter-spacing:.055em;font-size:1rem!important;}
     body:has(.opening-workspace) [data-testid="stMain"] [data-testid="stMetricValue"] {font-family:"Consolas","SFMono-Regular",monospace;font-variant-numeric:tabular-nums;}
     body:has(.opening-workspace) [data-testid="stMain"] a {color:#26c6da;}
     .opening-workspace {display:none;}
     body:has(.opening-workspace) [data-testid="stMainBlockContainer"] {padding-top:1.1rem;padding-bottom:2rem;max-width:1920px;}
     body:has(.opening-workspace) [data-testid="stVerticalBlock"] {gap:.7rem;}
-    .terminal-quote {border-bottom:1px solid #303030;padding:8px 0 14px;display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;}
+    .terminal-quote {border-bottom:1px solid #283649;padding:8px 0 14px;display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;}
     .terminal-quote h2 {margin:0 0 7px!important;font-size:1.1rem!important;text-transform:none!important;letter-spacing:0!important;}
-    .terminal-quote .badge {background:#303030;border-radius:4px;padding:3px 7px;color:#c3c3c3;font-size:.7rem;margin-left:7px;}
+    .terminal-quote .badge {background:#283649;border-radius:4px;padding:3px 7px;color:#c3c3c3;font-size:.7rem;margin-left:7px;}
     .terminal-quote strong {font:700 2rem Consolas,monospace;font-variant-numeric:tabular-nums;}
-    .terminal-quote small {color:#a7a7a7;font-size:.72rem;}
-    .terminal-quote .positive,.terminal-grid .positive {color:#35d07f;}.terminal-quote .negative,.terminal-grid .negative {color:#ff5964;}
-    .terminal-quote .consensus {text-align:right;font-size:.78rem;color:#a7a7a7;line-height:1.6;}
-    .terminal-rail {height:4px;background:#303030;border-radius:4px;position:relative;margin:9px 0 5px;}
-    .terminal-rail i {display:block;position:absolute;top:-3px;height:10px;width:3px;background:#e34444;}
-    .terminal-rail-labels {display:flex;justify-content:space-between;font:11px Consolas,monospace;color:#a7a7a7;gap:10px;margin-bottom:12px;}
-    .terminal-panel {background:#1C1C1C;border:1px solid #303030;border-radius:5px;padding:12px;margin-bottom:10px;min-width:0;}
-    .terminal-panel h3 {margin:0 0 10px!important;padding-bottom:7px;border-bottom:1px solid #303030;font-size:.84rem!important;}
+    .terminal-quote small {color:#9AA9BC;font-size:.72rem;}
+    .terminal-quote .positive,.terminal-grid .positive {color:#37B68C;}.terminal-quote .negative,.terminal-grid .negative {color:#E2747E;}
+    .terminal-quote .consensus {text-align:right;font-size:.78rem;color:#9AA9BC;line-height:1.6;}
+    .terminal-rail {height:4px;background:#283649;border-radius:4px;position:relative;margin:9px 0 5px;}
+    .terminal-rail i {display:block;position:absolute;top:-3px;height:10px;width:3px;background:#C8AA73;}
+    .terminal-rail-labels {display:flex;justify-content:space-between;font:11px Consolas,monospace;color:#9AA9BC;gap:10px;margin-bottom:12px;}
+    .terminal-panel {background:#121D2B;border:1px solid #283649;border-radius:5px;padding:12px;margin-bottom:10px;min-width:0;}
+    .terminal-panel h3 {margin:0 0 10px!important;padding-bottom:7px;border-bottom:1px solid #283649;font-size:.84rem!important;}
     .terminal-grid {display:grid;grid-template-columns:1fr 1fr;gap:0 16px;}
-    .terminal-grid .metric {display:flex;align-items:center;justify-content:space-between;gap:7px;border-bottom:1px solid #292929;padding:7px 0;min-width:0;}
-    .terminal-grid .metric span {color:#a7a7a7;font-size:.76rem;overflow-wrap:anywhere;}
+    .terminal-grid .metric {display:flex;align-items:center;justify-content:space-between;gap:7px;border-bottom:1px solid #283649;padding:7px 0;min-width:0;}
+    .terminal-grid .metric span {color:#9AA9BC;font-size:.76rem;overflow-wrap:anywhere;}
     .terminal-grid .metric b {font:12px Consolas,monospace;white-space:normal;overflow-wrap:anywhere;text-align:right;}
     .terminal-panel p {font-size:.82rem;line-height:1.5;margin:0;}
     .company-price-marker {display:none;}
     .peer-scroll {width:100%;overflow-x:auto;margin:8px 0 14px;}
     .terminal-peers {width:100%;min-width:520px;border-collapse:collapse;font-size:11px;}
-    .terminal-peers th,.terminal-peers td {border-bottom:1px solid #303030;padding:9px 7px;text-align:right;}
-    .terminal-peers thead th {color:#a7a7a7;font-weight:normal;font-size:10px;}
+    .terminal-peers th,.terminal-peers td {border-bottom:1px solid #283649;padding:9px 7px;text-align:right;}
+    .terminal-peers thead th {color:#9AA9BC;font-weight:normal;font-size:10px;}
     .terminal-peers th:first-child {text-align:left;}
-    .terminal-peers tr.selected {background:#303030;}
-    .terminal-peers tr.selected th {border-left:2px solid #e34444;}
+    .terminal-peers tr.selected {background:#283649;}
+    .terminal-peers tr.selected th {border-left:2px solid #C8AA73;}
     .peer-value {position:relative;font-family:Consolas,monospace;white-space:nowrap;}
     .peer-value i {position:absolute;left:0;bottom:3px;height:14px;background:#777777;opacity:.22;}
     .peer-value span {position:relative;}
@@ -136,24 +136,24 @@ def observations(items):
 
 def terminal_chart(chart):
     """Style only the supplied opening chart, preserving data/encoding/axes."""
-    return (chart.configure(background="#1C1C1C", font="Consolas")
-            .configure_view(stroke="#303030")
-            .configure_axis(labelColor="#a7a7a7", titleColor="#a7a7a7", gridColor="#292929",
-                            domainColor="#303030", tickColor="#303030", labelFontSize=11,
+    return (chart.configure(background="#121D2B", font="Consolas")
+            .configure_view(stroke="#283649")
+            .configure_axis(labelColor="#9AA9BC", titleColor="#9AA9BC", gridColor="#283649",
+                            domainColor="#283649", tickColor="#283649", labelFontSize=11,
                             titleFontSize=11, gridOpacity=.65)
-            .configure_legend(labelColor="#c6d2dd", titleColor="#a7a7a7")
-            .configure_title(color="#f1f1f1", anchor="start")
-            .configure_range(category=["#26c6da", "#e34444", "#bd9bff", "#35d07f", "#ff5964"]))
+            .configure_legend(labelColor="#c6d2dd", titleColor="#9AA9BC")
+            .configure_title(color="#E6EBF2", anchor="start")
+            .configure_range(category=["#26c6da", "#C8AA73", "#bd9bff", "#37B68C", "#E2747E"]))
 
 
 def opening_price_chart(frame, period, unit, *, height=280):
     """Thin price line + restrained area using the same dated wall-clock contract."""
     import altair as alt
     from langgraphagenticai.ui.technical_chart import price_chart_spec
-    base = price_chart_spec(frame, period, unit).encode(color=alt.value("#e34444"))
+    base = price_chart_spec(frame, period, unit).encode(color=alt.value("#C8AA73"))
     domain = list(base.to_dict()["encoding"]["y"]["scale"]["domain"])
     # Area baseline is the existing finite padded domain, never an invented zero.
-    area = base.copy(deep=True).mark_area(opacity=.12, color="#e34444").encode(y2=alt.datum(domain[0]))
+    area = base.copy(deep=True).mark_area(opacity=.12, color="#C8AA73").encode(y2=alt.datum(domain[0]))
     # Keep one interactive selection, shared by the two layers.
     area.params = alt.Undefined
     return terminal_chart((area + base).properties(height=height))

@@ -10,6 +10,7 @@ import yfinance as yf
 from langgraphagenticai.providers.fmp_http import get_fmp_json
 from langgraphagenticai.utils.safety import sanitize_error
 from langgraphagenticai.providers.discovery import finite_number
+from langgraphagenticai.providers.sector_heatmap import load_sector_performance
 
 try:
     # Use the Windows certificate store. This is important on managed machines
@@ -111,7 +112,7 @@ def _load_fmp_market_overview(api_key: str) -> dict[str, Any]:
     warnings: list[str] = []
     for snap in snapshots.values():
         snap["provider"] = "Financial Modeling Prep"
-    missing = [symbol for symbol in symbols if symbol not in snapshots]
+    missing = [symbol for symbol in symbols if symbol not in snapshots and symbol not in SECTORS.values()]
     if missing:
         try:
             fallback_raw = yf.download(tickers=sorted(set(missing)), period="5d", interval="1d", auto_adjust=True, progress=False, group_by="column", threads=False, timeout=15)
@@ -125,7 +126,20 @@ def _load_fmp_market_overview(api_key: str) -> dict[str, Any]:
             warnings.append("Missing FMP quotes use labelled Yahoo Finance daily closes; these may differ from live quotes.")
         except Exception as exc:
             warnings.append(f"Missing-quote fallback unavailable: {sanitize_error(exc)}")
-    unavailable = sorted(set(symbols) - snapshots.keys())
+    # Sector bars, leading-sector observations and heatmap share the same FMP
+    # price / prior adjClose calculation rather than provider quote percentages.
+    performance = load_sector_performance(api_key)
+    warnings.extend(performance.get("warnings", []))
+    from langgraphagenticai.analysis.sector_heatmap import SECTORS as HEATMAP_SECTORS
+    for name, symbol in HEATMAP_SECTORS.items():
+        record = performance.get("sectors", {}).get(name, {})
+        snapshots[symbol] = {"price": record.get("price"), "percent": record.get("day"),
+                             "change": record.get("change"), "as_of": record.get("as_of"),
+                             "provider": "Financial Modeling Prep", "basis": performance.get("basis"),
+                             "previous_adj_close": record.get("previous_adj_close"),
+                             "previous_date": record.get("starts", {}).get("day"),
+                             "retrieved_at": performance.get("retrieved_at")}
+    unavailable = sorted(symbol for symbol in set(symbols) if symbol not in snapshots or snapshots[symbol].get("price") is None)
     if unavailable:
         warnings.append("No quote coverage for: " + ", ".join(unavailable))
     first_quote = next((row for row in rows if isinstance(row, dict)), {})

@@ -108,7 +108,16 @@ class Collector:
             except (KeyError,ValueError):continue
             self.endpoint_times[record['endpoint']]=max(stamp,self.endpoint_times.get(record['endpoint'],0))
         self.bundle=ROOT/'documentation/windows_ca_bundle.pem'
-        if not self.bundle.exists(): safe_path(self.bundle).write_text(''.join(ssl.DER_cert_to_PEM_cert(c) for c in ssl.create_default_context().get_ca_certs(binary_form=True)),encoding='ascii')
+        if not self.bundle.exists():
+            try:
+                certificates = ssl.create_default_context().get_ca_certs(binary_form=True)
+            except NotImplementedError:
+                # Native trust-store contexts verify certificates but cannot export
+                # them. Keep verification enabled with Requests' CA file; the
+                # active native context continues to honor OS trust roots.
+                self.bundle = Path(requests.certs.where())
+            else:
+                safe_path(self.bundle).write_text(''.join(ssl.DER_cert_to_PEM_cert(c) for c in certificates), encoding='ascii')
     def request(self,endpoint,params,api_id):
         params={k:v for k,v in params.items() if k.lower() not in ['apikey','api_key'] and v is not None}
         signature=hashlib.sha256(json.dumps([endpoint,params,self.args.max_bytes],sort_keys=True).encode()).hexdigest()

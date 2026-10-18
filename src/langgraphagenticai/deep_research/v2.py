@@ -23,6 +23,7 @@ class V2BudgetError(RuntimeError):
 
 
 def report_instruction(request: ResearchRequest, config: dict) -> str:
+    from .report_structure import structure_instruction
     cap = config["depth_draft_tokens"][request.depth]
     # Reserve room for citations/Markdown and model reasoning. This is a target,
     # not a guarantee of usable output; diagnostics record actual generation.
@@ -32,18 +33,18 @@ def report_instruction(request: ResearchRequest, config: dict) -> str:
         f"Write a compact completed investment memo, at most {words} words total, "
         f"about {per_company} words per company for {len(request.symbols)} companies. "
         "Start with ## Executive Investment Thesis. Answer the user's question and horizon; "
-        "never ask for clarification or promise a later report. Use these concise sections: "
-        "Company comparison (business quality, dated financial trends/cash conversion, "
-        "balance sheet, TTM versus latest reported period, forward estimates/valuation, "
-        "technical trend); News, Sentiment & Catalysts; Risks and counterargument; "
-        "Thesis invalidation and monitoring. Discuss every selected ticker on its own sector "
+        "never ask for clarification or promise a later report. Structure the analysis around "
+        "the question instead of squeezing every topic into a Company comparison section. "
+        "Use dated fundamentals, cash conversion, TTM versus latest reported period, forward "
+        "estimates/valuation, technical trend and News, Sentiment & Catalysts where they affect the question. "
+        "Include risks, counterargument, thesis invalidation and monitoring. Discuss every selected ticker on its own sector "
         "economics. Use a small table only if it saves space. Include dates, currency and "
         "period labels. Cite exact [E###] next to material factual claims, including the thesis. "
         "Preserve missing-data limitations; do not invent facts, numerical targets or growth "
         "between incompatible periods. Use qualitative scenarios when calculations are absent. "
         "Distinguish provider facts, calculated figures and interpretation. Prefer complete "
         "concise coverage over lengthy prose; do not add a sources appendix."
-    )
+    ) + structure_instruction(request)
 
 
 CostMode = Literal["Economy", "Balanced", "Maximum quality"]
@@ -120,7 +121,8 @@ def stage_configuration(mode: str, *, light_provider: str, light_model: str | No
             "review_standard": 12000, "review_extended": 14000,
             "follow_up": 12000, "committee": 10000,
         },
-        "interpretive_review": selected.interpretive_review,
+        "interpretive_review": False,
+        "report_mode": "single_pass",
     }
 
 
@@ -192,7 +194,11 @@ def run_quick_decision(result: dict, llm, *, model: str, max_chars: int = 10000)
     structured = llm.with_structured_output(QuickDecision, include_raw=True)
     instruction = (
         RESEARCH_RULES + "\nMake one concise investment decision from the compact brief. Select only from "
-        + ", ".join(symbols) + ". Use NO_BUY and null preferred_ticker when none qualifies."
+        + ", ".join(symbols) + ". Use NO_BUY and null preferred_ticker when none qualifies. "
+        "Use one summary paragraph of at most 50 words, balancing sector-specific fundamentals and valuation "
+        "with available momentum/technicals and news. Each catalyst/risk/invalidation must be a short sentence; "
+        "at most two per list. No source IDs, URLs, statement or filing references, provider fields, "
+        "methodology, dataset references or workflow jargon in decision prose."
     )
     started = __import__("time").monotonic()
     kwargs = {"max_completion_tokens": 900, "timeout": 90}

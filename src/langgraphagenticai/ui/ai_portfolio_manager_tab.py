@@ -5,6 +5,7 @@ from datetime import datetime, timezone
 from typing import Any
 
 import pandas as pd
+from langgraphagenticai.utils.export_csv import safe_csv_bytes
 import streamlit as st
 
 from langgraphagenticai.portfolio_manager.hybrid_workflow import run_hybrid_portfolio_workflow
@@ -53,7 +54,7 @@ def _get_holdings_input() -> pd.DataFrame:
     sample_df = _get_sample_holdings_df()
     st.download_button(
         "Download holdings template",
-        data=sample_df.to_csv(index=False).encode("utf-8"),
+        data=safe_csv_bytes(sample_df),
         file_name="portfolio_holdings_template.csv",
         mime="text/csv",
     )
@@ -247,7 +248,7 @@ def _render_main_recommendations(bundle: dict[str, Any]) -> None:
 
     st.download_button(
         "Download recommendation table CSV",
-        data=rec.to_csv(index=False).encode("utf-8"),
+        data=safe_csv_bytes(rec),
         file_name="hybrid_ai_portfolio_recommendations.csv",
         mime="text/csv",
     )
@@ -271,7 +272,7 @@ def _render_rebalance(bundle: dict[str, Any]) -> None:
     st.dataframe(display, use_container_width=True, hide_index=True)
     st.download_button(
         "Download rebalance table CSV",
-        data=rb.to_csv(index=False).encode("utf-8"),
+        data=safe_csv_bytes(rb),
         file_name="hybrid_ai_rebalance_table.csv",
         mime="text/csv",
     )
@@ -382,6 +383,12 @@ def render_ai_portfolio_manager_tab(
     marketaux_api_key: str = "",
     fmp_api_key: str = "",
 ) -> None:
+    st.markdown('''<style>
+    @media(max-width:1100px){
+      [data-testid="stHorizontalBlock"]:has(> [data-testid="stColumn"] .portfolio-recommendations-marker){flex-wrap:wrap}
+      [data-testid="stHorizontalBlock"]:has(> [data-testid="stColumn"] .portfolio-recommendations-marker)>[data-testid="stColumn"]{min-width:0;flex:1 1 100%;width:auto!important}
+    }
+    </style>''', unsafe_allow_html=True)
     st.subheader("Agentic AI Portfolio Manager")
     st.caption(
         "AI-powered portfolio recommendations that evaluate each holding across fundamentals, valuation, forward estimates, "
@@ -504,8 +511,6 @@ def render_ai_portfolio_manager_tab(
                 st.caption(f"Pages fetched: {bundle['screen_meta'].get('pages', 0)}")
 
     _render_summary(bundle)
-    st.markdown("## AI Committee Summary")
-    st.write(bundle.get("portfolio_committee_summary") or "No summary available.")
 
     tabs = st.tabs([
         "Recommendations",
@@ -518,7 +523,24 @@ def render_ai_portfolio_manager_tab(
         "AI Chat",
     ])
     with tabs[0]:
-        _render_main_recommendations(bundle)
+        recommendations, saved_rail = st.columns([2.3, 1], gap="large")
+        with recommendations:
+            st.markdown('<span class="portfolio-recommendations-marker" style="display:none"></span>', unsafe_allow_html=True)
+            _render_main_recommendations(bundle)
+        with saved_rail:
+            with st.container(border=True):
+                st.markdown("### Sector allocation")
+                sector = bundle.get("sector_allocation_table", pd.DataFrame())
+                if sector is None or sector.empty:
+                    st.info("No sector allocation available.")
+                else:
+                    compact_cols = [col for col in ("sector", "current_weight", "target_weight") if col in sector.columns]
+                    preview = _format_table(sector[compact_cols], pct_decimal_cols=["current_weight", "target_weight"])
+                    st.dataframe(preview, use_container_width=True, hide_index=True)
+                    st.caption("Current holdings and proposed targets; see Sector Exposure for the full table.")
+            with st.container(border=True):
+                st.markdown("### AI Committee Summary")
+                st.write(bundle.get("portfolio_committee_summary") or "No summary available.")
     with tabs[1]:
         _render_rebalance(bundle)
     with tabs[2]:

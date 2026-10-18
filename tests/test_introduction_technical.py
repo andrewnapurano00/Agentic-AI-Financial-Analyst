@@ -9,6 +9,7 @@ import pytest
 from streamlit.testing.v1 import AppTest
 
 from langgraphagenticai.providers import symbol_history as history
+from langgraphagenticai.providers import fmp_daily_prices as daily
 from langgraphagenticai.technical_analysis.indicators import (
     IndicatorSettings, calculate_indicators, finite_domain, axis_style,
 )
@@ -42,15 +43,21 @@ def test_all_ranges_shared_history_exact_request_and_metadata(monkeypatch, perio
     points = prices(range(100, 180))
     def get(url, *, api_key, params, timeout):
         calls.append((url, params, timeout))
-        return [{"date": stamp.isoformat(), "close": value, "symbol": "AAPL"} for stamp, value in points]
+        rows = [{"date": stamp.date().isoformat(), "close": value + 10, "adjClose": value, "symbol": "AAPL"} for stamp, value in points]
+        return rows if "historical-chart" in url else {"symbol": "AAPL", "historical": rows}
     monkeypatch.setattr(history, "get_fmp_json", get)
+    monkeypatch.setattr(daily, "get_fmp_json", get)
     monkeypatch.setattr(history.yf, "download", lambda *a, **k: pytest.fail("No fallback when FMP has valid partial prices"))
     result = history.load_symbol_history("aapl", "synthetic", period, "USD")
-    assert len(calls) == 1 and calls[0][1]["symbol"] == "AAPL"
-    assert calls[0][0].endswith("historical-chart/5min" if period in {"1D", "5D"} else "historical-price-eod/full")
+    assert len(calls) == 1
+    assert calls[0][0].endswith("historical-chart/5min" if period in {"1D", "5D"} else "historical-price-full/AAPL")
+    if period in {"1D", "5D"}:
+        assert calls[0][1]["symbol"] == "AAPL"
     assert calls[0][2] == (5, 20)
     assert result["provider"] == "Financial Modeling Prep"
-    assert result["price_basis"] == "Close; adjustment unverified"
+    assert result["price_basis"] == ("Close; adjustment unverified" if period in {"1D", "5D"} else "FMP adjClose")
+    if period not in {"1D", "5D"} and result["points"]:
+        assert result["points"][-1][1] == 179
     assert result["currency"] == "USD" and "naive" in result["timezone"]
     assert result["retrieved_at"] and result["as_of"] and result["source"]
     assert len(result["points"]) == (1 if period == "1D" else 5 if period == "5D" else len(result["points"]))
@@ -106,9 +113,9 @@ def test_aware_future_instants_rejected_current_boundary_and_offsets_retained(mo
 
 def test_future_day_exclusion_protects_asof_warmup_range_and_ai(monkeypatch):
     monkeypatch.setattr(history, "_utc_now", lambda: pd.Timestamp("2026-10-04T12:00:00Z"))
-    monkeypatch.setattr(history, "get_fmp_json", lambda *a, **k: [
-        {"date": "2026-10-01", "close": 99}, {"date": "2026-10-02", "close": 100},
-        {"date": "2099-12-31", "close": 200}])
+    monkeypatch.setattr(daily, "get_fmp_json", lambda *a, **k: {"symbol": "AAPL", "historical": [
+        {"date": "2026-10-01", "close": 999, "adjClose": 99}, {"date": "2026-10-02", "close": 1000, "adjClose": 100},
+        {"date": "2099-12-31", "close": 200, "adjClose": 200}]})
     monkeypatch.setattr(history.yf, "download", lambda *a, **k: pytest.fail("Valid FMP data must remain intact"))
     chart = history.load_symbol_history("AAPL", "synthetic", "1Y", "USD")
     assert chart["as_of"] == "2026-10-02T00:00:00" and chart["partial"]
@@ -133,14 +140,14 @@ def test_future_exclusion_count_survives_whole_series_fallback(monkeypatch):
 
 
 @pytest.mark.parametrize("payload", [None, {}, {"error": "bad"}, 1, ["bad"]])
-def test_malformed_provider_whole_yahoo_fallback(monkeypatch, payload):
-    monkeypatch.setattr(history, "get_fmp_json", lambda *a, **k: payload)
+def test_malformed_fmp_daily_history_stays_unavailable(monkeypatch, payload):
+    monkeypatch.setattr(daily, "get_fmp_json", lambda *a, **k: payload)
     fallback = Mock(return_value=pd.DataFrame({"Close": [100, 101]}, index=pd.date_range("2026-01-01", periods=2, tz="America/New_York")))
     monkeypatch.setattr(history.yf, "download", fallback)
     result = history.load_symbol_history("AAPL", "synthetic", "10Y")
-    assert result["provider"] == "Yahoo Finance" and result["price_basis"] == "Yahoo auto-adjusted close"
-    assert result["timezone"] == "America/New_York" and result["partial"]
-    assert fallback.call_count == 1 and fallback.call_args.kwargs["auto_adjust"] is True
+    assert result["provider"] == "Financial Modeling Prep" and result["price_basis"] == "FMP adjClose"
+    assert result["points"] == [] and result["warnings"]
+    assert fallback.call_count == 0
 
 
 def test_errors_empty_recovery_and_secret_safe(monkeypatch):
@@ -157,8 +164,8 @@ def test_errors_empty_recovery_and_secret_safe(monkeypatch):
 
 
 def test_daily_range_and_setting_changes_reuse_provider_cache(monkeypatch):
-    get = Mock(return_value=[{"date": stamp.isoformat(), "close": value} for stamp, value in prices(range(100, 200))])
-    monkeypatch.setattr(history, "get_fmp_json", get)
+    get = Mock(return_value={"symbol": "AAPL", "historical": [{"date": stamp.date().isoformat(), "close": value, "adjClose": value} for stamp, value in prices(range(100, 200))]})
+    monkeypatch.setattr(daily, "get_fmp_json", get)
     a = history.load_symbol_history("AAPL", "synthetic", "1M")
     b = history.load_symbol_history("AAPL", "synthetic", "10Y")
     calculate_indicators(a["calculation_points"], IndicatorSettings(sma=30))
@@ -307,38 +314,14 @@ def test_agent_rejects_truncated_generation_and_missing_key_without_call(monkeyp
     build.assert_not_called()
 
 
-@pytest.mark.parametrize("surface", ["market", "company"])
-def test_all_eight_introduction_ranges_preserve_narrative_and_do_not_call_models(monkeypatch, surface):
-    from datetime import datetime, timezone
-    from langgraphagenticai.ui import introduction_tab
-    requested = []
-    def load(*args):
-        period = args[1] if surface == "market" else args[2]
-        requested.append(period)
-        return chart_data(period)
-    monkeypatch.setattr(introduction_tab, "load_market_chart", load)
-    monkeypatch.setattr(introduction_tab, "load_symbol_history", load)
-    monkeypatch.setattr(introduction_tab, "load_market_overview", lambda *args: {
-        "indexes": {"S&P 500": {"price": 100, "percent": 0}}, "sectors": {}, "cross_assets": {}, "movers": [],
-        "as_of": datetime.now(timezone.utc), "fetched_at": datetime.now(timezone.utc), "warnings": []})
-    snapshot = {"symbol": "AAPL", "company": "Apple", "quote": {"price": 100}, "fundamentals": {},
-                "profile": {"currency": "USD"}, "news": [], "providers": ["Synthetic"], "fetched_at": "2026-02-10", "performance": {}}
-    monkeypatch.setattr(introduction_tab, "load_company_snapshot", lambda *args: snapshot)
-    def paid(*a, **k):
-        pytest.fail("Ordinary range/settings controls must not call models")
-    monkeypatch.setattr(introduction_tab, "generate_company_summary", paid)
-    monkeypatch.setattr(technical_chart, "analyze_technical", paid)
-    app = AppTest.from_string("from langgraphagenticai.ui.introduction_tab import render_introduction_tab\nrender_introduction_tab(openai_api_key='synthetic')")
-    if surface == "company":
-        app.session_state["intro_company_symbol"] = "AAPL"
-        app.session_state["intro_summary:AAPL:gpt-5"] = "Existing saved company narrative"
-    app.run(timeout=30)
-    assert not app.exception
-    for period in history.RANGES:
-        app.get("button_group")[-1].set_value(period).run(timeout=30)
-        assert not app.exception and requested[-1] == period
-    if surface == "company":
-        assert any("Existing saved company narrative" in item.value for item in app.markdown)
+def test_daily_introduction_ranges_do_not_call_models(market_dashboard_stub):
+    ui, packet, calls = market_dashboard_stub
+    app = AppTest.from_string("from langgraphagenticai.ui.introduction_tab import render_introduction_tab\nrender_introduction_tab()").run(timeout=30)
+    app.button(key="intro_refresh").click().run()
+    for period in ["1M", "3M", "1Y", "3Y", "5Y", "10Y"]:
+        app.get("button_group")[0].set_value(period).run(timeout=30)
+        assert not app.exception and calls[-1] == ("^GSPC", period)
+
 
 
 def test_explicit_ai_action_and_saved_result_invalidation(monkeypatch):
@@ -375,7 +358,9 @@ def test_invalid_macd_configuration_disables_ai_and_preserves_prices(monkeypatch
     monkeypatch.setitem(sys.modules, "tests_placeholder", SimpleNamespace(chart_data=chart_data))
     monkeypatch.setattr(technical_chart, "analyze_technical", lambda *a: pytest.fail("Invalid settings must not call AI"))
     app = AppTest.from_string("from langgraphagenticai.ui.technical_chart import render_technical_chart\nfrom tests_placeholder import chart_data\nrender_technical_chart(chart_data(), key='invalid', openai_api_key='synthetic')").run(timeout=30)
-    app.multiselect(key="invalid_indicators").set_value(["MACD"]).run()
+    app.checkbox(key="invalid_indicator_SMA").uncheck()
+    app.checkbox(key="invalid_indicator_RSI").uncheck()
+    app.checkbox(key="invalid_indicator_MACD").check().run()
     app.number_input(key="invalid_macd_fast").set_value(40).run()
     assert not app.exception and app.error
     assert app.button(key="invalid_analyze").disabled

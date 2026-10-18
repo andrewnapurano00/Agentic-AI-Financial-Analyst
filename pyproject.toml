@@ -10,8 +10,10 @@ requires-python = ">=3.11,<3.13"
 dependencies = [
     "streamlit>=1.61,<2",
     "pandas>=2.2,<4",
+    "exchange-calendars>=4.13,<5",
     "numpy>=2,<3",
     "requests>=2.32,<3",
+    "truststore>=0.10,<0.11",
     "openai>=2.50,<3",
     "langchain>=1.3,<2",
     "langchain-community>=0.4,<0.5",
@@ -43,3 +45,7 @@ dev = ["pytest>=8,<10"]
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.pytest.ini_options]
+# Discover only the application and provider contract suites.
+testpaths = ["tests", "fmp_data_reference/scripts"]

@@ -12,7 +12,8 @@ import streamlit as st
 from langgraphagenticai.deep_research.context import available_context, collect_app_context
 from langgraphagenticai.deep_research.v2_workflow import build_manager, run_decision
 from langgraphagenticai.deep_research.quarterly_ttm import METHODOLOGY
-from langgraphagenticai.deep_research.manager import failure_reason, finalize_report
+from langgraphagenticai.deep_research.manager import failure_reason
+from langgraphagenticai.deep_research.delivery import executive_saved_result
 from langgraphagenticai.deep_research.models import Evidence, ResearchRequest, dumps, parse_symbols
 from langgraphagenticai.deep_research.presentation import build_research_pdf, clean_report_markdown
 from langgraphagenticai.ui.investment_brief import render_investment_brief
@@ -43,6 +44,8 @@ def _save_v2(update, *, run_id=None, metadata=None, select=False):
 
 
 def _run_status(result):
+    if result.get("delivery_outcome") == "limited_evidence":
+        return "Financial overview only; full report review unsuccessful", "error"
     return {
         "complete": ("V2 research ready", "complete"),
         "needs_review": ("Review completed with evidence issues", "error"),
@@ -57,30 +60,17 @@ def _safe_failure(exc):
 
 
 def _render_quick_decision(decision: dict) -> None:
-    ticker = decision.get("preferred_ticker")
-    label = f"{decision.get('verdict')} · {ticker}" if ticker else decision.get("verdict", "NO_BUY")
-    st.success(f"**{label}** · {decision.get('confidence', 0)}% confidence")
-    st.write(decision.get("summary", ""))
-    columns = st.columns(3)
-    for column, (title, key) in zip(columns, (("Catalysts", "catalysts"), ("Risks", "risks"),
-                                                  ("Invalidation", "invalidation_signals"))):
-        with column:
-            st.markdown(f"**{title}**")
-            for value in decision.get(key, []):
-                st.markdown(f"- {value}")
-    if decision.get("limitations"):
-        with st.expander("Evidence limitations"):
-            for value in decision["limitations"]:
-                st.markdown(f"- {value}")
-    st.caption(decision.get("disclaimer", "AI-generated research opinion, not personalized investment advice."))
+    from langgraphagenticai.ui.research_decision import render_executive_decision
+    render_executive_decision(decision)
 
 
 @st.fragment
 def render_deep_research_v2_tab(*, openai_api_key: str, fmp_api_key: str, serper_api_key: str = "",
                                 marketaux_api_key: str = "", groq_api_key: str = "") -> None:
-    st.caption("Experimental cost pilot. Validate AI conclusions against saved Sources; workflow completion does not certify accuracy.")
+    st.caption("Concise research with bounded model spend and automatic completion.")
 
-    saved_history = st.session_state.get("drv2_history", [])
+    saved_history = [executive_saved_result(item) for item in st.session_state.get("drv2_history", [])]
+    st.session_state["drv2_history"] = saved_history
     active_saved = next((item for item in saved_history if item.get("id") == st.session_state.get("drv2_active_run")), saved_history[0] if saved_history else None)
     if active_saved:
         result = active_saved
@@ -93,9 +83,10 @@ def render_deep_research_v2_tab(*, openai_api_key: str, fmp_api_key: str, serper
             ("Saved result generated", format_saved_time(result.get("result_generated_at")), "Operation time; evidence retrieval is separate"),
         ])
         st.markdown("**Saved AI findings**")
-        report_preview = clean_report_markdown(result.get("report") or result.get("draft") or "No report has been generated. Saved evidence remains available below.")
-        st.write(report_preview[:600])
-        st.caption("AI interpretation; use Sources to verify claims and warnings.")
+        from langgraphagenticai.deep_research.executive import executive_preview
+        report_preview = executive_preview(result.get("report") or result.get("draft") or "No report has been generated.")
+        st.write(report_preview)
+        st.caption("Research interpretation based on the saved company information.")
     else:
         render_company_header(st.session_state.get("drv2_tickers", "Company not selected"), "V2 research pilot", "No saved evidence selected")
         render_evidence_row(evidence_status({}))
@@ -136,8 +127,7 @@ def render_deep_research_v2_tab(*, openai_api_key: str, fmp_api_key: str, serper
             option_cols[0].caption("Quarterly-derived V2 excludes saved app packets because their financial basis and provider identity are unverified. Saved V2 runs remain available below.")
             include_news = option_cols[1].checkbox("Include news", value=bool(serper_api_key),
                                                        help="Use Serper company news within the requested lookback, plus planner-requested web research.")
-            stop_after_evidence = option_cols[2].checkbox("Stop after evidence", value=False)
-            st.caption("Stop after evidence includes planning/investigation; report writing and decisions wait for a later explicit action.")
+            stop_after_evidence = False
             decision_mode = option_cols[3].selectbox("Decision stage", ["None", "Quick decision", "Full committee"])
             cache_policy = st.radio("Reuse policy", ["Use saved result", "Force fresh research"], horizontal=True)
             news_days = st.select_slider("News lookback", options=[7, 30, 90], value=30)
@@ -219,49 +209,13 @@ def render_deep_research_v2_tab(*, openai_api_key: str, fmp_api_key: str, serper
     render_serper_news_coverage(result)
     label, state = _run_status(result)
     (st.success if state == "complete" else st.warning)(label)
-    for warning in dict.fromkeys(result.get("warnings", []) + result.get("report_warnings", [])):
-        st.warning(sanitize_error(warning))
-    if result.get("gaps"):
-        with st.expander("Evidence gaps", expanded=result.get("status") == "incomplete"):
-            for gap in result["gaps"]:
-                st.write(sanitize_error(gap))
-    usable = any(item.get("status") == "ok" and item.get("data") for item in result.get("evidence", []))
     status = result.get("status")
-    retry_label = "Generate report from saved evidence" if status == "evidence_ready" else "Retry review" if result.get("draft") else "Retry report writing"
-    if status in {"evidence_ready", "incomplete", "review_pending", "collecting", "reviewing"} and usable:
-        st.info("Recovery uses saved evidence and drafts. It does not fetch provider data again.")
-        legacy = result.get("financial_methodology") != METHODOLOGY
-        if legacy:
-            st.warning("Legacy saved evidence uses the earlier financial methodology and may contain provider TTM facts. Start fresh research for quarterly-derived TTM.")
-        legacy_ack = st.checkbox("Use legacy saved financial evidence for this recovery", key=f"drv2_legacy_{selected}") if legacy else True
-        if st.button(retry_label, type="primary", key=f"drv2_recover_{selected}", disabled=not legacy_ack):
-            try:
-                runtime = result.get("v2_runtime", {})
-                manager = _manager_v2(
-                    request=request, config=config, openai_api_key=openai_api_key, groq_api_key=groq_api_key,
-                    fmp_api_key=fmp_api_key, serper_api_key=serper_api_key, marketaux_api_key=marketaux_api_key,
-                    ollama_base_url=runtime.get("ollama_base_url", "http://localhost:11434/v1"),
-                    budget=float(runtime.get("budget", 0.35)), stop_after_evidence=False, saved=result,
-                    checkpoint=lambda update: _save_v2(update, run_id=selected),
-                )
-                updated = manager.resume(result)
-                st.session_state["drv2_history"] = stamp_saved_result(
-                    updated, st.session_state.get("drv2_history", []))
-                _save_v2(updated)
-                st.rerun()
-            except Exception as exc:
-                st.error("Recovery stopped. " + _safe_failure(exc) + " Saved evidence and progress remain available.")
-    elif status == "incomplete" and not usable:
-        st.info("No usable company evidence was collected. Check provider access and tickers, then start fresh research.")
-    if status == "needs_review":
-        st.info("Review found unresolved issues. Verify warnings and sources before finalizing with caveats.")
-        if st.button("Finalize report with caveats", key=f"drv2_finalize_{selected}"):
-            _save_v2(finalize_report(result))
-            st.rerun()
+    if result.get("status") == "incomplete":
+        st.info("Report generation did not finish. Collected research remains available in Sources.")
     decision_mode_saved = result.get("v2_runtime", {}).get("decision_mode", "None")
     if result.get("decision_error"):
         st.warning("Decision stage stopped: " + sanitize_error(result["decision_error"]) + " Your research report is preserved.")
-    if status == "complete" and decision_mode_saved != "None" and result.get("decision_status") != "complete":
+    if status == "complete" and result.get("delivery_outcome")!="limited_evidence" and decision_mode_saved != "None" and result.get("decision_status") != "complete":
         decision_label = "Retry decision" if result.get("decision_status") == "failed" else "Run saved decision stage"
         if st.button(decision_label, key=f"drv2_decision_{selected}"):
             _save_v2(run_decision(result, openai_api_key=openai_api_key, groq_api_key=groq_api_key))
@@ -272,10 +226,21 @@ def render_deep_research_v2_tab(*, openai_api_key: str, fmp_api_key: str, serper
     with brief_tab:
         render_investment_brief(result, "v2", (openai_api_key, fmp_api_key, serper_api_key, marketaux_api_key, groq_api_key))
     with report_tab:
-        if result.get("report"):
-            st.markdown(clean_report_markdown(result["report"]))
-        else:
-            st.info("No report has been generated yet.")
+        report_body, evidence_rail = st.columns([3, 1], gap="large")
+        with report_body:
+            if result.get("report"):
+                st.markdown(clean_report_markdown(result["report"]))
+            else:
+                st.info("No report has been generated yet.")
+        with evidence_rail:
+            with st.container(border=True):
+                st.markdown("**Saved-run evidence**")
+                st.caption("Supporting detail is available in Sources.")
+                st.metric("Workflow status", result.get("status", "unknown").replace("_", " ").title())
+                st.metric("Usable evidence", sum(1 for item in result.get("evidence", []) if item.get("status") == "ok" and item.get("data")))
+                st.caption("Saved result generated: " + format_saved_time(result.get("result_generated_at")))
+                st.caption("Operation time; evidence retrieval is separate.")
+                render_evidence_row(evidence_status(result))
     with decision_tab:
         if result.get("quick_decision"):
             _render_quick_decision(result["quick_decision"])
@@ -310,6 +275,10 @@ def render_deep_research_v2_tab(*, openai_api_key: str, fmp_api_key: str, serper
                          hide_index=True, width="stretch")
 
     if result.get("report"):
+        if result.get("crewai_decision"):
+            st.caption("The PDF includes the saved CrewAI committee decision.")
+        elif result.get("quick_decision"):
+            st.caption("The PDF includes the saved quick investment decision.")
         downloads = st.columns(3)
         filename = "research_v2_" + "_".join(request.symbols) + "_" + result["id"]
         downloads[0].download_button("Download PDF", build_research_pdf(result), filename + ".pdf", "application/pdf", on_click="ignore")

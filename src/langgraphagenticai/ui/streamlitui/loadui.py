@@ -43,7 +43,6 @@ class LoadStreamlitUI:
         inject_app_shell_css()
         st.sidebar.markdown('<div class="ax-brand"><strong>Axiom</strong> <span>Research</span></div>', unsafe_allow_html=True)
         st.sidebar.markdown('<div class="ax-tagline">DISCOVER. ANALYZE. INVEST.</div>', unsafe_allow_html=True)
-        st.sidebar.markdown('<div class="ax-sidebar-label">Workspace</div>', unsafe_allow_html=True)
         from langgraphagenticai.ui.workspace_handoff import apply_pending_handoff
         from langgraphagenticai.state.discovery import apply_discovery
         apply_discovery(st.session_state)
@@ -51,27 +50,30 @@ class LoadStreamlitUI:
         next_workspace = st.session_state.pop("next_workspace", None)
         if next_workspace:
             st.session_state["active_workspace"] = next_workspace
+        if st.session_state.get("active_workspace") == "Deep Research V2":
+            st.session_state["active_workspace"] = "Deep Research"
+            st.session_state["deep_research_format"] = "Low cost format"
+        st.sidebar.markdown('<div class="ax-sidebar-label">Workspaces</div>', unsafe_allow_html=True)
         active_page = st.sidebar.radio(
             "Workspace navigation",
-            ["Introduction", "Top Movers", "Research", "Equity Report", "Stock Screener", "Portfolio Lab", "Deep Research", "Deep Research V2"],
+            ["Introduction", "Top Movers", "Stock Screener", "Research", "Equity Report", "AI Valuation", "Deep Research", "Portfolio Lab"],
             label_visibility="collapsed",
             key="active_workspace",
             format_func=lambda label: "Market Brief" if label == "Introduction" else label,
         )
 
         st.sidebar.markdown("---")
-        st.sidebar.markdown('<div class="ax-sidebar-label">Configuration</div>', unsafe_allow_html=True)
-        selected_model = st.sidebar.selectbox("Select OpenAI Model", self.config.OPENAI_MODEL_OPTIONS, index=0)
-        selected_usecase = st.sidebar.selectbox("Select Use Case", self.config.USECASE_OPTIONS, index=0)
-
-        with st.sidebar.expander("Model & data settings", expanded=False):
+        with st.sidebar.expander("Settings", expanded=False):
+            st.caption("Model, use case, provider keys and debug controls")
+            selected_model = st.selectbox("Select OpenAI Model", self.config.OPENAI_MODEL_OPTIONS, index=0)
+            selected_usecase = st.selectbox("Select Use Case", self.config.USECASE_OPTIONS, index=0)
             st.caption("Keys load from .env, environment variables, or Streamlit secrets.")
             openai_input = st.text_input("OpenAI API Key", type="password")
             fmp_input = st.text_input("FMP API Key", type="password")
             marketaux_input = st.text_input("Marketaux API Key", type="password")
             serper_input = st.text_input("Serper API Key", type="password")
             groq_input = st.text_input("Groq API Key (V2 pilot)", type="password")
-        debug_mode = st.sidebar.checkbox("Show debug trace", value=False)
+            debug_mode = st.checkbox("Show debug trace", value=False)
 
         openai_api_key = _resolve_secret(openai_input, "OPENAI_API_KEY", "OPENAI_API_KEY")
         fmp_api_key = _resolve_secret(fmp_input, "FMP_API_KEY", "FMP_API_KEY")

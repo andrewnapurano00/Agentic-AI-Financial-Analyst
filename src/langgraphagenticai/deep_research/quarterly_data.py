@@ -34,6 +34,8 @@ class QuarterlyFinancialDataSource(FinancialDataSource):
         def fetch(job):
             symbol, category, route, params = job
             url = "https://financialmodelingprep.com/stable/" + route
+            if category == "estimates":
+                url = "https://financialmodelingprep.com/api/v3/analyst-estimates/" + symbol
             try:
                 rows = extract_rows(self.fetch_json(url, api_key=self.api_key, params={"symbol": symbol, **params}))
                 if category in {"profile", "quote"}:

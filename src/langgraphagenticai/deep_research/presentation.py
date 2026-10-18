@@ -17,7 +17,7 @@ from reportlab.lib.units import inch
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.platypus import (
-    HRFlowable, KeepTogether, Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle,
+    CondPageBreak, HRFlowable, KeepTogether, Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle,
 )
 
 
@@ -77,8 +77,11 @@ def _font_safe(value) -> str:
 def clean_report_markdown(report: str) -> str:
     """Remove internal evidence notation and model-generated source footer rows."""
     cleaned: list[str] = []
+    in_executive = False
     removed_source_row = False
-    for raw_line in str(report or "").splitlines():
+    from .report_structure import normalize_report_headings
+    from langgraphagenticai.utils.safety import redact_sensitive_text
+    for raw_line in normalize_report_headings(redact_sensitive_text(report)).splitlines():
         line = raw_line.strip()
         if SOURCE_LINE.match(line) or ("sources:" in line.lower() and re.search(r"\bE\d{3}\b", line)):
             removed_source_row = True
@@ -94,6 +97,23 @@ def clean_report_markdown(report: str) -> str:
             } else match.group(0)
 
         line = INTERNAL_REF.sub(remove_internal_reference, raw_line)
+        from .summary_text import clean_summary_references
+        from .summary_text import REFERENCE
+        from .models import safe_url
+        article_links = {}
+        def preserve_article(match):
+            label, url = match.group(1), match.group(2)
+            if in_executive or re.search(REFERENCE,label,re.I):
+                return match.group(0)
+            if not safe_url(url) or re.search(r"(?i)[?&](?:api_?key|token|key|password)=",url):
+                return label
+            marker = f"AXARTICLELINK{len(article_links)}X"
+            article_links[marker] = match.group(0)
+            return marker
+        line = re.sub(r"\[([^]\n]+)\]\((https?://[^)]+)\)",preserve_article,line)
+        line = clean_summary_references(line)
+        for marker, link in article_links.items():
+            line = line.replace(marker,link)
         line = re.sub(r"[ \t]+([,.;:])", r"\1", line)
         line = re.sub(r" {2,}", " ", line).rstrip()
         stripped = line.strip()
@@ -101,12 +121,20 @@ def clean_report_markdown(report: str) -> str:
                 and any(stripped.lower().startswith(prefix) for prefix in REPORT_SECTION_PREFIXES)
                 and len(stripped) <= 120):
             line = "## " + stripped
+        if re.match(r"^#{1,4}\s+", line.strip()):
+            in_executive = bool(re.match(r"^#{1,4}\s+Executive (?:Investment Thesis|Summary)", line.strip(), re.I))
+        if in_executive:
+            from .summary_text import clean_summary_references
+            line = clean_summary_references(line)
+            line = re.sub(r"\[([^]\n]+)\]\(https?://[^)]+\)", r"\1", line)
+            line = re.sub(r"https?://\S+", "", line)
         cleaned.append(line)
     return re.sub(r"\n{3,}", "\n\n", "\n".join(cleaned)).strip()
 
 
 def _plain_inline(value: str) -> str:
-    text = html.escape(_font_safe(value), quote=True)
+    from langgraphagenticai.utils.safety import redact_sensitive_text
+    text = html.escape(_font_safe(redact_sensitive_text(value)), quote=True)
     text = re.sub(r"\*\*(.+?)\*\*", r"<b>\1</b>", text)
     text = re.sub(r"(?<!\*)\*(.+?)\*(?!\*)", r"<i>\1</i>", text)
     text = re.sub(r"`(.+?)`", r"\1", text)
@@ -209,7 +237,7 @@ def _financial_basis_table(rows: list[dict], body_style: ParagraphStyle) -> Tabl
 
 
 def _comparison_table(rows: list[dict], body_style: ParagraphStyle,
-                      sector_frameworks: list[dict] | None = None) -> Table | None:
+                      sector_frameworks: list[dict] | None = None, fields: list[str] | None = None) -> Table | None:
     if not rows:
         return None
     from .research_metrics import project_sector_row
@@ -250,6 +278,9 @@ def _comparison_table(rows: list[dict], body_style: ParagraphStyle,
             return "text"
         metrics = [(name, name, kind_for(name)) for name in ordered[:18]] or default_metrics
 
+    if fields is not None:
+        metrics = [(key, key, "text") for key in fields]
+
     def metric_value(row: dict, key: str, kind: str) -> str:
         value = row.get(key)
         if value is None or value == "":
@@ -284,8 +315,8 @@ def _comparison_table(rows: list[dict], body_style: ParagraphStyle,
         ("VALIGN", (0, 0), (-1, -1), "TOP"),
         ("LEFTPADDING", (0, 0), (-1, -1), 7),
         ("RIGHTPADDING", (0, 0), (-1, -1), 7),
-        ("TOPPADDING", (0, 0), (-1, -1), 6),
-        ("BOTTOMPADDING", (0, 0), (-1, -1), 6),
+        ("TOPPADDING", (0, 0), (-1, -1), 4 if fields is not None else 6),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 4 if fields is not None else 6),
     ]))
     return table
 
@@ -357,8 +388,16 @@ def _markdown_story(markdown: str, styles: dict) -> list:
         elif line.startswith(">"):
             story.append(Paragraph(_plain_inline(line.lstrip("> ")), styles["Callout"]))
         else:
-            story.append(Paragraph(_plain_inline(line), styles["BodyText"]))
-        story.append(Spacer(1, 0.06 * inch))
+            paragraph = [line]
+            while index + 1 < len(lines):
+                following = lines[index + 1].strip()
+                if not following or re.match(r"^(?:#{1,4}\s|[-*]\s|\d+[.)]\s|[|>])", following):
+                    break
+                if re.fullmatch(r"[-_*]{3,}", following.replace(" ", "")):
+                    break
+                paragraph.append(following)
+                index += 1
+            story.append(Paragraph(_plain_inline(" ".join(paragraph)), styles["BodyText"]))
         index += 1
     return story
 
@@ -405,17 +444,18 @@ def build_research_pdf(result: dict) -> bytes:
         "HeaderMeta": ParagraphStyle("HeaderMeta", parent=base["Normal"], fontName=BODY_FONT,
                                      fontSize=8.3, leading=11, textColor=colors.HexColor("#D7E7EF")),
         "Subtitle": ParagraphStyle("ExecutiveSubtitle", parent=base["Normal"], fontName=BODY_FONT,
-                                   fontSize=8.5, leading=12, textColor=colors.HexColor("#52677B")),
+                                   fontSize=8.5, leading=12, textColor=colors.HexColor("#52677B"), keepWithNext=True),
         "Heading1": ParagraphStyle("H1", parent=base["Heading1"], fontName=BOLD_FONT, fontSize=14, leading=18,
-                                   spaceBefore=13, spaceAfter=5, textColor=colors.HexColor("#16324F"), keepWithNext=1),
+                                   spaceBefore=10, spaceAfter=4, textColor=colors.HexColor("#16324F"), keepWithNext=1),
         "Heading2": ParagraphStyle("H2", parent=base["Heading2"], fontName=BOLD_FONT, fontSize=11.2, leading=14,
                                    spaceBefore=10, spaceAfter=4, textColor=colors.HexColor("#1F5A7A"), keepWithNext=1),
         "Heading3": ParagraphStyle("H3", parent=base["Heading3"], fontName=BOLD_FONT, fontSize=9.6, leading=12.5,
                                    spaceBefore=8, spaceAfter=3, textColor=colors.HexColor("#315C73"), keepWithNext=1),
         "BodyText": ParagraphStyle("ExecutiveBody", parent=base["BodyText"], fontName=BODY_FONT,
-                                   fontSize=9.2, leading=13.4, textColor=colors.HexColor("#243746"), alignment=TA_LEFT),
+                                   fontSize=9.2, leading=13.0, spaceAfter=4,
+                                   textColor=colors.HexColor("#243746"), alignment=TA_LEFT),
         "BulletBody": ParagraphStyle("ExecutiveBullet", parent=base["BodyText"], fontName=BODY_FONT,
-                                     fontSize=9, leading=12.8, leftIndent=14, firstLineIndent=-9,
+                                     fontSize=9, leading=12.8, spaceAfter=3, leftIndent=14, firstLineIndent=-9,
                                      textColor=colors.HexColor("#243746")),
         "Callout": ParagraphStyle("ExecutiveCallout", parent=base["BodyText"], fontName=BODY_FONT,
                                   fontSize=8.6, leading=12.3,
@@ -441,7 +481,7 @@ def build_research_pdf(result: dict) -> bytes:
         canvas.line(0.65 * inch, 0.43 * inch, 7.85 * inch, 0.43 * inch)
         canvas.setFont(BODY_FONT, 7)
         canvas.setFillColor(colors.HexColor("#64748B"))
-        canvas.drawString(0.65 * inch, 0.25 * inch, "Research support only | Validate before making investment decisions")
+        canvas.drawString(0.65 * inch, 0.25 * inch, "General investment research | Not personalized financial advice")
         canvas.drawRightString(7.85 * inch, 0.25 * inch, f"Page {document.page}")
         canvas.restoreState()
 
@@ -450,11 +490,12 @@ def build_research_pdf(result: dict) -> bytes:
     prepared = datetime.now().strftime("%B %d, %Y")
     status = str(result.get("status") or "complete").replace("_", " ").title()
     horizon = result.get("request", {}).get("horizon") or "Not specified"
+    report_type = "Comparative investment report" if len(symbols) > 1 else "Company investment report"
 
     header = Table([
         [Paragraph("INSTITUTIONAL EQUITY RESEARCH", styles["Kicker"])],
         [Paragraph(_plain_inline(" / ".join(symbols) or title), styles["HeaderTitle"])],
-        [Paragraph(_plain_inline(f"Comparative investment report  |  Prepared {prepared}"), styles["HeaderMeta"])],
+        [Paragraph(_plain_inline(f"{report_type}  |  Prepared {prepared}"), styles["HeaderMeta"])],
     ], colWidths=[7.0 * inch])
     header.setStyle(TableStyle([
         ("BACKGROUND", (0, 0), (-1, -1), colors.HexColor("#16324F")),
@@ -471,9 +512,9 @@ def build_research_pdf(result: dict) -> bytes:
     meta_value = ParagraphStyle("MetaValue", parent=styles["BodyText"], fontName=BOLD_FONT,
                                 fontSize=8.5, leading=11, textColor=colors.HexColor("#16324F"))
     meta = Table([
-        [Paragraph("COVERAGE", meta_label), Paragraph("INVESTMENT HORIZON", meta_label), Paragraph("REVIEW STATUS", meta_label)],
+        [Paragraph("COVERAGE", meta_label), Paragraph("INVESTMENT HORIZON", meta_label), Paragraph("REPORT TYPE", meta_label)],
         [Paragraph(_plain_inline(", ".join(symbols)), meta_value), Paragraph(_plain_inline(horizon), meta_value),
-         Paragraph(_plain_inline(status), meta_value)],
+         Paragraph("Financial overview" if result.get("delivery_outcome")=="limited_evidence" else "Investment analysis" if result.get("status")=="complete" else "Draft", meta_value)],
     ], colWidths=[2.5 * inch, 2.5 * inch, 2.0 * inch])
     meta.setStyle(TableStyle([
         ("BACKGROUND", (0, 0), (-1, -1), colors.HexColor("#F2F6F8")),
@@ -487,6 +528,10 @@ def build_research_pdf(result: dict) -> bytes:
         ("BOTTOMPADDING", (0, 1), (-1, 1), 7),
     ]))
     story = [header, Spacer(1, 0.12 * inch), meta, Spacer(1, 0.18 * inch)]
+    question = result.get("request", {}).get("question")
+    if question:
+        story.extend([Paragraph("RESEARCH QUESTION", meta_label),
+                      Paragraph(_plain_inline(question), styles["BodyText"]), Spacer(1, 0.12 * inch)])
 
     if executive:
         panel_kicker = ParagraphStyle("PanelKicker", parent=styles["Kicker"],
@@ -510,10 +555,22 @@ def build_research_pdf(result: dict) -> bytes:
         ]))
         story.extend([panel, Spacer(1, 0.18 * inch)])
 
+    # Keep the argument together; detailed metric tables are a supporting appendix.
+    story.extend(_markdown_story(remainder if executive else report, styles))
+    from .committee_export import committee_markdown
+    committee = committee_markdown(result)
+    if committee:
+        story.append(CondPageBreak(2.3 * inch))
+        story.extend(_markdown_story(committee, styles))
+
     frameworks = result.get("sector_frameworks", [])
+    if frameworks or result.get("comparison"):
+        story.extend([CondPageBreak(2.5 * inch),
+                      Paragraph("Supporting financial detail", styles["Heading1"]),
+                      Paragraph("Saved financial inputs supporting the analysis; periods and currencies are retained.", styles["Subtitle"])])
     from .quarterly_ttm import METHODOLOGY
     if result.get("financial_methodology") != METHODOLOGY:
-        story.append(Paragraph("Saved legacy financial methodology: original comparison values preserved. Fresh research is required for audited quarterly metrics.", styles["BodyText"]))
+        story.append(Paragraph("Financial figures retain their saved fiscal periods; coverage varies by company.", styles["BodyText"]))
     framework_names = list(dict.fromkeys(str(item.get("framework")) for item in frameworks if item.get("framework")))
     if frameworks:
         focus_header = ParagraphStyle("FocusHeader", parent=styles["TableBody"], fontName=BOLD_FONT,
@@ -542,38 +599,29 @@ def build_research_pdf(result: dict) -> bytes:
     if basis:
         story.extend([
             Paragraph("TTM vs Latest Reported Period", styles["Heading1"]),
-            Paragraph("TTM reflects the latest four-quarter operating view. The reported row reflects the selected annual or quarterly statement; differences between these bases are not growth rates.",
+            Paragraph("TTM covers the latest four quarters; FY and quarterly figures retain their fiscal periods. Differences between these bases are not growth rates.",
                       styles["Subtitle"]),
             Spacer(1, 0.07 * inch), basis, Spacer(1, 0.14 * inch),
         ])
 
-    from .research_metrics import project_sector_row
-    audit_rows = [(row.get("Ticker"), key, contract) for row in [project_sector_row(value) for value in result.get("comparison", [])]
-                  for key, contract in row.get("Metric contracts", {}).items()]
-    if audit_rows:
-        story.append(Paragraph("Metric audit: methodology, units and input basis", styles["Heading2"]))
-        story.append(Paragraph("Forward growth compares FY+2 with FY+1. Latest quarterly balances and matched beginning/end return snapshots are separate. Raw source evidence remains available in audit JSON; arithmetic checks do not certify AI-written numerical claims.", styles["BodyText"]))
-        for symbol,key,contract in audit_rows:
-            text = f"{symbol}: {key}; unit {contract.get('unit')}; currency {contract.get('currency') or 'not applicable/unavailable'}; status {contract.get('status')}; applicability {contract.get('applicability')}; {contract.get('formula')}; "
-            dates = [str(item.get('date')) for item in contract.get('inputs', []) if item.get('date')]
-            text += "Input dates: " + (", ".join(dates) or "unavailable")
-            if contract.get('reason'): text += "; " + contract['reason']
-            story.append(Paragraph(_plain_inline(text), styles["TableBody"]))
-    comparison = _comparison_table(result.get("comparison", []), styles["TableBody"], frameworks)
-    if comparison:
-        story.extend([KeepTogether([
-            Paragraph("Sector Metrics, Estimates & Valuation", styles["Heading1"]),
-            Paragraph("Priority metrics for " + _plain_inline(", ".join(framework_names) if framework_names else "the covered companies") +
-                      ". Blank values indicate unavailable provider data.",
-                      styles["Subtitle"]),
-            Spacer(1, 0.07 * inch), comparison,
-        ]), Spacer(1, 0.14 * inch)])
+    from .executive import executive_metric_groups
+    groups = executive_metric_groups(result.get("comparison", []))
+    if any(groups.values()):
+        story.append(Paragraph("Sector Metrics, Estimates & Valuation", styles["Heading1"]))
+        story.append(Paragraph("Equity Report sector priorities. Missing or sector-inapplicable values remain blank; fiscal bases are preserved.", styles["Subtitle"]))
+        for name, fields in groups.items():
+            if not fields:
+                continue
+            comparison = _comparison_table(result.get("comparison", []), styles["TableBody"], fields=fields)
+            story.append(Paragraph(_plain_inline(name), styles["Heading2"]))
+            if name == "Momentum & technicals":
+                story.append(Paragraph("Observed-session price returns, not total returns. Price date/basis are shown when available; missing metadata is unverified.", styles["Subtitle"]))
+            story.extend([comparison, Spacer(1, 0.1 * inch)])
 
-    story.extend(_markdown_story(remainder if executive else report, styles))
-    story.extend([Spacer(1, 0.14 * inch), Paragraph(
-        "This document is generated from the saved research record. Source evidence remains available in the application's Sources & Evidence view and JSON export.",
-        styles["Callout"],
-    )])
+    # A final spacer can overflow a tightly filled page and create a footer-only
+    # extra page even though all report content already fitted.
+    while story and isinstance(story[-1], Spacer):
+        story.pop()
     doc.build(story, onFirstPage=footer, onLaterPages=footer)
     value = buffer.getvalue()
     buffer.close()

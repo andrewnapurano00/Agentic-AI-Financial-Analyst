@@ -15,7 +15,7 @@ from langgraphagenticai.tools.serper_tools import SerperClient
 from langgraphagenticai.tools.fmp_mcp_client import fmp_request_budget
 from .data import FinancialDataSource, comparison_rows, financial_trends
 from .models import Evidence, ResearchRequest, dumps, json_safe, safe_url, utc_now
-from .prompt_context import compact, evidence_context
+from .prompt_context import compact, evidence_context, forward_consensus_context
 from .sector import sector_frameworks, sector_prompt_context
 
 
@@ -194,13 +194,21 @@ class ResearchManager:
                  stage_llms=None, stage_limits=None, context_limits=None,
                  deterministic_validator=None, interpretive_review=True,
                  max_estimated_cost_usd=None, stop_after_evidence=False,
-                 report_instruction=None, stage_options=None, allow_clarification_retry=True):
+                 report_instruction=None, stage_options=None, allow_clarification_retry=True, auto_finish=False,
+                 single_pass=False):
         self.llm, self.financial_source, self.serper = llm, financial_source, serper
         self.utility_llm = utility_llm or llm
         self.tools = {tool.name: tool for tool in tools}
         self.progress = progress or (lambda message: None)
         self.on_text = on_text
-        self.checkpoint = checkpoint or (lambda update: None)
+        self.auto_finish = auto_finish
+        self.single_pass = single_pass
+        self.last_checkpoint = {}
+        def save_checkpoint(update):
+            self.last_checkpoint.update(update)
+            if checkpoint:
+                checkpoint(update)
+        self.checkpoint = save_checkpoint
         self.draft = ""
         self.partial_draft = ""
         self.review_status = "pending"
@@ -398,6 +406,7 @@ class ResearchManager:
             self.progress("Discarding the saved clarification response and writing the complete memo")
             draft = ""
         if not draft:
+            from .executive import EXECUTIVE_STYLE
             length = "1600–2000" if request.depth == "Extended" else "1000–1400"
             draft_instruction = (
             f"Write an investment research memo in Markdown, about {length} words when supported. "
@@ -405,15 +414,15 @@ class ResearchManager:
             "request confirmation, describe what you could produce, or defer any part of the work. When the request "
             "leaves a choice open, make a reasonable assumption, state it briefly in the memo, and continue. "
             "Open with a polished 'Executive Investment Thesis' suitable for an investment-committee PDF: use a concise "
-            "recommendation, confidence, time horizon, two short synthesis paragraphs, and the principal upside/downside. "
-            "Include: company/business quality; financial trends and cash conversion; balance-sheet resilience; "
+            "recommendation, confidence, time horizon, one paragraph of at most 100 words, and the principal upside/downside. "
+            "Cover the question's material business drivers, financial trends, cash conversion and financial resilience. "
             "a concise 'TTM vs Latest Reported Period' section that shows both bases for revenue, profitability and "
             "cash flow when available, with each basis's period/date and currency; explain material differences without "
             "treating unlike periods as growth; "
-            "a dedicated 'Forward Estimates & Valuation' section with each company's dated forward revenue, EPS, EBITDA "
+            "Where relevant, integrate Forward Estimates & Valuation with each company's dated forward revenue, EPS, EBITDA "
             "and forward growth when available, plus relevant P/E, forward P/E, P/S, EV/EBITDA, analyst target and implied "
             "upside data points; technical trend/momentum with as-of date; "
-            "a dedicated 'News, Sentiment & Catalysts' section for every company with an overall Positive, Mixed, Negative, "
+            "Integrate material News, Sentiment & Catalysts for every company with an overall Positive, Mixed, Negative, "
             "or Insufficient Evidence signal, the dated developments driving that signal, likely investor implications, and "
             "the strongest contrary item. Use at least two distinct recent items per company when the evidence provides them. "
             "Sentiment describes the direction of recent coverage and expectations, not a buy/sell conclusion. Treat snippets "
@@ -434,13 +443,20 @@ class ResearchManager:
             )
             if self.report_instruction:
                 draft_instruction = self.report_instruction(request)
+            draft_instruction += "\n" + EXECUTIVE_STYLE
+            from .report_structure import report_structure, structure_instruction
+            if "REPORT ORGANIZATION:" not in draft_instruction:
+                draft_instruction += structure_instruction(request)
             draft_payload = {"request": asdict(request), "research_questions": plan.get("questions", []),
+             "report_structure": report_structure(request),
+             "previous_review_issues":plan.get("repair_issues", []),
+             "forward_consensus":forward_consensus_context(comparison),
              "sector_context": sector_context,
              "evidence": evidence_context(evidence, self.context_limits.get(
                  "draft_extended" if request.depth == "Extended" else "draft_standard",
                  48000 if request.depth == "Extended" else 36000),
                                            focus=request.question),
-             "comparison": analysis_comparison}
+             "comparison": analysis_comparison, "comparison_policy": "Canonical forward values in comparison remain usable even when a raw source excerpt is abbreviated. Check both comparison and evidence before declaring estimates missing."}
             token_limit = self.stage_limits.get("draft", (150, 6000 if request.depth == "Extended" else 4500))[1]
             draft = self._invoke(draft_instruction, draft_payload, stage="draft", max_tokens=token_limit)
             if clarification_only_response(draft):
@@ -456,7 +472,9 @@ class ResearchManager:
                 if clarification_only_response(draft):
                     raise IncompleteGeneration("The model repeatedly returned clarification questions instead of a report.")
         self.draft = draft
-        self.checkpoint({"draft": draft, "report": draft, "status": "review_pending", "review_status": "pending"})
+        self.checkpoint({"draft": draft, "report": draft,
+                         "status": "complete" if self.single_pass else "review_pending",
+                         "review_status": "not_performed" if self.single_pass else "pending"})
         validation_failures = []
         if self.deterministic_validator:
             validation_failures = self.deterministic_validator(request, evidence, draft)
@@ -467,6 +485,10 @@ class ResearchManager:
                 "cached_input_tokens": 0, "output_tokens": 0, "reasoning_tokens": 0,
                 "token_counts_estimated": False, "estimated_cost_usd": 0.0, "seconds": 0.0,
             })
+        if self.single_pass:
+            self.review_status = "not_performed"
+            self.report_warnings.extend(validation_failures)
+            return draft
         if self.deterministic_validator and not validation_failures and not self.interpretive_review:
             self.review_status = "complete"
             return draft
@@ -540,12 +562,27 @@ class ResearchManager:
         return selected or evidence
 
     def run(self, request: ResearchRequest, app_context=()) -> dict:
+        if not self.auto_finish:
+            return self._run_once(request, app_context)
+        try:
+            return self._run_once(request, app_context)
+        except Exception as exc:
+            from .delivery import complete_delivery
+            result = dict(self.last_checkpoint)
+            if not result.get("request"):
+                raise
+            result.setdefault("warnings", []).append("Collection stopped. " + failure_reason(exc))
+            return complete_delivery(self, result)
+
+    def _run_once(self, request: ResearchRequest, app_context=()) -> dict:
         started = time.monotonic()
         warnings, evidence = [], []
         plan = {}
         result = {"id": uuid.uuid4().hex[:12], "created_at": utc_now(), "request": asdict(request),
                   "status": "collecting", "report": "", "markdown": "", "plan": {},
                   "evidence": [], "comparison": [], "sector_frameworks": [], "warnings": warnings, "gaps": []}
+        from .report_structure import report_structure
+        result["report_structure"] = report_structure(request)
         if getattr(self, "financial_methodology", None):
             result["financial_methodology"] = self.financial_methodology
         self.checkpoint(result.copy())
@@ -619,6 +656,18 @@ class ResearchManager:
         return result
 
     def resume(self, saved: dict) -> dict:
+        try:
+            result = self._resume_once(saved)
+        except Exception as exc:
+            if not self.auto_finish:
+                raise
+            result = dict(saved, status="incomplete", warnings=list(saved.get("warnings", [])) + [failure_reason(exc)])
+        if self.auto_finish:
+            from .delivery import complete_delivery
+            return complete_delivery(self, result)
+        return result
+
+    def _resume_once(self, saved: dict) -> dict:
         """Resume synthesis or review without repeating any provider requests."""
         result = dict(saved)
         if not self.diagnostics:
@@ -642,7 +691,7 @@ class ResearchManager:
                 report = self.write_report(request, evidence, result.get("plan", {}), draft=result.get("draft", ""))
                 if not report:
                     raise ValueError("Empty report")
-                status = {"complete": "complete", "needs_review": "needs_review"}.get(self.review_status, "review_pending")
+                status = {"complete": "complete", "not_performed": "complete", "needs_review": "needs_review"}.get(self.review_status, "review_pending")
         except Exception as exc:
             status = "incomplete"
             report = self.partial_draft or result.get("partial_draft") or "## Research collected; synthesis unavailable\nUse **Retry report writing** to synthesize the saved evidence without fetching data again."
@@ -666,6 +715,8 @@ class ResearchManager:
                       estimated_model_cost_usd=round(sum(costs), 6) if costs else None,
                       token_counts_estimated=any(d.get("token_counts_estimated", False)
                                                  for d in self.diagnostics))
+        if self.single_pass:
+            result.update(report_mode="single_pass", delivery_outcome="executive_report" if status == "complete" else "incomplete")
         self.checkpoint(result.copy())
         return result
 

@@ -137,28 +137,18 @@ def test_selected_quote_identity_missing_currency_and_zero(monkeypatch):
     assert discovery.load_selected_quote.__wrapped__("AAPL", "test")["error"]
 
 
-def test_selected_company_generation_failure_preserves_previous(monkeypatch):
-    from langgraphagenticai.ui import introduction_tab
-    snapshot = {"symbol": "AAPL", "company": "Apple", "quote": {"price": 100},
-                "fundamentals": {}, "profile": {}, "news": [], "providers": ["Synthetic"],
-                "fetched_at": "2026-10-09", "performance": {}}
-    monkeypatch.setattr(introduction_tab, "load_company_snapshot", lambda *args: snapshot)
-    monkeypatch.setattr(introduction_tab, "load_symbol_history", lambda *args: {"points": []})
-    calls = []
-    def fail(*args):
-        calls.append(args)
-        raise RuntimeError("Synthetic model unavailable")
-    monkeypatch.setattr(introduction_tab, "generate_company_summary", fail)
-    app = AppTest.from_string("from langgraphagenticai.ui.introduction_tab import render_introduction_tab\nrender_introduction_tab(openai_api_key='test')")
-    app.session_state["intro_company_symbol"] = "AAPL"
-    app.session_state["intro_interpretation:AAPL"] = save_interpretation({**snapshot, "quote": {"price": 99}}, "gpt-5", "Prior interpretation")
+def test_market_generation_failure_preserves_previous(market_dashboard_stub, monkeypatch):
+    ui, packet, _ = market_dashboard_stub
+    from langgraphagenticai.analysis.market_brief_ai import evidence_identity
+    app = AppTest.from_string("from langgraphagenticai.ui.introduction_tab import render_introduction_tab\nrender_introduction_tab(openai_api_key='fake')")
+    app.session_state["market_ai_summary"] = {"text": "Prior interpretation", "identity": "older", "model": "gpt-5"}
     app.run(timeout=30)
-    assert not app.exception and not calls
-    assert any("different or unverified" in warning.value for warning in app.warning)
-    app.button(key="intro_summary_generate").click().run()
-    assert not app.exception and len(calls) == 1
-    assert app.session_state["intro_interpretation:AAPL"]["text"] == "Prior interpretation"
-    assert any("previous interpretation" in warning.value for warning in app.warning)
+    app.button(key="intro_refresh").click().run()
+    app.button(key="market_summary_generate").click().run()
+    assert not app.exception
+    assert app.session_state["market_ai_summary"]["text"] == "Prior interpretation"
+    assert any("preserved" in item.value for item in app.warning)
+
 
 
 def test_return_from_research_restores_filters_selection_and_failed_news(monkeypatch):
@@ -203,13 +193,13 @@ def test_terminal_chart_style_preserves_price_and_layered_oscillator_evidence(mo
     styled = terminal_chart(technical_chart.price_chart_spec(frame, "5D", "Unknown currency")).to_dict()
     assert styled["encoding"] == original["encoding"]
     assert styled["datasets"] == original["datasets"]
-    assert styled["config"]["background"] == "#1C1C1C"
-    assert styled["config"]["axis"]["gridColor"] == "#292929"
+    assert styled["config"]["background"] == "#121D2B"
+    assert styled["config"]["axis"]["gridColor"] == "#283649"
     rendered = []
     monkeypatch.setattr(technical_chart.st, "altair_chart", lambda chart, **kwargs: rendered.append((chart.to_dict(), kwargs)))
     technical_chart.render_indicator_charts(frame, "5D", "Unknown currency", chart_style=terminal_chart)
     assert len(rendered) == 3
-    assert all(spec["config"]["background"] == "#1C1C1C" and options["theme"] is None for spec, options in rendered)
+    assert all(spec["config"]["background"] == "#121D2B" and options["theme"] is None for spec, options in rendered)
     assert len(rendered[1][0]["layer"]) == 2 and len(rendered[2][0]["layer"]) == 2
     rendered.clear()
     technical_chart.render_indicator_charts(frame, "5D", "Unknown currency")

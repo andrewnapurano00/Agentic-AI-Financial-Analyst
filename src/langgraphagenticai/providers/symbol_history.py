@@ -8,6 +8,7 @@ import streamlit as st
 import yfinance as yf
 
 from .fmp_http import get_fmp_json
+from .fmp_daily_prices import load_fmp_daily_prices
 
 RANGES = {"1D": (1, "5m"), "5D": (5, "5m"), "1M": (31, "1d"), "3M": (93, "1d"),
           "6M": (184, "1d"), "YTD": (None, "1d"), "1Y": (366, "1d"),
@@ -57,11 +58,25 @@ def normalize_history(rows, symbol):
 
 def _fetch_history(symbol, api_key, intraday):
     now = _utc_now()
+    if not intraday and api_key.strip():
+        daily = load_fmp_daily_prices(symbol, api_key)
+        points = [(pd.Timestamp(row["date"]), row["adj_close"]) for row in daily["records"] if row.get("adj_close") is not None]
+        warnings = list(daily["warnings"])
+        missing = len(daily["records"]) - len(points)
+        if missing:
+            warnings.append(f"Excluded {missing} daily observations without explicit FMP adjClose; raw close was not substituted.")
+        if not points:
+            warnings.append("FMP adjusted daily prices unavailable. Retry the chart; no other provider was substituted.")
+        return {"history": points, "provider": daily["provider"], "price_basis": "FMP adjClose",
+                "source": daily["source"], "retrieved_at": daily["retrieved_at"],
+                "warnings": warnings, "interval": "1d", "symbol": symbol}
     # One adapter call (shared transport retries are bounded), then at most one
     # whole-series Yahoo fallback. 30 intraday days or ten years + warmup.
     start = (now - timedelta(days=30 if intraday else 3653 + 800)).date().isoformat()
     points, warnings, rejected = [], [], 0
     provider, basis, source = "Unavailable", "Unknown", ""
+    if not api_key.strip():
+        warnings.append("FMP is not configured; using a separately labeled Yahoo Finance chart series.")
     if api_key.strip():
         source = "https://financialmodelingprep.com/stable/" + ("historical-chart/5min" if intraday else "historical-price-eod/full")
         try:
@@ -107,7 +122,7 @@ def _intraday_history(symbol, api_key):
     return _fetch_history(symbol, api_key, True)
 
 
-@st.cache_data(ttl=3600, show_spinner=False)
+@st.cache_data(ttl=300, show_spinner=False)
 def _daily_history(symbol, api_key):
     return _fetch_history(symbol, api_key, False)
 
@@ -164,3 +179,4 @@ def load_symbol_history(symbol, api_key="", period="1Y", currency=""):
 def clear_history_cache():
     _daily_history.clear()
     _intraday_history.clear()
+    load_fmp_daily_prices.clear()

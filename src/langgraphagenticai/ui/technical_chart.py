@@ -11,12 +11,19 @@ from langgraphagenticai.technical_analysis.agent import analyze_technical
 from langgraphagenticai.utils.safety import sanitize_error
 
 
-def indicator_controls(key):
+def indicator_controls(key, daily_only=False):
     values = {}
     with st.expander("Technical indicators & settings"):
-        selected = st.multiselect("Indicators", ["SMA", "EMA", "RSI", "MACD", "Bollinger"],
-                                  default=["SMA", "RSI"], key=f"{key}_indicators")
-        st.caption("Windows count observed bars: five-minute bars for 1D/5D; daily bars for longer ranges. Up to 500 warmup bars are used before display trimming.")
+        # Individual controls avoid the lazy-loaded Multiselect frontend chunk.
+        # Keep a non-widget copy so navigation preserves the selected indicators.
+        preference_key = f"technical_indicator_choices:{key}"
+        prior = st.session_state.get(preference_key, st.session_state.get(f"{key}_indicators", ["SMA", "RSI"]))
+        st.caption("Indicators")
+        choices = st.columns(3)
+        selected = [name for index, name in enumerate(("SMA", "EMA", "RSI", "MACD", "Bollinger"))
+                    if choices[index % 3].checkbox(name, value=name in prior, key=f"{key}_indicator_{name}")]
+        st.session_state[preference_key] = selected
+        st.caption("Windows count observed daily bars for this chart. Up to 500 warmup bars are used before display trimming." if daily_only else "Windows count observed bars: five-minute bars for 1D/5D; daily bars for longer ranges. Up to 500 warmup bars are used before display trimming.")
         columns = st.columns(3)
         for i, name in enumerate(selected):
             with columns[i % 3]:
@@ -98,7 +105,7 @@ def render_technical_chart(chart, *, key, openai_api_key="", model_name="gpt-5",
         return
     configuration_valid = True
     try:
-        settings = indicator_controls(key)
+        settings = indicator_controls(key, daily_only=chart.get("daily_only", False))
     except ValueError as exc:
         st.error(str(exc) + " Correct the indicator settings before requesting AI analysis.")
         configuration_valid = False
@@ -112,7 +119,7 @@ def render_technical_chart(chart, *, key, openai_api_key="", model_name="gpt-5",
         render_indicator_charts(frame, period, unit, chart_style=chart_style)
     st.caption(f"{chart.get('symbol', '^GSPC')} · {period} · {chart.get('provider', 'Unknown')} · {chart.get('price_basis', 'Basis unknown')} · {unit}")
     st.caption(f"As of {chart.get('as_of', str(frame.iloc[-1].Date))} · retrieved {chart.get('retrieved_at', 'Unknown')} · timezone {chart.get('timezone', 'Unknown')} · {chart.get('interval', 'Unknown interval')} · {len(frame)} displayed bars. Axes preserve provider wall-clock fields; tooltips retain source timestamps. Price performance, not total return.")
-    st.caption("Intraday history cache: 5 minutes; daily history cache: 1 hour. Retry refreshes chart history. Data gaps and session completeness are not independently verified.")
+    st.caption("History cache: up to 5 minutes. Refresh chart history to request new observations. Data gaps and session completeness are not independently verified.")
     if len(frame) == 1:
         st.warning("Only one observed price bar is available; price change and technical AI interpretation are unavailable.")
     packet = technical_packet(chart, frame, settings, model_name)

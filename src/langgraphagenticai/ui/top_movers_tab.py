@@ -61,12 +61,13 @@ def _rows(frame: pd.DataFrame, period="5D") -> str:
     return "".join(html)
 
 
-def render_top_movers_tab(*, fmp_api_key: str, serper_api_key: str) -> None:
+def render_top_movers_tab(*, fmp_api_key: str, serper_api_key: str, openai_api_key: str = "", model_name: str = "gpt-5", marketaux_api_key: str = "") -> None:
     from langgraphagenticai.ui.opening_presentation import opening_styles, heading, cards, number, terminal_chart, quote_header, opening_price_chart
     from langgraphagenticai.providers.discovery import rank_discovery, sector_summary, PERIODS, load_selected_news, load_selected_quote
     from langgraphagenticai.providers.symbol_history import load_symbol_history, clear_history_cache
     from langgraphagenticai.state.discovery import DiscoveryState, apply_discovery, queue_discovery_research
     from langgraphagenticai.ui.workspace_presentation import saved_time, source_link
+    from langgraphagenticai.ui.app_shell import render_evidence_row
     from langgraphagenticai.utils.safety import sanitize_error
     import altair as alt
 
@@ -77,6 +78,13 @@ def render_top_movers_tab(*, fmp_api_key: str, serper_api_key: str) -> None:
         st.session_state.setdefault("movers_period", restored.period)
         st.session_state.setdefault("movers_direction", restored.direction)
     opening_styles()
+    st.markdown(
+        '<style>body:has(.opening-workspace) .terminal-quote strong{display:inline-block;margin-right:8px}'
+        'body:has(.opening-workspace) .terminal-quote small{display:inline-block;margin:0 8px 0 0}'
+        'body:has(.opening-workspace) .terminal-quote span.positive,'
+        'body:has(.opening-workspace) .terminal-quote span.negative{display:inline-block}</style>',
+        unsafe_allow_html=True,
+    )
     heading("Top Movers", "Discover the move. Understand the evidence.")
     refresh_col, info_col = st.columns([1, 4], vertical_alignment="center")
     with refresh_col:
@@ -96,6 +104,11 @@ def render_top_movers_tab(*, fmp_api_key: str, serper_api_key: str) -> None:
         st.info("Check FMP configuration and refresh. No illustrative rankings are displayed.")
         return
     universe = data["universe"]
+    render_evidence_row([
+        ("Ranking source", "FMP capped U.S. equity screen"),
+        ("Retrieved", saved_time(data.get("fetched_at"))),
+        ("Requested symbols", data.get("requested_universe_size", len(universe))),
+    ])
     sectors = sorted(universe["sector"].dropna().astype(str).unique())
     options = ["All sectors", *sectors]
     if st.session_state.get("movers_sector_filter", "All sectors") not in options:
@@ -111,7 +124,12 @@ def render_top_movers_tab(*, fmp_api_key: str, serper_api_key: str) -> None:
     prior_discovery = st.session_state.get("discovery_state")
     retained_ticker = prior_discovery.selected_ticker if isinstance(prior_discovery, DiscoveryState) else ""
     st.session_state["discovery_state"] = DiscoveryState(sector, period, direction, retained_ticker, "Top Movers")
-    frame, stats = rank_discovery(universe, period, sector, direction)
+    from langgraphagenticai.analysis.discovery import expanded_ranking, sector_participation, RANKING_SIZES
+    size = st.selectbox("Ranking size", RANKING_SIZES, index=RANKING_SIZES.index(st.session_state.get("movers_saved_ranking_size", RANKING_SIZES[0])), key="movers_ranking_size",
+                        help="Top 10% rounds up from usable stocks after the sector filter. Top 50 shows up to 50 available stocks.")
+    st.session_state.movers_saved_ranking_size = size
+    frame, stats = expanded_ranking(universe, period, sector, direction, size)
+    st.caption(f"{size}: showing {len(frame)} of {stats['usable']} usable filtered stocks. Leaders/laggards rank relative returns; a ranking can include both gains and losses.")
     requested = data.get("requested_universe_size", len(universe))
     _, full_stats = rank_discovery(universe, period, limit=len(universe))
     cards([("Usable filtered universe", stats["usable"], sector),
@@ -120,7 +138,23 @@ def render_top_movers_tab(*, fmp_api_key: str, serper_api_key: str) -> None:
     st.caption(f"FMP ranking evidence retrieved {saved_time(data.get('fetched_at'))} | {full_stats['usable']} / {requested} requested symbols usable for {period} ({number(full_stats['usable'] / requested * 100 if requested else None, '%', decimals=1)}). Performance observation dates and adjustment basis unavailable; no total-return or session-completeness claim.")
     for warning in data.get("provider_warnings", []):
         st.warning(warning)
-    left, right = st.columns([1.85, 1], gap="medium")
+    from langgraphagenticai.ui.movers_heatmap import concentration_rows, concentration_chart
+    st.subheader("Sector concentration heatmap")
+    st.caption(f"{direction} · {period} · {sector}. Equal-size tiles show stock count and share of the displayed top {len(frame)} ranking; color and signed value = equal-weight mean price change. Capped screened equities, not sector ETF returns. Dates and adjustment basis unavailable.")
+    heatmap_rows = concentration_rows(frame, period)
+    if heatmap_rows:
+        st.altair_chart(concentration_chart(heatmap_rows), use_container_width=True, theme=None, key="movers_concentration")
+    else:
+        st.info("No usable movers for this period and filter. Choose another filter to see sector concentration.")
+    from langgraphagenticai.ui.movers_heatmap import participation_chart
+    st.subheader("Top movers as a share of each sector")
+    st.caption(f"{period} · {direction} · {size}. In top movers versus other stocks with finite {period} observations in each screened sector. Missing-period observations are excluded. This is the available capped screen, not all sector constituents. Hover for counts and percentages.")
+    participation = sector_participation(universe, frame, period, sector)
+    if not participation.empty:
+        st.altair_chart(participation_chart(participation), use_container_width=True, theme=None, key="movers_participation")
+    else:
+        st.info("No usable sector stocks for this period and filter.")
+    left, right = st.columns([1.86, 1], gap="medium")
     with left, st.container(border=True):
         st.subheader(f"{sector if sector != 'All sectors' else 'Screened equity'} {direction.lower()}")
         if frame.empty:
@@ -129,18 +163,18 @@ def render_top_movers_tab(*, fmp_api_key: str, serper_api_key: str) -> None:
             display = ranked_display(frame, period)
             return_columns = [col for col in display if col.endswith("change (%)")]
             styled = display.style.format({**{col: "{:+.2f}" for col in return_columns}, "Last Price": "{:,.2f}", "Market Cap": "{:,.0f}", "Volume": "{:,.0f}", "Avg Volume": "{:,.0f}"}, na_rep="Unavailable")
-            styled = styled.map(lambda value: "color:#35d07f" if pd.notna(value) and value > 0 else "color:#ff5964" if pd.notna(value) and value < 0 else "", subset=return_columns)
+            styled = styled.map(lambda value: "color:#37B68C" if pd.notna(value) and value > 0 else "color:#E2747E" if pd.notna(value) and value < 0 else "", subset=return_columns)
             retained = st.session_state.get("discovery_state")
             selected = st.session_state.get("movers_focus", retained.selected_ticker if isinstance(retained, DiscoveryState) else "")
             options_for_style = frame["symbol"].tolist()
             if selected not in options_for_style:
                 selected = options_for_style[0]
-            table_key = f"movers_table_{sector}_{period}_{direction}"
+            table_key = f"movers_table_{sector}_{period}_{direction}_{size}"
             pending_rows = st.session_state.get(table_key, {}).get("selection", {}).get("rows", [])
-            pending_marker = (sector, period, direction, tuple(pending_rows))
+            pending_marker = (sector, period, direction, size, tuple(pending_rows))
             if pending_rows and st.session_state.get("movers_last_selection") != pending_marker and 0 <= pending_rows[0] < len(frame):
                 selected = options_for_style[pending_rows[0]]
-            styled = styled.apply(lambda row: ["background-color:#303030;font-weight:bold" if row["Ticker"] == selected else "" for _ in row], axis=1)
+            styled = styled.apply(lambda row: ["background-color:#172334;font-weight:bold" if row["Ticker"] == selected else "" for _ in row], axis=1)
             event = st.dataframe(styled, hide_index=True, use_container_width=True, height=430,
                                  on_select="rerun", selection_mode="single-row", key=table_key,
                                  column_config={"Rank": st.column_config.NumberColumn(width="small"), "Ticker": st.column_config.TextColumn(width="small"), "Company": st.column_config.TextColumn(width="medium"),
@@ -155,7 +189,7 @@ def render_top_movers_tab(*, fmp_api_key: str, serper_api_key: str) -> None:
             row_applied = False
             selected_rows = event.selection.rows
             # A table event is applied once, so the accessible selector can override it.
-            marker = (sector, period, direction, tuple(selected_rows))
+            marker = (sector, period, direction, size, tuple(selected_rows))
             if selected_rows and st.session_state.get("movers_last_selection") != marker:
                 index = selected_rows[0]
                 if 0 <= index < len(frame):
@@ -218,7 +252,7 @@ def render_top_movers_tab(*, fmp_api_key: str, serper_api_key: str) -> None:
             if st.button("Research this move", key="movers_research", type="primary", use_container_width=True):
                 queue_discovery_research(st.session_state, discovery)
                 st.rerun()
-            if st.button("Open snapshot", key="movers_open_snapshot", use_container_width=True):
+            if st.button("Open daily chart", key="movers_open_snapshot", use_container_width=True):
                 from langgraphagenticai.ui.workspace_handoff import queue_handoff
                 from langgraphagenticai.state.research_context import ResearchContext
                 queue_handoff(st.session_state, ResearchContext((focus,), "Introduction", "analyze", "Top Movers"))
@@ -226,6 +260,22 @@ def render_top_movers_tab(*, fmp_api_key: str, serper_api_key: str) -> None:
             with st.expander("More research workspaces"):
                 from langgraphagenticai.ui.workspace_handoff import render_company_handoffs
                 render_company_handoffs(focus, "Top Movers", key="movers_handoff")
+        with left, st.container(border=True):
+            from langgraphagenticai.ui.social_sentiment import render_social_sentiment
+            render_social_sentiment(focus, fmp_api_key)
+        with left, st.container(border=True):
+            from langgraphagenticai.ui.analyst_consensus import render_analyst_consensus
+            render_analyst_consensus(focus_options, focus, fmp_api_key)
+        with left, st.container(border=True):
+            from langgraphagenticai.ui.price_targets import render_price_targets
+            render_price_targets(st.session_state.get("movers_consensus_stock", focus), fmp_api_key)
+        with left, st.container(border=True):
+            from langgraphagenticai.ui.ticker_news_summary import render_ticker_news_summary
+            news_symbol=st.session_state.get("movers_consensus_stock",focus)
+            names=frame.loc[frame["symbol"]==news_symbol,"companyName"] if "companyName" in frame else pd.Series(dtype=str)
+            company=str(names.iloc[0]) if not names.empty and pd.notna(names.iloc[0]) else news_symbol
+            render_ticker_news_summary(news_symbol,company,fmp_api_key=fmp_api_key,serper_api_key=serper_api_key,
+                                      marketaux_api_key=marketaux_api_key,openai_api_key=openai_api_key,model_name=model_name)
     st.subheader("Screened sector context")
     summary = sector_summary(universe, period)
     if sector != "All sectors":

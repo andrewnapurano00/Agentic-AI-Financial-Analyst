@@ -87,11 +87,9 @@ def build_manager(*, request, config, openai_api_key, groq_api_key, fmp_api_key,
                   stop_after_evidence, progress=None, on_text=None, checkpoint=None, saved=None):
     credentials = dict(openai_api_key=openai_api_key, groq_api_key=groq_api_key,
                        ollama_base_url=ollama_base_url)
-    required = ["review"] if saved and saved.get("draft") else ["draft"] if saved else ["plan"]
+    required = [] if saved and saved.get("draft") else ["draft"] if saved else ["plan"]
     if not saved and not stop_after_evidence:
         required.append("draft")
-    if not stop_after_evidence and config["interpretive_review"]:
-        required.append("review")
     preflight(config, required, **credentials)
     models = {stage: LazyStage(stage, config, credentials) for stage in ("plan", "draft", "review", "follow_up")}
     limits = dict(config["limits"])
@@ -109,8 +107,8 @@ def build_manager(*, request, config, openai_api_key, groq_api_key, fmp_api_key,
         stage_limits=limits, context_limits=config["contexts"], stage_options=options,
         report_instruction=lambda req: report_instruction(req, config), allow_clarification_retry=False,
         deterministic_validator=validate_report,
-        interpretive_review=config["interpretive_review"] or bool(saved and saved.get("status") == "review_pending"),
-        max_estimated_cost_usd=budget, stop_after_evidence=stop_after_evidence,
+        interpretive_review=False, single_pass=True,
+        max_estimated_cost_usd=budget, stop_after_evidence=stop_after_evidence, auto_finish=True,
     )
     manager.comparison_builder = quarterly_comparison_rows
     return manager
@@ -122,6 +120,9 @@ def run_decision(saved, *, openai_api_key, groq_api_key=""):
     runtime, config = result["v2_runtime"], result["v2_config"]
     mode = runtime.get("decision_mode", "None")
     if mode == "None":
+        return result
+    if result.get("delivery_outcome") == "limited_evidence":
+        result["decision_status"] = "not_available"
         return result
     if result.get("status") != "complete" or not result.get("report"):
         result["decision_status"] = "waiting_for_report"

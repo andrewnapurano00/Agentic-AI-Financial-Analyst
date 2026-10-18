@@ -16,8 +16,10 @@ from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer, Table, Tabl
 
 from langgraphagenticai.equity_committee import build_equity_committee_packet, run_equity_committee
 from langgraphagenticai.providers.fmp_http import get_fmp_json
+from langgraphagenticai.providers.company_evidence import capture_company_evidence, capture_fmp_response, save_company_evidence
 from langgraphagenticai.providers.openai_client import build_openai_client, safe_model_error
 from langgraphagenticai.utils.safety import sanitize_error
+from langgraphagenticai.utils.export_csv import safe_csv_bytes, safe_spreadsheet_text_frame
 
 
 PRICE_FROM_DATE = "2019-01-01"
@@ -66,7 +68,9 @@ def _render_equity_committee(decision: dict) -> None:
 def _get_json(url: str, params: dict, timeout: int = 30):
     params = dict(params)
     api_key = str(params.pop("apikey", ""))
-    return get_fmp_json(url, api_key=api_key, params=params, timeout=(5, timeout))
+    data = get_fmp_json(url, api_key=api_key, params=params, timeout=(5, timeout))
+    capture_fmp_response(url, params, data, api_key)
+    return data
 
 
 def _safe_number(x):
@@ -3927,7 +3931,7 @@ def _write_excel_sheet(writer, sheet_name: str, df: pd.DataFrame):
     if df is None or df.empty:
         pd.DataFrame({"Message": ["No data available for this section."]}).to_excel(writer, sheet_name=sheet_name[:31], index=False)
     else:
-        df.to_excel(writer, sheet_name=sheet_name[:31], index=False)
+        safe_spreadsheet_text_frame(df).to_excel(writer, sheet_name=sheet_name[:31], index=False)
 
 
 def generate_excel_report(
@@ -4382,10 +4386,10 @@ def _legacy_render_equity_report_tab(
         st.dataframe(combined_scorecard, use_container_width=True, height=720)
 
     with downloads_tab:
-        raw_csv = combined_scorecard.to_csv(index=False).encode("utf-8")
-        display_csv = display_df.to_csv(index=False).encode("utf-8")
-        ranking_csv = ranking_table.to_csv(index=False).encode("utf-8") if not ranking_table.empty else b""
-        technical_csv = technical_scorecard.to_csv(index=False).encode("utf-8") if not technical_scorecard.empty else b""
+        raw_csv = safe_csv_bytes(combined_scorecard)
+        display_csv = safe_csv_bytes(display_df)
+        ranking_csv = safe_csv_bytes(ranking_table) if not ranking_table.empty else b""
+        technical_csv = safe_csv_bytes(technical_scorecard) if not technical_scorecard.empty else b""
 
         st.download_button(
             "Download Raw Combined CSV",
@@ -4998,6 +5002,12 @@ def render_equity_report_tab(
     st.markdown("### Build a comparison")
     st.caption("Enter a company or peer set. Axiom will assemble fundamentals, valuation, momentum, risks, and a decision-ready research story.")
     inject_equity_research_report_css()
+    st.markdown('''<style>
+    @media(max-width:1100px){
+      [data-testid="stHorizontalBlock"]:has(> [data-testid="stColumn"] .equity-thesis-marker){flex-wrap:wrap}
+      [data-testid="stHorizontalBlock"]:has(> [data-testid="stColumn"] .equity-thesis-marker)>[data-testid="stColumn"]{min-width:0;flex:1 1 100%;width:auto!important}
+    }
+    </style>''', unsafe_allow_html=True)
 
     if not openai_api_key:
         st.caption("Deterministic reports and saved outputs are available. Add an OpenAI key for AI recommendations.")
@@ -5049,7 +5059,7 @@ def render_equity_report_tab(
         st.session_state["equity_report_peer_group"] = sector_peer_group
         price_to = price_to_date.strip() or None
 
-        with st.spinner("Fetching fundamentals, market data, technicals, historical valuation averages, and price history..."):
+        with st.spinner("Fetching fundamentals, market data, technicals, historical valuation averages, and price history..."), capture_company_evidence(fmp_api_key) as reusable_evidence:
             financials = prepare_financials(tickers, api_key=fmp_api_key, limit=40)
             market_data = fetch_market_intelligence(tickers, api_key=fmp_api_key)
             fundamental_scorecard = build_analyst_scorecard(financials, market_data)
@@ -5080,6 +5090,8 @@ def render_equity_report_tab(
             report_tables = build_story_report_tables(combined_scorecard, peer_group=selected_peer_group)
             valuation_explanations, technical_explanations = build_interpretation_tables(combined_scorecard)
             executive_summary = build_executive_summary_paragraph(combined_scorecard)
+
+        save_company_evidence(st.session_state, reusable_evidence)
 
         gpt_note = None
         if include_gpt:
@@ -5180,7 +5192,17 @@ def render_equity_report_tab(
 
     with story_tab:
         st.markdown("### Decision Summary")
-        render_executive_summary_card(executive_summary)
+        thesis_body, thesis_context = st.columns([3, 1], gap="large")
+        with thesis_body:
+            st.markdown('<span class="equity-thesis-marker" style="display:none"></span>', unsafe_allow_html=True)
+            render_executive_summary_card(executive_summary)
+        with thesis_context:
+            with st.container(border=True):
+                st.markdown("**Saved comparison**")
+                st.metric("Securities", len(tickers))
+                st.caption("Peer framework: " + peer_group)
+                st.caption("Report generated: " + (generated_at or "Unavailable"))
+                st.caption("Generation time is separate from source dates. See Sources / Audit for metric coverage.")
 
         if gpt_note:
             st.markdown("### AI Research & Evidence")
@@ -5278,9 +5300,9 @@ def render_equity_report_tab(
 
     with downloads_tab:
         display_df = make_display_df(combined_scorecard)
-        raw_csv = combined_scorecard.to_csv(index=False).encode("utf-8")
-        display_csv = display_df.to_csv(index=False).encode("utf-8")
-        ranking_csv = ranking_table.to_csv(index=False).encode("utf-8") if not ranking_table.empty else b""
+        raw_csv = safe_csv_bytes(combined_scorecard)
+        display_csv = safe_csv_bytes(display_df)
+        ranking_csv = safe_csv_bytes(ranking_table) if not ranking_table.empty else b""
         excel_bytes = payload.get("excel_bytes")
         if excel_bytes is None:
             excel_bytes = generate_excel_report(
@@ -5332,14 +5354,14 @@ def inject_equity_research_report_css() -> None:
         """
         <style>
         .er-card {
-            border: 1px solid #E5E7EB;
+            border: 1px solid var(--ax-line, #283649);
             border-radius: 14px;
             padding: 18px 20px;
-            background: #FFFFFF;
-            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+            background: var(--ax-panel, #121D2B);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
             margin: 6px 0 18px 0;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-            color: #111827;
+            color: var(--ax-text, #E6EBF2);
             line-height: 1.55;
         }
         .er-card p { margin: 0 0 12px 0; font-size: 0.96rem; }
@@ -5348,37 +5370,37 @@ def inject_equity_research_report_css() -> None:
         .er-section-title {
             font-size: 1.02rem;
             font-weight: 700;
-            color: #0F172A;
+            color: var(--ax-amber, #C8AA73);
             margin: 16px 0 7px 0;
             padding-top: 8px;
-            border-top: 1px solid #EEF2F7;
+            border-top: 1px solid var(--ax-line, #283649);
         }
         .er-section-title:first-child { border-top: none; margin-top: 0; padding-top: 0; }
         .er-subsection-title {
             font-size: 0.96rem;
             font-weight: 700;
-            color: #1F2937;
+            color: var(--ax-text, #E6EBF2);
             margin: 14px 0 8px 0;
             padding: 7px 10px;
-            background: #F8FAFC;
-            border-left: 4px solid #CBD5E1;
+            background: var(--ax-panel-2, #172334);
+            border-left: 4px solid var(--ax-amber, #C8AA73);
             border-radius: 8px;
         }
         .er-ticker-line {
             margin: 0 0 9px 0;
             padding: 9px 11px;
-            background: #FFFFFF;
-            border: 1px solid #EEF2F7;
+            background: var(--ax-panel-2, #172334);
+            border: 1px solid var(--ax-line, #283649);
             border-radius: 10px;
             font-size: 0.94rem;
         }
         .er-ticker-line strong {
-            color: #0F172A;
+            color: var(--ax-amber, #C8AA73);
             font-weight: 700;
         }
         .er-card-divider {
             height: 1px;
-            background: #EEF2F7;
+            background: var(--ax-line, #283649);
             margin: 12px 0;
         }
         .er-kicker {
@@ -5386,7 +5408,7 @@ def inject_equity_research_report_css() -> None:
             font-size: 0.74rem;
             text-transform: uppercase;
             letter-spacing: 0.06em;
-            color: #64748B;
+            color: var(--ax-muted, #9AA9BC);
             font-weight: 700;
             margin-bottom: 8px;
         }

@@ -124,7 +124,13 @@ def run_investment_committee(result: dict, *, openai_api_key: str, model_name: s
             "For multiple tickers, compare them directly and name preferred_ticker only when at least one is rated BUY; "
             "otherwise use null. Apply the same rule for one ticker. Preserve the strongest disagreement in dissent. "
             "A HOLD is appropriate when evidence or risk/reward is inconclusive. Write for an investment-committee executive: "
-            "use polished plain English, concise paragraphs and short bullets. Do not mention the research packet, evidence IDs, "
+            "Return a summary of at most 50 words in one paragraph. Each ticker rationale must be at most 25 words; "
+            "use at most two catalysts, two risks and one invalidation signal per ticker, each at most 12 words. "
+            "Use sector-relevant Equity Report priorities; explicitly balance fundamentals/valuation with available "
+            "momentum/technicals and dated news implications. Preserve uncertainty and the key bear case. "
+            "Keep dissent to one sentence. Never mention statement names, provider fields, financial statement references, "
+            "filings, collection methods or calculation methodology in the summary. State business implications directly. "
+            "Use polished plain English. Do not mention the research packet, evidence IDs, "
             "source IDs, internal prompts, or agent workflow. Avoid raw metric dumps; explain only the figures material to the decision."
         ),
         expected_output="A structured verdict with recommendations, confidence, reasons, catalysts, risks, and invalidation signals.",
