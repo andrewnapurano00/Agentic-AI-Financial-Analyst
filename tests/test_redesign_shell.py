@@ -7,7 +7,7 @@ from langgraphagenticai.ui.app_shell import PAGE_LABELS
 
 ROUTES = (
     "Introduction", "Top Movers", "Stock Screener", "Research",
-    "Equity Report", "AI Valuation", "Deep Research", "Portfolio Lab",
+    "Equity Report", "AI Valuation", "Deep Research", "Portfolio Lab", "AI Robo Advisor",
 )
 
 

@@ -57,3 +57,6 @@ verification/
 /fmp_data_reference/raw/
 /fmp_data_reference/documentation/*.html
 /fmp_data_reference/documentation/windows_ca_bundle.pem
+
+# User-supplied course reference, not the active application
+/Live_Agent_Traders/

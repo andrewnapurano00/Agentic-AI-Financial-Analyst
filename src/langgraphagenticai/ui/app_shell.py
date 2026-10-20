@@ -13,7 +13,8 @@ PAGE_LABELS = {
     "Equity Report": ("Equity Research", "REPORT WORKSPACE", "Decision-ready company and peer analysis."),
     "AI Valuation": ("AI Valuation", "VALUATION WORKSPACE", "An AI investment view, reviewed drivers and clear price scenarios."),
     "Stock Screener": ("Stock Screener", "DISCOVERY WORKSPACE", "Filter a universe by fundamental and market criteria."),
-    "Portfolio Lab": ("Portfolio Lab", "ALLOCATION WORKSPACE", "Optimize allocations and review agent decisions."),
+    "Portfolio Lab": ("Portfolio Lab", "ALLOCATION WORKSPACE", "Compare portfolio ideas and allocation strategies."),
+    "AI Robo Advisor": ("AI Robo Advisor", "PORTFOLIO RESEARCH", "Build research portfolios and compare simulated agent traders."),
     "Deep Research V2": ("Deep Research V2", "COST PILOT", "Saved evidence and explicit decisions."),
     "Deep Research": ("Deep Research", "INVESTIGATION WORKSPACE", "Run a sourced, multi-step company or thematic investigation."),
 }

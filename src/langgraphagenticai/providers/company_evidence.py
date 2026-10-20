@@ -70,7 +70,7 @@ def save_company_evidence(state, captured):
         previous.update({k: deepcopy(v) for k, v in value.items() if k != "sources"})
         previous["sources"] = {**previous.get("sources", {}), **deepcopy(value["sources"])}
         store[key] = previous
-    while len(store) > 8:
+    while len(store) > 16:
         del store[next(iter(store))]
 
 

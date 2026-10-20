@@ -24,7 +24,7 @@ JOBS = {
     "history": ("/api/v3/historical-price-full/{symbol}", {}, 400),
 }
 FIELDS = {
-    "quote": ("symbol", "price", "timestamp", "currency", "marketCap"),
+    "quote": ("symbol", "price", "timestamp", "currency", "marketCap", "priceAvg50", "priceAvg200"),
     "profile": ("symbol", "companyName", "sector", "industry", "currency", "description", "beta"),
     "income": ("symbol", "date", "period", "fiscalYear", "calendarYear", "reportedCurrency", "revenue", "netIncome", "epsDiluted", "weightedAverageShsOutDil", "acceptedDate", "filingDate", "grossProfit", "operatingIncome"),
     "balance": ("symbol", "date", "period", "fiscalYear", "calendarYear", "reportedCurrency", "totalStockholdersEquity", "commonStockEquity", "preferredStock", "commonStockSharesOutstanding", "acceptedDate", "filingDate", "totalAssets", "totalDebt", "cashAndCashEquivalents"),

@@ -53,10 +53,12 @@ class LoadStreamlitUI:
         if st.session_state.get("active_workspace") == "Deep Research V2":
             st.session_state["active_workspace"] = "Deep Research"
             st.session_state["deep_research_format"] = "Low cost format"
+        if st.session_state.get("active_workspace") in {"AI Live Agent Traders", "Live Traders", "Agent Trading Lab", "Live Agent Traders"}:
+            st.session_state["active_workspace"] = "AI Robo Advisor"
         st.sidebar.markdown('<div class="ax-sidebar-label">Workspaces</div>', unsafe_allow_html=True)
         active_page = st.sidebar.radio(
             "Workspace navigation",
-            ["Introduction", "Top Movers", "Stock Screener", "Research", "Equity Report", "AI Valuation", "Deep Research", "Portfolio Lab"],
+            ["Introduction", "Top Movers", "Stock Screener", "Research", "Equity Report", "AI Valuation", "Deep Research", "Portfolio Lab", "AI Robo Advisor"],
             label_visibility="collapsed",
             key="active_workspace",
             format_func=lambda label: "Market Brief" if label == "Introduction" else label,

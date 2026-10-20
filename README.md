@@ -17,7 +17,8 @@ Start with a decision: **What deserves attention? Which company looks stronger? 
 | How do these companies compare? | [Equity Report](#7-equity-report) | A comparative scorecard, financial analysis, charts and reports |
 | What price could this company reach? | [AI Valuation](#8-ai-valuation) | Bear/Base/Bull targets, assumptions and sensitivity analysis |
 | Can I prepare a fuller investment report? | [Deep Research](#9-deep-research) | An executive report, evidence, comparisons and optional committee |
-| How should I evaluate my holdings? | [Portfolio Lab](#10-portfolio-lab) | Historical portfolio analysis or allocation and rebalance proposals |
+| How should I evaluate my holdings? | [Portfolio Lab](#10-portfolio-lab) | Historical optimization and portfolio management |
+| Can I build a research portfolio or compare simulated traders? | **AI Robo Advisor** | Portfolio architect and Agent traders, with saved session results |
 
 ## 1. Get ready
 
@@ -39,6 +40,8 @@ Start with a decision: **What deserves attention? Which company looks stronger? 
 | **Groq API Key (V2 pilot)** | An optional service for selected stages of Low cost Deep Research |
 
 The Portfolio Lab **Optimizer** uses historical prices and does not require OpenAI. The Portfolio Manager currently does **not** use the Marketaux news overlay, even when that key is configured.
+
+Open **AI Robo Advisor** in the Axiom sidebar and choose **Portfolio architect**: choose **SYNTHETIC DEMO** for an offline demonstration, enter an objective, click **Interpret mandate**, review the allocation controls and click **Build portfolio**. Read the allocation, holding research, risk, committee and evidence tabs; download CSV/JSON/HTML or save a session snapshot. **FMP live** requires FMP access; bounded AI interpretation/review is optional with OpenAI. Missing evidence and infeasible constraints preserve the previous result. ETF categories do not establish underlying sector exposures, and historical mix diagnostics are not a strategy backtest. See the [Portfolio Architect guide](docs/portfolio_architect/USER_GUIDE.md) for controls and recovery. If Build cannot find eligible securities, open **Latest collection diagnostics** for provider warnings and per-ticker exclusions; a batch-quote restriction automatically tries bounded individual FMP quotes.
 
 AI analysis and committee actions can incur provider charges. Treat displayed costs as estimates, especially when pricing is unknown. More depth, more companies and committee decisions can increase usage.
 
@@ -465,7 +468,7 @@ These user-entered sensitivities differ from AI Valuation's future per-share tar
 
 ## 10. Portfolio Lab
 
-**Use it for:** testing historical allocations or discussing portfolio changes. Neither workflow places trades.
+**Use it for:** testing historical allocations or discussing portfolio changes. Start with **Optimizer**, or choose **AI Portfolio Manager**. For prompt-led portfolio construction and simulated traders, open **AI Robo Advisor** in the sidebar. None of these workflows places real trades.
 
 ### Option A: Optimizer
 
@@ -535,6 +538,17 @@ In **AI Chat**, enter a **Question**, then click **Ask Portfolio Manager**:
 > Which monitoring triggers should we review after the next earnings season?
 
 Chat uses saved analysis. Rerun the committee when you want a proposal based on newly collected evidence or changed portfolio settings.
+
+### AI Robo Advisor
+
+1. Open **AI Robo Advisor** in the sidebar and choose **Portfolio architect**.
+2. Start with **SYNTHETIC DEMO** for an offline demonstration, or use **FMP live** with your configured FMP key.
+3. Enter an objective, click **Interpret mandate**, review the controls and click **Build portfolio**. Optional AI interpretation/review uses the shared model and OpenAI key only for explicit actions.
+4. Review allocations, holding research, risk, committee and evidence. Use **Latest collection diagnostics** if data or eligibility checks prevent a result.
+5. Download CSV, JSON or HTML, or save a session snapshot. Download important work before closing the app.
+6. Choose **Agent traders** on the same page for existing manual paper rounds or historical replay. Accounts and portfolio results remain separate; neither connects to a broker.
+
+See the [Robo Advisor portfolio guide](docs/portfolio_architect/USER_GUIDE.md) for constraints, data limitations and recovery.
 
 ## 11. Put the workspaces together
 

@@ -392,6 +392,9 @@ def load_langgraph_agenticai_app() -> None:
                 marketaux_api_key=marketaux_api_key,
                 fmp_api_key=fmp_api_key,
             )
+    elif active_page == "AI Robo Advisor":
+        from langgraphagenticai.ui.robo_advisor_tab import render_robo_advisor
+        render_robo_advisor(fmp_api_key=fmp_api_key, openai_api_key=openai_api_key, model_name=model_name)
     elif active_page in {"Deep Research", "Deep Research V2"}:
         from langgraphagenticai.ui.deep_research_workspace import render_deep_research_workspace
         render_deep_research_workspace(

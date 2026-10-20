@@ -198,9 +198,9 @@ def test_reused_quarters_produce_audited_ttm_metrics_with_resolvable_provenance(
 
 def test_saved_equity_evidence_is_bounded_and_independent_between_sessions():
     state={}
-    for symbol in ("AAPL","MSFT","MS","JPM","GOOG","NVDA","META","AMD","AVGO"):
+    for symbol in ("AAPL","MSFT","MS","JPM","GOOG","NVDA","META","AMD","AVGO","XOM","CVX","CAT","JNJ","UNH","V","MA","HD"):
         state=capture(rich_evidence(symbol),"profile",state=state)
-    assert len(state["company_evidence"])==8
+    assert len(state["company_evidence"])==16
     assert bridge.saved_company_evidence(state,"AAPL","synthetic") is None
     assert bridge.saved_company_evidence({},"MS","synthetic") is None
 
