@@ -4,7 +4,7 @@ from typing import Literal
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 from langgraphagenticai.state.research_context import normalize_company_symbol
 
-VERSION = "architect-1.0"
+VERSION = "architect-2.1"
 
 
 class Contract(BaseModel):
@@ -13,6 +13,7 @@ class Contract(BaseModel):
 
 class InvestorMandate(Contract):
     objective: str = Field(min_length=10, max_length=1800)
+    investment_style: Literal["balanced", "growth"] = "balanced"
     horizon: Literal[1, 3, 5, 10] = 5
     risk: Literal["conservative", "moderate", "aggressive"] = "moderate"
     amount: float = Field(default=100000, ge=100, le=100000000)
@@ -25,7 +26,7 @@ class InvestorMandate(Contract):
     excluded_sectors: list[str] = Field(default_factory=list, max_length=15)
     themes: list[str] = Field(default_factory=list, max_length=5)
     benchmark: str = "SPY"
-    method: Literal["equal", "risk", "conviction_risk"] = "risk"
+    method: Literal["equal", "risk", "conviction_risk", "risk_parity", "min_variance", "ai_risk_budget"] = "ai_risk_budget"
 
     @field_validator("benchmark")
     @classmethod
@@ -43,6 +44,8 @@ class InvestorMandate(Contract):
     @model_validator(mode="after")
     def capacity(self):
         from .universe import UNIVERSE, SECTORS, THEMES
+        if self.investment_style == "growth":
+            self.themes = [t for t in self.themes if t != "growth"]
         if self.benchmark not in UNIVERSE or any(s not in SECTORS for s in self.excluded_sectors) or any(t not in THEMES for t in self.themes):
             raise ValueError("Unsupported benchmark, sector or curated theme; revise the mandate explicitly.")
         if self.holdings * min(self.position_cap, self.sector_cap) < 1-self.cash-1e-9:
@@ -67,6 +70,8 @@ class SecurityEvidence(Contract):
     asset: Literal["stock", "etf"]
     sector: str
     themes: list[str]
+    news: list[dict] = Field(default_factory=list)
+    business_summary: str = "Issuer business description unavailable."
     price: float = Field(gt=0)
     currency: Literal["USD"]
     currency_basis: str
@@ -104,6 +109,8 @@ class EvidenceSnapshot(Contract):
     benchmark: SecurityEvidence | None
     warnings: list[str]
     excluded: dict[str, str]
+    screening: dict = Field(default_factory=dict)
+    macro: dict = Field(default_factory=dict)
     universe_version: str
 
     @model_validator(mode="after")
@@ -147,7 +154,9 @@ class HoldingRecommendation(Contract):
     pros: list[str]
     cons: list[str]
     sizing: str
+    ai_analysis: dict = Field(default_factory=dict)
     citations: list[str]
+    catalysts: list[str] = Field(default_factory=list)
     thesis_breakers: list[str]
 
 
@@ -177,6 +186,8 @@ class PortfolioRecommendation(Contract):
     method_used: str
     model: str | None
     usage: list[dict]
+    allocation_audit: dict = Field(default_factory=dict)
+    ai_review_status: dict = Field(default_factory=dict)
 
 
 class WorkflowError(Contract):

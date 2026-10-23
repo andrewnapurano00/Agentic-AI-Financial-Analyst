@@ -1,6 +1,7 @@
 """Deterministic selection and nested cap allocation; no forecasts or order execution."""
 from collections import defaultdict
 from .risk import sizing_signals
+from .construction import quantitative_weights
 
 TOL = 1e-9
 
@@ -19,11 +20,28 @@ def select(securities, scores, mandate):
     chosen = []
     remaining = {s.ticker:s for s in securities}
     for _ in range(mandate.holdings):
-        current = capacity(chosen, mandate)
-        def priority(s):
-            gain = capacity(chosen+[s], mandate)-current
-            return (round(gain, 10) if current < 1-mandate.cash-TOL else 0, ranking[s.ticker], s.ticker)
-        next_security = max(remaining.values(), key=priority)
+        def can_complete(candidate):
+            proposed = chosen+[candidate]
+            counts, available = defaultdict(int), defaultdict(int)
+            for s in proposed:
+                counts[s.sector] += 1
+            for s in remaining.values():
+                if s.ticker != candidate.ticker:
+                    available[s.sector] += 1
+            gains = []
+            for sector, count in available.items():
+                start = counts[sector]
+                for j in range(count):
+                    gains.append(min((start+j+1)*mandate.position_cap,mandate.sector_cap)
+                                 -min((start+j)*mandate.position_cap,mandate.sector_cap))
+            slots = mandate.holdings-len(proposed)
+            return (len(gains) >= slots and capacity(proposed,mandate)+sum(sorted(gains,reverse=True)[:slots])
+                    >= 1-mandate.cash-TOL)
+        feasible = [s for s in remaining.values() if can_complete(s)]
+        if not feasible:
+            raise ValueError("Eligible sectors and position limits cannot fund the requested allocation. Increase cash/caps or revise the universe.")
+        # Preserve mandate/AI ranking unless choosing a name would make completion impossible.
+        next_security = max(feasible, key=lambda s:(ranking[s.ticker],s.ticker))
         chosen.append(next_security)
         remaining.pop(next_security.ticker)
     if capacity(chosen, mandate) < 1-mandate.cash-TOL:
@@ -34,7 +52,12 @@ def select(securities, scores, mandate):
 def allocate(securities, mandate, conviction=None):
     signals, note = ({s.ticker:1. for s in securities}, "Equal-weight baseline subject to caps.")
     used = mandate.method
-    if mandate.method != "equal":
+    if mandate.method in {"min_variance", "risk_parity", "ai_risk_budget"}:
+        signals, note = quantitative_weights(securities, mandate, conviction)
+        if signals is None:
+            signals = {s.ticker:1. for s in securities}
+            used = "equal (quantitative sizing unavailable)"
+    elif mandate.method != "equal":
         signals, note = sizing_signals(securities)
         if signals is None:
             signals = {s.ticker:1. for s in securities}

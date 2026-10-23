@@ -6,6 +6,12 @@ from langgraphagenticai.providers import portfolio_architect as provider
 NOW=datetime(2026,10,19,12,tzinfo=timezone.utc)
 
 
+@pytest.fixture(autouse=True)
+def no_real_batch_wait(monkeypatch):
+    from langgraphagenticai.providers import advisor_batches
+    monkeypatch.setattr(advisor_batches,"PAUSE_SECONDS",0)
+
+
 def records():
     q={"symbol":"MSFT","price":100.,"timestamp":NOW.timestamp(),"currency":"USD"}
     p={"symbol":"MSFT","companyName":"Microsoft fixture","currency":"USD","sector":"Technology",
@@ -161,3 +167,51 @@ def test_null_profile_average_volume_can_use_explicit_quote_average():
     q,p,r,h=records();p['averageVolume']=None;q['avgVolume']=1000000
     s=norm(q,p,r,h)
     assert next(f for f in s.facts if f.field=='turnover').value==100000000
+
+
+def test_rate_limited_quote_stops_all_fanout_and_history(monkeypatch):
+    from langgraphagenticai.providers.fmp_http import ProviderRequestError
+    calls=[]
+    def fake(url,**kwargs):
+        calls.append(url)
+        assert kwargs["timeout"] == (3,30)
+        raise ProviderRequestError("FMP","fixture-secret",status_code=429)
+    monkeypatch.setattr(provider,"get_fmp_json",fake)
+    provider.load_current.clear();provider.load_histories.clear()
+    snapshot=provider.collect(("MSFT","NVDA"),"SPY","fixture-secret")
+    assert len(calls)==1 and calls[0].endswith("batch-quote")
+    assert not snapshot.securities and any("collection stopped" in w for w in snapshot.warnings)
+    assert "fixture-secret" not in snapshot.model_dump_json()
+    provider.load_current.clear();provider.load_histories.clear()
+
+
+def test_late_rate_limit_keeps_quote_profile_and_skips_history(monkeypatch):
+    from langgraphagenticai.providers.fmp_http import ProviderRequestError
+    q,p,_,_=records();calls=[]
+    def fake(url,**kwargs):
+        calls.append(url.rsplit("/",1)[-1])
+        if url.endswith("batch-quote"):return [q]
+        if url.endswith("profile"):return [p]
+        raise ProviderRequestError("FMP","fixture",status_code=429)
+    monkeypatch.setattr(provider,"get_fmp_json",fake)
+    provider.load_current.clear();provider.load_histories.clear()
+    snapshot=provider.collect(("MSFT",),"MSFT","fixture")
+    assert calls==["batch-quote","profile","ratios-ttm"]
+    assert len(snapshot.securities)==1 and not snapshot.securities[0].history
+    assert any("429" in w for w in snapshot.warnings)
+    provider.load_current.clear();provider.load_histories.clear()
+
+
+def test_quotes_batch_at_most_hundred_symbols(monkeypatch):
+    names=tuple("A"+chr(65+i//26)+chr(65+i%26) for i in range(61))
+    batches=[]
+    def fake(url,**kwargs):
+        if url.endswith("batch-quote"):
+            symbols=kwargs["params"]["symbols"].split(",")
+            batches.append(symbols)
+            return [{"symbol":s,"price":100} for s in symbols]
+        return []
+    monkeypatch.setattr(provider,"get_fmp_json",fake);provider.load_current.clear()
+    result=provider.load_current(names,"fixture")
+    assert [len(b) for b in batches]==[61] and len(result["quotes"])==61
+    provider.load_current.clear()

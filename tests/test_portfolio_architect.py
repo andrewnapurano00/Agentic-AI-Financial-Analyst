@@ -43,7 +43,7 @@ def test_invalid_mandates_rejected(change):
         InvestorMandate(objective="Diversified portfolio",**change)
 
 
-@pytest.mark.parametrize("method",["equal","risk","conviction_risk"])
+@pytest.mark.parametrize("method",["equal","risk","conviction_risk","risk_parity","ai_risk_budget","min_variance"])
 @pytest.mark.parametrize("n",[5,10,15])
 def test_budget_caps_and_determinism(snapshot,mandate,method,n):
     m = InvestorMandate.model_validate({**mandate.model_dump(),"method":method,"holdings":n,"amount":12345.67})
@@ -158,8 +158,19 @@ def install_model(monkeypatch,response):
 
 
 def valid_review(snapshot):
-    return {"picks":[{"ticker":s.ticker,"conviction":"medium","reason":"diversification","evidence_ids":[s.ticker+":price"]} for s in snapshot.securities],
-            "concerns":["concentration","missing_data","valuation_uncertainty"],"rejected":[]}
+    from langgraphagenticai.portfolio_architect.screening import sector_lens, applicable
+    picks = []
+    from langgraphagenticai.portfolio_architect.analyst_packet import review_pool
+    test_mandate = InvestorMandate(objective="Build a diversified AI research portfolio",themes=["AI"])
+    eligible, ranked,_ = candidates(snapshot,test_mandate)
+    pool = review_pool(eligible,ranked,select(eligible,ranked,test_mandate))
+    for s in pool:
+        metric = next((f.id for f in s.facts if f.field in applicable(s.sector)[1]), s.ticker+":price") if s.asset == "stock" else s.ticker+":price"
+        picks.append({"ticker":s.ticker, "conviction":"medium", "reason":"diversification", "evidence_ids":[metric],
+                      "analysis":{"framework":sector_lens(s)["framework"], "conviction_summary":"Saved profitability supports conviction; future growth remains uncertain.","thesis":"Saved profitability evidence supports further company research.",
+                                  "risks":["Sector conditions could weaken profitability."], "thesis_breaker":"Reassess after deterioration in the next reported margins.",
+                                  "portfolio_role":"core", "missing_inputs":["Forward earnings and specialist evidence remain unavailable."]}})
+    return {"picks":picks, "concerns":["concentration","missing_data","valuation_uncertainty"], "rejected":[]}
 
 
 def test_valid_structured_review_is_bounded_and_deterministic(monkeypatch,snapshot,mandate):
@@ -170,20 +181,22 @@ def test_valid_structured_review_is_bounded_and_deterministic(monkeypatch,snapsh
     assert all(h.conviction == "medium" for h in result.holdings)
     assert result.usage[0]["input_tokens"] == 100
     factory.assert_called_once_with("fixture-key",timeout=90,max_retries=0)
-    assert create.call_args.kwargs["max_completion_tokens"] == 3800
+    assert create.call_args.kwargs["max_completion_tokens"] == 9000
     assert "tools" not in create.call_args.kwargs
     assert len(create.call_args.kwargs["messages"][1]["content"].encode()) <= 42000
     assert sum(h.weight for h in result.holdings)+result.cash == pytest.approx(1)
 
 
-@pytest.mark.parametrize("failure",["ticker","citation","numbers","reason","duplicate","truncated","refusal","json"])
+@pytest.mark.parametrize("failure",["ticker","citation","numbers","reason","duplicate","truncated","refusal","json","sector","price_only"])
 def test_bad_ai_preserves_local(monkeypatch,snapshot,mandate,failure):
     payload=valid_review(snapshot)
     response=model_response(payload)
     if failure == "ticker": payload["picks"][0]["ticker"]="FAKE"
     if failure == "citation": payload["picks"][0]["evidence_ids"]=["NVDA:made_up"]
     if failure == "numbers": payload["picks"][0]["target_price"]=1000
-    if failure == "reason": payload["picks"][0]["reason"]="quality"  # Missing cited margin.
+    if failure == "reason": payload["picks"][0].update(reason="quality", evidence_ids=[payload["picks"][0]["ticker"]+":price"])  # Missing cited margin.
+    if failure == "sector": payload["picks"][0]["analysis"]["framework"]="Banks / Financials"
+    if failure == "price_only": payload["picks"][0]["evidence_ids"]=[payload["picks"][0]["ticker"]+":price"]
     if failure == "duplicate": payload["picks"][1]=payload["picks"][0]
     response=model_response(payload)
     if failure == "truncated": response.choices[0].finish_reason="length"
@@ -224,3 +237,55 @@ def test_safe_exports_omit_prompts_escape_html_and_reconcile(snapshot,mandate):
     assert b'<script>' not in html and b'&lt;script&gt;' in html and b'fixture-secret' not in html
     payload=json.loads(data)
     assert payload["snapshot"]["id"] == r.snapshot.id and payload["snapshot"]["securities"][0]["facts"]
+
+
+def test_large_evidence_download_round_trips_without_omissions(snapshot, mandate):
+    import gzip
+    from langgraphagenticai.portfolio_architect.export import evidence_download, export_payload
+    result = build(snapshot, mandate)
+    result.snapshot.screening = {"ranked": [{"symbol": "MSFT", "audit": "x" * 4_100_000}], "zero": 0,
+                                 "missing": None, "source": "FMP fixture-secret"}
+    data, filename, mime = evidence_download(result, ("fixture-secret",))
+    assert filename.endswith(".json.gz") and mime == "application/gzip" and len(data) < 4_000_000
+    decoded = gzip.decompress(data)
+    assert b"fixture-secret" not in decoded
+    payload = json.loads(decoded)
+    assert payload == export_payload(result, ("fixture-secret",))
+    assert len(payload["snapshot"]["screening"]["ranked"][0]["audit"]) == 4_100_000
+    assert "objective" not in payload["mandate"]
+
+
+def test_small_evidence_download_is_plain_json(snapshot, mandate):
+    from langgraphagenticai.portfolio_architect.export import evidence_download
+    result = build(snapshot, mandate)
+    data, filename, mime = evidence_download(result)
+    assert filename.endswith(".json") and mime == "application/json"
+    assert json.loads(data)["id"] == result.id
+
+
+def test_even_compressed_oversize_is_structured(snapshot, mandate, monkeypatch):
+    from langgraphagenticai.portfolio_architect import export
+    monkeypatch.setattr(export, "EXPORT_BYTE_LIMIT", 10)
+    with pytest.raises(export.ExportSizeError, match="saved report"):
+        export.evidence_download(build(snapshot, mandate))
+
+
+def test_active_screen_ai_review_has_twenty_alternatives_and_saved_theses(monkeypatch,snapshot,mandate):
+    from langgraphagenticai.portfolio_architect.schemas import Fact
+    snapshot.screening={"membership_count":503,"ranked":[]}
+    for security in snapshot.securities:
+        if security.asset == "stock":
+            security.facts.append(Fact(id=security.ticker+":screen_score",field="screen_score",value=75.,unit="score/100",basis="Synthetic sector rank",as_of=None,retrieved_at=security.retrieved_at,source="Synthetic fixture"))
+    def response(contract,packet,*args,**kwargs):
+        allowed={r["ticker"] for r in packet["candidates"]}
+        assert len(allowed)==20 and len(json.dumps(packet).encode())<=42000
+        value=valid_review(snapshot)
+        value["picks"]=[p for p in value["picks"] if p["ticker"] in allowed]
+        return contract.model_validate(value),{"status":"completed","input_tokens":100,"output_tokens":200}
+    call=Mock(side_effect=response)
+    monkeypatch.setattr(committee,"structured_call",call)
+    result=build(snapshot,mandate,"fixture","model",True)
+    assert "One structured" in result.committee.source
+    assert all(h.ai_analysis for h in result.holdings)
+    assert result.usage[0]["stage"]=="sector_specialist_review"
+    call.assert_called_once()

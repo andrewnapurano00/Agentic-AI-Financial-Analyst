@@ -29,24 +29,15 @@ def test_sidebar_migrates_trader_name_and_exposes_robo_advisor(old_name):
     assert len(a.radio(key="active_workspace").options) == 9
 
 
-def test_robo_advisor_switch_preserves_portfolio_and_trader_accounts(monkeypatch):
+def test_robo_advisor_has_only_live_architect_and_no_implicit_calls(monkeypatch):
     from langgraphagenticai.ui import portfolio_architect_tab
-    from langgraphagenticai.portfolio_architect import committee
     forbidden=Mock(side_effect=AssertionError("No external calls"))
     monkeypatch.setattr(portfolio_architect_tab,"collect",forbidden)
-    monkeypatch.setattr(committee,"build_openai_client",forbidden)
     a=AppTest.from_string("from langgraphagenticai.ui.robo_advisor_tab import render_robo_advisor; render_robo_advisor()",default_timeout=30).run()
+    assert not a.exception and not a.radio
+    assert not any("SYNTHETIC DEMO" in str(x.value) for x in a.info)
     a.button(key="architect_interpret").click().run()
     next(b for b in a.button if b.label == "Build portfolio").click().run()
-    assert not a.exception
-    portfolio=a.session_state["architect_result"]
-    a.radio(key="robo_advisor_workflow").set_value("Agent traders").run()
-    next(b for b in a.button if b.label == "Create experiment").click().run()
-    a.button(key="paper_run").click().run()
-    assert not a.exception
-    accounts=a.session_state["paper_experiments_v1"]
-    a.radio(key="robo_advisor_workflow").set_value("Portfolio architect").run()
-    assert not a.exception and a.session_state["architect_result"] == portfolio
-    a.radio(key="robo_advisor_workflow").set_value("Agent traders").run()
-    assert not a.exception and a.session_state["paper_experiments_v1"] == accounts
+    assert a.error and "Configure FMP" in a.error[0].value
+    a.run()
     forbidden.assert_not_called()

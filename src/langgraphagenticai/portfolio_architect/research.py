@@ -3,6 +3,7 @@ from datetime import date, datetime, timedelta, timezone
 from math import exp, sin
 from .schemas import EvidenceSnapshot, SecurityEvidence, Fact, CandidateScore, utc_stamp
 from .universe import UNIVERSE, ETFS, UNIVERSE_VERSION
+from .mandate_fit import mandate_priority
 from langgraphagenticai.providers.portfolio_architect import snapshot_id, HISTORY_BASIS
 
 
@@ -19,6 +20,7 @@ def demo_snapshot(names, benchmark):
             price *= exp(.00015+.008*sin(j*.21+i*.7)+.004*sin(j*.57+i))
             history[day] = price
         fs = [("price", price, "USD/share", "synthetic point-in-time"), ("margin_ttm", .05+i*.004, "fraction", "synthetic TTM"),
+              ("revenue_cagr_3y", .04+i*.004, "fraction", "synthetic annual growth; not forecast"),
               ("pe_ttm", 12.+i, "multiple", "synthetic TTM"), ("debt_equity_ttm", .2+i*.02, "multiple", "synthetic TTM")]
         facts = [Fact(id=s+":"+f, field=f, value=v, unit=u, basis=b, as_of=stamp, retrieved_at=stamp, source="SYNTHETIC DEMO") for f,v,u,b in fs]
         values[s] = SecurityEvidence(ticker=s, name=s+" synthetic example", asset="etf" if s in ETFS else "stock",
@@ -55,10 +57,25 @@ def candidates(snapshot, mandate, now=None):
             excluded[s.ticker] = reason
             continue
         fs = {f.field: f for f in s.facts}
-        pros = ["Dated USD quote available.", "Eligible within the explicit curated research universe."]
-        cons = ["Past observations do not establish future returns.", "No current news or forward earnings evidence collected."]
+        pros = ["Dated USD quote available.", "Eligible within the explicit research universe."]
+        cons = ["Past observations do not establish future returns.", "Forward earnings evidence unavailable; headlines do not establish an earnings or price catalyst."]
         score = 1.0 + .3*len(set(s.themes)&set(mandate.themes))
-        # Stock-only, broad descriptive heuristics; not sector-normalized valuation.
+        if s.asset == "stock" and snapshot.screening:
+            screen = fs.get("screen_score")
+            if screen is None:
+                excluded[s.ticker] = "No qualified S&P sector screen evidence"
+                continue
+            score += screen.value/10
+            growth = fs.get("revenue_cagr_3y")
+            if growth:
+                score += max(-.2, min(.3, growth.value))
+            pros.append(f"Sector-relative screen {screen.value:.1f}/100; missing metrics penalized; see saved peer inputs.")
+            for field in ("roa_ttm", "roe_ttm", "fcf_yield_ttm", "pe_ttm", "debt_assets_ttm", "revenue_cagr_3y"):
+                if field in fs:
+                    fact = fs[field]
+                    pros.append(f"{field}: {fact.value:.4g} {fact.unit} [{fact.id}]; {fact.basis}.")
+            cons.append("Sector ranks measure the available TTM subset, not intrinsic value or forecast growth; negative equity may distort ROE/leverage.")
+        # Legacy/synthetic snapshots retain their original modest descriptive ranking.
         if s.asset == "stock" and fs.get("margin_ttm") and fs["margin_ttm"].value > 0:
             score += .2
             pros.append("Provider TTM net margin is positive; fiscal end may be unavailable.")
@@ -68,8 +85,16 @@ def candidates(snapshot, mandate, now=None):
             cons.append("Fund constituents and sector look-through unmeasured; category is not underlying exposure.")
         if mandate.risk == "conservative" and "defensive" in s.themes:
             score += .4
+        if mandate.investment_style == "growth":
+            quality = fs["screen_score"].value/100 if "screen_score" in fs else min(score/3,1)
+            eligible, score, fit = mandate_priority(s, mandate, quality)
+            if not eligible:
+                excluded[s.ticker] = fit["growth_basis"]
+                continue
+            pros += [fit["growth_basis"],fit["theme_basis"]]
+            cons.append(fit["policy"])
         if len(s.history) < 61:
             cons.append("Insufficient history for risk sizing.")
         selected.append(s)
-        scores.append(CandidateScore(ticker=s.ticker, score=score, citations=[f.id for f in s.facts], pros=pros[:4], cons=cons[:4]))
+        scores.append(CandidateScore(ticker=s.ticker, score=score, citations=[f.id for f in s.facts], pros=pros, cons=cons))
     return selected, sorted(scores, key=lambda v: (-v.score, v.ticker)), excluded

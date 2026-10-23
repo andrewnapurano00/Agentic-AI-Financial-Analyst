@@ -6,9 +6,11 @@ import json
 import streamlit as st
 from langgraphagenticai.providers.fmp_http import get_fmp_json
 from langgraphagenticai.providers.discovery_numbers import finite_number
+from langgraphagenticai.providers.advisor_batches import RequestBatch, BATCH_SIZE
 from langgraphagenticai.utils.safety import redact_sensitive_text
 from langgraphagenticai.portfolio_architect.schemas import EvidenceSnapshot, Fact, SecurityEvidence
 from langgraphagenticai.portfolio_architect.universe import UNIVERSE, ETFS, UNIVERSE_VERSION
+from langgraphagenticai.state.research_context import normalize_company_symbol
 
 BASE = "https://financialmodelingprep.com/stable/"
 HISTORY_BASIS = "FMP daily close; adjustment basis unverified. Price-return diagnostics, excludes dividend cash flows; corporate actions may distort returns."
@@ -54,37 +56,48 @@ def failure_note(error):
 
 
 @st.cache_data(ttl=300, max_entries=12, show_spinner=False)
-def load_current(names, api_key):
+def load_current(names, api_key, _budget=None):
     _validate(names, api_key)
+    budget = _budget or RequestBatch()
     warnings = []
     fallback_allowed = True
-    try:
-        quotes = get_fmp_json(BASE+"batch-quote", api_key=api_key, params={"symbols": ",".join(names)}, timeout=(3, 10))
-    except Exception as exc:
-        quotes = []
-        note = failure_note(exc)
-        warnings.append("FMP batch-quote: "+note)
-        fallback_allowed = getattr(exc,"status_code",None) != 401 and not note.startswith("HTTPS certificate")
+    quotes = []
+    for start in range(0, len(names), BATCH_SIZE):
+        if budget.stopped.is_set():
+            break
+        try:
+            batch = names[start:start+BATCH_SIZE]
+            quotes.extend(rows(budget.request(get_fmp_json, BASE+"batch-quote", api_key=api_key, params={"symbols": ",".join(batch)})))
+        except Exception as exc:
+            note = failure_note(exc)
+            warnings.append("FMP batch-quote: "+note)
+            fallback_allowed = getattr(exc,"status_code",None) not in (401,429) and not note.startswith("HTTPS certificate")
+            if not fallback_allowed:
+                break
     batched = {s:one(quotes,s) for s in names}
     missing = [s for s in names if not batched[s]]
     if missing and fallback_allowed:
         warnings.append(f"Trying individual FMP quote requests for {len(missing)} missing batch quotes; at most one per symbol, concurrency three.")
     def fetch(symbol):
-        values = {}
+        values = {"profile":{}, "ratios":{}}
         notices = []
         quote = batched[symbol]
         quote_source = "FMP stable/batch-quote"
+        if budget.stopped.is_set():
+            return symbol, values, quote, quote_source, notices
         if not quote and fallback_allowed:
             try:
-                quote = one(get_fmp_json(BASE+"quote",api_key=api_key,params={"symbol":symbol},timeout=(3,10)),symbol)
+                quote = one(budget.request(get_fmp_json, BASE+"quote",api_key=api_key,params={"symbol":symbol}),symbol)
                 quote_source = "FMP stable/quote"
             except Exception as exc:
                 notices.append(symbol+" quote: "+failure_note(exc))
         if not quote:
             notices.append(symbol+": unique dated quote response unavailable.")
         for kind, route in (("profile", "profile"), ("ratios", "ratios-ttm")):
+            if budget.stopped.is_set():
+                break
             try:
-                values[kind] = one(get_fmp_json(BASE+route, api_key=api_key, params={"symbol": symbol}, timeout=(3, 10)), symbol)
+                values[kind] = one(budget.request(get_fmp_json, BASE+route, api_key=api_key, params={"symbol": symbol}), symbol)
                 if not values[kind]:
                     notices.append(symbol+" "+kind+": unique response unavailable.")
             except Exception as exc:
@@ -97,12 +110,14 @@ def load_current(names, api_key):
     for symbol, values, quote, source, notices in results:
         facts[symbol], quote_rows[symbol], quote_sources[symbol] = values, quote, source
         warnings.extend(notices)
-    return {"quotes": quote_rows, "quote_sources":quote_sources, "facts": facts,
+    if budget.stopped.is_set():
+        warnings.append(budget.warning)
+    return {"rate_limited":budget.stopped.is_set(), "quotes": quote_rows, "quote_sources":quote_sources, "facts": facts,
             "retrieved_at": datetime.now(timezone.utc).isoformat(), "warnings": warnings}
 
 
 def _validate(names, api_key):
-    if not api_key or not 1 <= len(names) <= 41 or len(set(names)) != len(names) or any(s not in UNIVERSE for s in names):
+    if not api_key or not 1 <= len(names) <= 61 or len(set(names)) != len(names) or any(normalize_company_symbol(s) != s for s in names):
         raise ValueError("Use unique supported universe symbols and configure FMP.")
 
 
@@ -123,22 +138,25 @@ def normalize_history(raw, symbol, first, last):
 
 
 @st.cache_data(ttl=21600, max_entries=12, show_spinner=False)
-def load_histories(names, api_key, end):
+def load_histories(names, api_key, end, _budget=None):
     _validate(names, api_key)
+    budget = _budget or RequestBatch()
     last = date.fromisoformat(end)
     if last >= datetime.now(timezone.utc).date():
         raise ValueError("Historical diagnostics use completed calendar dates only.")
     first = (last-timedelta(days=400)).isoformat()
     def fetch(symbol):
+        if budget.stopped.is_set():
+            return symbol, {}
         try:
-            raw = get_fmp_json(BASE+"historical-price-eod/full", api_key=api_key,
-                               params={"symbol": symbol, "from": first, "to": end}, timeout=(3, 15))
+            raw = budget.request(get_fmp_json, BASE+"historical-price-eod/full", api_key=api_key,
+                               params={"symbol": symbol, "from": first, "to": end})
             return symbol, normalize_history(raw, symbol, first, end)
         except Exception:
             return symbol, {}
     with ThreadPoolExecutor(max_workers=3) as pool:
         values = dict(pool.map(fetch, names))
-    return {"series": values, "retrieved_at": datetime.now(timezone.utc).isoformat()}
+    return {"rate_limited":budget.stopped.is_set(), "series": values, "retrieved_at": datetime.now(timezone.utc).isoformat()}
 
 
 def normalize_security(symbol, quote, profile, ratios, history, retrieved_at, history_retrieved_at, now, api_key="", quote_source="FMP stable/batch-quote"):
@@ -193,7 +211,7 @@ def normalize_security(symbol, quote, profile, ratios, history, retrieved_at, hi
         history = {}
         flags.append("Recent historical coverage unavailable; no filling or substitution.")
     return SecurityEvidence(ticker=symbol, name=clean(profile.get("companyName") or symbol, api_key), asset="etf" if expected_etf else "stock",
-                            sector=sector, themes=UNIVERSE[symbol][1], price=price, currency="USD", currency_basis=currency_basis,
+                            sector=sector, themes=UNIVERSE.get(symbol, (sector, []))[1], business_summary=clean(profile.get("description"), api_key, 1800) or "Issuer business description unavailable.", price=price, currency="USD", currency_basis=currency_basis,
                             quote_as_of=observed.isoformat(), retrieved_at=retrieved_at, provider="FMP", facts=facts, history=history,
                             history_retrieved_at=history_retrieved_at, history_basis=HISTORY_BASIS, flags=flags)
 
@@ -202,15 +220,22 @@ def snapshot_id(data):
     return sha256(json.dumps(data, sort_keys=True, allow_nan=False).encode()).hexdigest()[:24]
 
 
-def collect(names, benchmark, api_key, force=False):
+def collect(names, benchmark, api_key, force=False, _budget=None):
+    budget = _budget or RequestBatch()
     all_names = tuple(sorted(set(names) | {benchmark}))
     _validate(all_names, api_key)
     end = (datetime.now(timezone.utc).date()-timedelta(days=1)).isoformat()
     if force:
         load_current.clear(all_names, api_key)
         load_histories.clear(all_names, api_key, end)
-    current = load_current(all_names, api_key)
-    history = load_histories(all_names, api_key, end)
+    current = load_current(all_names, api_key, _budget=budget)
+    if current.get("rate_limited"):
+        budget.stopped.set()
+    history = load_histories(all_names, api_key, end, _budget=budget) if not budget.stopped.is_set() else {"series":{s:{} for s in all_names}, "retrieved_at":current["retrieved_at"]}
+    if history.get("rate_limited"):
+        budget.stopped.set()
+    if budget.stopped.is_set() and budget.warning not in current["warnings"]:
+        current["warnings"].append(budget.warning)
     now = datetime.now(timezone.utc)
     securities, excluded = {}, {}
     for s in all_names:
@@ -223,6 +248,6 @@ def collect(names, benchmark, api_key, force=False):
             excluded[s] = str(exc)
     packet = dict(mode="FMP live", retrieved_at=current["retrieved_at"], securities=[securities[s].model_dump() for s in names if s in securities],
                   benchmark=securities[benchmark].model_dump() if benchmark in securities else None,
-                  warnings=current["warnings"]+["Current curated universe is not point-in-time; no backtest or survivorship correction.", HISTORY_BASIS],
+                  warnings=current["warnings"]+["Current candidate universe is not point-in-time; no backtest or survivorship correction.", HISTORY_BASIS],
                   excluded=excluded, universe_version=UNIVERSE_VERSION)
     return EvidenceSnapshot(id=snapshot_id(packet), **packet)

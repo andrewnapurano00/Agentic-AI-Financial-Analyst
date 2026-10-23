@@ -18,7 +18,7 @@ Start with a decision: **What deserves attention? Which company looks stronger? 
 | What price could this company reach? | [AI Valuation](#8-ai-valuation) | Bear/Base/Bull targets, assumptions and sensitivity analysis |
 | Can I prepare a fuller investment report? | [Deep Research](#9-deep-research) | An executive report, evidence, comparisons and optional committee |
 | How should I evaluate my holdings? | [Portfolio Lab](#10-portfolio-lab) | Historical optimization and portfolio management |
-| Can I build a research portfolio or compare simulated traders? | **AI Robo Advisor** | Portfolio architect and Agent traders, with saved session results |
+| Can I build an evidence-backed research portfolio? | **AI Robo Advisor** | S&P 500 screening, ETFs, position research and saved session results |
 
 ## 1. Get ready
 
@@ -41,7 +41,7 @@ Start with a decision: **What deserves attention? Which company looks stronger? 
 
 The Portfolio Lab **Optimizer** uses historical prices and does not require OpenAI. The Portfolio Manager currently does **not** use the Marketaux news overlay, even when that key is configured.
 
-Open **AI Robo Advisor** in the Axiom sidebar and choose **Portfolio architect**: choose **SYNTHETIC DEMO** for an offline demonstration, enter an objective, click **Interpret mandate**, review the allocation controls and click **Build portfolio**. Read the allocation, holding research, risk, committee and evidence tabs; download CSV/JSON/HTML or save a session snapshot. **FMP live** requires FMP access; bounded AI interpretation/review is optional with OpenAI. Missing evidence and infeasible constraints preserve the previous result. ETF categories do not establish underlying sector exposures, and historical mix diagnostics are not a strategy backtest. See the [Portfolio Architect guide](docs/portfolio_architect/USER_GUIDE.md) for controls and recovery. If Build cannot find eligible securities, open **Latest collection diagnostics** for provider warnings and per-ticker exclusions; a batch-quote restriction automatically tries bounded individual FMP quotes.
+Open **AI Robo Advisor**, configure FMP in Settings, enter an objective, click **Interpret mandate**, review the controls and click **Build portfolio**. It screens current S&P 500 constituents using sector-relative quality, valuation, cash-flow and leverage metrics, then researches up to 30 stocks alongside curated ETFs. Read position evidence, dated news, annual revenue growth, market risks and conditional catalysts; download CSV/JSON/HTML or save a session snapshot. AI review is optional with OpenAI. Full screening may take several minutes when bulk access is unavailable. See the [Portfolio Architect guide](docs/portfolio_architect/USER_GUIDE.md) for controls and recovery.
 
 AI analysis and committee actions can incur provider charges. Treat displayed costs as estimates, especially when pricing is unknown. More depth, more companies and committee decisions can increase usage.
 
@@ -468,7 +468,7 @@ These user-entered sensitivities differ from AI Valuation's future per-share tar
 
 ## 10. Portfolio Lab
 
-**Use it for:** testing historical allocations or discussing portfolio changes. Start with **Optimizer**, or choose **AI Portfolio Manager**. For prompt-led portfolio construction and simulated traders, open **AI Robo Advisor** in the sidebar. None of these workflows places real trades.
+**Use it for:** testing historical allocations or discussing portfolio changes. Start with **Optimizer**, or choose **AI Portfolio Manager**. For prompt-led portfolio construction, open **AI Robo Advisor** in the sidebar. None of these workflows places real trades.
 
 ### Option A: Optimizer
 
@@ -541,12 +541,17 @@ Chat uses saved analysis. Rerun the committee when you want a proposal based on 
 
 ### AI Robo Advisor
 
-1. Open **AI Robo Advisor** in the sidebar and choose **Portfolio architect**.
-2. Start with **SYNTHETIC DEMO** for an offline demonstration, or use **FMP live** with your configured FMP key.
-3. Enter an objective, click **Interpret mandate**, review the controls and click **Build portfolio**. Optional AI interpretation/review uses the shared model and OpenAI key only for explicit actions.
-4. Review allocations, holding research, risk, committee and evidence. Use **Latest collection diagnostics** if data or eligibility checks prevent a result.
-5. Download CSV, JSON or HTML, or save a session snapshot. Download important work before closing the app.
-6. Choose **Agent traders** on the same page for existing manual paper rounds or historical replay. Accounts and portfolio results remain separate; neither connects to a broker.
+1. Open **AI Robo Advisor** and configure your FMP key in Settings. The page opens directly to portfolio construction.
+2. Enter an objective, click **Interpret mandate**, review **Investment style** (choose **Growth** for a growth portfolio), holdings, asset types, cash, sector and position limits, then click **Build portfolio**. Optional AI uses the shared model and OpenAI key only for explicit actions.
+3. Review **Holding research** for company descriptions, measured strengths, counterarguments, annual revenue growth and dated news. Read sector and market sensitivities before treating a possible catalyst as a reason to invest.
+4. Open **Evidence & exports** for the S&P 500 screening audit and Market Brief indicators. Scores rank available sector metrics; they do not guarantee the best future performers. ETFs have a separate curated universe and no company-fundamental ranking.
+5. With OpenAI configured, **Use bounded AI interpretation and specialist review** starts selected. Explicit **Interpret mandate** and **Build portfolio** actions produce a reviewed mandate and cited sector-aware AI theses. Read each holding's AI risks, missing evidence, portfolio role and thesis-break condition in **Holding research**. Invalid AI output preserves a local portfolio.
+6. Choose **AI conviction + covariance risk budgets**, **Equal covariance risk budgets**, **Constrained minimum variance** or **Equal weight** in **Sizing method**, then **Build portfolio**. The first method uses bounded AI conviction to set relative historical risk budgets. In **Allocation**, compare capital weights with achieved risk contributions, target risk budgets, effective holdings and diversification ratio. Cash and hard caps take precedence; risk-budget caps can prevent exact target risk shares. Sparse or unstable history produces a disclosed equal-weight fallback. These methods do not forecast returns or enforce a future loss ceiling.
+7. Use **Latest collection diagnostics** if provider or eligibility checks prevent a result. Collection pauses thirty seconds between batches of one hundred requests; a full screen can take several minutes. If FMP reports HTTP 429, wait for its limit to reset, then enable **Refresh provider evidence on next Build** and click **Build portfolio**. Download CSV, JSON or HTML, or save a session snapshot. Download important work before closing the app.
+
+For a growth/AI objective, stock candidates need positive comparable three-year annual revenue growth; supported AI relevance and growth receive priority over a generic value score. Sector limits are enforced without adding unrelated sectors merely for variety. The universe stays current S&P 500 stocks plus curated ETFs. Business-description and curated theme matches are research clues, not measured AI revenue exposure.
+
+The **Conviction / AI rationale** column includes a brief saved AI explanation with each validated rating. A status above the table says whether AI completed, failed or was not requested. If no validated review exists, the table says so; it does not invent an AI rationale. Older saved balanced results remain unchanged: explicitly choose **Growth** and **Build portfolio** to apply the new selection logic.
 
 See the [Robo Advisor portfolio guide](docs/portfolio_architect/USER_GUIDE.md) for constraints, data limitations and recovery.
 
@@ -592,3 +597,7 @@ See the [Robo Advisor portfolio guide](docs/portfolio_architect/USER_GUIDE.md) f
 | Portfolio result seems too concentrated | Review inputs, position/sector limits, the available universe and constraint warnings |
 
 Before sharing a conclusion, check identities, source dates, financial periods, currency, assumptions and evidence gaps. Keep the supporting download with the executive summary. Axiom Research supports investment research and discussion; its output is not personalized financial advice or a guarantee of returns.
+
+Large AI Robo Advisor evidence downloads use **Evidence JSON (.gz)** when needed. Extract the file to read the complete JSON; all saved evidence is retained. If compressed evidence still exceeds the download limit, the report, Allocation CSV and Research HTML remain available. Downloads reuse saved results.
+
+If a saved Robo Advisor result says AI review was unavailable, click **Retry AI review using saved evidence** when OpenAI is configured. This explicit action reuses collected company evidence without repeating provider collection. If the saved quotes are too old, the app keeps your result and asks you to refresh and Build instead. Downloads and ordinary reruns never retry AI automatically.
