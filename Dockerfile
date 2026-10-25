@@ -10,7 +10,10 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     STREAMLIT_SERVER_ADDRESS=0.0.0.0 \
     STREAMLIT_SERVER_PORT=7860 \
     STREAMLIT_BROWSER_GATHER_USAGE_STATS=false
-ENV AXIOM_RUNTIME_MODE=hosted
+ENV AXIOM_RUNTIME_MODE=huggingface_single_owner
+
+ENV HOME=/home/user
+RUN useradd --create-home --uid 1000 user
 
 WORKDIR /app
 
@@ -27,6 +30,7 @@ RUN --mount=type=secret,id=build_ca \
 
 COPY --chown=1000:1000 app.py ./
 COPY --chown=1000:1000 src ./src
+COPY --chown=1000:1000 .streamlit/config.toml ./.streamlit/config.toml
 
 USER 1000
 

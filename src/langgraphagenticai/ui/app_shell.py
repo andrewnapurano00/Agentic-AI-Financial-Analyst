@@ -218,6 +218,47 @@ def inject_app_shell_css() -> None:
         .terminal-card, .ax-page-head { min-width:0; overflow-wrap:anywhere; }
         .ax-table-scroll { overflow-x:auto; }
         @media(max-width:700px) { .ax-executive { grid-template-columns:1fr; } .ax-statusbar { position:static; flex-wrap:wrap; white-space:normal; overflow:visible; gap:.5rem; margin-top:1rem; } }
+
+        /* Native widget surfaces must remain readable even with a browser light-theme override. */
+        :root { color-scheme: dark; }
+        [data-testid="stWidgetLabel"], [data-testid="stWidgetLabel"] p {
+          color: var(--ax-text) !important;
+        }
+        [data-baseweb="input"], [data-baseweb="base-input"],
+        [data-baseweb="textarea"], [data-baseweb="select"] > div,
+        [data-testid="stTextInput"] input, [data-testid="stNumberInput"] input,
+        [data-testid="stDateInput"] input, [data-testid="stTimeInput"] input,
+        [data-testid="stTextArea"] textarea, [data-testid="stChatInput"] textarea {
+          background-color: var(--ax-panel) !important;
+          color: var(--ax-text) !important;
+          -webkit-text-fill-color: var(--ax-text);
+          border-color: var(--ax-line) !important;
+          caret-color: var(--ax-amber) !important;
+        }
+        input::placeholder, textarea::placeholder {
+          color: var(--ax-muted) !important;
+          -webkit-text-fill-color: var(--ax-muted);
+          opacity: 1;
+        }
+        [data-testid="stBottom"], [data-testid="stBottomBlockContainer"],
+        [data-testid="stBottom"] > div {
+          background-color: var(--ax-bg) !important;
+        }
+        [data-testid="stChatInput"], [data-testid="stChatInput"] > div {
+          background-color: var(--ax-panel) !important;
+          color: var(--ax-text) !important;
+          border-color: var(--ax-line) !important;
+        }
+        [data-baseweb="popover"] [role="listbox"],
+        [data-baseweb="popover"] [role="option"],
+        [data-baseweb="menu"] {
+          background-color: var(--ax-panel) !important;
+          color: var(--ax-text) !important;
+        }
+        [data-baseweb="popover"] [role="option"]:hover,
+        [data-baseweb="popover"] [role="option"][aria-selected="true"] {
+          background-color: var(--ax-panel-2) !important;
+        }
         </style>
         """,
         unsafe_allow_html=True,

@@ -25,3 +25,6 @@ The root FMP workbook and MCP prompt reference are intentionally retained withou
 The retired Portfolio Ideas/simulation paths remain source/fixtures for compatibility checks; the sidebar does not expose them. Runtime Docker copies `app.py`/`src`, while the derived verification image also needs selected tests/data/reference fixtures. Monitoring and hosted durable jobs remain disabled pending their documented gates.
 
 Saved executive memo PDFs use pure deferred download callbacks: opening a report does not render its complete evidence appendices. The original evidence and PDF contents remain retained. See PLAN for the navigation regression and measured layout cost.
+
+
+2026-10-25: `security/space_owner.py` provides the bounded Hugging Face single-owner sign-in adapter; generic hosted mode remains blocked. `scripts/export_huggingface.py` builds a minimal runtime ZIP including `.streamlit/config.toml`, generated Space README metadata and operator guides. ZIPs remain ignored under exports. See [Hugging Face setup](HUGGING_FACE.md).

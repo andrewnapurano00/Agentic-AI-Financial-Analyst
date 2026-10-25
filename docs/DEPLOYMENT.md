@@ -1,7 +1,6 @@
 # Deployment rehearsal runbook
 
-P05 local automation is preparation for a protected preview. The hosting target,
-preview identity, hosted smoke checks and rollback rehearsal remain pending.
+P05 local automation prepares broader release verification. The user reported a successful single-owner Hugging Face deployment on 2026-10-25; [setup and access limits](HUGGING_FACE.md) describe that bounded adapter. Independent hosted smoke, multi-user identity and rollback rehearsal remain pending.
 Passing offline checks does not establish provider entitlement, financial
 freshness, model quality or production readiness.
 
@@ -73,9 +72,9 @@ performed merely by adding this runbook.
 
 ## AX-10 local controls and blocked hosted mode (2026-10-24)
 
-`AXIOM_RUNTIME_MODE` defaults to `local` for desktop development (blank also means local). This is a trusted, single-operator research mode, not hosted authentication. Bind local development to loopback. The runtime Dockerfile defaults to `hosted`, which currently denies access before workspace/credential controls. Unknown modes also deny access. There is no UI switch to bypass it. Both the main app and focused advisor launcher apply this gate. The verification image explicitly uses local mode for offline fixtures only; never expose that verification image as a service.
+`AXIOM_RUNTIME_MODE` defaults to `local` for desktop development (blank also means local). This is a trusted, single-operator research mode, not hosted authentication. Bind local development to loopback. The runtime Dockerfile now defaults to `huggingface_single_owner`, which requires a 24-1024 character `AXIOM_OWNER_PASSWORD` and session sign-in before workspace/credential controls. See [Hugging Face setup](HUGGING_FACE.md). Generic `hosted` mode still denies access. Unknown modes also deny access. There is no UI switch to bypass these access checks. Both the main app and focused advisor launcher apply this gate. The verification image explicitly uses local mode for offline fixtures only; never expose that verification image as a service.
 
-Hosted identity is not implemented merely by setting environment variables or editing a manifest. A real deployment-specific identity adapter, per-user authorization on every resume/export, credential/cache boundaries, protected network and release evidence must be integrated before this hard block can be removed. Local mode must not be used as an unauthenticated hosting workaround. AX-08 monitoring remains disabled.
+General multi-user hosted identity is not implemented merely by setting environment variables or editing a manifest. The bounded single-owner adapter does not satisfy the broader identity/job gates. A real deployment-specific identity adapter, per-user authorization on every resume/export, credential/cache boundaries, protected network and release evidence must be integrated before this hard block can be removed. Local mode must not be used as an unauthenticated hosting workaround. AX-08 monitoring remains disabled.
 
 `python scripts/release_gate.py` reports the declared gate inventory from `docs/roadmap/production-gates.json`. `--require-ready` exits nonzero while blocked, even if every declaration says passed: the missing hosted adapter is an independent blocker. This inventory is not signed release attestation. Do not change unverified/failed entries based on older tests. The dependency-audit record is `docs/roadmap/dependency-audit-2026-10-24.json`; it describes the installed project environment, not a clean dependency resolution. Findings require reviewed remediation and re-audit. CI adds pip-audit without vulnerability exemptions. Network/certificate errors must fail the audit, not become a clean result.
 

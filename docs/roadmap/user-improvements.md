@@ -375,3 +375,8 @@ These are broad final-acceptance checks, not a list of wholly absent features. C
 - [ ] No Jira writes, commits, pushes, deployment or paid live calls without separate authorization.
 
 Simplify the user journey while preserving existing financial contracts; verify evidence and risk controls before expanding agent autonomy.
+
+
+### Single-owner hosting scope update (2026-10-25)
+
+The user-reported successful Hugging Face deployment now has a bounded owner-password adapter and reproducible runtime archive in source (see PLAN D-20261025-HUGGINGFACE-SYNC). Generic hosted mode stays blocked. This does not complete AX-10: multi-user authenticated ownership, durable jobs/save-resume, dependency remediation, distributed budgets, independent hosted testing and backup/rollback remain open. AX-08 monitoring is still disabled.
