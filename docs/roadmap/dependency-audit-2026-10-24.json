@@ -1,0 +1,326 @@
+{
+  "date": "2026-10-24",
+  "scope": "Installed project Python 3.12 environment; not a clean constrained install",
+  "audit_exit": 1,
+  "packages_audited": 245,
+  "skipped": 0,
+  "findings": [
+    {
+      "package": "aiohttp",
+      "installed_version": "3.14.3",
+      "direct_dependency": false,
+      "advisory_ids": [
+        "CVE-2026-111063",
+        "CVE-2026-111064",
+        "CVE-2026-111065",
+        "CVE-2026-111066",
+        "CVE-2026-111748",
+        "CVE-2026-111749",
+        "CVE-2026-111750",
+        "GHSA-2g87-pp6c-29x5"
+      ],
+      "reported_fix_versions": [
+        "3.14.4"
+      ]
+    },
+    {
+      "package": "brotli",
+      "installed_version": "1.2.0",
+      "direct_dependency": false,
+      "advisory_ids": [
+        "GHSA-9v8h-qqgm-4m35",
+        "PYSEC-2026-4322"
+      ],
+      "reported_fix_versions": [
+        "1.2.1"
+      ]
+    },
+    {
+      "package": "certifi",
+      "installed_version": "2026.7.22",
+      "direct_dependency": false,
+      "advisory_ids": [
+        "PYSEC-2026-4320"
+      ],
+      "reported_fix_versions": [
+        "2026.10.19"
+      ]
+    },
+    {
+      "package": "chromadb",
+      "installed_version": "1.1.1",
+      "direct_dependency": false,
+      "advisory_ids": [
+        "PYSEC-2026-311",
+        "PYSEC-2026-311",
+        "PYSEC-2026-3813",
+        "PYSEC-2026-3814",
+        "PYSEC-2026-3815"
+      ],
+      "reported_fix_versions": []
+    },
+    {
+      "package": "fastmcp",
+      "installed_version": "3.4.7",
+      "direct_dependency": true,
+      "advisory_ids": [
+        "GHSA-7xgj-8392-5q4r"
+      ],
+      "reported_fix_versions": [
+        "3.4.10",
+        "4.1.2"
+      ]
+    },
+    {
+      "package": "filelock",
+      "installed_version": "3.32.2",
+      "direct_dependency": false,
+      "advisory_ids": [
+        "CVE-2026-112907",
+        "CVE-2026-112913",
+        "CVE-2026-112940"
+      ],
+      "reported_fix_versions": [
+        "4.2.1"
+      ]
+    },
+    {
+      "package": "json-repair",
+      "installed_version": "0.25.3",
+      "direct_dependency": false,
+      "advisory_ids": [
+        "GHSA-xf7x-x43h-rpqh"
+      ],
+      "reported_fix_versions": [
+        "0.60.1"
+      ]
+    },
+    {
+      "package": "langgraph-sdk",
+      "installed_version": "0.4.2",
+      "direct_dependency": false,
+      "advisory_ids": [
+        "PYSEC-2026-4240"
+      ],
+      "reported_fix_versions": [
+        "0.4.4"
+      ]
+    },
+    {
+      "package": "mcp",
+      "installed_version": "1.26.0",
+      "direct_dependency": false,
+      "advisory_ids": [
+        "CVE-2026-59951",
+        "PYSEC-2026-3481",
+        "PYSEC-2026-3481",
+        "PYSEC-2026-3482",
+        "PYSEC-2026-3482",
+        "PYSEC-2026-3483",
+        "PYSEC-2026-3483"
+      ],
+      "reported_fix_versions": [
+        "1.27.2",
+        "1.28.1",
+        "1.30.0",
+        "2.2.0"
+      ]
+    },
+    {
+      "package": "multidict",
+      "installed_version": "6.7.1",
+      "direct_dependency": false,
+      "advisory_ids": [
+        "PYSEC-2026-4244"
+      ],
+      "reported_fix_versions": [
+        "6.9.1"
+      ]
+    },
+    {
+      "package": "nltk",
+      "installed_version": "3.10.2",
+      "direct_dependency": false,
+      "advisory_ids": [
+        "PYSEC-2026-3733",
+        "PYSEC-2026-3733",
+        "PYSEC-2026-3735",
+        "PYSEC-2026-3735",
+        "PYSEC-2026-3736",
+        "PYSEC-2026-3736",
+        "PYSEC-2026-3737",
+        "PYSEC-2026-3737",
+        "PYSEC-2026-3738",
+        "PYSEC-2026-3738",
+        "PYSEC-2026-3739",
+        "PYSEC-2026-3739",
+        "PYSEC-2026-3740",
+        "PYSEC-2026-3740",
+        "PYSEC-2026-3741",
+        "PYSEC-2026-3741",
+        "PYSEC-2026-3748",
+        "PYSEC-2026-3748",
+        "PYSEC-2026-3749",
+        "PYSEC-2026-3749",
+        "PYSEC-2026-3751",
+        "PYSEC-2026-3751",
+        "PYSEC-2026-3752",
+        "PYSEC-2026-3752",
+        "PYSEC-2026-3790",
+        "PYSEC-2026-3790",
+        "PYSEC-2026-3867",
+        "PYSEC-2026-3868",
+        "PYSEC-2026-3869",
+        "PYSEC-2026-3871"
+      ],
+      "reported_fix_versions": [
+        "3.10.3"
+      ]
+    },
+    {
+      "package": "oauthlib",
+      "installed_version": "3.3.1",
+      "direct_dependency": false,
+      "advisory_ids": [
+        "PYSEC-2026-4114",
+        "PYSEC-2026-4114"
+      ],
+      "reported_fix_versions": [
+        "4.0.0"
+      ]
+    },
+    {
+      "package": "opentelemetry-api",
+      "installed_version": "1.34.1",
+      "direct_dependency": false,
+      "advisory_ids": [
+        "CVE-2026-114603"
+      ],
+      "reported_fix_versions": [
+        "1.45.1"
+      ]
+    },
+    {
+      "package": "pillow",
+      "installed_version": "12.3.0",
+      "direct_dependency": false,
+      "advisory_ids": [
+        "CVE-2026-112390",
+        "CVE-2026-112391",
+        "CVE-2026-112392",
+        "CVE-2026-112393",
+        "CVE-2026-112395",
+        "CVE-2026-112396",
+        "CVE-2026-112397",
+        "CVE-2026-112398",
+        "CVE-2026-112399",
+        "CVE-2026-112400",
+        "CVE-2026-112401",
+        "CVE-2026-112402",
+        "CVE-2026-112404",
+        "CVE-2026-112405",
+        "CVE-2026-112406",
+        "CVE-2026-112891",
+        "CVE-2026-112892",
+        "CVE-2026-112893",
+        "CVE-2026-112894",
+        "CVE-2026-112895",
+        "CVE-2026-112896",
+        "CVE-2026-112897",
+        "CVE-2026-112899",
+        "CVE-2026-112900",
+        "CVE-2026-112901",
+        "CVE-2026-114501",
+        "CVE-2026-96636",
+        "CVE-2026-96637",
+        "CVE-2026-96638",
+        "CVE-2026-96639",
+        "CVE-2026-96640",
+        "CVE-2026-96641",
+        "CVE-2026-96642",
+        "CVE-2026-96643",
+        "CVE-2026-96644",
+        "CVE-2026-96778",
+        "GHSA-78g4-xqwv-q3g8"
+      ],
+      "reported_fix_versions": [
+        "13.0.0"
+      ]
+    },
+    {
+      "package": "pip",
+      "installed_version": "26.1.2",
+      "direct_dependency": false,
+      "advisory_ids": [
+        "PYSEC-2026-3721",
+        "PYSEC-2026-3721"
+      ],
+      "reported_fix_versions": [
+        "26.2",
+        "26.2.0"
+      ]
+    },
+    {
+      "package": "pyjwt",
+      "installed_version": "2.13.0",
+      "direct_dependency": false,
+      "advisory_ids": [
+        "GHSA-pxh4-856f-4h89",
+        "PYSEC-2026-4140",
+        "PYSEC-2026-4141",
+        "PYSEC-2026-4142",
+        "PYSEC-2026-4143",
+        "PYSEC-2026-4144",
+        "PYSEC-2026-4145",
+        "PYSEC-2026-4146",
+        "PYSEC-2026-4147",
+        "PYSEC-2026-4148",
+        "PYSEC-2026-4149",
+        "PYSEC-2026-4150",
+        "PYSEC-2026-4151",
+        "PYSEC-2026-4152",
+        "PYSEC-2026-4183"
+      ],
+      "reported_fix_versions": [
+        "2.14.0",
+        "2.15.0"
+      ]
+    },
+    {
+      "package": "setuptools",
+      "installed_version": "83.0.0",
+      "direct_dependency": false,
+      "advisory_ids": [
+        "GHSA-xmj3-9gf7-h52w"
+      ],
+      "reported_fix_versions": [
+        "84.1.0"
+      ]
+    },
+    {
+      "package": "urllib3",
+      "installed_version": "2.7.0",
+      "direct_dependency": true,
+      "advisory_ids": [
+        "PYSEC-2026-4175",
+        "PYSEC-2026-4176",
+        "PYSEC-2026-4177"
+      ],
+      "reported_fix_versions": [
+        "2.8.0"
+      ]
+    },
+    {
+      "package": "uv",
+      "installed_version": "0.11.33",
+      "direct_dependency": false,
+      "advisory_ids": [
+        "PYSEC-2026-4321"
+      ],
+      "reported_fix_versions": [
+        "0.13.4"
+      ]
+    }
+  ],
+  "advisory_count": 122
+}

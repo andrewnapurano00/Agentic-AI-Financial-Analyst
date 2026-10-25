@@ -10,12 +10,12 @@ class SerperClient:
     def __init__(self, api_key: str):
         self.api_key = api_key.strip()
 
-    def search(self, query: str, *, news: bool = True, days: int = 30, limit: int = 5) -> dict:
+    def search(self, query: str, *, news: bool = True, days: int = 30, limit: int = 5, filter_dates: bool = False) -> dict:
         if not self.api_key:
             return {"ok": False, "error": "SERPER_API_KEY is not configured.", "results": []}
         endpoint = "news" if news else "search"
         payload = {"q": query[:500], "num": min(max(limit, 1), 10), "gl": "us", "hl": "en"}
-        if news:
+        if news or filter_dates:
             payload["tbs"] = f"qdr:d{min(max(days, 1), 90)}"
         try:
             response = requests.post(

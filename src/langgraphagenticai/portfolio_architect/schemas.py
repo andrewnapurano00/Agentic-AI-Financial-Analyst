@@ -20,6 +20,7 @@ class InvestorMandate(Contract):
     holdings: int = Field(default=10, ge=5, le=15)
     assets: Literal["stocks", "etfs", "both"] = "both"
     cash: float = Field(default=.10, ge=0, le=.8)
+    historical_volatility_cap: float | None = Field(default=None, ge=.01, le=1.)
     position_cap: float = Field(default=.20, gt=0, le=1)
     sector_cap: float = Field(default=.40, gt=0, le=1)
     forbidden: list[str] = Field(default_factory=list, max_length=40)
@@ -186,6 +187,7 @@ class PortfolioRecommendation(Contract):
     method_used: str
     model: str | None
     usage: list[dict]
+    risk_policy: dict = Field(default_factory=dict)
     allocation_audit: dict = Field(default_factory=dict)
     ai_review_status: dict = Field(default_factory=dict)
 

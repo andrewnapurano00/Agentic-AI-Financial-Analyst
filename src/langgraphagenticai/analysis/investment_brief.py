@@ -105,7 +105,10 @@ def _safe_packet(value, credentials, depth=0):
     return safe_text(value,credentials)
 
 def export_packet(result, inputs, scenarios, credentials=()):
+    from .earnings_metrics import research_net_income
+    earnings = research_net_income(result, inputs.ticker, reference_time=inputs.reference_time).to_dict()
     packet = _safe_packet(dict(schema="axiom-saved-brief-v1", result_id=result.get("id"), brief=brief(result,credentials),
+        earnings_observation=earnings,
         saved_evidence=evidence_register(result,credentials),
         inputs=asdict(inputs), scenarios=scenarios,
         formulas={"equity_value":"saved TTM net income * (1 + user earnings change percent / 100) * user P/E",

@@ -261,8 +261,8 @@ def render_top_movers_tab(*, fmp_api_key: str, serper_api_key: str, openai_api_k
                 from langgraphagenticai.ui.workspace_handoff import render_company_handoffs
                 render_company_handoffs(focus, "Top Movers", key="movers_handoff")
         with left, st.container(border=True):
-            from langgraphagenticai.ui.social_sentiment import render_social_sentiment
-            render_social_sentiment(focus, fmp_api_key)
+            from langgraphagenticai.ui.social_brief import render_social_brief
+            render_social_brief(focus, fmp_api_key, openai_api_key, model_name)
         with left, st.container(border=True):
             from langgraphagenticai.ui.analyst_consensus import render_analyst_consensus
             render_analyst_consensus(focus_options, focus, fmp_api_key)

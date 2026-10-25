@@ -89,7 +89,7 @@ def _maybe_reset_thread_for_config_change(model_name: str, usecase: str) -> bool
     return mismatch
 
 
-@st.cache_resource(show_spinner=False)
+@st.cache_resource(show_spinner=False, scope="session", max_entries=2)
 def _build_cached_graph(
     openai_api_key: str,
     model_name: str,
@@ -120,7 +120,7 @@ def _build_cached_graph(
     return graph
 
 
-@st.cache_resource(show_spinner=False)
+@st.cache_resource(show_spinner=False, scope="session", max_entries=2)
 def _build_repair_llm(openai_api_key: str, model_name: str):
     return OpenAILLM(
         user_controls_input={
@@ -316,6 +316,8 @@ def _render_status_panel(warnings):
 
 
 def load_langgraph_agenticai_app() -> None:
+    from langgraphagenticai.security.runtime import enforce_runtime_access
+    enforce_runtime_access()
     _bootstrap_session_state()
 
     ui = LoadStreamlitUI()
@@ -352,6 +354,13 @@ def load_langgraph_agenticai_app() -> None:
     if active_page == "Top Movers":
         render_top_movers_tab(fmp_api_key=fmp_api_key, serper_api_key=user_controls.get("SERPER_API_KEY", ""), openai_api_key=openai_api_key, model_name=model_name, marketaux_api_key=marketaux_api_key)
         render_terminal_status(model_name, fmp_ready=bool(fmp_api_key), openai_ready=bool(openai_api_key))
+        return
+
+    if active_page == "Data Validation":
+        from langgraphagenticai.ui.data_validation_tab import render_data_validation
+        render_page_header(active_page)
+        render_data_validation(fmp_api_key=fmp_api_key, marketaux_api_key=marketaux_api_key,
+                               serper_api_key=user_controls.get("SERPER_API_KEY", ""))
         return
 
     command_query = render_command_bar()
@@ -475,7 +484,7 @@ def load_langgraph_agenticai_app() -> None:
             return
 
         st.session_state.request_counter += 1
-        request_id = f"req-{st.session_state.request_counter}"
+        request_id = uuid.uuid4().hex
         thread_id = st.session_state.thread_id
 
         st.session_state.chat_history.append({"role": "user", "content": user_input})
@@ -501,7 +510,7 @@ def load_langgraph_agenticai_app() -> None:
             ):
                 result = graph.invoke(
                     {"messages": [HumanMessage(content=user_input)]},
-                    config={"configurable": {"thread_id": thread_id}},
+                    config={"configurable": {"thread_id": thread_id}, "recursion_limit": 12},
                 )
         except Exception as exc:
             log_error(

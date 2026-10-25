@@ -74,21 +74,32 @@ def structured_call(contract, packet, api_key, model, instructions, output_token
                    "estimated_cost_usd":None, "pricing":"Not estimated; token caps do not guarantee a dollar ceiling"}
 
 
-def review(securities, scores, mandate, api_key, model, macro=None, sector_screen=None, required_tickers=None):
+def review(securities, scores, mandate, api_key, model, macro=None, sector_screen=None, required_tickers=None, *, explanation_only=False):
     packet = research_packet(securities, scores, mandate, macro, sector_screen, required_tickers)
     sent = {row["ticker"]:row for row in packet["candidates"]}
-    output, usage = structured_call(SpecialistOutput, packet, api_key, model,
+    role = (
+        "You are one equity research analyst explaining a portfolio already selected using sector metrics and mandate rules. "
+        "Cover every supplied holding exactly once; do not add, replace, reorder or resize holdings. Return no rejections. "
+        "For each holding explain in plain English: why its sector-relevant evidence supports inclusion, the main risk, "
+        "and what would invalidate that rationale. Keep each answer concise and company-specific. "
+        "Avoid committee theater, agent debates, jargon and unsupported numerical claims. Conviction is descriptive only; it cannot affect allocation. "
+        if explanation_only else
         "Perform research analyst ranking, strategist mandate alignment, risk challenge and committee rejection review in one bounded response. "
-        "Honor investment_style and mandate_fit: a growth mandate prioritizes positive saved annual growth and supported theme relevance; unrelated value names must not displace stronger mandate fits merely to add sectors. "
-        "Explain conviction briefly in conviction_summary, including the company-specific growth/theme support and a key uncertainty. "
-        "Order picks by subjective conviction; include at least the requested number of holdings, keep diversification alternatives. "
+    )
+    output, usage = structured_call(SpecialistOutput, packet, api_key, model,
+        role + ("Describe how each saved holding fits the supplied objective and mandate_fit; do not nominate replacements. " if explanation_only else "Honor investment_style and mandate_fit: a growth mandate prioritizes positive saved annual growth and supported theme relevance; unrelated value names must not displace stronger mandate fits merely to add sectors. ") +
+        "Explain conviction briefly in conviction_summary, including the company-specific growth/theme support and a key uncertainty. " +
+        ("Explain all supplied holdings; their selection and weights are fixed. " if explanation_only else "Order picks by subjective conviction; include at least the requested number of holdings, keep diversification alternatives. ") +
         "For every pick provide a concise company thesis, sector-specific risks, missing inputs, portfolio role and a falsifiable thesis-break condition. "
+        "For ETFs use fund_assessment role, conditional drivers and risks; discuss missing fees, holdings, NAV and duration. Historical volatility/drawdown are not forecasts or fair value. "
         "Use the supplied sector_lens framework exactly. Discuss its priorities and specialist gaps; do not treat banks like industrials or ETFs like companies. "
         "Cite exact candidate-specific fact IDs supplied in the packet, including at least one applicable fundamental metric for each stock. For growth-style stocks also cite revenue_cagr_3y. "
         "Separate provider facts, conditional interpretation and uncertainties. Do not invent forward growth, fair values or specialist metrics. "
         "Quality requires positive stock net margin; theme/defensive require matching tags. "
         "Risk concerns are hypotheses, not measured facts. Rejected names must be separate from picks; no numerical claims or weight arithmetic.", output_tokens=9000)
     output = SpecialistOutput.model_validate(scrub(output.model_dump(), (api_key,)))
+    if explanation_only and (len(output.picks) != len(sent) or {p.ticker for p in output.picks} != set(sent) or output.rejected):
+        raise ValueError("AI explanation must cover the exact locally selected holdings.")
     allowed = {s.ticker:s for s in securities if s.ticker in sent}
     seen = set()
     for p in output.picks:
@@ -124,8 +135,11 @@ def review(securities, scores, mandate, api_key, model, macro=None, sector_scree
 
 def review_failure_reason(exc):
     """Allowlisted diagnostics only; never retain raw provider/model errors."""
+    if isinstance(exc, TimeoutError) or type(exc).__name__ in {"APITimeoutError", "ReadTimeout", "ConnectTimeout"}:
+        return "AI review exceeded its request time budget. The local portfolio and saved evidence remain; use Retry AI review using saved evidence for an explicit new attempt."
     message = str(exc) if isinstance(exc, ValueError) else ""
     known = {
+        "AI explanation must cover the exact locally selected holdings.":"AI did not explain the exact saved holdings. The local portfolio is unchanged; retry explicitly using saved evidence.",
         "Sector research packet cannot fit the 42KB evidence budget.":"Saved evidence could not fit the bounded AI packet; no model review was sent.",
         "Incomplete or refused structured output.":"Model returned an incomplete or refused review. Check output limits/model configuration before an explicit new Build.",
         "Unsupported evidence citation.":"AI cited evidence outside the candidate's supplied packet.",

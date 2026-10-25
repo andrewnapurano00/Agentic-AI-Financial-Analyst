@@ -1,0 +1,16 @@
+{
+  "offline_tests": "passed",
+  "dependency_audit": "failed",
+  "clean_python_311": "unverified",
+  "clean_python_312": "unverified",
+  "container_build": "unverified",
+  "non_root_runtime": "unverified",
+  "remote_ci": "unverified",
+  "authenticated_identity": "unverified",
+  "cross_user_isolation": "partial",
+  "durable_jobs": "partial",
+  "protected_preview": "unverified",
+  "hosted_smoke": "unverified",
+  "backup_restore": "partial",
+  "rollback": "unverified"
+}

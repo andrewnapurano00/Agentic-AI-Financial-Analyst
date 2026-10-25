@@ -8,6 +8,7 @@ from langgraphagenticai.technical_analysis.indicators import (
 )
 from langgraphagenticai.technical_analysis.evidence import technical_packet, technical_summary
 from langgraphagenticai.technical_analysis.agent import analyze_technical
+from langgraphagenticai.analysis.executive_text import executive_text
 from langgraphagenticai.utils.safety import sanitize_error
 
 
@@ -141,11 +142,11 @@ def render_technical_chart(chart, *, key, openai_api_key="", model_name="gpt-5",
         if saved.get("fingerprint") != packet["fingerprint"]:
             st.warning("Saved AI interpretation belongs to earlier chart inputs/settings/model. Re-run analysis to match the current evidence.")
         st.caption(f"{saved['symbol']} · {saved['range']} · evidence as of {saved['as_of']} · outlook {saved['outlook']}")
-        st.write(saved["summary"])
+        st.write(executive_text(saved["summary"]))
         for claim in saved["claims"]:
-            st.write(claim["interpretation"] + " [" + ", ".join(claim["evidence_ids"]) + "]")
+            st.write(executive_text(claim["interpretation"]))
         for title, field in (("Risks", "risks"), ("Thesis invalidation", "invalidation_conditions"), ("Uncertainty & limitations", "limitations")):
-            st.write(title + ": " + "; ".join(saved[field]))
+            st.write(title + ": " + executive_text("; ".join(saved[field])))
     with st.expander("Technical evidence & calculation basis"):
         st.dataframe(pd.DataFrame(packet["evidence"]), hide_index=True, width="stretch")
         for limitation in packet["limitations"]:

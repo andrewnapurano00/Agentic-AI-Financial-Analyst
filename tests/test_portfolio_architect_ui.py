@@ -34,7 +34,9 @@ def test_mocked_live_build_save_rerun_no_extra_calls(monkeypatch):
     a=AppTest.from_string(PAGE.replace("render_portfolio_architect()", "render_portfolio_architect(fmp_api_key='fixture-key')"),default_timeout=30).run()
     a.button(key="architect_interpret").click().run(); build_app(a)
     result=a.session_state["architect_result"]
-    assert len(result["holdings"]) == 10 and len(a.get("download_button")) == 3
+    assert len(result["holdings"]) == 10
+    assert {b.label for b in a.get("download_button")} == {
+        "Executive investment memo PDF", "Allocation CSV", "Evidence JSON", "Research HTML"}
     a.button(key="architect_save").click().run(); a.run()
     assert result == a.session_state["architect_result"]
     provider.assert_called_once()
@@ -92,7 +94,7 @@ def test_oversize_export_preserves_report_other_downloads_and_rerun(monkeypatch)
     build_app(a)
     before = a.session_state["architect_result"]
     assert any("saved report" in w.value for w in a.warning)
-    assert len(a.get("download_button")) == 2
+    assert len(a.get("download_button")) == 3
     a.button(key="architect_save").click().run()
     a.run()
     assert not a.exception and a.session_state["architect_result"] == before

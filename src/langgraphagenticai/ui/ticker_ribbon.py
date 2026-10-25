@@ -14,11 +14,11 @@ def ribbon_html(rows):
     group = '<div class="group">' + ''.join(items) + '</div>'
     return f'''<style>
 body{{margin:0;background:#0e1724;color:#e4edf6;font:14px system-ui}}
-.viewport{{overflow:auto;border-block:1px solid #27364a;padding:14px 0}}
+.viewport{{overflow:hidden;border-block:1px solid #27364a;padding:14px 0}}
 .track{{display:flex;width:max-content;animation:roll {max(30, len(rows)*4)}s linear infinite}}
 .group{{display:flex;flex-shrink:0}}.quote{{padding:0 24px;border-right:1px solid #27364a;white-space:nowrap}}
 .quote b{{margin-right:10px}}.viewport:hover .track,.viewport:focus .track{{animation-play-state:paused}}
-@keyframes roll{{to{{transform:translateX(-50%)}}}}
+@keyframes roll{{from{{transform:translateX(-50%)}}to{{transform:translateX(0)}}}}
 @media(prefers-reduced-motion:reduce){{.track{{animation:none}}}}
 </style><div class="viewport" tabindex="0" aria-label="S&P 500 quotes; focus or hover to pause"><div class="track">{group}{group}</div></div>'''
 

@@ -63,8 +63,8 @@ def metric_weights(sector):
 
 def sector_lens(security):
     if security.asset == "etf":
-        return {"framework":"ETF category", "available":[], "missing_required":["Fund holdings look-through, fees and duration"],
-                "policy":"Company profitability and valuation ratios are inapplicable to funds."}
+        from .etf_assessment import assess_etf
+        return {**assess_etf(security), "available":["Curated fund category", "Saved quote and liquidity"]}
     framework, fields = applicable(security.sector)
     labels = {METRICS[f.field][1] for f in security.facts if f.field in fields}
     if any(f.field == "revenue_cagr_3y" for f in security.facts):
@@ -187,6 +187,12 @@ def macro_assessment(packet, now=None):
 
 
 def position_tradeoffs(security, macro):
+    if security.asset == "etf":
+        from .etf_assessment import assess_etf
+        assessment = assess_etf(security)
+        return [assessment["risk"], assessment["valuation_status"], assessment["policy"], *macro.get("risks", [])[:2]], [
+            "Portfolio role hypothesis: "+assessment["role"],
+            "Conditional fund driver: "+assessment["conditional_driver"]]
     framework, _ = applicable(security.sector)
     sensitivity = {
         "Banks / Financials": "Credit losses, deposit costs and yield-curve changes can offset a low earnings/book multiple; capital adequacy is unmeasured.",

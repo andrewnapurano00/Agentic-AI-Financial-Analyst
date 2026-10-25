@@ -19,6 +19,12 @@ def eligible_result():
     """Explicit synthetic source-currency quote; recorded quote alone is ineligible."""
     result=recorded_result()
     for e in result['evidence']:
+        # Synthetic snapshot must predate the explicit historical evaluation clock.
+        e['retrieved_at']='2026-10-07T16:00:00+00:00'
+        if isinstance(e.get('data'),list):
+            for record in e['data']:
+                if isinstance(record,dict) and record.get('source_records'):
+                    record['source_records']['retrieved_at']=e['retrieved_at']
         if e['category']=='quote':
             row=e['data'][0] if isinstance(e['data'],list) else e['data']
             row['currency']='USD'

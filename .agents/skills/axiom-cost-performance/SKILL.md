@@ -20,7 +20,7 @@ Under `src/langgraphagenticai/`:
 - Evidence compaction: `deep_research/prompt_context.py`.
 - Equity/portfolio committees: `equity_committee.py`, `portfolio_manager/agentic_committee.py`.
 
-Read TODO_DEEP_RESEARCH_COST_OPTIMIZATION.md only when the task concerns that subsystem's cost roadmap.
+Read docs/roadmap/deep-research-cost-optimization.md only when the task concerns that subsystem's cost roadmap.
 
 ## Measure before changing
 

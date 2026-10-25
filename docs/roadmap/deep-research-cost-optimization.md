@@ -6,7 +6,7 @@ Reduce Deep Research and CrewAI model costs without materially weakening the qua
 
 ## Status and document scope - updated 2026-10-01
 
-This is the original optimization design checklist. Its unchecked proposals and cost-driver baseline are historical, not a current completion ledger. [PLAN.md](PLAN.md) records delivered capabilities, fresh verification and remaining acceptance work.
+This is the original optimization design checklist. Its unchecked proposals and cost-driver baseline are historical, not a current completion ledger. [PLAN.md](../../PLAN.md) records delivered capabilities, fresh verification and remaining acceptance work.
 
 ## V2 pilot implementation - introduced 2026-09-27
 

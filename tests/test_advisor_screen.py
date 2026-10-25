@@ -115,23 +115,37 @@ def test_membership_fallback_must_still_be_complete_and_errors_safe(monkeypatch)
     assert "fixture-secret" not in str(error.value)
 
 
-@pytest.mark.parametrize("status,expected", [(401,3),(429,2),(403,803)])
-def test_fallback_only_on_plan_restriction_and_cache_reuses(monkeypatch,status,expected):
-    from langgraphagenticai.providers.fmp_http import ProviderRequestError
+def test_regular_screen_avoids_bulk_and_cache_reuses(monkeypatch):
     members=[{"symbol":"A"+chr(65+i//26)+chr(65+i%26),"sector":"Industrials"} for i in range(400)]
     calls=[]
     def request(url,**kwargs):
         calls.append(url)
+        assert not url.endswith("-bulk")
         if url.endswith("sp500-constituent"):
             return members
-        if url.endswith("-bulk"):
-            raise ProviderRequestError("FMP","fixture failure",status_code=status)
         return [{"symbol":kwargs["params"]["symbol"],"netProfitMarginTTM":.1,"returnOnAssetsTTM":.1}]
     monkeypatch.setattr(provider,"get_fmp_json",request)
     provider.load_screen.clear()
     result=provider.load_screen("fixture-key")
-    assert result["membership_count"] == 400 and len(calls)==expected
-    assert provider.load_screen("fixture-key") == result and len(calls)==expected
+    assert result["membership_count"] == 400 and len(calls)==801
+    assert provider.load_screen("fixture-key") == result and len(calls)==801
+    provider.load_screen("other-fixture-key")
+    assert len(calls)==1602
+    provider.load_screen.clear()
+
+
+@pytest.mark.parametrize("status", [401,402,403,429])
+def test_regular_endpoint_access_failure_stops_fanout(monkeypatch,status):
+    from langgraphagenticai.providers.fmp_http import ProviderRequestError
+    members={"A"+chr(65+i//26)+chr(65+i%26):{"sector":"Industrials"} for i in range(400)}
+    monkeypatch.setattr(provider,"load_membership",lambda *a,**k:(members,"fixture",[]))
+    request=Mock(side_effect=ProviderRequestError("FMP","fixture-secret",status_code=status))
+    monkeypatch.setattr(provider,"get_fmp_json",request)
+    provider.load_screen.clear()
+    result=provider.load_screen("fixture-secret")
+    assert request.call_count <= 6
+    assert "fixture-secret" not in str(result)
+    assert all(r["exclusion"] for r in result["ranked"])
     provider.load_screen.clear()
 
 
@@ -146,7 +160,7 @@ def test_full_screen_filters_nonmembers_and_keeps_evidence(monkeypatch):
     monkeypatch.setattr(provider,"get_fmp_json",request); provider.load_screen.clear()
     result=provider.load_screen("fixture-key")
     assert len(result["ranked"])==400 and not result["ranked"][0]["exclusion"]
-    assert result["ranked"][0]["facts"][0]["source"] == "FMP stable/ratios-ttm-bulk"
+    assert result["ranked"][0]["facts"][0]["source"] == "FMP stable/ratios-ttm"
     provider.load_screen.clear()
 
 

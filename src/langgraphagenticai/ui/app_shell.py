@@ -7,6 +7,7 @@ import streamlit as st
 
 
 PAGE_LABELS = {
+    "Data Validation": ("Data Validation", "PROVIDER DATA CHECKER", "Inspect a selected endpoint with your configured provider credentials."),
     "Introduction": ("Market Brief", "MARKET OVERVIEW", "Market evidence and company research."),
     "Top Movers": ("Top Movers", "MARKET LEADERSHIP", "Weekly price leadership, sector breadth, and current news catalysts."),
     "Research": ("Research", "LLM WORKSPACE", "Ask, compare, and synthesize market evidence."),
@@ -78,13 +79,15 @@ def inject_app_shell_css() -> None:
         [data-testid="stSidebar"] div[role="radiogroup"] label p { font-size: .78rem; font-weight: 680; letter-spacing: .015em; }
         [data-testid="stSidebar"] div[role="radiogroup"] > label:nth-child(1)::before,
         [data-testid="stSidebar"] div[role="radiogroup"] > label:nth-child(4)::before,
-        [data-testid="stSidebar"] div[role="radiogroup"] > label:nth-child(8)::before {
+        [data-testid="stSidebar"] div[role="radiogroup"] > label:nth-child(8)::before,
+        [data-testid="stSidebar"] div[role="radiogroup"] > label:nth-child(10)::before {
           display: block; width: 100%; padding: .45rem 0 .25rem; color: var(--ax-muted);
           font-size: .61rem; font-weight: 750; letter-spacing: .12em; text-transform: uppercase;
         }
         [data-testid="stSidebar"] div[role="radiogroup"] > label:nth-child(1)::before { content: "Discover"; }
         [data-testid="stSidebar"] div[role="radiogroup"] > label:nth-child(4)::before { content: "Analyze"; }
         [data-testid="stSidebar"] div[role="radiogroup"] > label:nth-child(8)::before { content: "Allocate"; }
+        [data-testid="stSidebar"] div[role="radiogroup"] > label:nth-child(10)::before { content: "Validate"; }
 
         .ax-command-shell { border: 1px solid var(--ax-line); background: #121D2B; padding: .45rem .55rem; margin: 0 0 .55rem; }
         .ax-market-strip { display: grid; grid-template-columns: repeat(5, 1fr); border: 1px solid var(--ax-line); border-left: 3px solid var(--ax-amber); margin-bottom: .7rem; background: #121D2B; }

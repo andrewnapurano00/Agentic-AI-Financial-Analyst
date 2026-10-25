@@ -125,7 +125,7 @@ def test_summary_receives_entire_dashboard_with_bounded_explicit_request(monkeyp
     assert ai.interpret_market(packet, {"articles": [{"title": "Market news"}]}, "fake", "gpt-5") == "Summary"
     prompt = str(calls[0]["messages"])
     assert "vs SMA 200 %" in prompt and "Market news" not in prompt and "partial" in prompt
-    assert "160 words" in prompt and "What is working" in prompt and "What is not working" in prompt
+    assert "350-500 words" in prompt and "Past 5 trading days" in prompt and "Past month" in prompt and "Past 3 months" in prompt
     assert "fake" not in prompt and calls[0]["max_completion_tokens"] == 6000
     ai.interpret_market(packet, {"articles": [{"title": "Market news", "url": "https://example.com/news", "article_text": "Provider article content", "sentiment": .9}]}, "fake", "gpt-5", "What news is relevant?")
     import json

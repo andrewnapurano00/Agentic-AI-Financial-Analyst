@@ -9,6 +9,8 @@ from langgraphagenticai.ui.portfolio_architect_tab import render_portfolio_archi
 
 
 def main():
+    from langgraphagenticai.security.runtime import enforce_runtime_access
+    enforce_runtime_access()
     st.set_page_config(page_title="AI Portfolio Architect",layout="wide")
     inject_app_shell_css()
     with st.sidebar:

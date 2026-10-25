@@ -1,9 +1,70 @@
-# Axiom Research — Feature Development Team Implementation Roadmap
+# Axiom Research - User Improvement Roadmap
 
 **Prepared:** 2026-10-22\
 **Repository:** `Agentic-AI-Financial-Analyst/`\
 **Audience:** Codex feature-development team, financial-data specialist, implementation engineer, independent verifier, and Jira writer\
-**Document status:** Engineering implementation specification / proposed work, **not** authorization that implementation has occurred.
+**Document status:** Reviewed backlog; documentation setup complete on 2026-10-22. AX-01 guided UX is implemented locally with scoped verification; AX-02 unified controls and saved-evidence continuation are implemented locally with offline, health and guarded browser verification (2026-10-23); AX-03 has a bounded saved-company specialist pilot implemented locally with offline, health and guarded browser verification; AX-04 has a one-family earnings-contract slice implemented locally with offline, health and guarded browser verification; AX-05 has a bounded historical-risk-policy slice implemented locally; AX-06 has a bounded numerical-claim verification slice implemented locally; AX-07 has a bounded session-scoped earnings-sensitivity reuse pilot implemented locally; AX-08 has disabled monitoring-plan/offline-ledger foundations; AX-09 has shared saved-state executive memo/PDF presentation implemented locally; AX-10 has local hardening/checkpoint-service foundations implemented; production activation remains blocked on explicit release gates. New financial collection, universal verification and broader AX-03 rollout remain gated on AX-04/AX-06. AX-06 indicators cover only bounded extracted numeric lines; broader verification remains open; hosted rollout is not implied.
+
+**Start here:** [Current execution queue](../../PLAN.md#user-improvement-execution-queue-2026-10-22). [Engineering requirements](../../AGENTS.md) govern delivery; PLAN records status and verification. This document owns the AX package specifications and acceptance criteria. Paths in code spans are relative to the repository root unless explicitly abbreviated.
+
+## Remaining work register (2026-10-24)
+
+This is the current follow-up register after the local AX-01 through AX-10 deliveries. **Working through all ten package IDs did not complete every acceptance criterion.** Local use is available; production readiness is blocked. [PLAN's remaining-work queue](../../PLAN.md#remaining-implementation-and-verification-2026-10-24) records execution priorities and dated verification. Feature reports remain the detailed delivery evidence; earlier descriptions in them retain their dates.
+
+### Implementation still remaining
+
+| Package | Delivered local boundary | Remaining implementation / extension |
+| --- | --- | --- |
+| AX-01 | Guided objective, editable mandate and portfolio review implemented | Optional parser expansion for amounts and arbitrary horizon wording. Current manual confirmation is supported behavior, not a broken or missing review flow. Keep ambiguity/provenance visible. |
+| AX-02 | Unified default intent controls, saved-run navigation, supported continuation and classic-controls rollback implemented; V1/V2 remain separate | No additional mandatory UI rewrite identified in this review. Do not equate a common overview with universal structured report semantics, automatic recovery of every failure, or promotion of V2 from pilot. Broader validation belongs to AX-04/06 and shared acceptance checks. |
+| AX-03 | Bounded one-company specialist pilot over saved evidence | Collect genuinely new evidence for named gaps; integrate more workflows only after eligibility checks; evaluate quality, latency and cost against the existing approach before expanding the pilot. Existing independent calls/contracts/local gap lookup are already implemented. |
+| AX-04 | Quarterly/annual/TTM total-company net-income contracts and named consumers | Extend contracts/adapters to other metric families and consumers, including annual EPS/proxy valuation and portfolio metrics. Complete currency/price-adjustment/fiscal/filing/corporate-event comparability and provenance for each newly supported family. Do not imply existing financial calculations are absent merely because the new registry has not adopted them. |
+| AX-05 | Deterministic allocation checks, optional historical-volatility rejection gate and explicit stress assumptions | Add eligible ETF underlying holdings/look-through and overlap, benchmark-relative exposures/constraints, account-aware turnover and transaction costs, and shared policy adoption in Portfolio Lab. Forward-looking risk controls need supported assumptions/data; never turn indicative risk preferences into a future-loss guarantee. |
+| AX-06 | Selected explicit numeric-claim/source/period/currency checks and deterministic earnings/revenue/P-E audits | Broaden supported metrics/sectors, prose/table/formula extraction, matched annual-growth history adapters, corporate-event comparisons and forward-target prerequisite checks. Preserve the distinction between checked arithmetic and unverified AI interpretation; do not promise universal semantic or external-source truth verification. |
+| AX-07 | Explicit session/credential/source-bound research-to-valuation earnings-sensitivity handoff | Extend qualified reuse to the advisor and other named workflows; add authenticated durable/account-level reuse only after ownership/entitlement/freshness checks. The existing annual per-share valuation and Equity Report raw-data bridge remain separate; do not silently merge inputs. |
+| AX-08 | Disabled saved-model plans and offline durable event/advisory rehearsal | Implement entitled earnings/estimate event adapters, actual durable background scheduling/refresh, bounded reassessment, user-visible old/new evidence and notifications, and advisory approval integration where supported. Production activation remains disabled until AX-04/05/07/10 prerequisites are verified. No broker execution is in scope. |
+| AX-09 | Shared saved-state screen/PDF memo, complete safe references and retained original formats implemented | No additional core memo feature identified as missing. Broader financial verification belongs to AX-04/06. Existing PDF size/glyph limitations have recovery paths; native browser disk-save verification remains a check, not an unimplemented export. |
+| AX-10 | Strict metadata telemetry, FMP local transport limits, session-scoped chat resources, blocked hosted mode and encrypted checkpoint service foundation | Remediate and re-audit dependencies; select a host and integrate real sign-in, per-user resume/export authorization, server-held grants/keys, revocation/rotation and worker/data isolation. Wire durable app save/resume and jobs; add distributed per-user/provider/model budgets and complete stage/usage telemetry. The checkpoint service is not an active report library or sign-in system. |
+
+### Concrete follow-up checklist
+
+- [ ] AX-03: implement bounded fresh-evidence gap collection and evaluate the saved-evidence pilot before broader integration.
+- [ ] AX-04: select the next metric family and named consumers, then add audited adapters/edge cases before expanding verification or reuse.
+- [ ] AX-05: add eligible ETF/benchmark exposure information and account-aware cost/turnover inputs; extend the policy to Portfolio Lab without changing unsupported values to zero.
+- [ ] AX-06: extend exact claim support and extraction with explicit coverage limits; keep unsupported conclusions unverified.
+- [ ] AX-07: add the next explicit verified handoff, including recipient revalidation and session/credential isolation; advisor/general durable reuse is not implemented.
+- [ ] AX-08: connect event adapters, protected workers, alerts and advisory review only after its prerequisites; keep activation disabled until then.
+- [ ] AX-10: remediate the installed-environment dependency findings using reviewed compatible changes, then repeat resolution/tests/audit. The dated audit reports 122 advisories across 19 installed packages; this is not an exploitability assessment or a clean-install inventory.
+- [ ] AX-10: integrate a real identity provider and authorized durable app save/resume/job workflow. Grant issuance in a service test is not user authentication.
+- [ ] AX-10: finish distributed quotas, complete model-stage cost/usage coverage, managed secrets/key rotation and operational retention/backup procedures.
+
+Optional follow-up, not a blocker for the implemented local AX-01 UI: broaden deterministic amount/horizon parsing while retaining confirmation and explicit ambiguity. AX-02 and AX-09 remain implemented local surfaces; do not reopen them as missing solely because broader financial/release gates remain open.
+
+### Verification and release checks still outstanding
+
+These are **unexecuted or unresolved checks**, not necessarily missing application code:
+
+- [ ] Demonstrate clean constrained Python 3.11 and 3.12 installations and repeat dependency checks/audit. The installed-environment `pip check` pass does not close the failed advisory audit.
+- [ ] Build runtime/verification Docker images and verify non-root, read-only/resource-limited startup/health; local Docker engine was unavailable.
+- [ ] Execute remote GitHub CI after separately authorized source synchronization; workflow files alone are not execution evidence.
+- [ ] Exercise authenticated concurrent users and real ownership boundaries across reports, caches, exports, retrieval and jobs after integration. Existing local graph/session and service-contract isolation tests are narrower.
+- [ ] Verify native browser PDF disk-save; the AX-09 browser-served PDF endpoint/content was checked, but native save-dialog automation cancelled.
+- [ ] Complete protected preview/access checks, cold/warm startup and operational backup/restore/rollback rehearsals on the selected host. Offline encrypted SQLite backup restoration is already tested and is not hosted rollback.
+- [ ] Perform a separately authorized, bounded live-provider/model smoke after the access/offline gates pass; no such call is authorized by this register.
+- [ ] Record measured specialist quality/cost/latency and wider live financial coverage rather than inferring them from fixtures.
+
+**Last recorded full offline result:** 1322 passed in 474.29s, 2026-10-24, V-20261024-AX10. This documentation update does not rerun tests. [Release gate declarations](production-gates.json), [sanitized dependency findings](dependency-audit-2026-10-24.json), and [deployment runbook](../DEPLOYMENT.md) retain failed/partial/unverified statuses. No host has been selected; authenticated jobs/monitoring are not activated. No automatic authorization to build follow-ups, spend credits, create tickets, commit/push or deploy follows from this record.
+
+## Review and first implementation boundary (2026-10-22)
+
+- Preserve AX-01 through AX-10 as stable local package IDs, separate from R01 through R10 and actual Jira keys. Existing advisor scoring, covariance sizing, saved-evidence retry, typed navigation and research audits are foundations to inspect and reuse, not features to rebuild from scratch.
+- AX-01 baseline and bounded UX delivery are recorded in [the delivery report](../features/2026-10-22-ax01-guided-robo-advisor.md). Its presentation-only work does not require AX-05 completion; enforceable risk claims do. Preserve saved portfolios and distinguish a changed draft from the last generated result rather than erasing valid work.
+- AX-02 may begin with design and compatibility inventory. Shipping verification indicators requires AX-06; any preset routing must explicitly retain V1/V2 behavior, saved results and pilot status. No default engine migration follows from this roadmap.
+- AX-04 starts with one metric family and named consumers. AX-06 and AX-05 consume eligible validated observations; none of these package titles establishes universal financial correctness.
+- AX-10 security boundaries apply to every slice. Hosted persistence and AX-08 monitoring remain gated by authentication, isolation, durable jobs and separately verified release prerequisites.
+- The organization request prepared documentation; the subsequent AX-01 implementation request authorized its scoped build. Select each further package for implementation; do not interpret this setup as approval to build all ten packages, create tickets, publish or deploy. Existing explicit session authorization takes precedence over the reusable prompts below.
+
+The implementation queue, R-ID mapping, dependencies and current statuses live in PLAN to avoid competing completion ledgers.
 
 ## 0. Primary development-team instruction (copy into Codex)
 
@@ -45,7 +106,7 @@
 ## 2. Work packages — prioritized backlog
 
 ### AX-01 — Guided Robo Advisor experience
-**Priority:** P0 UX | **Effort:** Medium | **Depends on:** AX-05 for enforceable risk claims
+**Priority:** P0 UX | **Effort:** Medium | **Depends on:** baseline inventory for the UX slice; AX-05 only for enforceable risk claims
 
 **User problem:** Prompt-led portfolio building still exposes advanced portfolio-engineering jargon and too many configuration decisions; users may misread descriptive risk labels as enforced limits.
 
@@ -139,6 +200,8 @@
 **Tests:** Sector-specific samples including financials/REITs; fiscal 53-week/irregular periods; revised filings; zero vs null; currencies; mismatched dates; absent quote; negative earnings and denominator edge cases.
 
 ### AX-05 — Enforceable portfolio risk and transparent suitability limitations
+
+Local bounded delivery (2026-10-23): optional reject-only historical-volatility ceiling, final-allocation policy audit, explicit hypothetical stress and unknown exposure/cost disclosures. See [delivery and remaining scope](../features/2026-10-23-ax05-portfolio-risk-policy.md). Full package acceptance remains partial.
 **Priority:** P0 correctness | **Effort:** High | **Depends on:** AX-04
 
 **Inspect first:** `portfolio_architect/{optimizer,risk,construction,workflow,mandate_fit}.py`, `portfolio_manager/{rebalance_engine,portfolio_actions}.py`, current benchmark/position-cap tests.
@@ -157,6 +220,8 @@
 **Tests:** Infeasible optimization, correlated assets, sparse history, ETF overlap, stress sign and units, cash/weights, missing benchmark, extreme constraints.
 
 ### AX-06 — Independent verification of research claims
+
+Local bounded delivery (2026-10-23): explicit numerical statements, source/basis/amount reconciliation and independent arithmetic, distinct coverage/freshness/reconciliation/interpretation indicators, retained original reports and safe JSON audit. [Scope and verification](../features/2026-10-23-ax06-claim-verification.md). Broad semantic and universal metric acceptance remains partial.
 **Priority:** P0 trust | **Effort:** Medium–high | **Depends on:** AX-04
 
 **Inspect first:** `deep_research/{manager,report_basis,research_metrics,v2_workflow}.py`, citations/audit contracts, saved investment briefs and source displays.
@@ -174,6 +239,8 @@
 **Tests:** Off-by-1000 scaling, period mismatch, evidence ID spoofing, 0 vs missing, currency mismatch, stale price, false multiple arithmetic, untrusted retrieved source instructions.
 
 ### AX-07 — Verified shared research memory and cross-workspace handoffs
+
+Local pilot (2026-10-24): explicit verified saved research to AI Valuation earnings sensitivities with session/credential/source lineage and repeated recipient checks. Metadata-only navigation remains separate. [Delivery and remaining scope](../features/2026-10-24-ax07-verified-reuse.md).
 **Priority:** P1 | **Effort:** Medium–high | **Depends on:** AX-04, AX-06
 
 **Inspect first:** `state/research_context.py`, `ui/workspace_handoff.py`, `portfolio_manager/research_snapshot.py`, `deep_research/context.py`, current saved research/session behavior.
@@ -191,6 +258,8 @@
 **Tests:** Cross-ticker, cross-user, cached credentials changed, stale filing, mismatched fiscal basis, legacy saved snapshot, missing metadata, revalidation after refresh.
 
 ### AX-08 — Event-driven monitoring and advisory-only rebalancing
+
+Local disabled foundations (2026-10-24): immutable opt-in saved-model plans and durable offline event/lease/advisory rehearsal with deterministic concentration drift. Production activation remains blocked on the prerequisites below. [Scope, gates and verification](../features/2026-10-24-ax08-monitoring-foundations.md).
 **Priority:** P2 | **Effort:** High | **Depends on:** AX-04, AX-05, AX-07, AX-10
 
 **Inspect first:** `portfolio_manager/{rebalance_engine,portfolio_actions}.py`, `paper_trading/`, advisor portfolio saves and existing alert/scheduler architecture.
@@ -281,15 +350,17 @@ For each `AX-XX`, the feature development team must return:
 - `AX-09` Consistent executive report / portfolio memo
 - `AX-10` Hosting hardening, observability and release gates
 
-## 5. Suggested first build request (after plan-only review)
+## 5. Historical initial build prompt (2026-10-22)
 
 > **Invoke `feature-development-team` in BUILD mode for AX-01 only.** Preserve the current Robo Advisor route, engine, optimizer, dark design, full advanced settings, saved portfolio handling and downloads. Implement a progressive plain-language prompt → editable mandate → portfolio review layout with bounded session-state changes and no automatic paid calls. Read `AGENTS.md` and `PLAN.md` first; validate current files/tests rather than assuming this spec is fully current. Do not modify Deep Research, release infrastructure, or underlying financial formulas except for a specifically demonstrated in-scope bug. Run focused offline tests and relevant Streamlit interaction checks; independently verify and create the standard feature-team report. Do not create Jira tickets, commit, push or deploy.
 
-**Next likely builds:** AX-02 UX wrapper (separate slice), AX-04 metric-contract pilot, then AX-06 claim checks and AX-05 risk guardrails. AX-03 and AX-08 should follow verified underlying data/risk controls, not precede them.
+**Historical initial sequence:** AX-02 UX wrapper, AX-04 metric-contract pilot, then AX-06 claim checks and AX-05 risk guardrails. Local slices have since shipped. Use the [current remaining-work register](#remaining-work-register-2026-10-24) for follow-up scope; this historical prompt does not reactivate completed work or authorize the next build.
 
 ---
 
 ## 6. Quality bar and final sign-off checklist
+
+These are broad final-acceptance checks, not a list of wholly absent features. Consult the current remaining-work register for delivered versus unfinished scope; keep these unchecked until the complete named acceptance is evidenced.
 
 - [ ] Existing nine workspaces, content and styling preserved.
 - [ ] All existing options remain accessible or have explicit tested compatibility redirects.
@@ -303,4 +374,4 @@ For each `AX-XX`, the feature development team must return:
 - [ ] Release status accurately names unverified hosted, CI, Docker and rollback steps.
 - [ ] No Jira writes, commits, pushes, deployment or paid live calls without separate authorization.
 
-**Bottom line:** Simplify the user's journey first, then strengthen verified financial evidence and risk guardrails, then expand agent autonomy. Retain the investment-grade depth beneath a clearer surface.
+Simplify the user journey while preserving existing financial contracts; verify evidence and risk controls before expanding agent autonomy.

@@ -82,6 +82,13 @@ def candidates(snapshot, mandate, now=None):
         if s.asset == "stock" and fs.get("pe_ttm") and fs["pe_ttm"].value <= 0:
             cons.append("Provider earnings multiple is nonpositive; valuation inference is unsupported.")
         if s.asset == "etf":
+            from .etf_assessment import assess_etf
+            fund = assess_etf(s)
+            pros.append("Portfolio role hypothesis: "+fund["role"]+"; conditional driver: "+fund["conditional_driver"])
+            cons += [fund["risk"], fund["valuation_status"]]
+            observed = fund["observed_history"]
+            if observed:
+                cons.append(f"Saved-history annualized volatility {observed['annualized_volatility']:.1%}; maximum drawdown {observed['maximum_drawdown']:.1%}. {observed['convention']} {observed['basis']}")
             cons.append("Fund constituents and sector look-through unmeasured; category is not underlying exposure.")
         if mandate.risk == "conservative" and "defensive" in s.themes:
             score += .4

@@ -19,6 +19,7 @@ Start with a decision: **What deserves attention? Which company looks stronger? 
 | Can I prepare a fuller investment report? | [Deep Research](#9-deep-research) | An executive report, evidence, comparisons and optional committee |
 | How should I evaluate my holdings? | [Portfolio Lab](#10-portfolio-lab) | Historical optimization and portfolio management |
 | Can I build an evidence-backed research portfolio? | **AI Robo Advisor** | S&P 500 screening, ETFs, position research and saved session results |
+| What data is a provider returning? | [Data Validation](#data-validation) | One selected endpoint, request details, response inspection and JSON download |
 
 ## 1. Get ready
 
@@ -59,7 +60,7 @@ On pages with the five-index ribbon, you will see S&P 500, Nasdaq, Dow, Russell 
 
 Quotes are cached for up to five minutes and can refresh when you open or rerun a page after that interval. This is not a continuously updating trading feed. Check the dates below the ribbon; hover over an index for details. **Saved**, **stale** and **undated** labels explain when extra attention is needed. Weekend quotes may correctly show the prior trading day.
 
-Market Brief also has a scrolling S&P 500 constituent ribbon. Hover over or focus it to pause and inspect company quotes.
+Market Brief also has a decorative S&P 500 constituent ribbon that rotates left to right without a scrollbar. Hover over or focus it to pause; reduced-motion settings stop the animation.
 
 ### Understand the information
 
@@ -102,12 +103,13 @@ Returning here reuses the saved snapshot. Click **Refresh market evidence** for 
 
 ### Step 2: Request the briefings
 
-1. Click **Generate / refresh market summary** for an executive interpretation of the dashboard.
-2. Click **Generate / refresh news briefing** for key headlines and news tone.
-3. Open story/source disclosures to check the evidence behind a claim.
-4. Use **Read full story** to visit the publisher. An app preview may not contain the complete article.
+1. Click **Generate / refresh market summary** for a fuller executive view of the past **5 trading days**, **month** and **3 months**: macro crosscurrents, sector leaders and laggards, technical confirmation and what to watch. Monthly comparisons use calendar months; they differ from the table's 30/60 trading-session figures.
+2. Click **Generate / refresh news briefing** for one or two connected paragraphs on the main market drivers, crosscurrents and what could change the outlook. Open **Briefing evidence & coverage** to review provider coverage, supporting themes and limitations. Summaries omit citation numbers and verbal source references. Available descriptions, previews and article text inform the briefing; previews are not complete articles.
+3. For optional reading beyond the summary, use **Read full story** in the separate news cards. An app preview may not contain the complete article.
 
-The data summary and news briefing answer different questions. Read both when price behavior and headlines appear to disagree.
+The data summary and news briefing answer different questions. Read both when price behavior and headlines appear to disagree. Refresh market evidence before generating the updated formats when your saved dashboard predates the monthly comparisons. News refresh combines bounded searches for leadership, macro/rates and cross-asset risks with configured Marketaux and FMP coverage; it does not capture every market story.
+
+If the news briefing reports a source or saved-snapshot mismatch, the attempted answer is rejected and any earlier saved briefing remains available. Click **Generate / refresh news briefing** to request another answer using the saved articles; no automatic retry occurs. Refresh market evidence separately only when you want new articles.
 
 ### Step 3: Ask a market question
 
@@ -130,6 +132,8 @@ Follow-ups use available dashboard context; they do not themselves refresh the s
 5. Open **Technical indicators & settings** and select **SMA**, **EMA**, **RSI**, **MACD** or **Bollinger**.
 6. Adjust available windows. A window measured in bars counts observations, not calendar days.
 7. Read the technical summary and indicator panels. With enough usable evidence, click **Analyze technical evidence with AI** for interpretation.
+8. Open **Ask historical technical questions**. Enter a ticker, **From** and **Through** dates and a question, then click **Ask technical AI**. For example: "How did momentum and MACD change during the 2020 recovery?" Answers use available daily prices and indicators and explain missing history. Changing the draft or reopening the page does not commission another answer.
+
 
 Try `MSFT` over **1Y** with SMA and RSI, then compare trend and momentum. Technical analysis complements business research; it does not establish valuation on its own.
 
@@ -164,9 +168,11 @@ A related headline is a lead, not proof of causation. Rankings and separate char
 
 1. Use **Load / refresh [ticker] news**.
 2. Click **Generate / refresh [ticker] AI news summary** for the key stories and qualitative tone.
-3. Open **News sources & coverage** and **Available company news** for dates and sources.
+3. Read the consolidated company briefing, sentiment and investment implications. Citation numbers and source links do not interrupt the summary.
 
 Selecting another company does not automatically commission its AI news summary.
+
+If a company briefing is rejected for a stock, snapshot or source mismatch, click **Generate / refresh [ticker] AI news summary** again using the loaded news. Any existing summary for that stock remains available; there is no automatic retry or news refresh. Publication-timezone and missing-date warnings describe source coverage and may remain after a successful summary.
 
 ### Step 4: Check analyst views
 
@@ -179,14 +185,10 @@ Selecting another company does not automatically commission its AI news summary.
 
 ### Step 5: Explore social activity
 
-1. Choose **Social history page limit**, then **Load / refresh [ticker] social history**.
-2. Compare **Last 5 trading days** with **Latest 5 reported trading dates** in **Social date window**. The latter can show older dates when recent observations are missing.
-3. Choose **Sentiment score**, **Posts**, **Comments**, **Likes** or **Impressions**.
-4. Switch **Daily statistic** between **Average** and **Median**.
-5. Under **Activity filters**, adjust **Minimum posts per platform snapshot** and **Hide zero sentiment scores**.
-6. Open **Daily social statistics & coverage** for sample counts and gaps.
+1. Configure FMP and OpenAI, then click **Generate / refresh [ticker] social summary**.
+2. Read the **Positive**, **Negative** or **Neutral** assessment and short explanation of participation and direction.
+3. Treat missing, stale or conflicting observations as uncertainty. More posts alone does not indicate positive sentiment. A failed refresh keeps your saved summary.
 
-These controls compare available Stocktwits and Twitter snapshots. Treat low-activity spikes cautiously. Missing coverage is not neutral sentiment, and the score is not a probability that the stock will rise.
 
 ## 5. Stock Screener
 
@@ -290,6 +292,8 @@ Use a coherent peer group when possible. A favorable score against a small or mi
 
 Open available supporting notes and score/coverage explanations before relying on a rating. Missing or sector-inapplicable metrics should not be read as zero.
 
+To include a committee opinion, select **Run CrewAI best-buy debate** in **THESIS**. Once it completes, open **EXPORTS** and select **Download PDF Report**. The PDF includes the complete saved executive summary, AI research note and matching CrewAI decision, including dissent, risks and invalidation signals. The PDF uses a portrait executive layout with clear headings and readable paragraphs; financial metrics tables remain in the app and Excel rather than this narrative PDF. Longer reports span multiple pages. Downloading does not rerun analysis. If the debate failed or belongs to an older scorecard, the PDF states that no matching decision is available; retry the debate explicitly to add one.
+
 ### Step 3: Request the optional committee
 
 1. In the decision area, click **Run CrewAI best-buy debate**.
@@ -356,7 +360,19 @@ Generate five-year `CVX` cases, read the cycle limitation, then reduce the Base 
 
 ### Step 1: Choose the format
 
-Open **Deep Research**, then choose **Research format**:
+Open **Deep Research**. The unified research controls open by default for new sessions:
+
+1. Choose **Quick Brief**, **Deep Dive**, or **Investment Committee**. Quick Brief uses the experimental Low cost workflow; Deep Dive uses Standard. Committee preselects additional committee analysis, which you can disable before starting.
+2. Enter companies and your question. Open **Advanced settings** to change depth, news, committee options, providers or estimated budget. **Advanced settings ? engine and routing** lets you choose the other engine explicitly. Missing access is disclosed; the app does not switch engines automatically.
+3. Submit the run form to start research. Selecting a goal does not spend credits. Committee can add model calls after a completed report. Standard has no enforced dollar ceiling; Low cost's estimated budget cannot guarantee a ceiling when pricing is unknown.
+4. Read **Research overview**, then the full report, sources, gaps and optional decision below. Missing overview sections stay unavailable; they are not generated on display. Existing follow-ups, briefs and downloads remain in their original engine views.
+5. Turn off **Use unified research controls** to return to **Research format**. Both engines retain their separate saved histories. Use **Saved research across all goals** to reopen either engine's saved report without starting research. For an unfinished report with usable evidence, open **Continue saved research**, acknowledge that its evidence will not refresh, then click **Continue report using saved evidence**. This may use model credits; it preserves source dates and does not run a committee. Failed continuation preserves the original report and downloads. Missing evidence or saved configuration requires an explicit fresh run.
+
+For a saved one-company report, you can optionally open **Independent specialist review · experimental**. Review the disclosed limits, check **I understand the pilot limitations and additional model calls**, then click **Run independent specialists on saved evidence**. The fundamentals and valuation/risk specialists work separately; the summary preserves disagreements and partial failures. At most one additional call can resolve a named metric from the saved data. This action has its own limits outside the original report budget; unknown pricing prevents a guaranteed dollar ceiling. It does not refresh evidence, change portfolio constraints or launch a committee. Older, stale or incomplete financial contracts may make the pilot unavailable. The full source/check audit stays in the expander; these mechanical checks do not verify model prose. Reopening a review makes no calls.
+
+Open **Earnings data quality** to compare the saved quarterly, annual and TTM net-income amounts and their validation states. The view keeps fiscal dates, original retrieval dates, reporting currencies and filing/acceptance metadata separate. Zero and losses remain values; missing, stale, inconsistent or unverifiable earnings are labeled. A TTM total requires four matching raw fiscal quarters. Failed validation preserves the original report amount and explains why it cannot support new earnings sensitivities or the specialist earnings review. No refresh or AI call occurs when opening this view. For newer evidence, explicitly start fresh research. **Download brief/scenarios JSON** and **Download brief/scenarios CSV** include the same earnings observation and source audit. These checks cover total company earnings, not EPS, FFO/AFFO or forecast accuracy.
+
+With unified controls off, choose **Research format**:
 
 - **Standard format:** the main executive report workflow.
 - **Low cost format:** the experimental alternative with additional cost/provider controls and its own saved run history.
@@ -430,6 +446,10 @@ Follow-ups and committees use saved research and are additional AI actions; they
 
 ### Step 5: Export the report
 
+1. Open **Executive investment memo** in either research format to review the saved thesis, evidence highlights, valuation, drivers, risks, quality and assumptions. Numerical highlights show their saved period and source IDs; this does not refresh evidence or certify AI conclusions.
+2. Click **Executive investment memo PDF** for a concise first page followed by the retained narrative, decisions, detailed saved data and complete source records. Complete any optional committee first, then download again to include its decision. Existing report and evidence downloads remain available.
+3. If the memo exceeds its PDF size limit, use the original report and evidence downloads. Unsupported PDF glyphs appear as explicit Unicode codes; original text remains in the other saved formats.
+
 - **Download executive PDF:** a presentation-friendly report.
 - **Download research memo:** an editable text document.
 - **Download evidence & report:** the saved evidence/report record.
@@ -499,7 +519,7 @@ Historical optimization is not a forecast. The sample period, risk-free assumpti
 4. Use required `ticker` and `shares` columns and check every row in the editable table. The example remains a starting point until replaced; a missing upload does not create an empty portfolio.
 5. Add **Optional watchlist tickers to analyze alongside holdings** if desired. Entered-ticker mode instead accepts a direct candidate list.
 6. In Screen companies mode, set filters and how many returned names to analyze. The screened-candidate preview appears with the results after the run.
-7. In the Portfolio Manager sidebar, set **Benchmark**, **Price history window**, **Risk profile**, **Maximum position weight**, **Maximum sector weight**, **Target cash buffer** and **Ignore trades smaller than**.
+7. In **Portfolio settings** within the **AI Portfolio Manager** tab, set **Benchmark**, **Price history window**, **Risk profile**, **Maximum position weight**, **Maximum sector weight**, **Target cash buffer** and **Ignore trades smaller than**.
 8. If a weight control shows decimals, `0.18` means 18% and `0.35` means 35%. Choose constraints consistent with your candidate list and acceptable concentration.
 9. Click **Run hybrid AI committee**.
 
@@ -541,19 +561,33 @@ Chat uses saved analysis. Rerun the committee when you want a proposal based on 
 
 ### AI Robo Advisor
 
-1. Open **AI Robo Advisor** and configure your FMP key in Settings. The page opens directly to portfolio construction.
-2. Enter an objective, click **Interpret mandate**, review **Investment style** (choose **Growth** for a growth portfolio), holdings, asset types, cash, sector and position limits, then click **Build portfolio**. Optional AI uses the shared model and OpenAI key only for explicit actions.
-3. Review **Holding research** for company descriptions, measured strengths, counterarguments, annual revenue growth and dated news. Read sector and market sensitivities before treating a possible catalyst as a reason to invest.
-4. Open **Evidence & exports** for the S&P 500 screening audit and Market Brief indicators. Scores rank available sector metrics; they do not guarantee the best future performers. ETFs have a separate curated universe and no company-fundamental ranking.
-5. With OpenAI configured, **Use bounded AI interpretation and specialist review** starts selected. Explicit **Interpret mandate** and **Build portfolio** actions produce a reviewed mandate and cited sector-aware AI theses. Read each holding's AI risks, missing evidence, portfolio role and thesis-break condition in **Holding research**. Invalid AI output preserves a local portfolio.
-6. Choose **AI conviction + covariance risk budgets**, **Equal covariance risk budgets**, **Constrained minimum variance** or **Equal weight** in **Sizing method**, then **Build portfolio**. The first method uses bounded AI conviction to set relative historical risk budgets. In **Allocation**, compare capital weights with achieved risk contributions, target risk budgets, effective holdings and diversification ratio. Cash and hard caps take precedence; risk-budget caps can prevent exact target risk shares. Sparse or unstable history produces a disclosed equal-weight fallback. These methods do not forecast returns or enforce a future loss ceiling.
-7. Use **Latest collection diagnostics** if provider or eligibility checks prevent a result. Collection pauses thirty seconds between batches of one hundred requests; a full screen can take several minutes. If FMP reports HTTP 429, wait for its limit to reset, then enable **Refresh provider evidence on next Build** and click **Build portfolio**. Download CSV, JSON or HTML, or save a session snapshot. Download important work before closing the app.
+1. Open **AI Robo Advisor** and configure your FMP key in Settings.
+2. Describe the objective and click **Interpret mandate**. Confirm style, horizon, risk preference and hypothetical amount in **2. Review your mandate**. Open **Advanced settings** for holdings, cash, limits, exclusions, themes, benchmark and sizing. Click **Build portfolio** to apply the reviewed settings.
+3. Read **Portfolio recommendation** and **Recommendation snapshot**. The table shows allocations, sector framework, available sector score and coverage, main support and main concern. Sector scores describe saved peer comparisons, not expected returns or fair value. Missing scores remain unavailable.
+4. Choose **Review a holding**. Read **Why included**, **Main risk** and **What would change the thesis**. Open **Sector metrics behind this recommendation** for saved values and priorities, then **Metric sources, periods and evidence IDs** for the calculation inputs. ETFs show an allocation role and fund risks rather than a company profitability score.
+5. With **Use AI to interpret and explain** enabled, explicit Build sends the locally selected holdings to one analyst for a concise explanation. Sector metrics and your objective select holdings; local rules set weights. AI cannot add, replace or resize holdings. Invalid AI output leaves the local portfolio available.
+6. Open **How allocations were determined** for sizing. **Covariance risk budgets**, **Equal covariance risk budgets**, **Constrained minimum variance** and **Equal weight** remain in Advanced settings. Cash and position/category caps take precedence; unstable history can produce a labeled equal-weight fallback. Historical methods do not enforce a future loss ceiling.
+7. Open **Detailed research, risk & exports** for full holding research, risk checks, audit tables and exports; **Download concise portfolio memo** keeps the saved memo available. Use **Latest collection diagnostics** if collection or eligibility blocks the build. A full screen can take several minutes. If a run is interrupted within the same session, use **Retry AI review using saved evidence** when offered. Full browser-session/server restarts can lose session-only work; download completed results before closing.
 
 For a growth/AI objective, stock candidates need positive comparable three-year annual revenue growth; supported AI relevance and growth receive priority over a generic value score. Sector limits are enforced without adding unrelated sectors merely for variety. The universe stays current S&P 500 stocks plus curated ETFs. Business-description and curated theme matches are research clues, not measured AI revenue exposure.
 
-The **Conviction / AI rationale** column includes a brief saved AI explanation with each validated rating. A status above the table says whether AI completed, failed or was not requested. If no validated review exists, the table says so; it does not invent an AI rationale. Older saved balanced results remain unchanged: explicitly choose **Growth** and **Build portfolio** to apply the new selection logic.
+Earlier saved portfolios retain their original selection, sizing and AI results. The reader labels older AI selection workflows; explicitly Build to use metrics-led selection and explanation-only AI. The sector priorities are shared with Equity Report, but available provider TTM and annual evidence is narrower than the full Equity Report suite and is not independently audited TTM.
+
+Changed inputs leave the last generated portfolio available with a mismatch notice. Interpret a revised objective and explicitly Build to apply reviewed controls; display changes and saving do not rebuild.
 
 See the [Robo Advisor portfolio guide](docs/portfolio_architect/USER_GUIDE.md) for constraints, data limitations and recovery.
+
+## Data Validation
+
+1. Under the **Validate** sidebar ribbon, select **Data Validation** in the sidebar. Choose **Data provider**, then **Endpoint**. Stable and legacy FMP routes, retained FMP research tools, Marketaux, Serper and Yahoo operations are listed separately.
+2. Enter one **Ticker**, such as `AAPL` or `SPY`. Market-wide endpoints ignore the ticker and say so. For Serper, optionally enter a **Search query**.
+3. Open **Request parameters** when needed. For example, select **Income statement - stable** and use `{"period": "quarter", "limit": 8}` to inspect quarterly records. Dates use `YYYY-MM-DD`. Only the selected endpoint's listed parameters are accepted; credentials come from **Settings**.
+4. Click **Fetch data**. This requests the selected operation only. Provider quotas may apply; opening this page and changing controls do not fetch data or run AI.
+5. Review **Data table**, **JSON response** and **Request details**. Check ticker identity, provider dates, fiscal period, currency and zero versus missing values. Use **Filter field names** to focus the table. A successful request is not a financial-accuracy check.
+6. Click **Download response JSON** to save the sanitized response and original request details. A large response may be limited; narrow the parameters if the page flags a preview limit. The table shows at most 500 rows; retained response lists are capped at 1000.
+7. If a request fails, inspect **Failed request details**. HTTP 401 points to authentication; 402/403 indicate access restrictions; 429 indicates rate limiting. The last successful response remains visible with its original inputs. Changed inputs show a mismatch notice; changed credential settings require a new fetch before viewing prior data.
+
+Open **Endpoint catalog & usage** to see the registered operations and their app usage. Catalog presence does not establish access on your provider plan. Yahoo and Serper return adapter output, and Yahoo history explicitly uses adjusted prices. Ticker-specific entitlement, data freshness and financial correctness still need your review.
 
 ## 11. Put the workspaces together
 
@@ -601,3 +635,75 @@ Before sharing a conclusion, check identities, source dates, financial periods, 
 Large AI Robo Advisor evidence downloads use **Evidence JSON (.gz)** when needed. Extract the file to read the complete JSON; all saved evidence is retained. If compressed evidence still exceeds the download limit, the report, Allocation CSV and Research HTML remain available. Downloads reuse saved results.
 
 If a saved Robo Advisor result says AI review was unavailable, click **Retry AI review using saved evidence** when OpenAI is configured. This explicit action reuses collected company evidence without repeating provider collection. If the saved quotes are too old, the app keeps your result and asks you to refresh and Build instead. Downloads and ordinary reruns never retry AI automatically.
+
+
+### Optional portfolio risk policy
+
+1. Open **AI Robo Advisor**, interpret the objective, then expand **Advanced settings** in **2. Review your mandate**.
+2. To require a historical check, enable **Enforce historical-volatility ceiling** and set **Historical annualized volatility ceiling (%)**. Confirm with **Build portfolio**. This checks an aligned historical price-return estimate, not future losses or personal suitability.
+3. If the ceiling fails or history is insufficient/stale, the build stops and the previous portfolio stays available. Explicitly change cash, sizing, holdings or the ceiling, then build again. Limits are never relaxed automatically.
+4. In **Risk & tradeoffs**, review the saved policy checks, concentration warnings and hypothetical account shocks. Shocks use stated assumptions and unchanged cash; they are not forecasts. ETF underlying exposure, benchmark constituent weights and account turnover/costs are unavailable when supporting holdings and cost inputs are missing.
+5. Use **Evidence JSON** or **Research HTML** to retain the saved policy and shock assumptions. Legacy results without this audit remain readable; explicitly build to create a new audit.
+
+
+### Numerical claim checks in saved research
+
+1. Open a saved **Deep Research** result in either **Standard format** or **Low cost format**. **Numerical claim checks** shows separate coverage, freshness and reconciliation counts. Interpretation remains unassessed.
+2. Expand **Claim findings, evidence and verification limits** to inspect each extracted line, supporting inputs, status and remediation. A contradiction is a reason to inspect the original sources; the app keeps the report unchanged.
+3. Read **verified numerical fact**, **derived calculation**, **assumption/opinion**, **contradicted** and **unverifiable** as distinct labels. A verified amount does not verify the thesis or a future price target. Zero matched lines means no numerical certification.
+4. Use **Claim verification JSON** to save the dated checks and original report/evidence fingerprints. Opening the panel, rerunning and downloading make no provider or model calls.
+
+The bounded checker supports explicit ticker, amount, currency, date and citation statements for company earnings, TTM revenue, price/market cap and dated P/E arithmetic. It does not infer meaning from ambiguous prose, certify every metric or rewrite unsupported claims. Extraction limits and unsupported text remain visible; fresh research remains a separate explicit action.
+
+
+### Reuse saved verified research in AI Valuation
+
+1. Explicitly run new **Deep Research** in **Standard format** or **Low cost format** with your configured FMP credential. Reopening an older run does not establish its originating credential.
+2. Open **Reuse verified financial research** on the saved result and choose the company. Eligible data needs validated four-quarter earnings, compatible explicit quote currency, dated capitalization and matching provider sector information.
+3. Click **Use saved verified research** to open **AI Valuation** with a local earnings sensitivity. Edit **Saved earnings change (%)** and **Saved earnings P/E assumption** to calculate hypothetical total-company equity value. These assumptions are not forecasts, per-share price targets or personalized advice.
+4. Review the original earnings period, capitalization date and **Verified snapshot provenance**. Opening, navigating and editing reuse these inputs without provider/model calls. Annual per-share AI targets remain a separate explicit Generate action.
+5. If the company, credential, session, original sources or freshness no longer qualify, financial reuse is rejected and the saved research stays available. Explicitly collect fresh research to prepare a new snapshot, or choose **Open AI Valuation with ticker only** to navigate without active financial reuse.
+
+Reuse is limited to this browser session and originating FMP credential. It does not grant redistribution rights or enable advisor/portfolio reuse. Quote retrieval must be within one day and the quote observation within seven days; earnings/profile retrieval and fiscal dates retain their disclosed limits. Original timestamps are preserved.
+
+
+### Prepare a disabled monitoring plan
+
+1. In **AI Robo Advisor**, review a completed model portfolio and click **Save session snapshot**.
+2. Expand **Monitoring plan ? activation unavailable** and check **Prepare a disabled plan for this saved portfolio**.
+3. Click **Prepare monitoring plan**. Review the immutable holdings, constraints, benchmark, saved thesis and source timestamps. Up to six disabled plans are retained in the session; choose one with **Disabled monitoring plan**.
+4. **Enable monitoring** remains unavailable. No scheduled refresh, paid analysis, alerts or trades start. Secure sign-in, protected background processing and eligible data access must be verified before activation.
+
+The prepared plan starts no alerts or trades. Automatic earnings/estimate monitoring and ETF underlying exposure checks remain unavailable. Preparing a plan does not refresh old evidence or certify future risk.
+
+### Review and export a saved portfolio memo
+
+1. After **Build portfolio**, open **Executive investment memo** to review positions, weights, roles, sector concentration, available historical risk, assumptions and gaps. The figures describe the saved allocation and observation window. ETF look-through and future performance remain unverified.
+2. Click **Executive investment memo PDF**. Full holding roles, citations, saved committee, risk conventions and source records follow its first page. Daily price series remain in **Evidence JSON**; **Allocation CSV** and **Research HTML** remain available. Downloads and reopening the memo reuse saved results without collecting data or calling AI.
+
+### Access and saved sessions
+
+1. Use the local application in your own research session. Separate browser sessions keep separate conversations and saved outputs; they are not a shared account or a durable report library.
+2. Download important reports before restarting the server. Automatic recovery of research after restart is not available in the app.
+3. If a deployment shows **Hosted access is disabled**, its operator must complete sign-in, data isolation and release verification before opening access. This message does not mean your provider key is invalid.
+
+
+### Read your AI Robo Advisor result
+
+1. Start with **Your portfolio at a glance** for tickers, names, allocation percentages and short selection reasons.
+2. Read the holding summaries immediately below for the investment case and portfolio role. An allocation without a completed AI review uses its saved local selection reasons.
+3. Open **Download concise portfolio memo** for the executive PDF. Open **Detailed research, risk & exports** for the existing review tabs; the concise PDF does not include the full research universe or daily price histories.
+
+If an Equity Report committee analyst times out, the saved report remains available. Retry the explicit debate or choose a faster model. The app does not automatically commission another debate.
+
+
+AI Robo Advisor collects the current S&P 500 screen using the same FMP key as Equity Report and regular company endpoints, paced in request groups. A fresh full screen can take several minutes; saved screen evidence is reused for up to one hour. Use **Refresh provider evidence on next Build** and **Build portfolio** to recollect explicitly. ETFs use separate allocation theses for core equity, growth/sector, dividends, small caps, Treasuries, bonds and gold. Review each fund's role, conditional drivers and risks. Available saved-history volatility and drawdown describe price returns only; fees, holdings overlap, tracking, duration and NAV valuation remain unavailable where evidence is missing.
+
+
+In **Data Validation**, choose **Report / workspace** to focus on a report, then **Metric / calculation family** to narrow its inputs. Open **Report data & calculation map** for display locations, provider fields, calculation rules and period limitations. **Where this endpoint is used** explains the selected endpoint in context; **Calculation code index** lists current definitions and source lines. Download the report map as JSON for review. These filters make no requests; only **Fetch data** retrieves a provider response. The map documents metric families and source code, rather than certifying every value or AI conclusion.
+
+
+For runtime, verification and retained-reference locations, see the [repository layout](docs/REPOSITORY_LAYOUT.md).
+
+
+Executive investment memo PDFs are prepared when you click their download button. Opening a saved report or navigating does not generate the full memo appendices; repeated downloads reuse the same prepared content until the saved report or decision changes. No provider or AI call is made by the download.

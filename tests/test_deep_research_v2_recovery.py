@@ -109,8 +109,8 @@ def test_submission_and_saved_reuse_do_not_repeat_calls(app, monkeypatch):
     assert app.session_state["drv2_active_run"] == "v2-test"
     assert any("V2 research ready" in i.value for i in app.success)
     assert {button.label for button in app.get("download_button")} == {
-        "Download PDF", "Download memo", "Download audit JSON",
-        "Download brief/scenarios JSON", "Download brief/scenarios CSV"}
+        "Executive investment memo PDF", "Download PDF", "Download memo", "Download audit JSON",
+        "Download brief/scenarios JSON", "Download brief/scenarios CSV", "Claim verification JSON"}
     app.run(); widget(app, "button", "Run V2 pilot").click().run()
     assert len(calls) == 1
     assert any("Reused" in i.value for i in app.info)

@@ -6,7 +6,7 @@ import streamlit as st
 from langgraphagenticai.ui.app_shell import render_executive_cards, render_evidence_row
 from langgraphagenticai.portfolio_architect.schemas import InvestorMandate
 from langgraphagenticai.portfolio_architect.mandate import interpret, infer_style
-from langgraphagenticai.portfolio_architect.universe import eligible_names, SECTORS, THEMES, UNIVERSE
+from langgraphagenticai.portfolio_architect.universe import eligible_names
 from langgraphagenticai.portfolio_architect.research import candidates
 from langgraphagenticai.portfolio_architect.screening import sector_lens
 from langgraphagenticai.portfolio_architect.workflow import build
@@ -14,61 +14,33 @@ from langgraphagenticai.portfolio_architect.export import csv_bytes, html_bytes,
 from langgraphagenticai.providers.advisor_screen import collect_advisor as collect
 
 
-SIZING_METHODS = {
-    "ai_risk_budget":"AI conviction + covariance risk budgets",
-    "risk_parity":"Equal covariance risk budgets",
-    "min_variance":"Constrained minimum variance",
-    "risk":"Legacy volatility / correlation heuristic",
-    "equal":"Equal weight",
-    "conviction_risk":"Legacy conviction + risk heuristic",
-}
+from langgraphagenticai.ui.advisor_mandate_editor import (
+    SIZING_METHODS, render_mandate_editor as _editor, draft_changes,
+)
 
 
-def _editor(mandate):
-    # A new interpretation has a new widget namespace; ordinary reruns retain edits.
-    version = st.session_state.get("architect_editor_version", 0)
-    prefix = f"architect_edit_{version}_"
-    with st.form(prefix+"form"):
-        st.markdown("#### Review the mandate")
-        st.caption("These controls define enforced constraints. Prompt themes are preferences; review any requirements that were not extracted.")
-        style = st.selectbox("Investment style",["balanced","growth"],index=["balanced","growth"].index(mandate.investment_style),
-                             format_func=str.capitalize,key=prefix+"style")
-        st.caption("Growth requires positive comparable annual revenue growth for stocks; supported AI/theme relevance leads ranking. Sector limits constrain selection without forcing unrelated sector representatives.")
-        cols = st.columns(3)
-        horizon = cols[0].selectbox("Horizon (years)", [1,3,5,10], index=[1,3,5,10].index(mandate.horizon), key=prefix+"horizon")
-        risk = cols[1].selectbox("Risk preference", ["conservative","moderate","aggressive"], index=["conservative","moderate","aggressive"].index(mandate.risk), key=prefix+"risk")
-        amount = cols[2].number_input("Hypothetical amount (USD)",min_value=100.,max_value=100000000.,value=mandate.amount, key=prefix+"amount")
-        cols = st.columns(3)
-        n = cols[0].number_input("Holdings", min_value=5,max_value=15,value=mandate.holdings, key=prefix+"holdings")
-        assets = cols[1].selectbox("Allowed assets",["both","stocks","etfs"], index=["both","stocks","etfs"].index(mandate.assets), key=prefix+"assets")
-        method = cols[2].selectbox("Sizing method",list(SIZING_METHODS), index=list(SIZING_METHODS).index(mandate.method),
-                                   format_func=lambda v:SIZING_METHODS[v],key=prefix+"method")
-        with st.expander("Allocation limits, exclusions and themes",expanded=False):
-            cols = st.columns(3)
-            cash = cols[0].number_input("Cash target (%)",min_value=0.,max_value=80.,value=mandate.cash*100,key=prefix+"cash")
-            cap = cols[1].number_input("Max position (%)",min_value=1.,max_value=100.,value=mandate.position_cap*100,key=prefix+"cap")
-            sector = cols[2].number_input("Max sector/category (%)",min_value=1.,max_value=100.,value=mandate.sector_cap*100,key=prefix+"sector")
-            excluded = st.multiselect("Excluded stock sectors (all ETFs excluded when set: no look-through)",SECTORS,
-                                       default=[s for s in mandate.excluded_sectors if s in SECTORS],key=prefix+"excluded")
-            forbidden = st.text_input("Forbidden tickers (comma separated)",value=", ".join(mandate.forbidden),key=prefix+"forbidden")
-            themes = st.multiselect("Preferred curated themes",THEMES,default=[t for t in mandate.themes if t in THEMES],key=prefix+"themes")
-            benchmark = st.selectbox("Historical benchmark",sorted(UNIVERSE),index=sorted(UNIVERSE).index(mandate.benchmark) if mandate.benchmark in UNIVERSE else sorted(UNIVERSE).index("SPY"),key=prefix+"benchmark")
-        submitted = st.form_submit_button("Build portfolio",type="primary")
-    if not submitted:
-        return None
-    try:
-        return InvestorMandate(objective=mandate.objective,investment_style=style,horizon=horizon,risk=risk,amount=amount,holdings=int(n),assets=assets,
-            cash=cash/100,position_cap=cap/100,sector_cap=sector/100,excluded_sectors=excluded,
-            forbidden=[s.strip() for s in forbidden.split(",") if s.strip()],themes=themes,benchmark=benchmark,method=method)
-    except ValueError:
-        st.error("The mandate is invalid or infeasible. Check holdings × position/sector cap against the non-cash allocation, and ticker formats.")
-        return None
+def _build_stage(stage, result_id=None):
+    """Session checkpoint only; never start work because a prior stage was interrupted."""
+    st.session_state["architect_build_stage"] = {
+        "stage": stage, "updated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "result_id": result_id,
+    }
 
 
 def _report(result, credentials):
+    from .investment_memo import render_investment_memo
+    from .advisor_executive import render_advisor_executive
+    render_advisor_executive(result)
+    with st.expander("Download concise portfolio memo"):
+        render_investment_memo(result, credentials=credentials, portfolio=True, key="portfolio")
+    with st.expander("Detailed research, risk & exports", expanded=False):
+        _report_details(result, credentials)
+
+
+def _report_details(result, credentials):
     snapshot = result.snapshot
     st.divider()
-    st.markdown("### Portfolio recommendation")
+    st.markdown("### 3. Review your portfolio")
     if snapshot.mode == "SYNTHETIC DEMO":
         st.warning("SYNTHETIC DEMO · Every price, fundamental and return observation is invented. This is a software demonstration.")
     else:
@@ -81,7 +53,7 @@ def _report(result, credentials):
     render_executive_cards([("Holdings",str(len(result.holdings)),result.mandate.assets),
                             ("Cash",f"{result.cash:.1%}",f"${result.cash_dollars:,.2f}"),
                             ("Hypothetical account",f"${result.mandate.amount:,.0f}",SIZING_METHODS.get(result.method_used,result.method_used))])
-    st.caption(f"{result.mandate.horizon}-year horizon · {result.mandate.risk} risk preference")
+    st.caption(f"{result.mandate.horizon}-year horizon · {result.mandate.risk} risk preference (indicative; no enforced future loss ceiling)")
     render_evidence_row([("Mode",snapshot.mode),("Retrieved UTC",snapshot.retrieved_at),("Snapshot",snapshot.id),
                          ("Benchmark",result.mandate.benchmark),("Version",result.version)])
     st.caption("Research and hypothetical allocation only. No orders, forecast returns or personal suitability assessment.")
@@ -90,13 +62,21 @@ def _report(result, credentials):
     status = result.ai_review_status or {"state":"completed" if all(h.ai_analysis for h in result.holdings) else "failed" if result.model else "not_requested",
                                         "reason":"This saved result has no validated AI review details."}
     if status["state"] == "completed":
-        st.success("AI review completed - conviction explanations are shown in the allocation table.")
+        st.success("AI explanation completed - the allocation table retains the saved local sizing and evidence.")
     elif status["state"] == "failed":
         st.warning("AI review unavailable - showing a local fallback portfolio. "+status["reason"])
     else:
         st.info("Local portfolio - AI review was not requested for this saved result. Enable AI and explicitly Build for AI conviction explanations.")
     if result.mandate.investment_style == "balanced" and infer_style(result.mandate.objective) == "growth":
         st.warning("This saved result used balanced selection despite the growth objective. Review Investment style = Growth and explicitly Build to apply the corrected ranking.")
+    with st.expander("Applied constraints and limitations", expanded=False):
+        st.write(f"Saved choices: {result.mandate.holdings} holdings; cash target {result.mandate.cash:.0%}; max position {result.mandate.position_cap:.0%}; max sector/category {result.mandate.sector_cap:.0%}.")
+        st.write(f"Actual cash: {result.cash:.1%}; largest position: {max(h.weight for h in result.holdings):.1%}; largest sector/category: {max(result.sectors.values(), default=0):.1%}.")
+        st.write("Binding constraints: " + "; ".join(result.binding_constraints))
+        st.write("Sizing applied: " + SIZING_METHODS.get(result.method_used, result.method_used))
+        st.caption("Risk preference and horizon are research preferences. Historical risk estimates do not enforce future volatility, drawdown or loss. ETF underlying exposures remain unknown; category limits are not look-through sector limits.")
+        if "equal" in result.method_used and result.mandate.method != "equal":
+            st.warning("Historical sizing was unavailable; the saved result uses the disclosed equal-weight fallback subject to caps.")
     allocation, holdings, risk, committee, evidence = st.tabs(["Allocation","Holding research","Risk & tradeoffs","Investment committee","Evidence & exports"])
     with allocation:
         frame = pd.DataFrame(allocation_rows(result))
@@ -140,7 +120,7 @@ def _report(result, credentials):
                         st.write("AI risk: "+concern)
                     st.write("AI thesis-break condition: "+h.ai_analysis["thesis_breaker"])
                     st.write("AI missing inputs: "+"; ".join(h.ai_analysis["missing_inputs"]))
-                    st.caption("AI evidence references: "+", ".join(h.ai_analysis["evidence_ids"]))
+
                 else:
                     st.caption("Local evidence-based selection; no validated AI thesis saved.")
                 st.caption("Uncollected sector priorities: "+"; ".join(lens["missing_required"]))
@@ -168,6 +148,31 @@ def _report(result, credentials):
                 st.write("What would change my mind? "+" ".join(h.thesis_breakers))
                 for flag in facts[h.ticker].flags: st.caption(flag)
     with risk:
+        st.markdown("#### Risk policy and hypothetical stress")
+        policy = result.risk_policy
+        if policy:
+            labels = {"long_only_position_cap":"Maximum position (long only)", "top_level_sector_category_cap":"Maximum sector/category", "minimum_cash":"Minimum cash", "holdings_count":"Holding count", "total_weight":"Total allocation", "historical_volatility_ceiling":"Historical volatility ceiling"}
+            rows = []
+            for check in policy["checks"]:
+                name = check["constraint"]
+                if name == "asset_ticker_sector_exclusions":
+                    rows.append({"Policy":"Asset, ticker and sector exclusions", "Requirement":"Allowed assets and exclusions in saved mandate", "Actual":", ".join(check["actual"]), "Passed":check["passed"]})
+                else:
+                    fmt = lambda value: str(value) if name == "holdings_count" else f"{value:.2%}"
+                    rows.append({"Policy":labels.get(name, name), "Requirement":fmt(check["limit"]), "Actual":fmt(check["actual"]), "Passed":check["passed"]})
+            st.dataframe(pd.DataFrame(rows), hide_index=True, width="stretch")
+            st.caption(policy["volatility_basis"])
+            for note in policy["warnings"]:
+                st.warning(note)
+            for key in ("etf_look_through", "benchmark_relative_weights", "turnover_and_transaction_costs"):
+                st.write(key.replace("_", " ").capitalize()+": "+policy[key]["status"]+". "+policy[key]["reason"])
+            st.dataframe(pd.DataFrame([{
+                "Scenario":v["scenario"], "Hypothetical account return (%)":v["account_return"]*100,
+                "Hypothetical change (USD)":v["account_change_usd"]} for v in policy["stress_scenarios"]]), hide_index=True, width="stretch", column_config={"Hypothetical account return (%)":st.column_config.NumberColumn(format="%.2f"), "Hypothetical change (USD)":st.column_config.NumberColumn(format="$%.2f")})
+            st.caption(policy["stress_basis"]+" "+policy["purpose"])
+            st.caption("Descriptive only: "+", ".join(policy["descriptive_only"]))
+        else:
+            st.info("Legacy saved result: risk-policy audit and numerical stress were not saved. Explicitly Build to create them; original results remain unchanged.")
         r = result.risk
         if r.status == "available":
             cols = st.columns(3)
@@ -181,7 +186,7 @@ def _report(result, credentials):
         st.write(r.convention)
         for pair in r.high_correlations: st.write("High historical correlation: "+pair)
         for p in result.committee.vulnerabilities: st.write("• "+p)
-        st.write("Qualitative scenarios: rising rates can pressure long-duration growth and bonds; an earnings contraction can weaken equities; a sector shock can overwhelm category diversification. No numerical scenario loss is estimated.")
+        st.write("Qualitative scenarios: rising rates can pressure long-duration growth and bonds; an earnings contraction can weaken equities; a sector shock can overwhelm category diversification. These qualitative narratives are separate from the explicit hypothetical shocks above.")
         with st.expander("Data and methodology disclosures"):
             for note in list(dict.fromkeys(result.warnings+r.warnings)): st.write("• "+note)
     with committee:
@@ -234,15 +239,26 @@ def _report(result, credentials):
         else:
             st.warning("Six snapshots already saved; download your results before ending this session.")
 
+    from .monitoring_plan import render_monitoring_plan
+    render_monitoring_plan(result, credentials)
+
 
 def render_portfolio_architect(fmp_api_key="", openai_api_key="", model_name="gpt-5"):
-    st.subheader("AI Portfolio Architect")
+    st.subheader("AI Robo Advisor")
+    prior_stage = st.session_state.get("architect_build_stage", {})
+    if prior_stage.get("stage") in {"collecting", "constructing", "ai_review"}:
+        st.warning("The previous build was interrupted during " + {"collecting":"provider collection", "constructing":"local portfolio construction", "ai_review":"AI review"}[prior_stage["stage"]] +
+                   ". Saved results and completed evidence in this session remain. Nothing resumes automatically.")
+    st.caption("Keep this session open during Build. A full browser-session or server restart can lose session-only work; download completed results before leaving.")
     st.caption("Mandate → evidence → deterministic construction → committee review · research only")
     mode = "FMP live"
-    st.caption("Universe: current S&P 500 constituents + curated ETFs. Sector quality screen first, then bounded research. FMP required; AI optional. With OpenAI configured, explicit Build includes sector-aware AI theses and covariance risk budgets by default.")
-    st.caption("Provider collection runs in batches of 100 requests with a 30-second pause between batches and a 30-second read timeout per request (3-second connect timeout). Quotes use at most 100 tickers per request; concurrency remains three. Shared transport retries can add HTTP attempts and elapsed time. HTTP 429 stops further collection and preserves successful evidence. Full S&P screening may take several minutes; ordinary reruns reuse saved results.")
-    use_ai = st.checkbox("Use bounded AI interpretation and specialist review",value=bool(openai_api_key),key="architect_use_ai",
-                         help="Explicit Interpret and Build actions allow at most one call each. Build uses sector metrics for cited AI theses and conviction, followed by local covariance construction. No model retries or calls on reruns.")
+    st.caption("Universe: current S&P 500 constituents + curated ETFs. Sector quality screen first, then bounded research. FMP required; AI optional. With OpenAI configured, explicit Build includes sector-aware AI explanations of the locally selected portfolio. AI does not select holdings or set weights.")
+    with st.expander("Research coverage and collection details", expanded=False):
+        st.caption("Provider collection runs in batches of 100 requests with a 30-second pause between batches and a 30-second read timeout per request (3-second connect timeout). Quotes use at most 100 tickers per request; concurrency remains three. Shared transport retries can add HTTP attempts and elapsed time. HTTP 429 stops further collection and preserves successful evidence. Full S&P screening may take several minutes; ordinary reruns reuse saved results.")
+    st.markdown("### 1. Describe your objective")
+    st.caption("Tell us the investment question, time horizon and preferences. Interpret creates an editable draft; it does not collect market evidence.")
+    use_ai = st.checkbox("Use AI to interpret and explain",value=bool(openai_api_key),key="architect_use_ai",
+                         help="Explicit Interpret and Build actions allow at most one call each. Build uses sector metrics and local allocation rules; AI only explains the saved selections and cannot change weights. No model retries or calls on reruns.")
     prompt = st.text_area("Investment objective",value="Build an aggressive five-year growth portfolio focused on AI with diversified risk.",height=110,max_chars=1800,key="architect_prompt")
     force = st.checkbox("Refresh provider evidence on next Build",value=False,key="architect_force")
     if st.button("Interpret mandate",key="architect_interpret",type="primary"):
@@ -261,6 +277,8 @@ def render_portfolio_architect(fmp_api_key="", openai_api_key="", model_name="gp
                 if key:
                     mandate = mandate.model_copy(update={"objective":mandate.objective.replace(key,"[REDACTED]")})
             st.session_state["architect_mandate"] = mandate.model_dump()
+            st.session_state["architect_interpreted_mandate"] = mandate.model_dump()
+            st.session_state["architect_interpret_prompt"] = safe_prompt
             st.session_state["architect_notes"] = notes
             st.session_state["architect_interpret_usage"] = usage
             st.session_state["architect_editor_version"] = st.session_state.get("architect_editor_version",0)+1
@@ -274,15 +292,18 @@ def render_portfolio_architect(fmp_api_key="", openai_api_key="", model_name="gp
         for note in st.session_state.get("architect_notes",[]): st.caption(note)
         if prompt.strip() != mandate.objective.strip():
             st.caption("The prompt differs from the interpreted mandate. Click Interpret mandate to apply the revised objective.")
-        requested = _editor(mandate)
+        requested = _editor(mandate, bool(st.session_state.get("architect_interpret_usage")))
         if requested:
             try:
                 if mode == "FMP live" and not fmp_api_key:
                     raise ValueError("Configure FMP in Settings for live research.")
                 if mode == "FMP live" and use_ai and not openai_api_key:
                     raise ValueError("Configure OpenAI or disable AI; local live construction is available without it.")
+                # Preserve the submitted mandate even if collection or a rerun interrupts the build.
+                st.session_state["architect_mandate"] = requested.model_dump()
+                _build_stage("collecting")
                 names = eligible_names(requested)
-                with st.spinner("Collecting a bounded evidence snapshot and constructing the portfolio"):
+                with st.status("1 / 3 - Collecting provider evidence (a full screen can take several minutes)", expanded=True) as progress:
                     snapshot = collect(requested,fmp_api_key,force)
                     st.session_state["architect_last_evidence"] = snapshot.model_dump(mode="json")
                     eligible, _, excluded = candidates(snapshot,requested)
@@ -290,18 +311,26 @@ def render_portfolio_architect(fmp_api_key="", openai_api_key="", model_name="gp
                         mandate_eligible=len(eligible), excluded=excluded)
                     if not snapshot.securities:
                         raise ValueError("FMP rate limit reached; further collection stopped. Wait for the provider limit to reset, then explicitly refresh and Build again. Successful evidence and previous results remain." if any("429" in w for w in snapshot.warnings) else "No securities passed provider validation. Review collection diagnostics below; changing allocation constraints will not repair missing quotes.")
+                    _build_stage("constructing")
+                    progress.update(label="2 / 3 - Constructing and saving the local portfolio")
                     local = build(snapshot,requested)
                     st.session_state["architect_result"] = local.model_dump(mode="json")  # checkpoint before paid review
                     if mode == "FMP live" and use_ai:
-                        local = build(snapshot,requested,openai_api_key,model_name,True)
+                        _build_stage("ai_review", local.id)
+                        progress.update(label="3 / 3 - Explaining the sector evidence with AI; portfolio already saved")
+                        local = build(snapshot,requested,openai_api_key,model_name,True,explanation_only=True)
                     usage = st.session_state.get("architect_interpret_usage")
                     if usage: local.usage.insert(0,{**usage,"stage":"interpretation"})
                     st.session_state["architect_result"] = local.model_dump(mode="json")
                     st.session_state["architect_mandate"] = requested.model_dump()
+                    _build_stage("completed", local.id)
+                    progress.update(label="Portfolio saved" if local.ai_review_status.get("state") != "failed" else "Local portfolio saved; AI review needs an explicit retry", state="complete", expanded=False)
             except ValueError as exc:
+                _build_stage("failed")
                 # Only locally generated validation messages reach this path.
                 st.error(str(exc))
             except Exception:
+                _build_stage("failed")
                 st.error("Portfolio construction could not complete. Previous results and collected evidence remain; no automatic retry occurred.")
     latest = st.session_state.get("architect_last_evidence")
     if latest:
@@ -319,18 +348,29 @@ def render_portfolio_architect(fmp_api_key="", openai_api_key="", model_name="gp
     if st.session_state.get("architect_result"):
         from langgraphagenticai.portfolio_architect.schemas import PortfolioRecommendation
         saved_result = PortfolioRecommendation.model_validate(st.session_state["architect_result"])
-        if openai_api_key and saved_result.ai_review_status.get("state") == "failed":
+        stage = st.session_state.get("architect_build_stage", {})
+        interrupted_review = stage.get("stage") == "ai_review" and stage.get("result_id") == saved_result.id
+        if openai_api_key and (saved_result.ai_review_status.get("state") == "failed" or interrupted_review):
             if st.button("Retry AI review using saved evidence",key="architect_retry_ai"):
                 try:
+                    _build_stage("ai_review", saved_result.id)
                     with st.spinner("Reviewing saved evidence; no provider recollection"):
-                        reviewed = build(saved_result.snapshot,saved_result.mandate,openai_api_key,model_name,True)
+                        reviewed = build(saved_result.snapshot,saved_result.mandate,openai_api_key,model_name,True,explanation_only=True)
                     reviewed.usage = [*saved_result.usage,*[{**u,"action":"saved_evidence_retry"} for u in reviewed.usage]]
                     st.session_state["architect_result"] = reviewed.model_dump(mode="json")
                     saved_result = reviewed
+                    _build_stage("completed", reviewed.id)
                 except ValueError:
+                    _build_stage("failed")
                     st.error("Saved evidence no longer meets eligibility/freshness requirements. Previous results remain; explicitly refresh and Build for fresh evidence.")
                 except Exception:
+                    _build_stage("failed")
                     st.error("Saved-evidence review could not complete. Previous result remains; no automatic retry occurred.")
+        pending = st.session_state.get("architect_mandate")
+        if pending:
+            current = InvestorMandate.model_validate(pending)
+            if draft_changes(current, saved_result.mandate) or prompt.strip() != current.objective.strip():
+                st.info("Inputs differ from the saved portfolio. The report below still uses its saved mandate and evidence. Interpret a revised objective, or Build portfolio to apply reviewed controls; viewing it makes no new calls.")
         _report(saved_result,(fmp_api_key,openai_api_key))
     elif st.session_state.get("architect_last_evidence"):
         st.warning("Collection did not produce a portfolio. Review provider warnings and exclusion reasons in Latest collection diagnostics before retrying.")

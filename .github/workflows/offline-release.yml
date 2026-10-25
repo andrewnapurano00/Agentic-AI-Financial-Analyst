@@ -5,6 +5,7 @@ permissions:
 jobs:
   offline:
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     strategy:
       fail-fast: false
       matrix:
@@ -22,6 +23,9 @@ jobs:
           python -m pip install -r requirements-dev.txt -c constraints.txt
           python -m pip check
           python scripts/release_inventory.py
+          python scripts/release_gate.py --output verification/release-gates.json
+      - name: Dependency vulnerability audit
+        run: python -m pip_audit --format json --output verification/dependency-audit.json --progress-spinner off
       - name: Offline suite
         run: python -m pytest -q --junitxml=verification/pytest.xml
       - name: Compile and import
@@ -36,6 +40,7 @@ jobs:
           retention-days: 14
   container:
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
       - name: Runtime and derived offline verification
@@ -45,7 +50,7 @@ jobs:
           docker run --rm --network none axiom-verify:local
           mkdir -p verification
           docker image inspect --format '{{.Id}}' axiom-runtime:local > verification/runtime-image.txt
-          docker run -d --name axiom-health -p 7860:7860 axiom-runtime:local
+          docker run -d --name axiom-health --read-only --tmpfs /tmp:rw,noexec,nosuid,size=128m --cap-drop ALL --security-opt no-new-privileges --cpus 2 --memory 2g --pids-limit 128 -p 127.0.0.1:7860:7860 axiom-runtime:local
           for attempt in $(seq 1 60); do
             if curl --fail --silent http://127.0.0.1:7860/_stcore/health; then break; fi
             sleep 2

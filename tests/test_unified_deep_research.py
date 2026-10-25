@@ -16,6 +16,7 @@ def test_format_switch_preserves_histories_without_running_models(monkeypatch):
     app = AppTest.from_string('''
 import streamlit as st
 from langgraphagenticai.ui.deep_research_workspace import render_deep_research_workspace
+st.session_state["deep_research_intent_preview"] = False
 st.session_state.setdefault("dr_history", [{"id":"standard"}])
 st.session_state.setdefault("drv2_history", [{"id":"economy"}])
 render_deep_research_workspace(openai_api_key="", model_name="test", fmp_api_key="")

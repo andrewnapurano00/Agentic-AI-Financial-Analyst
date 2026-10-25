@@ -26,7 +26,7 @@ def test_sidebar_migrates_trader_name_and_exposes_robo_advisor(old_name):
     a.run()
     assert not a.exception
     assert a.radio(key="active_workspace").value == "AI Robo Advisor"
-    assert len(a.radio(key="active_workspace").options) == 9
+    assert len(a.radio(key="active_workspace").options) == 10
 
 
 def test_robo_advisor_has_only_live_architect_and_no_implicit_calls(monkeypatch):

@@ -403,15 +403,15 @@ def render_ai_portfolio_manager_tab(
         index=0,
     )
 
-    with st.sidebar:
-        st.header("Agentic AI Portfolio Manager")
+    with st.container(border=True):
+        st.markdown("### Portfolio settings")
         benchmark = st.text_input("Benchmark", value="SPY").upper().strip()
         period = st.selectbox("Price history window", ["1y", "2y", "5y"], index=1)
         risk_profile = st.selectbox("Risk profile", ["Conservative", "Balanced", "Aggressive"], index=1)
         max_weight = st.slider("Maximum position weight", 0.08, 0.30, 0.18, 0.01)
         max_sector_weight = st.slider("Maximum sector weight", 0.20, 0.60, 0.35, 0.01)
         cash_buffer = st.slider("Target cash buffer", 0.00, 0.20, 0.00, 0.01)
-        min_trade_weight_change = st.slider("Ignore trades smaller than", 0.001, 0.02, 0.0025, 0.001)
+        min_trade_weight_change = st.slider("Ignore trades smaller than", 0.001, 0.02, 0.0025, 0.0005, format="%.4f")
         run_button = st.button("Run hybrid AI committee", type="primary", disabled=not openai_api_key)
         st.divider()
         st.caption(f'FMP key loaded: {"Yes" if bool(fmp_api_key) else "No"}')

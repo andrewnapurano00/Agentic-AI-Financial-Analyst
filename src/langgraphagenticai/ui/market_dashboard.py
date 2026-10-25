@@ -15,6 +15,7 @@ from langgraphagenticai.utils.safety import sanitize_error
 from langgraphagenticai.providers.ticker_ribbon import load_ribbon, load_members
 from langgraphagenticai.ui.ticker_ribbon import render_ticker_ribbon
 from langgraphagenticai.ui.market_news_summary import render_news_summary
+from langgraphagenticai.analysis.executive_text import executive_text
 
 
 def render_market_ai(packet, news, api_key, model):
@@ -33,21 +34,21 @@ def render_market_ai(packet, news, api_key, model):
     if saved and saved.get("version") != SUMMARY_VERSION:
         st.info("Generate the updated executive brief for a high-level view of what is working and what is not.")
         with st.expander("Previously saved market summary"):
-            st.markdown(saved["text"])
+            st.markdown(executive_text(saved["text"]))
     elif saved:
         if saved["identity"] != summary_identity or saved["model"] != model:
             st.warning("Saved summary uses different evidence or model settings. Generate again to update it.")
         with st.container(border=True):
-            st.markdown(saved["text"])
+            st.markdown(executive_text(saved["text"]))
     else:
-        st.info("A quick executive read: what is working, what is lagging, and what to watch. Uses every available macro and sector metric once the dashboard has loaded.")
+        st.info("A fuller executive view of the past 5 trading days, month and 3 months: macro crosscurrents, sector leaders and laggards, technical confirmation and what to watch.")
     if not api_key.strip():
         st.caption("Configure OpenAI to generate a summary or ask follow-up questions.")
     with st.expander("Ask AI about this dashboard", expanded=bool(saved)):
         history = st.session_state.get("market_ai_chat", [])
         for message in history:
             with st.chat_message(message["role"]):
-                st.markdown(message["content"])
+                st.markdown(executive_text(message["content"]) if message["role"]=="assistant" else message["content"])
         chat_matches = st.session_state.get("market_chat_identity") == identity and st.session_state.get("market_chat_model") == model
         if history and not chat_matches:
             st.caption("Earlier answers used different evidence or model settings; new questions use the current dashboard.")
@@ -81,6 +82,8 @@ def render_daily_market_chart(api_key, openai_key, model, *, refresh=False):
         else:
             st.error("Enter a valid company, index or ETF ticker.")
     symbol = st.session_state.get("market_chart_symbol", "^GSPC")
+    from langgraphagenticai.ui.technical_questions import render_technical_questions
+    render_technical_questions(symbol, api_key, openai_key, model)
     previous_request = st.session_state.get("market_daily_request", (symbol, "1Y"))
     period = st.segmented_control("Daily chart range", ["1M", "3M", "1Y", "3Y", "5Y", "10Y"], default=previous_request[1], key="market_daily_range") or previous_request[1]
     chart_refresh = st.button("Refresh chart history", key="market_daily_refresh")
@@ -186,7 +189,7 @@ def render_market_dashboard(fmp_api_key="", openai_api_key="", model_name="gpt-5
     st.caption("Color and large value: 1-day price change. Small value: 5-trading-day return. Equal-size sector ETF tiles.")
     st.altair_chart(mosaic_chart(packet, None), use_container_width=True, theme=None, key="market_sector_mosaic")
     st.subheader("Macro context & sector ETFs")
-    st.caption("Returns: latest dated price versus historical adjusted close; 5/30/60 count trading observations. RSI (14) uses daily adjusted closes; SMA distance = (latest price / daily adjusted-close SMA − 1) × 100. Yield-index changes are percentages, not basis points; levels retain instrument-specific units.")
+    st.caption("Returns: latest dated price versus historical adjusted close; 5/30/60 count trading observations; 1M/3M use calendar-month anniversaries with the last adjusted-close observation on/before the anniversary (within seven days). RSI (14) uses daily adjusted closes; SMA distance = (latest price / daily adjusted-close SMA − 1) × 100. Yield-index changes are percentages, not basis points; levels retain instrument-specific units.")
     frame = pd.DataFrame([{key: value for key, value in row.items() if key != "evidence"} for row in packet["rows"]])
     percent = [c for c in frame if c.endswith("%")]
     formats = {c: lambda v: number(v, "%", True) for c in percent}

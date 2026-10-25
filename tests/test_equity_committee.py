@@ -59,3 +59,22 @@ def test_committee_rejects_out_of_universe_ticker(monkeypatch):
     )
     with pytest.raises(ValueError, match="out-of-universe"):
         run_equity_committee(packet, openai_api_key="test-only", model_name="gpt-test")
+
+
+def test_universe_schema_guides_all_ticker_fields_and_normalizes_formatting():
+    from langgraphagenticai.equity_committee import committee_output_schema
+    schema = committee_output_schema(["NVDA", "GOOGL"])
+    payload = dict(best_buy=" nvda ", runner_up=" googl ", confidence=70, verdict="BUY",
+                   summary="Saved conclusion", debate_summary="Dissent retained",
+                   specialist_views=[dict(role="risk", preferred_ticker=" nvda ", argument="Risk")])
+    decision = schema.model_validate(payload)
+    assert decision.best_buy == "NVDA" and decision.runner_up == "GOOGL"
+    assert decision.specialist_views[0].preferred_ticker == "NVDA"
+    assert '"enum": ["NVDA", "GOOGL"]' in __import__("json").dumps(schema.model_json_schema())
+    for field in ("best_buy", "runner_up"):
+        with pytest.raises(ValidationError):
+            schema.model_validate({**payload, field: "AAPL"})
+    with pytest.raises(ValidationError):
+        schema.model_validate({**payload, "specialist_views": [dict(role="risk", preferred_ticker="AAPL", argument="Risk")]})
+    with pytest.raises(ValidationError):
+        schema.model_validate({**payload, "verdict": "NO_BUY"})

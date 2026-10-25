@@ -6,6 +6,9 @@ from langgraphagenticai.ui.workspace_presentation import evidence_status
 import re
 import time
 
+from contextlib import nullcontext
+from .research_intent import render_saved_overview, render_recovery
+
 import pandas as pd
 import streamlit as st
 
@@ -66,7 +69,7 @@ def _render_quick_decision(decision: dict) -> None:
 
 @st.fragment
 def render_deep_research_v2_tab(*, openai_api_key: str, fmp_api_key: str, serper_api_key: str = "",
-                                marketaux_api_key: str = "", groq_api_key: str = "") -> None:
+                                marketaux_api_key: str = "", groq_api_key: str = "", intent=None) -> None:
     st.caption("Concise research with bounded model spend and automatic completion.")
 
     saved_history = [executive_saved_result(item) for item in st.session_state.get("drv2_history", [])]
@@ -100,7 +103,7 @@ def render_deep_research_v2_tab(*, openai_api_key: str, fmp_api_key: str, serper
 
     with st.expander("Configure new research / Run V2 pilot", expanded=not bool(active_saved)):
         with st.form("deep_research_v2_form"):
-            left, right = st.columns([2, 1])
+            left, right = (nullcontext(), nullcontext()) if intent else st.columns([2, 1])
             with left:
                 default = ", ".join(st.session_state.get("equity_report_tickers", [])[:4]) or "AAPL, MSFT"
                 st.session_state.setdefault("drv2_tickers", default)
@@ -110,27 +113,28 @@ def render_deep_research_v2_tab(*, openai_api_key: str, fmp_api_key: str, serper
                     value="Which company offers the strongest risk-adjusted long-term investment case?",
                     height=100, max_chars=4000,
                 )
-            with right:
-                mode = st.selectbox("Cost mode", list(MODES), index=0)
-                depth = st.selectbox("Research depth", ["Standard", "Extended"])
-                horizon = st.selectbox("Investment horizon", ["1–3 years", "3–12 months", "3–5 years"])
-                period_label = st.selectbox("Financial statements", ["Annual", "Quarterly"])
-            route_cols = st.columns(3)
-            light_provider = route_cols[0].selectbox("Light-stage provider", ["OpenAI", "Groq", "Ollama"])
-            default_light = "gpt-5-nano" if light_provider == "OpenAI" else "llama-3.3-70b-versatile" if light_provider == "Groq" else "llama3.1:8b"
-            light_model = route_cols[1].text_input("Light-stage model", value=default_light)
-            budget = route_cols[2].number_input("Maximum estimated model cost (USD)", min_value=0.01, max_value=25.0, value=0.35, step=0.05)
-            ollama_base_url = st.text_input("Ollama OpenAI-compatible URL", value="http://localhost:11434/v1",
-                                            disabled=light_provider != "Ollama")
-            option_cols = st.columns(4)
-            use_context = option_cols[0].checkbox("Use saved app data", value=False, disabled=True)
-            option_cols[0].caption("Quarterly-derived V2 excludes saved app packets because their financial basis and provider identity are unverified. Saved V2 runs remain available below.")
-            include_news = option_cols[1].checkbox("Include news", value=bool(serper_api_key),
-                                                       help="Use Serper company news within the requested lookback, plus planner-requested web research.")
-            stop_after_evidence = False
-            decision_mode = option_cols[3].selectbox("Decision stage", ["None", "Quick decision", "Full committee"])
-            cache_policy = st.radio("Reuse policy", ["Use saved result", "Force fresh research"], horizontal=True)
-            news_days = st.select_slider("News lookback", options=[7, 30, 90], value=30)
+            with st.expander("Advanced settings", expanded=False) if intent else nullcontext():
+                with right:
+                    mode = st.selectbox("Cost mode", list(MODES), index=list(MODES).index(intent["mode"]) if intent else 0)
+                    depth = st.selectbox("Research depth", ["Standard", "Extended"], index=int(bool(intent and intent["depth"] == "Extended")))
+                    horizon = st.selectbox("Investment horizon", ["1–3 years", "3–12 months", "3–5 years"])
+                    period_label = st.selectbox("Financial statements", ["Annual", "Quarterly"])
+                route_cols = st.columns(3)
+                light_provider = route_cols[0].selectbox("Light-stage provider", ["OpenAI", "Groq", "Ollama"])
+                default_light = "gpt-5-nano" if light_provider == "OpenAI" else "llama-3.3-70b-versatile" if light_provider == "Groq" else "llama3.1:8b"
+                light_model = route_cols[1].text_input("Light-stage model", value=default_light)
+                budget = route_cols[2].number_input("Maximum estimated model cost (USD)", min_value=0.01, max_value=25.0, value=0.35, step=0.05)
+                ollama_base_url = st.text_input("Ollama OpenAI-compatible URL", value="http://localhost:11434/v1",
+                                                disabled=light_provider != "Ollama")
+                option_cols = st.columns(4)
+                use_context = option_cols[0].checkbox("Use saved app data", value=False, disabled=True)
+                option_cols[0].caption("Quarterly-derived V2 excludes saved app packets because their financial basis and provider identity are unverified. Saved V2 runs remain available below.")
+                include_news = option_cols[1].checkbox("Include news", value=bool(serper_api_key),
+                                                           help="Use Serper company news within the requested lookback, plus planner-requested web research.")
+                stop_after_evidence = False
+                decision_mode = option_cols[3].selectbox("Decision stage", ["None", "Quick decision", "Full committee"], index=2 if intent and intent["committee"] else 0)
+                cache_policy = st.radio("Reuse policy", ["Use saved result", "Force fresh research"], horizontal=True)
+                news_days = st.select_slider("News lookback", options=[7, 30, 90], value=30)
             submitted = st.form_submit_button("Run V2 pilot", type="primary", width="stretch")
 
     history = st.session_state.setdefault("drv2_history", [])
@@ -179,6 +183,8 @@ def render_deep_research_v2_tab(*, openai_api_key: str, fmp_api_key: str, serper
                         checkpoint=checkpoint,
                     )
                     result = manager.run(request, context)
+                    from langgraphagenticai.state.verified_research import bind_collected_run
+                    bind_collected_run(st.session_state, result, "Low cost V2 pilot", fmp_api_key)
                     st.session_state["drv2_history"] = stamp_saved_result(
                         result, st.session_state.get("drv2_history", []))
                     result.update(metadata)
@@ -201,6 +207,30 @@ def render_deep_research_v2_tab(*, openai_api_key: str, fmp_api_key: str, serper
     selected = st.selectbox("V2 run history", list(lookup), key="drv2_active_run",
                             format_func=lambda key: f"{', '.join(lookup[key]['request']['symbols'])} · {lookup[key].get('cost_mode')} · Run started: {format_saved_time(lookup[key].get('created_at'))} · {key[:6]}")
     result = lookup[selected]
+    if intent:
+        def recovery_manager():
+            runtime = result["v2_runtime"]
+            return _manager_v2(request=ResearchRequest(**result["request"]), config=result["v2_config"],
+                openai_api_key=openai_api_key, groq_api_key=groq_api_key, fmp_api_key="",
+                serper_api_key="", marketaux_api_key="", ollama_base_url=runtime.get("ollama_base_url", "http://localhost:11434/v1"),
+                budget=runtime["budget"], stop_after_evidence=False, saved=result)
+        continued = render_recovery(result, recovery_manager, key="drv2_continue_" + selected,
+            enabled=bool(result.get("v2_config") and result.get("v2_runtime", {}).get("budget") is not None and openai_api_key))
+        if continued:
+            if not continued.get("continuation_error"):
+                st.session_state["drv2_history"] = stamp_saved_result(continued, st.session_state.get("drv2_history", []))
+            _save_v2(continued)
+            st.rerun()
+        render_saved_overview(result, "Low cost V2 pilot", api_key=openai_api_key,
+            model=result.get("v2_config", {}).get("routes", {}).get("draft", {}).get("model", ""),
+            credentials=(openai_api_key, groq_api_key, fmp_api_key, serper_api_key, marketaux_api_key))
+    else:
+        from .investment_memo import render_investment_memo
+        render_investment_memo(result, credentials=(openai_api_key, groq_api_key, fmp_api_key, serper_api_key, marketaux_api_key), key="pilot")
+        from .claim_verification import render_claim_audit
+        render_claim_audit(result, credentials=(openai_api_key, groq_api_key, fmp_api_key, serper_api_key, marketaux_api_key))
+    from .verified_research import render_verified_handoff
+    render_verified_handoff(result, "Low cost V2 pilot", fmp_api_key)
     config = result.get("v2_config", {})
     request = ResearchRequest(**result["request"])
 

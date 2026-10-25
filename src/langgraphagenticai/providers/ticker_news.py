@@ -6,6 +6,7 @@ import streamlit as st
 from langgraphagenticai.providers.fmp_http import get_fmp_json
 from langgraphagenticai.providers.market_brief_news import merge_news
 from langgraphagenticai.tools.serper_tools import SerperClient
+from langgraphagenticai.providers.news_content import preview
 from langgraphagenticai.state.research_context import normalize_company_symbol
 from langgraphagenticai.utils.safety import redact_sensitive_text
 
@@ -35,11 +36,18 @@ def _collect(symbol,company,fmp_key,marketaux_key,serper_key):
                     if not isinstance(item,dict):continue
                     entities=[str(e.get("symbol") or "").strip().upper() for e in item.get("entities",[]) if isinstance(e,dict)]
                     if entities and symbol not in entities:continue
-                    rows.append(dict(title=item.get("title"),url=item.get("url"),snippet=item.get("description") or item.get("snippet"),published=item.get("published_at"),publisher=item.get("source")))
+                    rows.append(dict(title=item.get("title"),url=item.get("url"),snippet=preview(item),published=item.get("published_at"),publisher=item.get("source")))
             else:
-                payload=SerperClient(key).search(f"{symbol} {company} stock company news",days=7,limit=8)
-                if not payload.get("ok"):raise ValueError("Company search unavailable")
-                rows=payload.get("results",[])[:8]
+                client=SerperClient(key)
+                query=f'"{company}" stock news' if company != symbol else f'{symbol} stock news'
+                payload=client.search(query,days=7,limit=8)
+                rows=list(payload.get("results",[]))[:8]
+                # News and ordinary Google search index different material. A bounded
+                # web fallback recovers company coverage absent from the news index.
+                if len(rows)<3:
+                    fallback=client.search(query,news=False,days=7,limit=5,filter_dates=True)
+                    rows.extend(fallback.get("results",[])[:5])
+                if not rows:raise ValueError("Company search unavailable")
             normalized=[]
             checked_at=datetime.now(timezone.utc)
             for row in rows:

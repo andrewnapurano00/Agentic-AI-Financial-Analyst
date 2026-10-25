@@ -47,7 +47,7 @@ def load_dashboard(api_key):
                                    quote_timezone="UTC" if symbol == "BTCUSD" else "America/New_York")
         packet["rows"].append({"Instrument": name, "Ticker": symbol, "Group": "Sector" if name in SECTORS else "Macro",
             "Level": record.get("price"), "1D %": record.get("day"), "5D %": record.get("week"), "30D %": record.get("30D"),
-            "60D %": record.get("60D"), "YTD %": record.get("ytd"),
+            "60D %": record.get("60D"), "1M %": record.get("1M"), "3M %": record.get("3M"), "YTD %": record.get("ytd"),
             **{key: value for key, value in record.items() if key.startswith("vs SMA") or key == "RSI (14)"}, "evidence": record})
         if name in SECTORS:
             packet["sectors"][name] = record

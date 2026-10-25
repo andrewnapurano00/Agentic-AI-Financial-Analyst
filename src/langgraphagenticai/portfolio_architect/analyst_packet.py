@@ -45,6 +45,7 @@ def research_packet(securities, scores, mandate, macro=None, sector_screen=None,
             packed_facts.append(item)
         rows.append({"ticker":s.ticker, "asset":s.asset, "category":s.sector, "themes":s.themes,
                      "sector_lens":{"framework":lens["framework"], "missing_required":lens["missing_required"][:5], "missing_required_count":len(lens["missing_required"]), "specialist_gaps":lens.get("specialist_gaps",[])[:3]},
+                     **({"fund_assessment":{k:v for k,v in lens.items() if k in {"role", "conditional_driver", "risk", "observed_history", "valuation_status", "policy"}}} if s.asset == "etf" else {}),
                      "facts":packed_facts,
                      "provider":s.provider, "retrieved_at":s.retrieved_at,
                      "local_priority":ranks.get(s.ticker), "mandate_fit":{k:v for k,v in mandate_priority(s,mandate,0)[2].items() if k != "policy"},

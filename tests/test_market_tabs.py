@@ -87,7 +87,7 @@ def test_movers_missing_average_volume_preserves_rankings(monkeypatch):
 
 def test_market_range_interaction_does_not_call_ai(market_dashboard_stub):
     ui, packet, calls = market_dashboard_stub
-    app = AppTest.from_string("from langgraphagenticai.ui.introduction_tab import render_introduction_tab\nrender_introduction_tab()").run(timeout=30)
+    app = AppTest.from_string("from langgraphagenticai.ui.introduction_tab import render_introduction_tab\nrender_introduction_tab()", default_timeout=30).run(timeout=30)
     app.button(key="intro_refresh").click().run()
     assert not app.exception
     app.get("button_group")[0].set_value("3M").run(); assert calls[-1] == ("^GSPC", "3M") and not app.exception

@@ -8,6 +8,14 @@
 6. Open **Evidence & exports** for the screening audit, original facts, metric coverage, exclusion reasons and Market Brief market indicators. VIX, market trend, rates, dollar and oil observations provide descriptive risk/tailwind context. They do not predict returns or override your cash target. Stale, future or undated macro observations are omitted. Unavailable macro evidence never implies a benign regime.
 7. Download CSV, JSON or HTML, or **Save session snapshot**. JSON/HTML retain screening and position evidence but remove raw objectives and external URLs. News source links remain available in the app. Downloads and saved reports do not collect data or call AI. Download important work before closing the session.
 
+## Guided objective, mandate and review
+
+1. In **1. Describe your objective**, enter the question and click **Interpret mandate**. No provider evidence is collected by interpretation. AI interpretation, when enabled, is an explicit paid action.
+2. In **2. Review your mandate**, inspect the style, horizon, risk preference and hypothetical USD amount. The preview identifies prompt-extracted choices, **User edit**, or a default/AI suggestion marked **Needs confirmation**. The local parser supports numeric 1/3/5/10-year horizons, risk/style and curated theme keywords; it does not extract account amounts or interpret every requirement. Worded/unsupported horizons and amounts require manual confirmation. Conflicting risk words receive a visible clarification.
+3. Open **Advanced settings** for all existing holdings, asset eligibility, sizing, cash, position/sector caps, exclusions, themes and benchmark controls. Form edits apply together when **Build portfolio** confirms the choices. These controls remain available without changing existing defaults.
+4. Start with **Your portfolio at a glance** for ticker, name, allocation and short selection reasons, then read the holding summaries below. Open **Download concise portfolio memo** for the executive PDF. Open **Detailed research, risk & exports** for **Applied constraints and limitations** and the existing Allocation, holding research, risk, committee and evidence/export tabs. Cash and concentration limits are distinct from indicative risk preferences. Historical volatility and drawdown estimates cannot guarantee future losses or suitability; fund-category caps do not establish ETF underlying sector exposures.
+5. Changing a draft preserves the generated report with its original mandate and evidence. A mismatch notice appears on the next submitted/rerun state; unsent form edits remain local to the form until Build. Interpret a changed objective before applying it. Invalid constraints or provider failure preserve the prior report and downloads. Saving, opening disclosures and ordinary reruns never rebuild or retry AI.
+
 ## Collection and recovery
 
 If the stable S&P membership endpoint is restricted or unavailable (HTTP 402/403/404), Build tries the legacy FMP membership endpoint once. The saved screening audit records the actual source and warning. Both endpoints must still provide a complete constituent list; authentication, rate-limit and connection failures do not trigger this fallback. After a failure, enable **Refresh provider evidence on next Build** and click **Build portfolio** to retry.
@@ -26,7 +34,7 @@ Use **Latest collection diagnostics** for partial provider failures and exclusio
 
 ## Choose how positions are weighted
 
-1. Select **AI conviction + covariance risk budgets** to let validated AI conviction influence target risk shares. Low/medium/high conviction correspond to relative budgets of 0.8/1.0/1.2. With AI off or invalid, equal risk budgets apply.
+1. Select **Covariance risk budgets** for local historical risk-budget sizing. In the active Robo Advisor workflow, AI only explains the selected portfolio and cannot influence risk budgets or weights. Earlier saved AI-selection results retain their disclosed subjective budgets.
 2. Select **Equal covariance risk budgets** to balance historical risk contributions before applying caps, or **Constrained minimum variance** to minimize historical covariance risk within your cash, position and sector limits. These methods use correlations across holdings, not just individual volatility. **Equal weight** and the two labeled legacy heuristics remain available.
 3. Click **Build portfolio** to apply a changed method. Review **Allocation and risk contribution**: capital weights, target risk budgets and achieved risk shares can differ. Caps are applied to risk-budget portfolios after the initial solve, so exact risk parity is not promised. Cash is reserved first. Risk-budget targets are not return estimates.
 4. Inspect effective holdings (concentration), diversification ratio and sizing volatility, alongside the dated historical mix diagnostics in **Risk & tradeoffs**. Sizing uses 20% diagonal-shrunk sample covariance; historical mix volatility uses unshrunk sample returns. Both annualize at 252 sessions and assume zero cash return/risk-free rate. At least 60 aligned returns and 90% common-date coverage are required. Missing history, unstable variance or a failed solver causes a disclosed equal-weight fallback subject to caps.
@@ -46,3 +54,22 @@ Large AI Robo Advisor evidence downloads use **Evidence JSON (.gz)** when needed
 Read **Conviction / AI rationale** in Allocation for the saved rating and brief company-specific AI explanation. The status above the tabs distinguishes completed AI review, local-only selection and a failed AI review with sanitized diagnostics. A missing review never receives an invented AI summary. An older saved AI thesis can supply the brief explanation without another call; older local results stay unrated. For a growth objective, choose **Investment style ? Growth**, review **Preferred curated themes**, then explicitly **Build portfolio**. Existing saved reports remain unchanged until you build again. The stock universe remains current S&P 500 constituents and the ETF universe remains curated; no individual ticker exclusions were added by this correction.
 
 If a saved Robo Advisor result says AI review was unavailable, click **Retry AI review using saved evidence** when OpenAI is configured. This explicit action reuses collected company evidence without repeating provider collection. If the saved quotes are too old, the app keeps your result and asks you to refresh and Build instead. Downloads and ordinary reruns never retry AI automatically.
+
+
+### Optional portfolio risk policy
+
+1. Open **AI Robo Advisor**, interpret the objective, then expand **Advanced settings** in **2. Review your mandate**.
+2. To require a historical check, enable **Enforce historical-volatility ceiling** and set **Historical annualized volatility ceiling (%)**. Confirm with **Build portfolio**. This checks an aligned historical price-return estimate, not future losses or personal suitability.
+3. If the ceiling fails or history is insufficient/stale, the build stops and the previous portfolio stays available. Explicitly change cash, sizing, holdings or the ceiling, then build again. Limits are never relaxed automatically.
+4. In **Risk & tradeoffs**, review the saved policy checks, concentration warnings and hypothetical account shocks. Shocks use stated assumptions and unchanged cash; they are not forecasts. ETF underlying exposure, benchmark constituent weights and account turnover/costs are unavailable when supporting holdings and cost inputs are missing.
+5. Use **Evidence JSON** or **Research HTML** to retain the saved policy and shock assumptions. Legacy results without this audit remain readable; explicitly build to create a new audit.
+
+
+### Disabled monitoring preparation
+
+Save the portfolio with **Save session snapshot**, then open **Monitoring plan ? activation unavailable**, explicitly consent and choose **Prepare monitoring plan**. The plan retains saved holdings, constraints, benchmark, thesis and original evidence times. Review retained plans with **Disabled monitoring plan**. **Enable monitoring** remains disabled until production identity, durable job authorization/isolation and eligible advisor evidence adapters are verified. No refresh, model call, notification or trade starts; preparing the plan does not make old inputs fresh.
+
+
+## Simplified sector-evidence reader
+
+New Builds use sector metrics and the confirmed mandate to select holdings, local allocation rules to size them, and one optional AI analyst to explain the fixed portfolio. Review the recommendation snapshot, then select a holding to see its supporting metrics, main risk and thesis-break condition. Company sector priorities reuse Equity Report applicability; this does not establish full Equity Report metric coverage or audited TTM parity. ETFs retain fund allocation roles and missing-data caveats. Saved evidence, risk policy, advanced controls and exports remain in the detailed expander.

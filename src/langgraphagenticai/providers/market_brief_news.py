@@ -1,12 +1,20 @@
-"""One bounded request per configured market-news provider; no article scraping."""
+"""Bounded thematic market-news collection; no article scraping or model calls."""
 from datetime import datetime, timedelta, timezone
 from urllib.parse import urlsplit, urlunsplit, parse_qsl, urlencode
 import requests
 import streamlit as st
 import truststore
 from langgraphagenticai.tools.serper_tools import SerperClient
+from langgraphagenticai.providers.news_content import preview
 from langgraphagenticai.providers.fmp_http import get_fmp_json
 from langgraphagenticai.providers.article_text import normalize_article_body, safe_news_url
+
+NEWS_LIMIT = 50
+SERPER_QUERIES = (
+    "US stock market outlook sector rotation earnings",
+    "US Federal Reserve interest rates inflation jobs economic growth markets",
+    "global markets Treasury yields dollar oil geopolitical risk US stocks",
+)
 
 # Keep certificate verification enabled while honoring the OS trusted roots.
 truststore.inject_into_ssl()
@@ -27,7 +35,9 @@ def merge_news(rows):
         if key in merged:
             previous = merged[key]
             previous["providers"] = sorted(set(previous["providers"] + row["providers"]))
-            for field in ("snippet", "published", "publisher"):
+            if len(row.get("snippet") or "") > len(previous.get("snippet") or ""):
+                previous["snippet"] = row["snippet"]
+            for field in ("published", "publisher"):
                 if not previous.get(field) and row.get(field):
                     previous[field] = row[field]
             if len(row.get("article_text") or "") > len(previous.get("article_text") or ""):
@@ -37,7 +47,7 @@ def merge_news(rows):
             merged[key] = {k: v for k, v in {**row, "url": url}.items() if k != "sentiment"}
             if title:
                 titles[title] = key
-    return list(merged.values())[:30]
+    return list(merged.values())[:NEWS_LIMIT]
 
 
 @st.cache_data(ttl=600, show_spinner=False)
@@ -45,15 +55,19 @@ def load_market_news(serper_api_key="", marketaux_api_key="", fmp_api_key=""):
     now = datetime.now(timezone.utc)
     rows, warnings = [], []
     if serper_api_key.strip():
-        try:
-            result = SerperClient(serper_api_key).search("US stock market", days=2, limit=10)
-        except Exception:
-            result = {"ok": False, "error": "Market headlines unavailable; other provider results preserved."}
-        if not result.get("ok"):
-            warnings.append("Serper: " + str(result.get("error") or "No market headlines returned."))
-        for item in result.get("results", []):
-            rows.append({"title": item["title"], "url": item["url"], "snippet": item.get("snippet", ""),
-                         "published": item.get("published"), "publisher": item.get("publisher"), "providers": ["Serper"]})
+        for query in SERPER_QUERIES:
+            try:
+                result = SerperClient(serper_api_key).search(query, days=2, limit=10)
+            except Exception:
+                result = {"ok": False, "error": "Market headlines unavailable; other provider results preserved."}
+            if not result.get("ok"):
+                # Provider diagnostics are kept outside executive prose.
+                warnings.append("Serper: " + str(result.get("error") or "Market search unavailable."))
+            for item in result.get("results", []):
+                if not isinstance(item, dict):
+                    continue
+                rows.append({"title": str(item.get("title") or "Untitled")[:500], "url": item.get("url"), "snippet": item.get("snippet", ""),
+                             "published": item.get("published"), "publisher": item.get("publisher"), "providers": ["Serper"]})
     else:
         warnings.append("Configure Serper for search-based market headlines.")
     if marketaux_api_key.strip():
@@ -71,7 +85,7 @@ def load_market_news(serper_api_key="", marketaux_api_key="", fmp_api_key=""):
                 if not isinstance(item, dict):
                     continue
                 rows.append({"title": str(item.get("title") or "Untitled")[:500], "url": item.get("url"),
-                    "snippet": str(item.get("description") or item.get("snippet") or "")[:2000],
+                    "snippet": preview(item),
                     "published": item.get("published_at"), "publisher": item.get("source"), "providers": ["Marketaux"]})
         except requests.exceptions.SSLError:
             warnings.append("Marketaux HTTPS certificate verification failed. Restart the app with OS trust-store support installed, or configure a trusted CA bundle.")
@@ -111,4 +125,13 @@ def load_market_news(serper_api_key="", marketaux_api_key="", fmp_api_key=""):
             warnings.append("FMP article bodies unavailable; headline/snippet coverage retained. Full publisher articles are not inferred from previews.")
     else:
         warnings.append("Configure FMP for general market headlines.")
-    return {"articles": merge_news(rows), "warnings": warnings, "retrieved_at": now.isoformat()}
+    articles = merge_news(rows)
+    configured = {"Serper":bool(serper_api_key.strip()), "Marketaux":bool(marketaux_api_key.strip()), "FMP":bool(fmp_api_key.strip())}
+    coverage = {provider:{"configured":enabled,
+                         "returned_rows":sum(provider in row.get("providers", []) for row in rows),
+                         "retained_stories":sum(provider in row.get("providers", []) for row in articles)}
+                for provider,enabled in configured.items()}
+    return {"articles": articles, "warnings": list(dict.fromkeys(warnings)), "retrieved_at": now.isoformat(),
+            "coverage":coverage, "collection_policy":{"lookback_days_requested":2, "serper_searches":len(SERPER_QUERIES) if serper_api_key.strip() else 0,
+                "story_cap":NEWS_LIMIT, "rows_before_merge":len(rows), "retained_stories":len(articles),
+                "note":"Bounded samples, not all market news. Requested search lookback is not verified publication timing; FMP latest routes may include older stories."}}

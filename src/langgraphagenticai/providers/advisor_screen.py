@@ -1,6 +1,7 @@
 """Explicit S&P screen -> bounded research collection; cached separately from AI."""
 from datetime import datetime, timezone
 from concurrent.futures import ThreadPoolExecutor
+from threading import Event
 import streamlit as st
 from langgraphagenticai.providers.fmp_http import get_fmp_json
 from langgraphagenticai.providers.advisor_batches import RequestBatch
@@ -62,32 +63,34 @@ def load_screen(api_key, _budget=None):
     members, membership_source, warnings = load_membership(api_key, _budget=budget)
     stamp = datetime.now(timezone.utc).isoformat()
     data, sources = {}, {}
+    # Regular endpoints match Equity Report; batching is client-side pacing,
+    # not a subscription-dependent bulk endpoint or multi-symbol API contract.
     for route in ("ratios-ttm-bulk", "key-metrics-ttm-bulk"):
-        sources[route] = route
-        if budget.stopped.is_set():
-            data[route] = {}
-            continue
-        try:
-            data[route] = unique_rows(budget.request(get_fmp_json, BASE+route, api_key=api_key))
-        except Exception as exc:
-            data[route] = {}
-            warnings.append(route+": "+failure_note(exc))
-            # A plan restriction alone permits the disclosed standard-endpoint path.
-            # Never fan out on authentication, TLS, rate-limit or transient failures.
-            if getattr(exc, "status_code", None) in (402, 403):
-                sources[route] = route.removesuffix("-bulk")
-                warnings.append(route+": standard per-company fallback; at most 550 requests, concurrency three, shared bounded retries.")
-                def fetch(symbol):
-                    if budget.stopped.is_set():
-                        return symbol, {}
-                    try:
-                        values = unique_rows(budget.request(get_fmp_json, BASE+route.removesuffix("-bulk"), api_key=api_key,
-                                                        params={"symbol": symbol}))
-                        return symbol, values.get(symbol, {})
-                    except Exception:
-                        return symbol, {}  # Coverage/exclusion audit exposes missing facts.
-                with ThreadPoolExecutor(max_workers=3) as pool:
-                    data[route] = dict(pool.map(fetch, sorted(members)))
+        regular = route.removesuffix("-bulk")
+        sources[route] = regular
+        access_denied = Event()
+        def fetch(symbol):
+            if access_denied.is_set():
+                return symbol, {}, "skipped after endpoint authentication/access failure"
+            if budget.stopped.is_set():
+                return symbol, {}, None
+            try:
+                values = unique_rows(budget.request(get_fmp_json, BASE+regular,
+                    api_key=api_key, params={"symbol": symbol}))
+                value = values.get(symbol, {})
+                return symbol, value, None if value else "unique response unavailable"
+            except Exception as exc:
+                if getattr(exc, "status_code", None) in (401, 402, 403):
+                    access_denied.set()
+                return symbol, {}, failure_note(exc)
+        with ThreadPoolExecutor(max_workers=3) as pool:
+            collected = list(pool.map(fetch, sorted(members)))
+        data[route] = {symbol:value for symbol,value,_ in collected}
+        failures = [note for _,_,note in collected if note]
+        if failures:
+            counts = {note:failures.count(note) for note in sorted(set(failures))}
+            warnings.append(regular+": "+str(len(failures))+"/"+str(len(members))+
+                            " symbols unavailable; "+"; ".join(str(n)+" "+note for note,n in counts.items()))
     if budget.stopped.is_set():
         warnings.append(budget.warning)
     rows = []
@@ -100,7 +103,7 @@ def load_screen(api_key, _budget=None):
         rows.append({"symbol": symbol, "sector": clean(member.get("sector") or "Unknown", api_key),
                      "facts": [f.model_dump() for f in facts], "values": {f.field:f.value for f in facts}})
     return {"ranked": rank_rows(rows), "retrieved_at": stamp, "membership_source": membership_source,
-            "membership_count": len(members), "warnings": warnings, "rate_limited":budget.stopped.is_set(),
+            "membership_count": len(members), "collection_policy": "Regular per-symbol TTM endpoints; up to 1100 logical requests, three workers, shared 100-request gate and 30-second cooldown; transport retries are separately bounded. Credential-scoped screen cache: one hour.", "warnings": warnings, "rate_limited":budget.stopped.is_set(),
             "method": "Equity Report sector-priority weighted metric percentiles (required 2, preferred 1, other applicable 0.5); missing = zero contribution, minimum 60% coverage and three peer-ranked metrics, positive margin/ROA. At least three peers per metric. REITs excluded without specialist evidence. Two leaders per framework then highest scores to 30. ETFs evaluated separately; no best-future-performer guarantee."}
 
 

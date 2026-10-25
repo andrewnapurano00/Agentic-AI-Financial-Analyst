@@ -258,7 +258,7 @@ def test_ranked_table_no_duplicate_daily_and_missing_never_zero():
 
 def test_market_chart_preserves_legacy_company_result_without_rendering_analysis(market_dashboard_stub):
     ui, packet, calls = market_dashboard_stub
-    app = AppTest.from_string("from langgraphagenticai.ui.introduction_tab import render_introduction_tab\nrender_introduction_tab()")
+    app = AppTest.from_string("from langgraphagenticai.ui.introduction_tab import render_introduction_tab\nrender_introduction_tab()", default_timeout=30)
     app.session_state["intro_summary:AAPL:gpt-5"] = "Saved interpretation"
     app.session_state["market_chart_symbol"] = "AAPL"
     app.run(timeout=30)

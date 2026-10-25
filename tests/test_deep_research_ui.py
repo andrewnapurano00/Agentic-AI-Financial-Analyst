@@ -125,7 +125,9 @@ class ResearchUITests(unittest.TestCase):
         self.assertFalse(any("unverified draft" in item.value for item in app.warning))
         self.assertFalse(any("missing primary source" in item.value for item in app.caption))
         self.assertFalse(any("Saved research draft" in item.label for item in app.expander))
-        self.assertFalse(any("E001" in item.value for item in app.markdown))
+        # AX-09's separate memo retains citations; the original reader remains clean.
+        from langgraphagenticai.deep_research.presentation import clean_report_markdown
+        self.assertNotIn("E001", clean_report_markdown(final["report"]))
         self.assertTrue(any("$111.5" in item.value or r"\$111.5" in item.value for item in app.markdown))
 
     @patch("langgraphagenticai.ui.deep_research_tab._manager")

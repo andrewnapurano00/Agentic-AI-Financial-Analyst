@@ -3,6 +3,9 @@ from __future__ import annotations
 from langgraphagenticai.ui.app_shell import render_evidence_row
 from langgraphagenticai.ui.workspace_presentation import evidence_status, source_link
 
+from contextlib import nullcontext
+from .research_intent import render_saved_overview, render_recovery
+
 import pandas as pd
 import re
 import time
@@ -28,7 +31,7 @@ from langgraphagenticai.ui.research_news import render_serper_news_coverage
 
 
 def _manager(openai_api_key, model_name, fmp_api_key, serper_api_key, marketaux_api_key,
-             progress=None, on_text=None, checkpoint=None):
+             progress=None, on_text=None, checkpoint=None, saved=False):
     controls = {"OPENAI_API_KEY": openai_api_key, "selected_model": model_name,
                 "timeout": 150, "max_retries": 0, "stream_usage": True}
     if model_name in {"gpt-5", "gpt-5-mini", "gpt-5-nano"}:
@@ -39,8 +42,8 @@ def _manager(openai_api_key, model_name, fmp_api_key, serper_api_key, marketaux_
         utility_controls = dict(controls, selected_model="gpt-5-mini", reasoning_effort="minimal")
         utility_llm = OpenAILLM(utility_controls).get_llm_model()
     return AuditedResearchManager(
-        llm, FinancialDataSource(fmp_api_key), SerperClient(serper_api_key),
-        audited_finance_tools(get_finance_tools(fmp_api_key, openai_api_key, marketaux_api_key)), progress,
+        llm, FinancialDataSource("" if saved else fmp_api_key), SerperClient("" if saved else serper_api_key),
+        [] if saved else audited_finance_tools(get_finance_tools(fmp_api_key, openai_api_key, marketaux_api_key)), progress,
         on_text=on_text, checkpoint=checkpoint, utility_llm=utility_llm, auto_finish=True,
         single_pass=True, interpretive_review=False, allow_clarification_retry=False,
     )
@@ -240,7 +243,7 @@ def _render_crew_decision(decision: dict) -> None:
 
 @st.fragment
 def render_deep_research_tab(*, openai_api_key: str, model_name: str, fmp_api_key: str,
-                             serper_api_key: str = "", marketaux_api_key: str = "") -> None:
+                             serper_api_key: str = "", marketaux_api_key: str = "", intent=None) -> None:
     st.caption("From company evidence to an investment thesis. Investigate one business or compare up to four.")
     saved_run_slot = st.container()
     with st.expander("Configure new research", expanded=not bool(st.session_state.get("dr_history"))):
@@ -263,24 +266,25 @@ def render_deep_research_tab(*, openai_api_key: str, model_name: str, fmp_api_ke
         if "dr_tickers" not in st.session_state:
             st.session_state["dr_tickers"] = ", ".join(st.session_state.get("equity_report_tickers", [])[:4]) or "AAPL, MSFT"
         with st.form("deep_research_form"):
-            left, right = st.columns([2, 1])
+            left, right = (nullcontext(), nullcontext()) if intent else st.columns([2, 1])
             with left:
                 ticker_text = st.text_input("Companies", key="dr_tickers", help="One to four ticker symbols, separated by commas.")
                 question = st.text_area("Research question", value="Which company offers the stronger long-term investment case? Examine business quality, fundamentals, valuation, technicals, recent news sentiment, catalysts, and downside risks.", height=125, max_chars=4000)
-            with right:
-                horizon = st.selectbox("Investment horizon", ["1–3 years", "3–12 months", "3–5 years"])
-                depth = st.selectbox("Research depth", ["Standard", "Extended"], help="Both collect the core datasets. Standard adds up to 4 targeted tool investigations; Extended adds up to 8.")
-                period_label = st.selectbox("Financial statements", ["Annual", "Quarterly"])
-                news_days = st.selectbox("News lookback (days)", [7, 30, 90], index=1)
-            options = st.columns(3)
-            use_context = options[0].checkbox("Include saved data from other tabs", value=False, disabled=True)
-            options[0].caption("Fresh research uses audited quarterly statements. Other saved pages have unverified financial bases; saved research remains available below.")
-            include_news = options[1].checkbox("Include Serper news and web research", value=bool(serper_api_key))
-            use_crewai = options[2].checkbox(
-                "Enable CrewAI investment committee",
-                value=False,
-                help="After research, three agents debate fundamentals, valuation, and risk before issuing BUY/HOLD/SELL calls.",
-            )
+            with st.expander("Advanced settings", expanded=False) if intent else nullcontext():
+                with right:
+                    horizon = st.selectbox("Investment horizon", ["1–3 years", "3–12 months", "3–5 years"])
+                    depth = st.selectbox("Research depth", ["Standard", "Extended"], index=int(bool(intent and intent["depth"] == "Extended")), help="Both collect the core datasets. Standard adds up to 4 targeted tool investigations; Extended adds up to 8.")
+                    period_label = st.selectbox("Financial statements", ["Annual", "Quarterly"])
+                    news_days = st.selectbox("News lookback (days)", [7, 30, 90], index=1)
+                options = st.columns(3)
+                use_context = options[0].checkbox("Include saved data from other tabs", value=False, disabled=True)
+                options[0].caption("Fresh research uses audited quarterly statements. Other saved pages have unverified financial bases; saved research remains available below.")
+                include_news = options[1].checkbox("Include Serper news and web research", value=bool(serper_api_key))
+                use_crewai = options[2].checkbox(
+                    "Enable CrewAI investment committee",
+                    value=bool(intent and intent["committee"]),
+                    help="After research, three agents debate fundamentals, valuation, and risk before issuing BUY/HOLD/SELL calls.",
+                )
             st.caption("Research completes automatically using the available information. Saved results stay in this session.")
             submitted = st.form_submit_button("Start deep research", type="primary", width="stretch", disabled=not openai_api_key)
 
@@ -315,6 +319,8 @@ def render_deep_research_tab(*, openai_api_key: str, model_name: str, fmp_api_ke
                     preview.markdown(re.sub(r"(?<!\\)\$", r"\\$", clean_report_markdown(text)))
 
                 result = _manager(*factory_args, progress=progress, on_text=on_text, checkpoint=checkpoint).run(request, context)
+                from langgraphagenticai.state.verified_research import bind_collected_run
+                bind_collected_run(st.session_state, result, "Standard V1", fmp_api_key)
                 result["model"] = model_name
                 result["crewai_enabled"] = use_crewai
                 if use_crewai and result.get("report") and result.get("status") == "complete" and result.get("delivery_outcome")!="limited_evidence":
@@ -359,6 +365,22 @@ def render_deep_research_tab(*, openai_api_key: str, model_name: str, fmp_api_ke
         chosen = st.selectbox("Research history", list(lookup), key="dr_active_run",
                               format_func=lambda key: f"{', '.join(lookup[key]['request']['symbols'])} · {lookup[key]['created_at']} · {lookup[key]['status']}")
         result = lookup[chosen]
+        if intent:
+            continued = render_recovery(result, lambda: _manager(
+                openai_api_key, result.get("model") or model_name, "", "", "", saved=True),
+                key="dr_continue_" + chosen, enabled=bool(openai_api_key))
+            if continued:
+                st.session_state["dr_history"] = [continued if r["id"] == chosen else r for r in history]
+                st.rerun()
+            render_saved_overview(result, "Standard V1", api_key=openai_api_key, model=result.get("model") or model_name,
+                credentials=(openai_api_key, fmp_api_key, serper_api_key, marketaux_api_key))
+        else:
+            from .investment_memo import render_investment_memo
+            render_investment_memo(result, credentials=(openai_api_key, fmp_api_key, serper_api_key, marketaux_api_key), key="standard")
+            from .claim_verification import render_claim_audit
+            render_claim_audit(result, credentials=(openai_api_key, fmp_api_key, serper_api_key, marketaux_api_key))
+        from .verified_research import render_verified_handoff
+        render_verified_handoff(result, "Standard V1", fmp_api_key)
         render_evidence_row(evidence_status(result))
         symbols = ", ".join(result["request"]["symbols"])
         status_label = ("Complete · Caveats disclosed" if result.get("finalized_with_caveats") else
@@ -375,7 +397,8 @@ def render_deep_research_tab(*, openai_api_key: str, model_name: str, fmp_api_ke
             details.append(f"{result['elapsed_seconds']:.0f}s run time")
         if cost is not None and result.get("token_counts_estimated"):
             details.append("cost estimated from text size")
-        st.caption(" · ".join(str(value) for value in details if value))
+        with st.expander("Advanced saved-run details") if intent else nullcontext():
+            st.caption(" · ".join(str(value) for value in details if value))
         render_serper_news_coverage(result)
         if result.get("status") == "incomplete":
             st.info("Report generation did not finish. Collected research remains available in Sources & evidence.")

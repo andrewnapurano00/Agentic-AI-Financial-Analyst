@@ -6,17 +6,24 @@ from datetime import datetime, timezone
 from typing import Any, Literal
 
 import pandas as pd
-from pydantic import BaseModel, Field, model_validator
+from pydantic import BaseModel, Field, create_model, field_validator, model_validator
 
 
-class SpecialistView(BaseModel):
+class TickerFields(BaseModel):
+    @field_validator("best_buy", "runner_up", "preferred_ticker", mode="before", check_fields=False)
+    @classmethod
+    def normalize_ticker(cls, value):
+        return value.strip().upper() if isinstance(value, str) else value
+
+
+class SpecialistView(TickerFields):
     role: Literal["fundamentals", "valuation", "risk"]
     preferred_ticker: str | None = None
     argument: str
     challenges: list[str] = Field(default_factory=list)
 
 
-class EquityCommitteeDecision(BaseModel):
+class EquityCommitteeDecision(TickerFields):
     best_buy: str | None = None
     confidence: int = Field(ge=0, le=100)
     verdict: Literal["BUY", "WATCH", "NO_BUY"]
@@ -36,6 +43,20 @@ class EquityCommitteeDecision(BaseModel):
         if self.verdict != "NO_BUY" and self.best_buy is None:
             raise ValueError("BUY and WATCH decisions must name a best buy.")
         return self
+
+
+def committee_output_schema(symbols: list[str]):
+    """Expose exact saved-universe choices to structured generation, including dissent."""
+    ticker = Literal[tuple(symbols)]
+    specialist = create_model(
+        "UniverseSpecialistView", __base__=SpecialistView,
+        preferred_ticker=(ticker | None, None),
+    )
+    return create_model(
+        "UniverseEquityCommitteeDecision", __base__=EquityCommitteeDecision,
+        best_buy=(ticker | None, None), runner_up=(ticker | None, None),
+        specialist_views=(list[specialist], ...),
+    )
 
 
 def _json_value(value: Any) -> Any:
@@ -96,7 +117,7 @@ def run_equity_committee(
     """Run a bounded CrewAI debate over a saved Equity Report scorecard."""
     if not openai_api_key:
         raise ValueError("An OpenAI API key is required to run the CrewAI debate.")
-    symbols = [str(value).upper() for value in packet.get("tickers", [])]
+    symbols = [str(value).strip().upper() for value in packet.get("tickers", [])]
     if not symbols:
         raise ValueError("The committee packet does not contain any tickers.")
     try:
@@ -105,18 +126,23 @@ def run_equity_committee(
         raise RuntimeError("CrewAI is not installed. Install the root project dependencies and restart the app.") from exc
 
     model = model_name if "/" in model_name else f"openai/{model_name}"
-    llm = LLM(model=model, api_key=openai_api_key, timeout=90, max_retries=1)
+    reasoning_model = model.rsplit("/", 1)[-1].lower().startswith("gpt-5")
+    # The installed native CrewAI chat adapter omits GPT-5 reasoning_effort.
+    # Its Responses adapter carries the bounded reasoning/output configuration.
+    llm = LLM(model=model, api_key=openai_api_key, timeout=60, max_retries=0, max_completion_tokens=4000,
+              **({"api":"responses", "store":False, "reasoning_effort":"low"} if reasoning_model else {}))
     evidence = json.dumps(packet, ensure_ascii=False, default=str)
     guardrails = (
         "Use only the supplied Equity Report packet. Do not browse, call tools, or invent facts. "
         "Null means unavailable, zero is a real value, and unlike currencies or periods must not be compared. "
-        "Challenge deterministic rankings when the underlying evidence is incomplete. This is research, not personalized advice."
+        "Challenge deterministic rankings when the underlying evidence is incomplete. This is research, not personalized advice. Keep each specialist response under 180 words; final decision under 500 words. "
+        "Use concise executive English with no source IDs, citations, provider attribution or workflow jargon."
     )
 
     def agent(role: str, goal: str, backstory: str) -> Any:
         return Agent(
             role=role, goal=goal, backstory=backstory, llm=llm, verbose=False,
-            allow_delegation=False, max_iter=4, max_execution_time=90, max_retry_limit=1,
+            allow_delegation=False, max_iter=2, max_execution_time=180, max_retry_limit=0,
         )
 
     fundamental = agent(
@@ -161,18 +187,26 @@ def run_equity_committee(
     final = Task(
         description=(
             f"{guardrails}\nAdjudicate the debate for this exact universe: {', '.join(symbols)}. "
-            "Return specialist views for fundamentals, valuation, and risk. Select no more than one best_buy. "
+            "Use only exact ticker strings from this universe in best_buy, runner_up and preferred_ticker; never company names, explanations or lists. Return specialist views for fundamentals, valuation, and risk. Select no more than one best_buy. "
             "Use NO_BUY with null best_buy when evidence or risk/reward is inadequate. A WATCH names the strongest "
             "candidate but states why it is not yet a buy. Explain the disagreements and decisive reasoning in plain English."
         ),
         expected_output="A structured best-buy verdict, debate summary, specialist views, risks, catalysts, and invalidation signals.",
-        agent=chair, context=[fundamentals, valuation_case, rebuttal], output_pydantic=EquityCommitteeDecision,
+        agent=chair, context=[fundamentals, valuation_case, rebuttal], output_pydantic=committee_output_schema(symbols),
     )
-    output = Crew(
+    crew = Crew(
         agents=[fundamental, valuation, risk, chair],
         tasks=[fundamentals, valuation_case, rebuttal, final],
         process=Process.sequential, verbose=False, memory=False, cache=False,
-    ).kickoff()
+    )
+    try:
+        output = crew.kickoff()
+    except Exception as exc:
+        # CrewAI timeout messages embed the entire task and saved packet. Never
+        # propagate those messages into the UI or external exception chains.
+        if isinstance(exc, TimeoutError) or "timed out" in str(exc).lower():
+            raise RuntimeError("A committee analyst exceeded its time budget. The saved Equity Report is unchanged. Retry the debate or select a faster model; no automatic retry was made.") from None
+        raise RuntimeError("The committee could not return a complete decision. The saved Equity Report is unchanged. Check model access and try the debate again.") from None
     parsed = output.pydantic
     if parsed is None:
         raise RuntimeError("CrewAI completed without a structured best-buy decision.")
@@ -181,16 +215,16 @@ def run_equity_committee(
     for field in ("best_buy", "runner_up"):
         value = decision.get(field)
         if value is not None:
-            value = str(value).upper()
+            value = str(value).strip().upper()
             if value not in allowed:
                 raise ValueError(f"CrewAI returned an out-of-universe {field}.")
             decision[field] = value
     for view in decision.get("specialist_views", []):
         value = view.get("preferred_ticker")
-        if value is not None and str(value).upper() not in allowed:
+        if value is not None and str(value).strip().upper() not in allowed:
             raise ValueError("CrewAI returned an out-of-universe specialist preference.")
         if value is not None:
-            view["preferred_ticker"] = str(value).upper()
+            view["preferred_ticker"] = str(value).strip().upper()
     decision.update({
         "created_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "model": model_name,

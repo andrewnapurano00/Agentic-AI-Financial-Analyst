@@ -58,7 +58,7 @@ class LoadStreamlitUI:
         st.sidebar.markdown('<div class="ax-sidebar-label">Workspaces</div>', unsafe_allow_html=True)
         active_page = st.sidebar.radio(
             "Workspace navigation",
-            ["Introduction", "Top Movers", "Stock Screener", "Research", "Equity Report", "AI Valuation", "Deep Research", "Portfolio Lab", "AI Robo Advisor"],
+            ["Introduction", "Top Movers", "Stock Screener", "Research", "Equity Report", "AI Valuation", "Deep Research", "Portfolio Lab", "AI Robo Advisor", "Data Validation"],
             label_visibility="collapsed",
             key="active_workspace",
             format_func=lambda label: "Market Brief" if label == "Introduction" else label,

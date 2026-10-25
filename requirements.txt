@@ -22,6 +22,7 @@ lxml_html_clean>=0.4,<1
 numpy>=2,<3
 openai>=2.50,<3
 reportlab>=4,<6
+cryptography>=46,<51
 matplotlib>=3.9,<4
 scikit-learn>=1.6,<2
 yfinance>=0.2.50,<2

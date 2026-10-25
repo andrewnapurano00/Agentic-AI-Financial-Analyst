@@ -1,6 +1,7 @@
 # syntax=docker/dockerfile:1
 ARG RUNTIME_IMAGE=axiom-runtime:local
 FROM ${RUNTIME_IMAGE}
+ENV AXIOM_RUNTIME_MODE=local
 USER root
 RUN --mount=type=secret,id=build_ca \
     if [ -f /run/secrets/build_ca ]; then export PIP_CERT=/run/secrets/build_ca; fi \

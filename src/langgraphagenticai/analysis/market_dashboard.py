@@ -24,6 +24,21 @@ def dashboard_metrics(records, now, quote=None, quote_timezone="America/New_York
             if value is not None and value > 0 and (end-start).days <= gap:
                 result[label] = (result["price"] / value - 1) * 100
                 result["inputs"][label] = {"price": result["price"], "adjClose": value, "date": start.isoformat()}
+    # Calendar-month baselines use the nearest prior observation, at most seven
+    # calendar days from the anniversary; never relabel 30/60 sessions as months.
+    for label, months in (("1M", 1), ("3M", 3)):
+        result[label] = None
+        if end and result.get("price"):
+            target = (pd.Timestamp(end) - pd.DateOffset(months=months)).date()
+            candidates = [day for day in dated if day <= target]
+            if candidates:
+                start = max(candidates)
+                value = finite_number(dated[start].get("adj_close"))
+                if (target-start).days <= 7 and value is not None and value > 0:
+                    result[label] = (result["price"] / value - 1) * 100
+                    result["inputs"][label] = {"price":result["price"], "adjClose":value,
+                        "date":start.isoformat(), "target_date":target.isoformat(),
+                        "basis":"Calendar months; last observed adjusted close on/before anniversary, within seven days"}
     # A live quote is not inserted as an extra daily indicator observation.
     values = pd.Series([finite_number(dated[date].get("adj_close")) for date in sorted(dated)], dtype=float)
     result["RSI (14)"] = None

@@ -1,2 +1,4 @@
 -r requirements.txt
 pytest>=8,<10
+pypdfium2>=5,<6
+pip-audit>=2.9,<3

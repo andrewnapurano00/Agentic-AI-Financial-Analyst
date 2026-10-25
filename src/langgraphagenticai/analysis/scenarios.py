@@ -6,11 +6,13 @@ import re
 from langgraphagenticai.deep_research.quarterly_ttm import METHODOLOGY, number
 from langgraphagenticai.deep_research.sector import map_sector_to_framework, SECTOR_METRIC_REGISTRY, GENERAL_FRAMEWORK
 from langgraphagenticai.deep_research.research_metrics import ALIASES
+from .earnings_metrics import research_net_income
 
 LIMITATIONS = (
     "Standardized flows assume standalone quarters where duration is absent; raw reported monetary scaling is unverified and is not changed.",
     "Saved quote Unix timestamps are interpreted as seconds in UTC, an existing disclosed assumption.",
     "Quote freshness policy: at most seven UTC calendar days at the supplied reference; future instants are rejected.",
+    "Shared earnings validation requires matching raw quarters, retrieval age at most thirty days and TTM fiscal age at most two hundred days; original saved values are never replaced.",
     "Hypothetical total equity values are user sensitivities, not forecasts, returns, recommendations or per-share targets.",
 )
 
@@ -44,7 +46,7 @@ def saved_inputs(result, ticker, reference_time):
         return SavedInputs(str(ticker).strip().upper(), False, ("Malformed or incomplete saved audit packet.",))
 
 def _saved_inputs(result, ticker, reference_time):
-    """Read actual saved contracts and their sources, never reaggregate earnings."""
+    """Validate raw earnings independently, then price only with unchanged saved contracts."""
     ticker = str(ticker).strip().upper()
     reasons = []
     try:
@@ -62,6 +64,9 @@ def _saved_inputs(result, ticker, reference_time):
     if len(rows) != 1:
         return unavailable("One unique saved company comparison is required.")
     row = rows[0]
+    earnings = research_net_income(result, ticker, reference_time=reference_time)
+    if not earnings.eligible:
+        return unavailable("Shared earnings validation: " + earnings.status + "; " + "; ".join(earnings.reasons))
     framework = map_sector_to_framework(row.get("Sector"), row.get("Industry"))
     avoided = {ALIASES.get(k, k) for k in SECTOR_METRIC_REGISTRY[framework]["avoid_or_downweight"]}
     if framework == GENERAL_FRAMEWORK or "P/E (TTM)" in avoided:

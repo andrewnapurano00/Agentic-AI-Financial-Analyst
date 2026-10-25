@@ -12,10 +12,7 @@ from langgraphagenticai.state.research_context import normalize_company_symbol
 from langgraphagenticai.utils.safety import sanitize_error,redact_sensitive_text
 
 
-def news_text(value):
-    text=executive_prose(redact_sensitive_text(value))
-    text=re.sub(r"\[\s*N\d+(?:\s*[,;]\s*N\d+)*\s*\]", "", text)
-    return re.sub(r"\s+([,.;:])",r"\1",text).strip()
+from langgraphagenticai.analysis.executive_text import executive_text as news_text
 
 
 def render_ticker_news_summary(symbol,company,*,fmp_api_key="",serper_api_key="",marketaux_api_key="",openai_api_key="",model_name="gpt-5"):
@@ -65,7 +62,8 @@ def render_ticker_news_summary(symbol,company,*,fmp_api_key="",serper_api_key=""
             while len(summaries)>8:summaries.pop(next(iter(summaries)))
             st.session_state["movers_news_summaries"]=summaries
         except Exception as exc:
-            st.warning("AI summary unavailable; previous summary preserved. "+sanitize_error(exc))
+            retained="; previous summary preserved" if summary_identity in summaries else ""
+            st.warning("AI summary unavailable"+retained+". "+sanitize_error(exc))
     saved=summaries.get(summary_identity)
     if saved:
         if not packet or saved["evidence"]["fingerprint"]!=packet["fingerprint"] or saved["model"]!=model_name:
@@ -80,17 +78,6 @@ def render_ticker_news_summary(symbol,company,*,fmp_api_key="",serper_api_key=""
             st.caption(news_text(story["implication"]))
         st.caption(news_text(result["limitations"]))
         st.caption(f"AI interpretation | generated {saved.get('generated_at') or 'unknown'} | news retrieved {saved['evidence'].get('retrieved_at') or 'unknown'} | qualitative news tone, separate from social sentiment and analyst ratings.")
-        with st.expander("News sources & coverage"):
-            for article in saved["evidence"]["articles"]:
-                url=safe_news_url(article.get("url"))
-                if url:st.link_button(redact_sensitive_text(article.get("title") or "News article",max_length=200),url)
-                st.caption(str(article.get("publisher") or "Publisher unavailable")+" | published "+str(article.get("published") or "unknown")+" | "+", ".join(article.get("providers",[])))
-            st.caption("Source IDs and ticker/fingerprint are checked; factual accuracy and sentiment interpretation are not independently verified. Headlines/snippets may omit context; retrieval time does not establish publication time.")
     else:
         st.info("Load news, then generate a concise company summary and qualitative sentiment assessment. Changing stocks or filters does not call AI.")
     if not openai_api_key.strip():st.caption("Configure OpenAI in Settings to generate a summary. News collection remains available.")
-    if packet and not saved:
-        with st.expander("Available company news"):
-            for article in packet["articles"]:
-                url=safe_news_url(article.get("url"))
-                if url:st.link_button(article["title"],url)

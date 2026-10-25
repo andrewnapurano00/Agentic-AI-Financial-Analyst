@@ -27,15 +27,16 @@ PRICE_TO_DATE = None
 
 
 def _render_equity_committee(decision: dict) -> None:
+    from langgraphagenticai.analysis.executive_text import executive_text
     best_buy = decision.get("best_buy")
     verdict = decision.get("verdict", "NO_BUY")
     if best_buy:
         st.success(f"Committee verdict: **{verdict} · {best_buy}** ({decision.get('confidence', 0)}% confidence)")
     else:
         st.warning(f"Committee verdict: **NO BUY** ({decision.get('confidence', 0)}% confidence)")
-    st.write(decision.get("summary", ""))
+    st.write(executive_text(decision.get("summary", "")))
     st.markdown("#### What the agents debated")
-    st.write(decision.get("debate_summary", ""))
+    st.write(executive_text(decision.get("debate_summary", "")))
     views = decision.get("specialist_views", [])
     if views:
         columns = st.columns(min(3, len(views)))
@@ -46,9 +47,9 @@ def _render_equity_committee(decision: dict) -> None:
                     st.markdown(f"**{role}**")
                     if view.get("preferred_ticker"):
                         st.caption(f"Preference: {view['preferred_ticker']}")
-                    st.write(view.get("argument", ""))
+                    st.write(executive_text(view.get("argument", "")))
                     for challenge in view.get("challenges", []):
-                        st.markdown(f"- {challenge}")
+                        st.markdown("- "+executive_text(challenge))
     details = (("Catalysts", "catalysts"), ("Risks", "risks"),
                ("Thesis invalidation", "invalidation_signals"),
                ("Evidence limitations", "evidence_limitations"))
@@ -58,7 +59,7 @@ def _render_equity_committee(decision: dict) -> None:
             if values:
                 st.markdown(f"**{label}**")
                 for value in values:
-                    st.markdown(f"- {value}")
+                    st.markdown("- "+executive_text(value))
     st.caption(
         f"Generated {decision.get('created_at', '')} · Model: {decision.get('model', 'unknown')} · "
         + decision.get("disclaimer", "AI-generated research opinion, not personalized investment advice.")
@@ -5161,6 +5162,13 @@ def render_equity_report_tab(
     gpt_note = payload.get("gpt_note")
     price_history = payload.get("price_history", {})
 
+    committee_packet = build_equity_committee_packet(
+        combined_scorecard, peer_group=peer_group,
+        generated_at=str(payload.get("generated_at", "")),
+    )
+    committee = payload.get("crewai_equity_decision")
+    current_decision = committee if committee and committee.get("input_fingerprint") == committee_packet["fingerprint"] else None
+
     pdf_bytes = generate_story_pdf_report(
         combined_scorecard,
         report_tables,
@@ -5168,6 +5176,9 @@ def render_equity_report_tab(
         executive_summary=executive_summary,
         gpt_note=gpt_note,
         peer_group=peer_group,
+        committee=current_decision,
+        generated_at=str(payload.get("generated_at", "")),
+        secrets=(openai_api_key, fmp_api_key),
     )
 
     st.session_state["equity_report_payload"].update({
@@ -5209,13 +5220,6 @@ def render_equity_report_tab(
             render_research_note_html(gpt_note)
 
         st.markdown("### CrewAI Best-Buy Debate")
-        committee_packet = build_equity_committee_packet(
-            combined_scorecard,
-            peer_group=peer_group,
-            generated_at=str(payload.get("generated_at", "")),
-        )
-        committee = payload.get("crewai_equity_decision")
-        current_decision = committee if committee and committee.get("input_fingerprint") == committee_packet["fingerprint"] else None
         if committee and current_decision is None:
             st.warning("The saved committee verdict belongs to an older scorecard. Run the debate again for this report.")
         st.caption(
@@ -5317,6 +5321,7 @@ def render_equity_report_tab(
                 peer_group=peer_group,
             )
 
+        st.caption("PDF includes the full saved summary and any completed CrewAI decision matching this scorecard. Exporting makes no model calls.")
         st.download_button("Download PDF Report", data=pdf_bytes, file_name=f"equity_research_report_{'_'.join(tickers[:5])}.pdf", mime="application/pdf")
         st.download_button("Download Excel Research Pack", data=excel_bytes, file_name=f"equity_research_pack_{'_'.join(tickers[:5])}.xlsx", mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
         st.download_button("Download Display CSV", data=display_csv, file_name="equity_research_display.csv", mime="text/csv")
@@ -5687,47 +5692,12 @@ def generate_story_pdf_report(
     executive_summary: str,
     gpt_note: Optional[str],
     peer_group: str,
+    *, committee=None, generated_at="", secrets=(),
 ) -> bytes:
-    """Override: tight one-page PDF with cleaner text and no tall narrative boxes."""
-    buffer = io.BytesIO()
-    doc = SimpleDocTemplate(
-        buffer,
-        pagesize=landscape(letter),
-        rightMargin=0.25 * inch,
-        leftMargin=0.25 * inch,
-        topMargin=0.22 * inch,
-        bottomMargin=0.22 * inch,
+    """Export complete saved narratives and a matching committee decision locally."""
+    from langgraphagenticai.analysis.equity_report_pdf import build_equity_pdf
+    return build_equity_pdf(
+        tickers=tickers, peer_group=peer_group, executive_summary=executive_summary,
+        gpt_note=gpt_note, committee=committee,
+        generated_at=generated_at, secrets=secrets,
     )
-    styles = getSampleStyleSheet()
-    styles["Title"].fontSize = 12
-    styles["Title"].leading = 13
-    styles["Heading2"].fontSize = 8
-    styles["Heading2"].leading = 9
-    styles["BodyText"].fontSize = 6.2
-    styles["BodyText"].leading = 7.1
-    styles["BodyText"].fontName = "Helvetica"
-
-    story = []
-    title = f"Equity Research Summary: {', '.join(tickers)}"
-    story.append(Paragraph(title, styles["Title"]))
-    story.append(Paragraph(f"Framework: {_html_escape(peer_group)}", styles["BodyText"]))
-
-    summary = _shorten_pdf_cell(_clean_report_text(executive_summary or "No executive summary available."), 430)
-    story.append(Paragraph(f"<b>Executive summary:</b> {_html_escape(summary)}", styles["BodyText"]))
-
-    if gpt_note:
-        # Keep PDF one-page. Full note remains in the app and Excel export.
-        note = _shorten_pdf_cell(_clean_report_text(str(gpt_note)), 360)
-        story.append(Paragraph(f"<b>OpenAI recommendation note:</b> {_html_escape(note)}", styles["BodyText"]))
-
-    compact_df = _one_page_pdf_rows(report_tables)
-    if not compact_df.empty:
-        story.append(Spacer(1, 0.05 * inch))
-        story.append(dataframe_to_one_page_pdf_table(compact_df))
-    else:
-        story.append(Paragraph("No compact report table was available.", styles["BodyText"]))
-
-    doc.build(story)
-    pdf = buffer.getvalue()
-    buffer.close()
-    return pdf

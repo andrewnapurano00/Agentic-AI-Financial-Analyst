@@ -94,6 +94,8 @@ def load_current(names, api_key, _budget=None):
         if not quote:
             notices.append(symbol+": unique dated quote response unavailable.")
         for kind, route in (("profile", "profile"), ("ratios", "ratios-ttm")):
+            if kind == "ratios" and symbol in ETFS:
+                continue  # Company profitability ratios do not describe fund allocation quality.
             if budget.stopped.is_set():
                 break
             try:
@@ -193,7 +195,7 @@ def normalize_security(symbol, quote, profile, ratios, history, retrieved_at, hi
     currency_basis = "Quote USD and listing USD" if quote.get("currency") else "Explicit USD listing; quote unit compatibility assumed"
     if not quote.get("currency"):
         flags.append(currency_basis)
-    if not ratios:
+    if not ratios and not expected_etf:
         flags.append("TTM ratios unavailable.")
     facts = [Fact(id=symbol+":price", field="price", value=price, unit="USD/share", basis="point-in-time quote",
                   as_of=observed.isoformat(), retrieved_at=retrieved_at, source=quote_source),
@@ -203,7 +205,7 @@ def normalize_security(symbol, quote, profile, ratios, history, retrieved_at, hi
     for field, key, unit in (("pe_ttm", "priceToEarningsRatioTTM", "multiple"),
                              ("margin_ttm", "netProfitMarginTTM", "fraction"),
                              ("debt_equity_ttm", "debtToEquityRatioTTM", "multiple")):
-        value = finite_number(ratios.get(key))
+        value = None if expected_etf else finite_number(ratios.get(key))
         if value is not None:
             facts.append(Fact(id=symbol+":"+field, field=field, value=value, unit=unit, basis="provider TTM, fiscal end unavailable",
                               as_of=None, retrieved_at=retrieved_at, source="FMP stable/ratios-ttm"))

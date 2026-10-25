@@ -230,6 +230,14 @@ def test_active_equity_saved_downloads_keep_raw_display_ranking_pdf_and_xlsx(mon
         "combined_scorecard": scorecard, "peer_group": "General / Cross-Sector",
         "gpt_note": None, "price_history": {},
     }
+    from langgraphagenticai.equity_committee import build_equity_committee_packet
+    packet = build_equity_committee_packet(scorecard, peer_group="General / Cross-Sector", generated_at="2026-10-14T12:00:00Z")
+    committee_run = Mock()
+    monkeypatch.setattr(equity_ui, "run_equity_committee", committee_run)
+    app.session_state["equity_report_payload"]["crewai_equity_decision"] = {
+        "input_fingerprint": packet["fingerprint"], "best_buy": "AAPL", "confidence": 65,
+        "verdict": "WATCH", "summary": "SAVED_COMMITTEE_END", "debate_summary": "Dissent preserved",
+    }
     app.run()
     assert not app.exception
     assert _csv(exported["Download Raw CSV"])[0]["Numeric Fact"] == "-20.5"
@@ -237,13 +245,25 @@ def test_active_equity_saved_downloads_keep_raw_display_ranking_pdf_and_xlsx(mon
     assert _csv(exported["Download Display CSV"])[0]["Numeric Fact"] == "displayed"
     assert list(_csv(exported["Download Ranking CSV"])[0]) == ["Ticker", "Final Rank"]
     with pdfplumber.open(io.BytesIO(exported["Download PDF Report"])) as document:
-        assert "Saved deterministic thesis" in " ".join(page.extract_text() or "" for page in document.pages)
+        text = " ".join(page.extract_text() or "" for page in document.pages)
+        assert "Saved deterministic thesis" in text
+        assert "SAVED_COMMITTEE_END" in text
     workbook = load_workbook(io.BytesIO(exported["Download Excel Research Pack"]), data_only=False)
     assert workbook["Full Scorecard"]["C2"].value == -20.5
     assert workbook["Full Scorecard"]["D2"].data_type == "s"
     next(button for button in app.get("download_button") if button.label == "Download Raw CSV").click().run()
     assert not app.exception
     app.run()
+    collect.assert_not_called()
+    committee_run.assert_not_called()
+    app.session_state["equity_report_payload"]["crewai_equity_decision"]["input_fingerprint"] = "stale"
+    app.run()
+    assert not app.exception
+    with pdfplumber.open(io.BytesIO(exported["Download PDF Report"])) as document:
+        text = " ".join(page.extract_text() or "" for page in document.pages)
+        assert "SAVED_COMMITTEE_END" not in text
+        assert "No completed CrewAI decision matches" in text
+    committee_run.assert_not_called()
     collect.assert_not_called()
 
 

@@ -60,6 +60,8 @@ def render_ai_valuation_tab(fmp_api_key="", openai_api_key="", model_name="gpt-5
     except ValueError:
         st.info("Enter a valid company ticker, such as AAPL or BRK-B.")
         return
+    from .verified_research import render_verified_sensitivity
+    render_verified_sensitivity(symbol, fmp_api_key)
     scope = sha256(fmp_api_key.encode()).hexdigest()[:16]
     key = f"{scope}:{symbol}"
     ai_key = key+":"+sha256(openai_api_key.encode()).hexdigest()[:16]
